@@ -105,6 +105,13 @@ const routes = [{
         import("../views/develop/Developer.vue"),
 
 },
+{
+    path: "/developerdetail",
+    name: "developerdetail",
+    component: () =>
+        import("../views/develop/DeveloperDetail.vue"),
+
+},
 
 {
     path: '/FAQ',
