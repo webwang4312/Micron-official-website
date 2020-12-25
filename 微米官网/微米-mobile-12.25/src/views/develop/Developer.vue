@@ -76,16 +76,14 @@
             </div>
           </li>
         </ul>
-        <div class="blocksdevelop" v-if="!zhanwei">
+        <div class="blocksdevelop" v-if="!zhanwei" >
           <Page
             :total="developerTotal"
             :page-size="6"
             @on-change="developerChange"
-             :cureent.sync="developernum"
-            v-if="developerTotal != 0"
-            ref="paginations"
+            :cureent.sync="developernum"
+            ref="pages"
             simple
-           
           />
         </div>
       </div>
@@ -127,7 +125,6 @@ export default {
     return {
       nowLang: "",
       fullscreenLoading: false,
-
       show: false,
       developerTotal: "",
       developernum: "",
@@ -141,23 +138,16 @@ export default {
   components: { slider, vFooter },
   created() {
     this.nowLang = this.$i18n.locale;
-    this.developernum =localStorage.getItem('uenc-developerpage')||3;
-     this.$nextTick(() => {
-      this.$refs.paginations.currentPage =2;
-    });
-    
-    console.log(this.developernum);
-    // console.log(this.$refs);
-   
-    
+    this.developernum = Number(localStorage.getItem("uenc-developerpage")) || Number(1);
     this.developerInfor();
     this.developerSum();
-  },
+    this.$nextTick(() => {
+       this.$refs.pages.currentPage=Number(localStorage.getItem("uenc-developerpage")) ||Number(1)
+    });
 
+  
+  },
   mounted() {
-    
-     
-   
   },
   destroyed() {},
   methods: {
@@ -170,11 +160,13 @@ export default {
     developerChange(page) {
       // console.log(page);
       this.developernum = page;
-   
+
       // console.log(this.developernum);
       // this.setContextData("currentpage", this.medianum);
       this.developerInfor();
-         localStorage.setItem('uenc-developerpage',page)
+      localStorage.setItem("uenc-developerpage", page);
+      window.scrollTo(0, 1550);
+    
     },
     developerSum() {
       this.$http
@@ -253,24 +245,26 @@ export default {
 };
 </script>
 <style lang="less">
+.ivu-page-simple {
+  .ivu-page-next {
+    background: none !important;
+    background-color: none !important;
+    border: none;
+  }
+}
 .ivu-page-simple-pager {
   input {
-  
     border: none !important;
     outline: none !important;
     color: aliceblue !important;
-    background:none!important;
+    background: none !important;
   }
 }
-.ivu-page-next {
-  background: none !important;
-  background-color: none!important;
-  border: none;
-}
+
 .ivu-page-prev {
   border: none;
-   background: none !important;
-  background-color: none!important;
+  background: none !important;
+  background-color: none !important;
 }
 .ivu-page-item {
   background: none;
@@ -453,9 +447,7 @@ button {
       .partner-line {
         width: 60px;
         height: 2px;
-        position: relative;
-        left: 40%;
-
+       margin: 0 auto;
         background: #009fcd;
         position: relative;
         top: 47px;
@@ -578,8 +570,10 @@ button {
         width: 60px;
         height: 2px;
         background: #009fcd;
-        margin-top: 20px;
-        margin-left: 40%;
+        position: relative;
+        top: 20px;
+      
+      margin: 0 auto;
       }
       .zhanwei {
         width: 100%;
@@ -699,8 +693,10 @@ button {
         height: 2px;
 
         background: rgba(0, 159, 205, 1);
-        margin-left: 40%;
-        margin-top: 10px;
+        position: relative;
+        top: 20px;
+      
+      margin: 0 auto;
       }
       .developer_reward-img {
         width: 100%;

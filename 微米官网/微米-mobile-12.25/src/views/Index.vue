@@ -717,9 +717,9 @@ export default {
     }
     .videoline {
       width: 60px;
-      height: 0px;
-      border: 2px solid rgba(0, 159, 205, 1);
-      margin: 0 auto;
+      height: 2px;
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
       //  left: 158px;
       top: 82px;
@@ -762,11 +762,12 @@ export default {
     }
     .projectline {
       width: 60px;
-      height: 0px;
+      height: 2px;
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
       top: 82px;
-      border: 2px solid rgba(0, 159, 205, 1);
-      opacity: 1;
+    
     }
     .project-content {
       display: flex;
@@ -849,8 +850,9 @@ export default {
       position: absolute;
       top: 82px;
       width: 60px;
-      height: 0px;
-      border: 2px solid rgba(0, 159, 205, 1);
+     height: 2px;
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
     }
     ul {
       position: absolute;
@@ -969,9 +971,9 @@ export default {
 
       top: 82px;
       width: 60px;
-      height: 0px;
-      border: 2px solid rgba(0, 159, 205, 1);
-      opacity: 1;
+      height: 2px;
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
     }
     .contactcontent {
       position: absolute;

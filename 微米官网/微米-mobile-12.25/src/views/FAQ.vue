@@ -298,8 +298,9 @@ export default {
     }
     .videoline {
       width: 60px;
-      height: 0px;
-      border: 2px solid rgba(0, 159, 205, 1);
+      height: 2px;
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
 
       top: 82px;

@@ -184,24 +184,24 @@ export default {
           this.link = info.link;
           // 状态
           this.status = info.status;
-          res.data.result.rollList = [
-            { amount: "100", name: "100" },
-            { amount: "200", name: "200" },
-            { amount: "300", name: "300" },
-          { amount: "400", name: "400" },
-          { amount: "500", name: "500" },
-          { amount: "600", name: "600" },
-          { amount: "700", name: "700" },
-          { amount: "800", name: "800" },
-          { amount: "900", name: "900" },
-          { amount: "1000", name: "1000" },
-          { amount: "1100", name: "1100" },
-          { amount: "1200", name: "1200" },
-          { amount: "1300", name: "1300" },
-          { amount: "1400", name: "1400" },
-          { amount: "1500", name: "1500" },
-          { amount: "1600", name: "1600" },
-          ];
+          // res.data.result.rollList = [
+          //   { amount: "100", name: "100" },
+          //   { amount: "200", name: "200" },
+          //   { amount: "300", name: "300" },
+          // { amount: "400", name: "400" },
+          // { amount: "500", name: "500" },
+          // { amount: "600", name: "600" },
+          // { amount: "700", name: "700" },
+          // { amount: "800", name: "800" },
+          // { amount: "900", name: "900" },
+          // { amount: "1000", name: "1000" },
+          // { amount: "1100", name: "1100" },
+          // { amount: "1200", name: "1200" },
+          // { amount: "1300", name: "1300" },
+          // { amount: "1400", name: "1400" },
+          // { amount: "1500", name: "1500" },
+          // { amount: "1600", name: "1600" },
+          // ];
           this.newsList = res.data.result.rollList;
           if (res.data.result.rollList.length > 0) {
             this.marqueetrueall = true;
@@ -254,7 +254,8 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   margin: 0 auto;
-  margin-top: 50px;
+  position:relative;
+  top: 50px;
   ul {
     display: flex;
     flex-direction: row;
@@ -346,12 +347,15 @@ export default {
     width: 100%;
     height: auto;
     background: rgba(20, 20, 20);
+    padding-bottom: 50px;
     .developer_detail_contents {
       width: 345px;
       height: auto;
       margin: 0 auto;
-      padding-top: 30px;
+     
       padding-bottom: 50px;
+      position: relative;
+      top: 80px;
       .title {
         width: 100%;
         font-size: 20px;

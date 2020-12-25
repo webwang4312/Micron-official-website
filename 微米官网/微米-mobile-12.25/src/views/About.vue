@@ -991,7 +991,9 @@ export default {
     .videoline {
       width: 60px;
       height: 2px;
-      border: 2px solid rgba(0, 159, 205, 1);
+    
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
 
       top: 82px;
@@ -1115,7 +1117,9 @@ export default {
     .aboutvideoline {
       width: 60px;
       height: 2px;
-      border: 2px solid rgba(0, 159, 205, 1);
+    
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
       top: 82px;
     }
@@ -1197,7 +1201,9 @@ export default {
     .telline {
       width: 60px;
       height: 2px;
-      border: 2px solid rgba(0, 159, 205, 1);
+    
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
       top: 82px;
     }
