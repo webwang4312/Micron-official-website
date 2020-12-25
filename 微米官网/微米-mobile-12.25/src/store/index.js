@@ -17,9 +17,13 @@ export default new Vuex.Store({
         fastokenbind: false,
         fastokenbind2: false,
         votenumberstate:false,
+        registrationtask:false
 
     },
     mutations: {
+        RegistrationTask(state){
+            state.registrationtask = !state.registrationtask;
+        },
         voteNumber(state){
             state.votenumberstate = !state.votenumberstate;  
         },

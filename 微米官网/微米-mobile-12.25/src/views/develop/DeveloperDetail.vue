@@ -184,24 +184,24 @@ export default {
           this.link = info.link;
           // 状态
           this.status = info.status;
-          // res.data.result.rollList = [
-          //   { amount: "100", name: "100" },
-          //   { amount: "200", name: "200" },
-          //   { amount: "300", name: "300" },
-          // { amount: "400", name: "400" },
-          // { amount: "500", name: "500" },
-          // { amount: "600", name: "600" },
-          // { amount: "700", name: "700" },
-          // { amount: "800", name: "800" },
-          // { amount: "900", name: "900" },
-          // { amount: "1000", name: "1000" },
-          // { amount: "1100", name: "1100" },
-          // { amount: "1200", name: "1200" },
-          // { amount: "1300", name: "1300" },
-          // { amount: "1400", name: "1400" },
-          // { amount: "1500", name: "1500" },
-          // { amount: "1600", name: "1600" },
-          // ];
+          res.data.result.rollList = [
+            { amount: "100", name: "100" },
+            { amount: "200", name: "200" },
+            { amount: "300", name: "300" },
+          { amount: "400", name: "400" },
+          { amount: "500", name: "500" },
+          { amount: "600", name: "600" },
+          { amount: "700", name: "700" },
+          { amount: "800", name: "800" },
+          { amount: "900", name: "900" },
+          { amount: "1000", name: "1000" },
+          { amount: "1100", name: "1100" },
+          { amount: "1200", name: "1200" },
+          { amount: "1300", name: "1300" },
+          { amount: "1400", name: "1400" },
+          { amount: "1500", name: "1500" },
+          { amount: "1600", name: "1600" },
+          ];
           this.newsList = res.data.result.rollList;
           if (res.data.result.rollList.length > 0) {
             this.marqueetrueall = true;
@@ -288,6 +288,11 @@ export default {
 
   color: #009fcd;
   margin-top: 30px;
+  img{
+    position: relative;
+    top: 5px;
+     right: 5px;
+  }
 }
 .registration_task3 {
   width: 152px;
@@ -304,6 +309,11 @@ export default {
   line-height: 40px;
   margin-top: 30px;
   color: #009fcd;
+  img{
+    position: relative;
+    top: 5px;
+     right: 5px;
+  }
 }
 .registration_task2 {
   width: 152px;
@@ -320,6 +330,12 @@ export default {
   line-height: 40px;
   color: #c43535;
   margin-top: 30px;
+  img{
+    position: relative;
+    top: 5px;
+    right: 5px;
+  }
+
 }
 // 主线
 .developerdetail {
@@ -348,10 +364,10 @@ export default {
         word-break: normal;
       }
       .summary {
-        padding: 40px;
+        padding: 15px;
         width: 345px;
         height: auto;
-        min-height: 500px;
+        min-height: 300px;
         background: #e5e5e5;
         border-radius: 10px;
         margin: 0 auto;
@@ -367,6 +383,15 @@ export default {
 
         margin-top: 34px !important;
         margin: 0 auto;
+        li:nth-child(2) {
+          margin-top: 10px;
+        }
+        li:nth-child(3) {
+          margin-top: 10px;
+        }
+        li:nth-child(4) {
+          margin-top: 10px;
+        }
         .github_net {
           word-wrap: break-word;
           word-break: normal;
@@ -383,20 +408,27 @@ export default {
           font-weight: normal;
           line-height: 27px;
           color: #ffffff;
-          opacity: 1;
           padding-left: 20px;
+          p {
+            text-align: left;
+            span:nth-child(1) {
+            
+            }
+            span:nth-child(2) {
+           
+            }
+          }
         }
         .detail_amount {
           width: 100%;
           height: 68px;
-          border: 1px solid rgba(24, 129, 160);
-          background: rgba(77, 79, 79);
-          text-align: center;
-          box-shadow: 0px 0px 4px #888888;
-          border-radius: 10px;
+          background: #4d4d4d;
+          border: 1px solid #009fcd;
+          box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+          border-radius: 5px;
           display: flex;
           flex-direction: row;
-          justify-content: space-around;
+         
           align-items: center;
           p:nth-child(1) {
             font-size: 20px;
@@ -411,6 +443,10 @@ export default {
             font-weight: normal;
             line-height: 27px;
             color: #009fcd;
+            margin-left: 20px!important;
+            span {
+              margin-left: 0px !important;
+            }
           }
         }
       }

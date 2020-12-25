@@ -790,6 +790,9 @@ input::-webkit-input-placeholder {
     }
     li:nth-child(4) {
       margin-top: 50px;
+      button{
+        margin-left: 0px!important;
+      }
     }
     .denglu_footer {
       margin-top: 40px;

@@ -4,7 +4,7 @@
       <img
         src="@assets/images/detail/组 372 (1).png"
         alt=""
-        style="width:30px;height:30px; position: relative;;left:336px;top:41px;cursor:pointer"
+        style="width:30px;height:30px; position: relative;;left:80%;top:41px;cursor:pointer"
         @click="forgetLogin"
       />
       <div class="tabs_name">
@@ -159,6 +159,7 @@ export default {
           )
           .then((res) => {
             console.log(res);
+            // res.data.code = 400
             if (res.data.code == 200) {
               this.$message.success(res.data.result);
               this.weixing = "";
@@ -170,7 +171,6 @@ export default {
               this.$message.error(res.data.result);
               window.sessionStorage.clear();
               localStorage.clear();
-              this.$store.commit("leavelogin");
               this.reload();
             }
           });
@@ -241,10 +241,11 @@ export default {
   left: 0;
   top: 0;
   .dengluzhuce {
-    width: 400px;
+    width:345px;
     height: 529px;
     background: #131313;
     border-radius: 10px;
+    margin:0 auto;
     .tabs_name {
       font-size: 18px;
       font-family: PingFang SC;

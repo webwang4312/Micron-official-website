@@ -195,6 +195,26 @@ export default {
 
 <style lang="less">
 .mediablock {
+  .ivu-page-simple-pager {
+  input {
+    background-color: rgba(12, 12, 12, 1) !important;
+    border: none !important;
+    outline: none !important;
+    color: aliceblue !important;
+  }
+}
+.ivu-page-next {
+  background-color: rgba(12, 12, 12, 1) !important;
+  border: none;
+}
+.ivu-page-prev {
+  background-color: rgba(12, 12, 12, 1);
+  border: none;
+}
+.ivu-page-item {
+  background: none;
+  border: none;
+}
   .van-pagination {
     margin-top: 30px;
   }
@@ -236,26 +256,7 @@ export default {
     }
   }
 }
-.ivu-page-simple-pager {
-  input {
-    background-color: rgba(12, 12, 12, 1) !important;
-    border: none !important;
-    outline: none !important;
-    color: aliceblue !important;
-  }
-}
-.ivu-page-next {
-  background-color: rgba(12, 12, 12, 1) !important;
-  border: none;
-}
-.ivu-page-prev {
-  background-color: rgba(12, 12, 12, 1);
-  border: none;
-}
-.ivu-page-item {
-  background: none;
-  border: none;
-}
+
 .mencen {
   background: rgba(0, 0, 0, 1);
   opacity: 0.5;

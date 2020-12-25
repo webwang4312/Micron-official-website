@@ -81,9 +81,11 @@
             :total="developerTotal"
             :page-size="6"
             @on-change="developerChange"
+             :cureent.sync="developernum"
             v-if="developerTotal != 0"
-            ref="pagination"
+            ref="paginations"
             simple
+           
           />
         </div>
       </div>
@@ -102,10 +104,9 @@
               {{ $t("developer[9]") }}
             </p>
             <div>
- <button @click="CopyUrl">{{ $t("developer[10]") }}</button>
-            <button @click="goTogithub">{{ $t("developer[11]") }}</button>
+              <button @click="CopyUrl">{{ $t("developer[10]") }}</button>
+              <button @click="goTogithub">{{ $t("developer[11]") }}</button>
             </div>
-           
           </div>
         </div>
       </div>
@@ -140,12 +141,24 @@ export default {
   components: { slider, vFooter },
   created() {
     this.nowLang = this.$i18n.locale;
-    this.developernum = 1;
+    this.developernum =localStorage.getItem('uenc-developerpage')||3;
+     this.$nextTick(() => {
+      this.$refs.paginations.currentPage =2;
+    });
+    
+    console.log(this.developernum);
+    // console.log(this.$refs);
+   
+    
     this.developerInfor();
     this.developerSum();
   },
 
-  mounted() {},
+  mounted() {
+    
+     
+   
+  },
   destroyed() {},
   methods: {
     goToDeveloperDetail(taskId) {
@@ -157,9 +170,11 @@ export default {
     developerChange(page) {
       // console.log(page);
       this.developernum = page;
+   
       // console.log(this.developernum);
       // this.setContextData("currentpage", this.medianum);
       this.developerInfor();
+         localStorage.setItem('uenc-developerpage',page)
     },
     developerSum() {
       this.$http
@@ -193,7 +208,7 @@ export default {
           for (let i = 0; i < res.data.result.list.length; i++) {
             if (res.data.result.list[i].outline.length >= 75) {
               res.data.result.list[i].outline =
-                res.data.result.list[i].outline.substring(0,75) + "...";
+                res.data.result.list[i].outline.substring(0, 75) + "...";
             } else {
               res.data.result.list[i].outline = res.data.result.list[i].outline;
             }
@@ -238,6 +253,29 @@ export default {
 };
 </script>
 <style lang="less">
+.ivu-page-simple-pager {
+  input {
+  
+    border: none !important;
+    outline: none !important;
+    color: aliceblue !important;
+    background:none!important;
+  }
+}
+.ivu-page-next {
+  background: none !important;
+  background-color: none!important;
+  border: none;
+}
+.ivu-page-prev {
+  border: none;
+   background: none !important;
+  background-color: none!important;
+}
+.ivu-page-item {
+  background: none;
+  border: none;
+}
 .mencen {
   background: rgba(0, 0, 0, 1);
   opacity: 0.5;
@@ -481,42 +519,49 @@ button {
       .blocksdevelop {
         position: relative;
         top: 40px;
-
         width: 100%;
         height: 30px;
         z-index: 20;
         margin: 0 auto;
         text-align: center;
-
-        img:nth-child(1) {
-          position: relative;
-          left: 514px;
+        .van-pagination {
+          margin-top: 30px;
         }
-        img:nth-child(3) {
-          position: relative;
-          left: 674px;
+        .van-pagination__item {
+          background: none;
+          color: white;
         }
-        input {
-          width: 30px;
-          height: 30px;
-
+        .van-pagination__item--active {
+          background: #009fcd;
           border-radius: 5px;
-          font-size: 16px;
-          font-family: PingFang SC;
-          font-weight: 400;
-
-          line-height: 42px;
-          text-align: center;
-          outline: none;
+        }
+        [class*="van-hairline"]::after {
           border: none;
         }
-        .ivu-page {
-          // margin-left: 35% !important;
+        button {
+          background-color: none !important;
+          background: none !important;
         }
-        .ivu-page-simple-pager {
-          #text {
-            color: red;
-            display: none !important;
+        .el-pager {
+          .number {
+            font-size: 13px;
+            font-family: "苹方-简";
+            font-weight: normal;
+            line-height: 25px;
+            color: #ffffff !important;
+            opacity: 1;
+          }
+          li {
+            background: none !important;
+            min-width: 20px;
+          }
+          .active {
+            background: #009fcd !important;
+            opacity: 1;
+            border-radius: 5px !important;
+          }
+          .btn-prev {
+            background-color: none !important;
           }
         }
       }
@@ -547,7 +592,7 @@ button {
         }
       }
       .developer_task-img {
-      
+        width: 100%;
         height: auto;
         border-radius: 10px;
         margin-top: 0px;
@@ -560,7 +605,7 @@ button {
           background: rgba(44, 44, 44);
           border-radius: 10px;
           margin-top: 40px;
-          margin-left: 15px;
+          margin: 0 auto;
           .developer_task_header {
             width: 100%;
             margin: 0 auto;
@@ -662,12 +707,12 @@ button {
         height: auto;
 
         border-radius: 10px;
-      margin-top: 30px;
+        margin-top: 30px;
         .reward_left {
           width: 100%;
           margin-top: 30px;
-          div{
-            width:375px;
+          div {
+            width: 375px;
             margin: 0 auto;
           }
           p {
@@ -683,24 +728,23 @@ button {
           }
           button {
             margin-top: 30px;
-           width: 146px;
-height: 40px;
-border: 1px solid #009FCD;
+            width: 146px;
+            height: 40px;
+            border: 1px solid #009fcd;
 
-border-radius: 20px;
+            border-radius: 20px;
 
-font-size: 16px;
-font-family: '苹方-简';
-font-weight: normal;
-line-height: 18px;
-color: #009FCD;
-margin-bottom: 50px;
-background:black
+            font-size: 16px;
+            font-family: "苹方-简";
+            font-weight: normal;
+            line-height: 18px;
+            color: #009fcd;
+            margin-bottom: 50px;
+            background: black;
           }
           button:nth-of-type(2) {
             margin-left: 60px;
           }
-        
         }
         .reward_right {
           margin: 0 auto;
@@ -713,6 +757,4 @@ background:black
     }
   }
 }
-
-
 </style>
