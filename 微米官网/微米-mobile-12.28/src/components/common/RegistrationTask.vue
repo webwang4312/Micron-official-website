@@ -1,69 +1,73 @@
 <template>
+ <van-popup v-model="$store.state.registrationtask">
   <div class="RegistrationTask">
-    <div class="dengluzhuce">
-      <img
-        src="@assets/images/detail/组 372 (1).png"
-        alt=""
-        style="width:30px;height:30px; position: relative;;left:80%;top:41px;cursor:pointer"
-        @click="forgetLogin"
-      />
-      <div class="tabs_name">
-        {{ $t("registrationtask[0]") }}
-      </div>
-      <div class="line"></div>
+   
+      <div class="dengluzhuce">
+        <img
+          src="@assets/images/detail/组 372 (1).png"
+          alt=""
+          style="width:30px;height:30px; position: relative;;left:80%;top:41px;cursor:pointer"
+          @click="forgetLogin"
+        />
+        <div class="tabs_name">
+          {{ $t("registrationtask[0]") }}
+        </div>
+        <div class="line"></div>
 
-      <div class="forget_content">
-        <!-- 微信号 -->
-        <div class="telzong">
-          <div class="tel">
-            <label :class="{ movename: showwx }">
-              {{ $t("registrationtask[1]") }}</label
+        <div class="forget_content">
+          <!-- 微信号 -->
+          <div class="telzong">
+            <div class="tel">
+              <label :class="{ movename: showwx }">
+                {{ $t("registrationtask[1]") }}</label
+              >
+              <input
+                type="text"
+                v-model="weixing"
+                @focus="wxFocus"
+                @blur="wxBlur"
+                class="button"
+              />
+            </div>
+          </div>
+
+          <!-- facebook -->
+          <div class="password">
+            <label :class="{ movename: showfacebook }">
+              {{ $t("registrationtask[2]") }}</label
             >
             <input
               type="text"
-              v-model="weixing"
-              @focus="wxFocus"
-              @blur="wxBlur"
+              v-model="facebook"
+              @focus="facebookFocus"
+              @blur="facebookBlur"
               class="button"
             />
           </div>
-        </div>
+          <!-- github账号 -->
+          <div class="confirmpassword">
+            <label :class="{ movename: showgithub }">
+              {{ $t("registrationtask[3]") }}</label
+            >
+            <input
+              type="text"
+              v-model="github"
+              @focus="githubFocus"
+              @blur="githubBlur"
+              class="button"
+            />
+          </div>
 
-        <!-- facebook -->
-        <div class="password">
-          <label :class="{ movename: showfacebook }">
-            {{ $t("registrationtask[2]") }}</label
-          >
-          <input
-            type="text"
-            v-model="facebook"
-            @focus="facebookFocus"
-            @blur="facebookBlur"
-            class="button"
-          />
-        </div>
-        <!-- github账号 -->
-        <div class="confirmpassword">
-          <label :class="{ movename: showgithub }">
-            {{ $t("registrationtask[3]") }}</label
-          >
-          <input
-            type="text"
-            v-model="github"
-            @focus="githubFocus"
-            @blur="githubBlur"
-            class="button"
-          />
-        </div>
-
-        <div class="but_zong">
-          <div class="submit" @click="submit">
-            {{ $t("forgetpassword[5]") }}
+          <div class="but_zong">
+            <div class="submit" @click="submit">
+              {{ $t("forgetpassword[5]") }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
+  </van-popup
+    >
 </template>
 
 <script>
@@ -136,13 +140,23 @@ export default {
             "Please fill in the WeChat account or facebook account"
           );
         } else {
-          this.$message.error("请选填微信号或facebook账号");
+          this.$message({
+            message: "请选填微信号或facebook账号",
+            center: true,
+            type: "error",
+            duration: "2000",
+          });
         }
       } else if (this.github === "") {
         if (this.$i18n.locale == "en") {
           this.$message.error("Please fill in the github account");
         } else {
-          this.$message.error("请填写github账号");
+          this.$message({
+            message: "请填写github账号",
+            center: true,
+            type: "error",
+            duration: "2000",
+          });
         }
       } else {
         this.$http
@@ -181,6 +195,11 @@ export default {
 </script>
 
 <style lang="less">
+ .van-popup{
+   background-color:black!important;
+   overflow: hidden!important;
+ 
+  }
 .button:hover {
   border: 1px solid#009FCD !important;
 }
@@ -230,22 +249,23 @@ export default {
   opacity: 1 !important;
 }
 .RegistrationTask {
-  width: 100%;
-  height: 100vh;
+ 
+ 
+    border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center; /*定义body的元素垂直居中*/
   justify-content: center; /*定义body的里的元素水平居中*/
-  z-index: 1000;
-  position: fixed;
-  left: 0;
-  top: 0;
+  // z-index: 1000;
+  // position: fixed;
+  // left: 0;
+  // top: 0;
   .dengluzhuce {
-    width:345px;
+    width: 345px;
     height: 529px;
     background: #131313;
     border-radius: 10px;
-    margin:0 auto;
+    margin: 0 auto;
     .tabs_name {
       font-size: 18px;
       font-family: PingFang SC;

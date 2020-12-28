@@ -834,6 +834,9 @@ input::-webkit-input-placeholder {
     margin-top: -30px;
     #registerbutton {
       margin-top: 70px;
+      button{
+        margin-left: 0px!important;
+      }
     }
     label {
       font-size: 14px;

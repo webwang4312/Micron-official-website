@@ -1,5 +1,6 @@
 # textone
 区块链pc端源代码
+12.28修改交易详情页去的地址超过两条，显示交易详情
 ## Project setup
 ```
 npm install

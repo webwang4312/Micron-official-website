@@ -1,21 +1,13 @@
 <template>
   <div class="about">
     <slider></slider>
-    <div
-      class="aboutheader"
-      @click="showSliderFalse"
-     
-    >
+    <div class="aboutheader" @click="showSliderFalse">
       <p>{{ $t("recommendtitle[0]") }}</p>
       <button @click="learnmore">
         <span>{{ $t("learnmore[0]") }}</span>
       </button>
     </div>
-    <div
-      class="abouthuman"
-      @click="showSliderFalse"
-     
-    >
+    <div class="abouthuman" @click="showSliderFalse">
       <p class="partnertitle">{{ $t("aboutcontent[0]") }}</p>
       <div class="videoline"></div>
       <!-- 轮播图 -->
@@ -104,11 +96,7 @@
         </el-carousel>-->
       </div>
     </div>
-    <div
-      class="aboutvideo"
-      @click="showSliderFalse"
-     
-    >
+    <div class="aboutvideo" @click="showSliderFalse">
       <p class="videotitle">{{ $t("aboutcontent[1]") }}</p>
       <div class="aboutvideoline"></div>
 
@@ -118,7 +106,7 @@
             <div class="demo">
               <video-player
                 id="video1"
-               v-if="!$store.state.slidershow"
+                v-if="!$store.state.slidershow"
                 class="video-player vjs-custom-skin"
                 ref="videoPlayer"
                 webkit-playsinline="true"
@@ -240,7 +228,7 @@
                 id="video4"
                 class="video-player vjs-custom-skin"
                 ref="videoPlayer4"
-               v-if="!$store.state.slidershow"
+                v-if="!$store.state.slidershow"
                 :playsinline="true"
                 :options="playerOptions4"
                 @play="playvideo4()"
@@ -277,11 +265,7 @@
       @swiperight="swipeRight"
       :swipe-options="{ direction: 'horizontal' }"
     >
-      <div
-        class="abouttel"
-        @click="showSliderFalse"
-      
-      >
+      <div class="abouttel" @click="showSliderFalse">
         <p class="teltitle">{{ $t("aboutcontent[2]") }}</p>
         <div class="telline"></div>
         <ul class="thing">
@@ -397,8 +381,7 @@
         </div>
       </div>
     </v-touch>
-  <v-footer></v-footer>
-  
+    <v-footer></v-footer>
   </div>
 </template>
 
@@ -427,8 +410,8 @@ export default {
         sources: [
           {
             src: "", // 路径
-            type: "video/mp4" // 类型
-          }
+            type: "video/mp4", // 类型
+          },
         ],
         poster: require("../assets/images/about/video1.png"),
         // width: document.documentElement.clientWidth,
@@ -437,8 +420,8 @@ export default {
           timeDivider: true,
           durationDisplay: true,
           remainingTimeDisplay: false,
-          fullscreenToggle: true //全屏按钮
-        }
+          fullscreenToggle: true, //全屏按钮
+        },
       },
       playerOptions2: {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
@@ -452,8 +435,8 @@ export default {
         sources: [
           {
             src: "", // 路径
-            type: "video/mp4" // 类型
-          }
+            type: "video/mp4", // 类型
+          },
         ],
         poster: require("../assets/images/about/video2.png"),
         // width: document.documentElement.clientWidth,
@@ -462,8 +445,8 @@ export default {
           timeDivider: true,
           durationDisplay: true,
           remainingTimeDisplay: false,
-          fullscreenToggle: true //全屏按钮
-        }
+          fullscreenToggle: true, //全屏按钮
+        },
       },
       playerOptions3: {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
@@ -477,8 +460,8 @@ export default {
         sources: [
           {
             src: "", // 路径
-            type: "video/mp4" // 类型
-          }
+            type: "video/mp4", // 类型
+          },
         ],
         poster: require("../assets/images/about/video3.png"),
         // width: document.documentElement.clientWidth,
@@ -487,8 +470,8 @@ export default {
           timeDivider: true,
           durationDisplay: true,
           remainingTimeDisplay: false,
-          fullscreenToggle: true //全屏按钮
-        }
+          fullscreenToggle: true, //全屏按钮
+        },
       },
       playerOptions4: {
         playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
@@ -502,8 +485,8 @@ export default {
         sources: [
           {
             src: "", // 路径
-            type: "video/mp4" // 类型
-          }
+            type: "video/mp4", // 类型
+          },
         ],
         poster: require("../assets/images/about/video4.png"),
         // width: document.documentElement.clientWidth,
@@ -512,14 +495,14 @@ export default {
           timeDivider: true,
           durationDisplay: true,
           remainingTimeDisplay: false,
-          fullscreenToggle: true //全屏按钮
-        }
+          fullscreenToggle: true, //全屏按钮
+        },
       },
       videoshow1: true,
       videoshow2: true,
       videoshow3: true,
       videoshow4: true,
-    
+
       transright: false,
       transleft: false,
       lanse: "",
@@ -546,14 +529,12 @@ export default {
       startstop1: true,
       startstop2: true,
       startstop3: true,
-      startstop4: true
+      startstop4: true,
     };
   },
   components: { videoPlayer, slider, vFooter },
-  
 
   created() {
-    
     this.nowLang = this.$i18n.locale;
 
     this.lanse = 1;
@@ -588,7 +569,7 @@ export default {
       this.$store.commit("showSliderFalse");
       this.$store.commit("menCengHide");
     },
-   
+
     popshow1() {
       this.videoshow1 = false;
     },
@@ -674,8 +655,7 @@ export default {
         myVideo4.webkitRequestFullScreen();
       }
     },
-   
-   
+
     swipeLeft() {
       this.transright = true;
       this.s += 1;
@@ -766,7 +746,7 @@ export default {
     gotohide() {
       this.show = false;
     },
-  }
+  },
 };
 </script>
 <style lang="less">
@@ -991,9 +971,9 @@ export default {
     .videoline {
       width: 60px;
       height: 2px;
-    
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
       position: absolute;
 
       top: 82px;
@@ -1117,9 +1097,9 @@ export default {
     .aboutvideoline {
       width: 60px;
       height: 2px;
-    
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
       position: absolute;
       top: 82px;
     }
@@ -1201,9 +1181,9 @@ export default {
     .telline {
       width: 60px;
       height: 2px;
-    
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
       position: absolute;
       top: 82px;
     }

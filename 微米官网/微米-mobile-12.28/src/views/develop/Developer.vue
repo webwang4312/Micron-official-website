@@ -55,7 +55,7 @@
         <div class="zhanwei" v-if="zhanwei">
           <img
             src="@assets/images/proposal/矢量智能对象.png"
-            style="width:400px"
+            style="width:300px"
           />
           <p>{{ $t("zhanwei[0]") }}</p>
         </div>
@@ -379,13 +379,13 @@ button {
         position: relative;
         left: 179px;
         top: 87px;
-       
+
         word-wrap: break-word;
         word-break: normal;
       }
       p:nth-child(2) {
         width: 151px;
-     
+
         font-size: 12px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -395,7 +395,6 @@ button {
         position: relative;
         left: 179px;
         top: 97px;
-      
       }
 
       .partner-button-overflow {
@@ -444,7 +443,6 @@ button {
         color: #ffffff;
         position: relative;
         top: 50px;
-         
       }
       .partner-line {
         width: 60px;
@@ -502,7 +500,7 @@ button {
     width: 100%;
     height: auto;
     background: rgb(20, 20, 20);
-    padding-bottom:94px;
+    padding-bottom: 94px;
     .developer_task-content {
       width: 100%;
       height: auto;
@@ -510,7 +508,7 @@ button {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      
+
       .blocksdevelop {
         position: relative;
         top: 40px;
@@ -568,7 +566,6 @@ button {
         color: #ffffff;
         text-align: center;
         margin-top: 50px;
-         
       }
       .developer_task-line {
         width: 60px;
@@ -608,7 +605,7 @@ button {
           .developer_task_header {
             width: 100%;
             margin: 0 auto;
-        
+
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -692,7 +689,6 @@ button {
         color: #ffffff;
         text-align: center;
         margin-top: 50px;
-       
       }
       .partner-line {
         width: 60px;
@@ -709,8 +705,8 @@ button {
         height: auto;
 
         border-radius: 10px;
-      margin-top: 40px;
-       
+        margin-top: 40px;
+
         .reward_left {
           width: 100%;
           margin-top: 30px;

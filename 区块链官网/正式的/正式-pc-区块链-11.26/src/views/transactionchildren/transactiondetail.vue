@@ -104,7 +104,7 @@
                 </div>
 
                 <button
-                  v-if="amount_detail"
+                  v-if="to_detail"
                   @click="showMoreInformation"
                   class="more_button"
                 >
@@ -289,6 +289,7 @@ export default {
       // 交易详情
       amount_detail: false,
       from_detail: false,
+      to_detail: false,
     };
   },
   components: { VFooter, Search, headertop },
@@ -554,37 +555,7 @@ export default {
               this.transactionlist[0].from_address =
                 res.data[0].search_main_transaction_detailInfo[0].from_address;
             }
-
-            // 从
-            // console.log(this.transactionlist[0].to_address);
-            if (this.transactionlist[0].to_address.length > 6) {
-              let to_address = [];
-              let to_address2 = [];
-              for (
-                let a = 0;
-                a < this.transactionlist[0].to_address2.length;
-                a++
-              ) {
-                to_address2.push(
-                  `<span style="color:blue">${a + 1}:</span>` +
-                    this.transactionlist[0].to_address[a] +
-                    `</br>`
-                );
-              }
-              //console.log(to_address2);
-              this.transactionlist[0].to_address2 = to_address2
-                .toString()
-                .replaceAll(",", "");
-              //  this.transactionlist[0].to_address.length=5
-              for (let s = 0; s < 6; s++) {
-                to_address.push(
-                  `<span style="color:blue">${s + 1}:</span>` +
-                    this.transactionlist[0].to_address[s]
-                );
-              }
-              this.transactionlist[0].to_address =
-                to_address.toString() + "...";
-              // 交易明细详情
+            if (this.transactionlist[0].to_address.length >= 2) {
               this.amount_detail = true;
               this.transactionlist[0].amount_detail = res.data[0].search_main_transaction_detailInfo[0].amount_detail.split(
                 ","
@@ -610,19 +581,72 @@ export default {
                 .toString()
                 .replaceAll(",", "");
               // console.log(this.transactionlist[0].amount_detail2);
-              for (let k = 0; k < 6; k++) {
-                amount_detail.push(
-                  `<span style="color:blue">${k + 1}:</span>` +
-                    this.transactionlist[0].amount_detail[k] / 1000000
+              if (this.transactionlist[0].amount_detail.length >= 6) {
+                for (let k = 0; k < 6; k++) {
+                  amount_detail.push(
+                    `<span style="color:blue">${k + 1}:</span>` +
+                      this.transactionlist[0].amount_detail[k] / 1000000
+                  );
+                }
+                // // console.log(to_address.toString());
+                this.transactionlist[0].amount_detail =
+                  amount_detail.toString() + "...";
+              } else {
+                for (
+                  let k = 0;
+                  k < this.transactionlist[0].amount_detail.length;
+                  k++
+                ) {
+                  amount_detail.push(
+                    `<span style="color:blue">${k + 1}:</span>` +
+                      this.transactionlist[0].amount_detail[k] / 1000000
+                  );
+                }
+                // // console.log(to_address.toString());
+                this.transactionlist[0].amount_detail =
+                  amount_detail.toString() + "...";
+              }
+            } else {
+              this.amount_detail = false;
+            }
+            // 从
+            // console.log(this.transactionlist[0].to_address);
+            if (this.transactionlist[0].to_address.length >= 6) {
+              this.to_detail = true;
+              let to_address = [];
+              let to_address2 = [];
+              for (
+                let a = 0;
+                a < this.transactionlist[0].to_address2.length;
+                a++
+              ) {
+                to_address2.push(
+                  `<span style="color:blue">${a + 1}:</span>` +
+                    this.transactionlist[0].to_address[a] +
+                    `</br>`
                 );
               }
-              // console.log(to_address.toString());
-              this.transactionlist[0].amount_detail =
-                amount_detail.toString() + "...";
+              //console.log(to_address2);
+              this.transactionlist[0].to_address2 = to_address2
+                .toString()
+                .replaceAll(",", "");
+
+              //  this.transactionlist[0].to_address.length=5
+              for (let s = 0; s < 6; s++) {
+                to_address.push(
+                  `<span style="color:blue">${s + 1}:</span>` +
+                    this.transactionlist[0].to_address[s]
+                );
+              }
+              this.transactionlist[0].to_address =
+                to_address.toString() + "...";
+              // 交易明细详情
+              // this.amount_detail = true;
             } else {
+              this.to_detail = false;
               this.transactionlist[0].to_address =
                 res.data[0].search_main_transaction_detailInfo[0].to_address;
-              this.amount_detail = false;
+              // this.amount_detail = false;
             }
           }
           //  console.log(this.collength);

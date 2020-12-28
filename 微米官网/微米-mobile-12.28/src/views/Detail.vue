@@ -8,10 +8,10 @@
           {{ detaies }}
         </div>
         <div v-html="updatedate" class="update">
-          >
+        
         </div>
         <div v-html="description" id="detailcontent">
-          >>
+      
         </div>
         <div v-html="content" :class="{ sca: sca }" id="detailimg"></div>
         <!-- <div class="detailfooter-right"></div> -->

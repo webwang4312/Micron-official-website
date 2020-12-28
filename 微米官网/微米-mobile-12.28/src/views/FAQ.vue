@@ -60,7 +60,6 @@
 </template>
 
 <script>
-
 import { BASEURL } from "@api/api";
 import slider from "@components/common/slider";
 import vFooter from "@components/common/vFooter";
@@ -135,7 +134,6 @@ export default {
           headers: { language: this.nowLang },
         })
         .then((res) => {
-        
           // console.log(res);
           this.setContextData("currentpages", this.medianum);
           this.totalNum = res.data.result.total;
@@ -299,8 +297,8 @@ export default {
     .videoline {
       width: 60px;
       height: 2px;
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
       position: absolute;
 
       top: 82px;
@@ -375,7 +373,9 @@ export default {
       .block {
         position: absolute;
         top: 540px;
-        left: 25%;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
         color: snow;
         height: 30px;
         margin: 0 auto;

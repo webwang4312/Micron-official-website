@@ -1,7 +1,7 @@
 <template>
   <div class="developerdetail">
     <HeaderDeatil></HeaderDeatil>
-    <registrationtask v-if="$store.state.registrationtask"></registrationtask>
+    <registrationtask></registrationtask>
     <div class="developer_detail_content">
       <div class="overhide" v-if="marqueetrueall">
         <ul v-if="marqueetrue">
@@ -19,6 +19,7 @@
           behavior="scroll"
           onmouseover="stop()"
           onmouseout="start()"
+          scrolldelay="150"
           v-else
         >
           <ul>
@@ -64,19 +65,19 @@
         </ul>
 
         <div class="registration_task3" v-if="status == 1">
-          <img src="@assets/images/developerdetail/矢量智能对象.png" />{{
+          <img src="@assets/images/developerdetail/矢量智能对象.png" /><span>{{
             $t("developerdetail[5]")
-          }}
+          }}</span>
         </div>
         <div class="registration_task2" v-else-if="status == 2">
-          <img src="@assets/images/developerdetail/完成.png" />{{
+          <img src="@assets/images/developerdetail/完成.png" /><span>{{
             $t("developerdetail[6]")
-          }}
+          }}</span>
         </div>
         <div class="registration_task" @click="registrationTask" v-else>
-          <img src="@assets/images/developerdetail/矢量智能对象.png" />{{
+          <img src="@assets/images/developerdetail/矢量智能对象.png" /><span>{{
             $t("developerdetail[4]")
-          }}
+          }}</span>
         </div>
       </div>
     </div>
@@ -133,15 +134,27 @@ export default {
   destroyed() {},
   methods: {
     registrationTask() {
+      console.log(this.$store.state.registrationtask);
+      console.log("111");
       if (!localStorage.getItem("token")) {
         window.sessionStorage.clear();
         localStorage.clear();
 
-        this.reload();
+        // this.reload();
         if (this.$i18n.locale == "en") {
-          this.$message.error("Please log in or register first");
+          this.$message({
+            message: "Please log in or register first",
+            center: true,
+            type: "error",
+            duration: "2000",
+          });
         } else {
-          this.$message.error("请先去登录或注册");
+          this.$message({
+            message: "请先去登录或注册",
+            center: true,
+            type: "error",
+            duration: "2000",
+          });
         }
       } else {
         this.$store.commit("RegistrationTask");
@@ -264,7 +277,7 @@ export default {
   ul {
     display: flex;
     flex-direction: row;
-    height: 60px;
+    height: 30px;
     li {
       font-size: 12px;
       font-family: "苹方-简";
@@ -291,13 +304,19 @@ export default {
   font-family: "苹方-简";
   font-weight: normal;
   line-height: 40px;
-
   color: #009fcd;
   margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  span {
+    position: relative;
+    left: -10px;
+  }
   img {
     position: relative;
-    top: 5px;
-    right: 5px;
+    left: 10px;
   }
 }
 .registration_task3 {
@@ -315,10 +334,17 @@ export default {
   line-height: 40px;
   margin-top: 30px;
   color: #009fcd;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  span {
+    position: relative;
+    left: -10px;
+  }
   img {
     position: relative;
-    top: 5px;
-    right: 5px;
+    left: 10px;
   }
 }
 .registration_task2 {
@@ -336,10 +362,17 @@ export default {
   line-height: 40px;
   color: #c43535;
   margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  span {
+    position: relative;
+    left: -10px;
+  }
   img {
     position: relative;
-    top: 5px;
-    right: 5px;
+    left: 10px;
   }
 }
 // 主线
@@ -360,7 +393,8 @@ export default {
       padding-bottom: 50px;
       margin-top: 30px;
       .title {
-        width: 100%;
+        width: 345px;
+        margin: 0 auto;
         font-size: 20px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -368,7 +402,6 @@ export default {
         color: #ffffff;
         opacity: 1;
         word-wrap: break-word;
-        word-break: normal;
       }
       .summary {
         padding: 15px;
@@ -387,17 +420,34 @@ export default {
         height: 188px;
         background: rgba(44, 44, 44);
         border-radius: 10px;
-
         margin-top: 34px !important;
         margin: 0 auto;
         li:nth-child(2) {
           margin-top: 10px;
+          p {
+            span:nth-child(1) {
+              display: inline-block;
+              width: 132px;
+            }
+          }
         }
         li:nth-child(3) {
           margin-top: 10px;
+          p {
+            span:nth-child(1) {
+              display: inline-block;
+              width: 132px;
+            }
+          }
         }
         li:nth-child(4) {
           margin-top: 10px;
+          p {
+            span:nth-child(1) {
+              display: inline-block;
+              width: 132px;
+            }
+          }
         }
         .github_net {
           word-wrap: break-word;
