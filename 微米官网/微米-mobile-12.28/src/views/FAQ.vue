@@ -60,6 +60,7 @@
 </template>
 
 <script>
+
 import { BASEURL } from "@api/api";
 import slider from "@components/common/slider";
 import vFooter from "@components/common/vFooter";
@@ -101,7 +102,7 @@ export default {
     },
 
     //给sessionStorage存值
-    setContextData: function (key, value) {
+    setContextData: function(key, value) {
       if (typeof value == "string") {
         sessionStorage.setItem(key, value);
       } else {
@@ -109,7 +110,7 @@ export default {
       }
     },
     // 从sessionStorage取值
-    getContextData: function (key) {
+    getContextData: function(key) {
       const str = sessionStorage.getItem(key);
       if (typeof str == "string") {
         try {
@@ -134,6 +135,7 @@ export default {
           headers: { language: this.nowLang },
         })
         .then((res) => {
+        
           // console.log(res);
           this.setContextData("currentpages", this.medianum);
           this.totalNum = res.data.result.total;
@@ -297,8 +299,8 @@ export default {
     .videoline {
       width: 60px;
       height: 2px;
-      background: rgba(0, 159, 205, 1);
-      margin: 0 auto;
+      background:  rgba(0, 159, 205, 1);
+   margin: 0 auto;
       position: absolute;
 
       top: 82px;

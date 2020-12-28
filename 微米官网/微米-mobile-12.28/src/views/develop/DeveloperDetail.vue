@@ -1,6 +1,6 @@
 <template>
   <div class="developerdetail">
-    <slider></slider>
+    <HeaderDeatil></HeaderDeatil>
     <registrationtask v-if="$store.state.registrationtask"></registrationtask>
     <div class="developer_detail_content">
       <div class="overhide" v-if="marqueetrueall">
@@ -87,9 +87,8 @@
 <script>
 import { BASEURL } from "@api/api";
 var qs = require("qs");
-
 import registrationtask from "@components/common/RegistrationTask";
-import slider from "@components/common/slider";
+import HeaderDeatil from "@components/common/HeaderDetail";
 import vFooter from "@components/common/vFooter";
 export default {
   name: "developerdetail",
@@ -119,7 +118,7 @@ export default {
       status: "",
     };
   },
-  components: { slider, vFooter, registrationtask },
+  components: { vFooter, registrationtask, HeaderDeatil },
   created() {
     this.$store.state.registrationtask = false;
     // console.log(this.$store.state.registrationtask);
@@ -242,6 +241,13 @@ export default {
 };
 </script>
 <style lang="less">
+.sticky {
+  width: 100% !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed !important;
+}
 .mencen {
   background: rgba(0, 0, 0, 1);
   opacity: 0.5;
@@ -254,8 +260,7 @@ export default {
   border-radius: 10px;
   overflow: hidden;
   margin: 0 auto;
-  position:relative;
-  top: 50px;
+  margin-top: 50px;
   ul {
     display: flex;
     flex-direction: row;
@@ -289,10 +294,10 @@ export default {
 
   color: #009fcd;
   margin-top: 30px;
-  img{
+  img {
     position: relative;
     top: 5px;
-     right: 5px;
+    right: 5px;
   }
 }
 .registration_task3 {
@@ -310,10 +315,10 @@ export default {
   line-height: 40px;
   margin-top: 30px;
   color: #009fcd;
-  img{
+  img {
     position: relative;
     top: 5px;
-     right: 5px;
+    right: 5px;
   }
 }
 .registration_task2 {
@@ -331,31 +336,29 @@ export default {
   line-height: 40px;
   color: #c43535;
   margin-top: 30px;
-  img{
+  img {
     position: relative;
     top: 5px;
     right: 5px;
   }
-
 }
 // 主线
 .developerdetail {
   width: 100%;
   height: auto;
-  background: black;
+  background: rgba(12, 12, 12);
+  z-index: 1;
   .developer_detail_content {
     width: 100%;
     height: auto;
-    background: rgba(20, 20, 20);
-    padding-bottom: 50px;
+    background: rgba(12, 12, 12);
+
     .developer_detail_contents {
       width: 345px;
       height: auto;
       margin: 0 auto;
-     
       padding-bottom: 50px;
-      position: relative;
-      top: 80px;
+      margin-top: 30px;
       .title {
         width: 100%;
         font-size: 20px;
@@ -416,10 +419,8 @@ export default {
           p {
             text-align: left;
             span:nth-child(1) {
-            
             }
             span:nth-child(2) {
-           
             }
           }
         }
@@ -432,7 +433,7 @@ export default {
           border-radius: 5px;
           display: flex;
           flex-direction: row;
-         
+
           align-items: center;
           p:nth-child(1) {
             font-size: 20px;
@@ -447,7 +448,7 @@ export default {
             font-weight: normal;
             line-height: 27px;
             color: #009fcd;
-            margin-left: 20px!important;
+            margin-left: 20px !important;
             span {
               margin-left: 0px !important;
             }

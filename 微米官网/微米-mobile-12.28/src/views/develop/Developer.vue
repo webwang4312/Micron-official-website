@@ -76,7 +76,7 @@
             </div>
           </li>
         </ul>
-        <div class="blocksdevelop" v-if="!zhanwei" >
+        <div class="blocksdevelop" v-if="!zhanwei">
           <Page
             :total="developerTotal"
             :page-size="6"
@@ -138,17 +138,16 @@ export default {
   components: { slider, vFooter },
   created() {
     this.nowLang = this.$i18n.locale;
-    this.developernum = Number(localStorage.getItem("uenc-developerpage")) || Number(1);
+    this.developernum =
+      Number(localStorage.getItem("uenc-developerpage")) || Number(1);
     this.developerInfor();
     this.developerSum();
     this.$nextTick(() => {
-       this.$refs.pages.currentPage=Number(localStorage.getItem("uenc-developerpage")) ||Number(1)
+      this.$refs.pages.currentPage =
+        Number(localStorage.getItem("uenc-developerpage")) || Number(1);
     });
-
-  
   },
-  mounted() {
-  },
+  mounted() {},
   destroyed() {},
   methods: {
     goToDeveloperDetail(taskId) {
@@ -166,7 +165,6 @@ export default {
       this.developerInfor();
       localStorage.setItem("uenc-developerpage", page);
       window.scrollTo(0, 1550);
-    
     },
     developerSum() {
       this.$http
@@ -371,8 +369,7 @@ button {
       // 大方块设置
 
       p:first-child {
-        width: 141px;
-        height: 25px;
+        width: 193px;
         font-size: 18px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -382,10 +379,13 @@ button {
         position: relative;
         left: 179px;
         top: 87px;
+       
+        word-wrap: break-word;
+        word-break: normal;
       }
       p:nth-child(2) {
         width: 151px;
-        height: 35px;
+     
         font-size: 12px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -394,7 +394,8 @@ button {
         opacity: 1;
         position: relative;
         left: 179px;
-        top: 122px;
+        top: 97px;
+      
       }
 
       .partner-button-overflow {
@@ -443,14 +444,15 @@ button {
         color: #ffffff;
         position: relative;
         top: 50px;
+         
       }
       .partner-line {
         width: 60px;
         height: 2px;
-       margin: 0 auto;
+        margin: 0 auto;
         background: #009fcd;
         position: relative;
-        top: 47px;
+        top: 57px;
       }
       .developer_total-img {
         width: 92%;
@@ -459,7 +461,7 @@ button {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         position: relative;
-        top: 90px;
+        top: 100px;
         margin: 0 auto;
         ul {
           width: 100%;
@@ -500,7 +502,7 @@ button {
     width: 100%;
     height: auto;
     background: rgb(20, 20, 20);
-    padding-bottom: 122px;
+    padding-bottom:94px;
     .developer_task-content {
       width: 100%;
       height: auto;
@@ -508,6 +510,7 @@ button {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      
       .blocksdevelop {
         position: relative;
         top: 40px;
@@ -565,15 +568,17 @@ button {
         color: #ffffff;
         text-align: center;
         margin-top: 50px;
+         
       }
       .developer_task-line {
         width: 60px;
         height: 2px;
         background: #009fcd;
         position: relative;
-        top: 20px;
-      
-      margin: 0 auto;
+        top: 10px;
+
+        margin: 0 auto;
+        margin-bottom: 40px;
       }
       .zhanwei {
         width: 100%;
@@ -592,18 +597,18 @@ button {
         margin-top: 0px;
 
         margin: 0 auto;
-
         li {
           width: 345px;
           height: 183px;
           background: rgba(44, 44, 44);
           border-radius: 10px;
-          margin-top: 40px;
+          margin-top: 15px;
           margin: 0 auto;
+          margin-top: 15px;
           .developer_task_header {
             width: 100%;
             margin: 0 auto;
-            margin-top: 39px;
+        
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -687,6 +692,7 @@ button {
         color: #ffffff;
         text-align: center;
         margin-top: 50px;
+       
       }
       .partner-line {
         width: 60px;
@@ -695,15 +701,16 @@ button {
         background: rgba(0, 159, 205, 1);
         position: relative;
         top: 20px;
-      
-      margin: 0 auto;
+
+        margin: 0 auto;
       }
       .developer_reward-img {
         width: 100%;
         height: auto;
 
         border-radius: 10px;
-        margin-top: 30px;
+      margin-top: 40px;
+       
         .reward_left {
           width: 100%;
           margin-top: 30px;

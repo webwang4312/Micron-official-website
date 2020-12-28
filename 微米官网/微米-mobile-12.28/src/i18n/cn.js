@@ -44,8 +44,8 @@ const cn = {
     {
         path: "/developer",
         title: "开发者社区",
-        img: require("@assets/images/index/投票(1).png"),
-        img2: require("@assets/images/index/投票.png"),
+        img: require("@assets/images/index/开发者社区(1).png"),
+        img2: require("@assets/images/index/开发者社区.png"),
     },
 
     ],

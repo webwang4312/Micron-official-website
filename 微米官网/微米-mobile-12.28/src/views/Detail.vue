@@ -1,23 +1,6 @@
 <template>
   <div class="detail">
-    <div class="detailheadertop">
-      <div class="detailheaders" :class="{ sticky: sticky }">
-        <img
-          src="../assets/images/detail/组 267@3x.png"
-          class="return"
-          @click="returned"
-        />
-        <img src="@assets/images/index/组 2.png" class="headerlogo" />
-        <div
-          class="qiehuan"
-          @click="selectlanguage"
-          v-loading.fullscreen.lock="fullscreenLoading"
-        >
-          <img src="@assets/images/index/切换.png" alt />
-          <span>中/英</span>
-        </div>
-      </div>
-    </div>
+    <HeaderDeatil></HeaderDeatil>
     <div class="detailheader"></div>
     <div class="detailfooter">
       <div class="detailfooter-content">
@@ -42,6 +25,7 @@
 import { BASEURL } from "@api/api";
 //import headerTop from "@components/content/HeaderTop.vue";
 import vFooter from "@components/common/vFooter";
+import HeaderDeatil from "@components/common/HeaderDetail";
 import Qs from "qs";
 import bus from "@/bus.js";
 export default {
@@ -62,7 +46,7 @@ export default {
       detaies: [],
     };
   },
-  components: { vFooter },
+  components: { vFooter, HeaderDeatil },
   created() {
     this.nowLang = this.$i18n.locale;
     this.id = this.$route.query.content_id;
@@ -70,50 +54,12 @@ export default {
     //console.log(this.$route.query);
     //console.log(this.$route.query.content_id);
   },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  destroyed() {
-    window.removeEventListener("scroll", this.handleScroll);
-  },
+
   methods: {
-    handleScroll() {
-      let scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      //  console.log(scrollTop);
-      if (scrollTop > 10) {
-        this.sticky = true;
-      }
-      if (scrollTop <= 0) {
-        this.sticky = false;
-      }
-      // console.log(scrollTop);
-    },
     scaed() {
       this.sca = !this.sca;
     },
-    returned() {
-      this.$router.go(-1); // 后退
-    },
-    // 切换语言
-    selectlanguage() {
-      this.fullscreenLoading = true;
-      if (this.$i18n.locale == "cn") {
-        this.$i18n.locale = "en";
-        localStorage.setItem("lang", "en");
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
-      } else if (this.$i18n.locale == "en") {
-        this.$i18n.locale = "cn";
-        localStorage.setItem("lang", "cn");
-        setTimeout(() => {
-          location.reload();
-        }, 1500);
-      }
-    },
+
     async getdetaillist() {
       let that = this;
       await that.$http
@@ -145,72 +91,11 @@ export default {
 };
 </script>
 <style lang="less">
-.sticky {
-  width: 100% !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  position: fixed !important;
-  background-color: black !important;
-}
 .detail {
   width: 100%;
   height: auto;
   background-color: black;
-  .detailheaders {
-    width: 100%;
-    height: 44px;
-    position: relative;
-    top: 0px;
-    z-index: 20;
-    display: flex;
-    flex-direction: row;
-    .return {
-      position: absolute;
-      top: 8px;
-      left: 21px;
-      width: 15.74px;
-      height: 27.24px;
-    }
-    .headerchoose {
-      width: 29px;
-      height: 26px;
-      position: absolute;
-      left: 15px;
-      top: 8px;
-    }
-    .headerlogo {
-      width: 83px;
-      height: 28px;
-      position: absolute;
-      left: 147px;
-      top: 8px;
-    }
-    .qiehuan {
-      width: 56px;
-      height: 24px;
-      position: absolute;
-      left: 304px;
-      top: 8px;
-      background: rgba(51, 51, 51, 1);
-      opacity: 1;
-      border-radius: 5px;
-      img {
-        position: relative;
-        left: 7px;
-      }
-      span {
-        position: relative;
-        left: 10px;
-        font-size: 10px;
-        font-family: Segoe UI;
-        font-weight: 400;
-        line-height: 14px;
-        color: rgba(255, 255, 255, 1);
-        opacity: 1;
-      }
-    }
-  }
+
   .detailheader {
     position: relative;
     top: 0px;

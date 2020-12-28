@@ -163,6 +163,10 @@ export default {
     };
   },
   created() {
+    //  if (!sessionStorage.getItem('uenc-whilelogin')) {
+    //   window.sessionStorage.clear();
+    //   localStorage.clear();
+    // }
     window.scrollTo(0,0)
     // console.log(localStorage.getItem('sliderfastoken1'));
     if (localStorage.getItem("walletAddress") == null) {
@@ -178,6 +182,7 @@ export default {
     }
     this.username = localStorage.getItem("username");
     this.logins = localStorage.getItem("login");
+    console.log(this.logins);
     if (localStorage.getItem("sliderfastoken1") == "true") {
       this.fastoken1 = false;
       this.fastoken11 = true;
