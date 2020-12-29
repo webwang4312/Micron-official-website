@@ -120,7 +120,7 @@
                 </div>
                 <div v-else></div>
                 <button
-                  v-if="amount_detail"
+                  v-if="amountbutton_detail"
                   @click="showMoreInformation2"
                   class="more_button"
                 >
@@ -288,6 +288,7 @@ export default {
       detail2Data: [],
       // 交易详情
       amount_detail: false,
+      amountbutton_detail: false,
       from_detail: false,
       to_detail: false,
     };
@@ -582,6 +583,7 @@ export default {
                 .replaceAll(",", "");
               // console.log(this.transactionlist[0].amount_detail2);
               if (this.transactionlist[0].amount_detail.length >= 6) {
+                this.amountbutton_detail = true;
                 for (let k = 0; k < 6; k++) {
                   amount_detail.push(
                     `<span style="color:blue">${k + 1}:</span>` +
@@ -592,6 +594,7 @@ export default {
                 this.transactionlist[0].amount_detail =
                   amount_detail.toString() + "...";
               } else {
+                this.amountbutton_detail = false;
                 for (
                   let k = 0;
                   k < this.transactionlist[0].amount_detail.length;
@@ -603,8 +606,7 @@ export default {
                   );
                 }
                 // // console.log(to_address.toString());
-                this.transactionlist[0].amount_detail =
-                  amount_detail.toString() + "...";
+                this.transactionlist[0].amount_detail = amount_detail.toString();
               }
             } else {
               this.amount_detail = false;
