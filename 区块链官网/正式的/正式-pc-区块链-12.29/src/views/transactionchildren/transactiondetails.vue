@@ -84,18 +84,14 @@ export default {
   data() {
     return {
       loading: true,
-
       shiyan: "",
       tables: false,
       yue: "",
       // 外部公共部分
       language: "",
-
       // 语言图片显示与隐藏
-
       choselanguage: ["中文", "EN"],
       nowLang: "",
-
       fullscreenLoading: false,
       // 分页
       transmedianum: 1,

@@ -510,7 +510,7 @@ export default {
             this.transactionlist[0].to_address =
               res.data[0].search_main_transaction_detailInfo[0].to_address;
           } else {
-            // 至
+            // 不是质押的情况
             this.transactionlist[0].from_address = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
               ","
             );
@@ -523,6 +523,7 @@ export default {
             this.transactionlist[0].to_address2 = res.data[0].search_main_transaction_detailInfo[0].to_address.split(
               ","
             );
+            // 来的地方
             //  this.transactionlist[0].from_address.length=7;
             if (this.transactionlist[0].from_address.length >= 6) {
               this.from_detail = true;
@@ -556,7 +557,9 @@ export default {
               this.transactionlist[0].from_address =
                 res.data[0].search_main_transaction_detailInfo[0].from_address;
             }
+            // 至的地方
             if (this.transactionlist[0].to_address.length >= 2) {
+              // 显示交易详情
               this.amount_detail = true;
               this.transactionlist[0].amount_detail = res.data[0].search_main_transaction_detailInfo[0].amount_detail.split(
                 ","
@@ -583,6 +586,7 @@ export default {
                 .replaceAll(",", "");
               // console.log(this.transactionlist[0].amount_detail2);
               if (this.transactionlist[0].amount_detail.length >= 6) {
+                // 显示交易详情按钮
                 this.amountbutton_detail = true;
                 for (let k = 0; k < 6; k++) {
                   amount_detail.push(
@@ -594,6 +598,7 @@ export default {
                 this.transactionlist[0].amount_detail =
                   amount_detail.toString() + "...";
               } else {
+                 // 不显示交易详情按钮
                 this.amountbutton_detail = false;
                 for (
                   let k = 0;
@@ -609,11 +614,13 @@ export default {
                 this.transactionlist[0].amount_detail = amount_detail.toString();
               }
             } else {
+              // 不显示交易详情
               this.amount_detail = false;
             }
             // 从
             // console.log(this.transactionlist[0].to_address);
             if (this.transactionlist[0].to_address.length >= 6) {
+              // 显示去的按钮
               this.to_detail = true;
               let to_address = [];
               let to_address2 = [];
@@ -645,9 +652,20 @@ export default {
               // 交易明细详情
               // this.amount_detail = true;
             } else {
+              let to_address = [];
+              let to_address2 = [];
               this.to_detail = false;
-              this.transactionlist[0].to_address =
-                res.data[0].search_main_transaction_detailInfo[0].to_address;
+              for (
+                let a = 0;
+                a < this.transactionlist[0].to_address.length;
+                a++
+              ) {
+                to_address.push(
+                  `<span style="color:blue">${a + 1}:</span>` +
+                    this.transactionlist[0].to_address[a]
+                );
+              }
+              this.transactionlist[0].to_address = to_address.toString();
               // this.amount_detail = false;
             }
           }

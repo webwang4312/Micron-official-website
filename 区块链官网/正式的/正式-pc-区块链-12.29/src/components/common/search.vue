@@ -197,8 +197,8 @@ export default {
           },
         })
         .then((res) => {
-          // console.log(res);
-          if (res.data[0].total_record[0].total_record !== 0) {
+          //  console.log(res);
+          if (res.data[0].search_transaction_list_for_walletAddress.length!== 0) {
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/transactiondetails",
@@ -212,7 +212,7 @@ export default {
             });
           }
         }).catch((err)=>{
-          ;
+          
         });
     },
     // 区块高度搜索
