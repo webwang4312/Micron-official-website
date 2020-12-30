@@ -291,6 +291,7 @@ export default {
       amountbutton_detail: false,
       from_detail: false,
       to_detail: false,
+      res: "",
     };
   },
   components: { VFooter, Search, headertop },
@@ -482,193 +483,8 @@ export default {
           this.transactionlist[0].award =
             res.data[0].search_main_transaction_detailInfo[0].award;
           this.collength = res.data[0].search_gas_transaction_detailInfo.length;
-          if (
-            res.data[0].search_main_transaction_detailInfo[0].to_address ==
-              "0000000000000000000000000000000000" ||
-            res.data[0].search_main_transaction_detailInfo[0].pledge == "1"
-          ) {
-            // 从
-            this.transactionlist[0].from_address =
-              res.data[0].search_main_transaction_detailInfo[0].from_address;
-            if (this.nowLang == "cn") {
-              this.transactionlist[0].to_address = "质押";
-            } else {
-              this.transactionlist[0].to_address = "Pledge";
-            }
-          } else if (
-            res.data[0].search_main_transaction_detailInfo[0].from_address ==
-              res.data[0].search_main_transaction_detailInfo[0].to_address ||
-            res.data[0].search_main_transaction_detailInfo[0].redeem == "1"
-          ) {
-            if (this.nowLang == "cn") {
-              // 从
-              this.transactionlist[0].from_address = "质押";
-            } else {
-              this.transactionlist[0].from_address = "Pledge";
-            }
-            // 至
-            this.transactionlist[0].to_address =
-              res.data[0].search_main_transaction_detailInfo[0].to_address;
-          } else {
-            // 不是质押的情况
-            this.transactionlist[0].from_address = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
-              ","
-            );
-            this.transactionlist[0].from_address2 = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
-              ","
-            );
-            this.transactionlist[0].to_address = res.data[0].search_main_transaction_detailInfo[0].to_address.split(
-              ","
-            );
-            this.transactionlist[0].to_address2 = res.data[0].search_main_transaction_detailInfo[0].to_address.split(
-              ","
-            );
-            // 来的地方
-            //  this.transactionlist[0].from_address.length=7;
-            if (this.transactionlist[0].from_address.length >= 6) {
-              this.from_detail = true;
-              let from_address = [];
-              let from_address2 = [];
-              for (
-                let m = 0;
-                m < this.transactionlist[0].from_address2.length;
-                m++
-              ) {
-                from_address2.push(
-                  `<span style="color:blue">${m + 1}:</span>` +
-                    this.transactionlist[0].from_address2[m] +
-                    `</br>`
-                );
-              }
-
-              this.transactionlist[0].from_address2 = from_address2
-                .toString()
-                .replaceAll(",", "");
-              for (let c = 0; c < 6; c++) {
-                from_address.push(
-                  `<span style="color:blue">${c + 1}:</span>` +
-                    this.transactionlist[0].from_address[c]
-                );
-              }
-              this.transactionlist[0].from_address =
-                from_address.toString() + "...";
-            } else {
-              // console.log("<6");
-              this.transactionlist[0].from_address =
-                res.data[0].search_main_transaction_detailInfo[0].from_address;
-            }
-            // 至的地方
-            if (this.transactionlist[0].to_address.length >= 2) {
-              // 显示交易详情
-              this.amount_detail = true;
-              this.transactionlist[0].amount_detail = res.data[0].search_main_transaction_detailInfo[0].amount_detail.split(
-                ","
-              );
-              this.transactionlist[0].amount_detail2 = res.data[0].search_main_transaction_detailInfo[0].amount_detail.split(
-                ","
-              );
-              // console.log(this.transactionlist[0].amount_detail2);
-              let amount_detail = [];
-              let amount_detail2 = [];
-              for (
-                let b = 0;
-                b < this.transactionlist[0].amount_detail2.length;
-                b++
-              ) {
-                amount_detail2.push(
-                  `<span style="color:blue">${b + 1}:</span>` +
-                    this.transactionlist[0].amount_detail2[b] / 1000000 +
-                    `</br>`
-                );
-              }
-              this.transactionlist[0].amount_detail2 = amount_detail2
-                .toString()
-                .replaceAll(",", "");
-              // console.log(this.transactionlist[0].amount_detail2);
-              if (this.transactionlist[0].amount_detail.length >= 6) {
-                // 显示交易详情按钮
-                this.amountbutton_detail = true;
-                for (let k = 0; k < 6; k++) {
-                  amount_detail.push(
-                    `<span style="color:blue">${k + 1}:</span>` +
-                      this.transactionlist[0].amount_detail[k] / 1000000
-                  );
-                }
-                // // console.log(to_address.toString());
-                this.transactionlist[0].amount_detail =
-                  amount_detail.toString() + "...";
-              } else {
-                 // 不显示交易详情按钮
-                this.amountbutton_detail = false;
-                for (
-                  let k = 0;
-                  k < this.transactionlist[0].amount_detail.length;
-                  k++
-                ) {
-                  amount_detail.push(
-                    `<span style="color:blue">${k + 1}:</span>` +
-                      this.transactionlist[0].amount_detail[k] / 1000000
-                  );
-                }
-                // // console.log(to_address.toString());
-                this.transactionlist[0].amount_detail = amount_detail.toString();
-              }
-            } else {
-              // 不显示交易详情
-              this.amount_detail = false;
-            }
-            // 从
-            // console.log(this.transactionlist[0].to_address);
-            if (this.transactionlist[0].to_address.length >= 6) {
-              // 显示去的按钮
-              this.to_detail = true;
-              let to_address = [];
-              let to_address2 = [];
-              for (
-                let a = 0;
-                a < this.transactionlist[0].to_address2.length;
-                a++
-              ) {
-                to_address2.push(
-                  `<span style="color:blue">${a + 1}:</span>` +
-                    this.transactionlist[0].to_address[a] +
-                    `</br>`
-                );
-              }
-              //console.log(to_address2);
-              this.transactionlist[0].to_address2 = to_address2
-                .toString()
-                .replaceAll(",", "");
-
-              //  this.transactionlist[0].to_address.length=5
-              for (let s = 0; s < 6; s++) {
-                to_address.push(
-                  `<span style="color:blue">${s + 1}:</span>` +
-                    this.transactionlist[0].to_address[s]
-                );
-              }
-              this.transactionlist[0].to_address =
-                to_address.toString() + "...";
-              // 交易明细详情
-              // this.amount_detail = true;
-            } else {
-              let to_address = [];
-              let to_address2 = [];
-              this.to_detail = false;
-              for (
-                let a = 0;
-                a < this.transactionlist[0].to_address.length;
-                a++
-              ) {
-                to_address.push(
-                  `<span style="color:blue">${a + 1}:</span>` +
-                    this.transactionlist[0].to_address[a]
-                );
-              }
-              this.transactionlist[0].to_address = to_address.toString();
-              // this.amount_detail = false;
-            }
-          }
+          this.res = res;
+          this.zhiYaDetail();
           //  console.log(this.collength);
           //  console.log(res.data.length);
           for (
@@ -709,6 +525,198 @@ export default {
           ) {}
         })
         .catch((e) => {});
+    },
+    zhiYaDetail() {
+      let res = this.res;
+      // console.log(res);
+      if (
+        res.data[0].search_main_transaction_detailInfo[0].to_address ==
+          "0000000000000000000000000000000000" ||
+        res.data[0].search_main_transaction_detailInfo[0].pledge == "1"
+      ) {
+        // 从
+        this.transactionlist[0].from_address =
+          res.data[0].search_main_transaction_detailInfo[0].from_address;
+        if (this.nowLang == "cn") {
+          this.transactionlist[0].to_address = "质押";
+        } else {
+          this.transactionlist[0].to_address = "Pledge";
+        }
+      } else if (
+        res.data[0].search_main_transaction_detailInfo[0].from_address ==
+          res.data[0].search_main_transaction_detailInfo[0].to_address ||
+        res.data[0].search_main_transaction_detailInfo[0].redeem == "1"
+      ) {
+        if (this.nowLang == "cn") {
+          // 从
+          this.transactionlist[0].from_address = "质押";
+        } else {
+          this.transactionlist[0].from_address = "Pledge";
+        }
+        // 至
+        this.transactionlist[0].to_address =
+          res.data[0].search_main_transaction_detailInfo[0].to_address;
+      } else {
+        // 不是质押的情况
+        this.transactionlist[0].from_address = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
+          ","
+        );
+        this.transactionlist[0].from_address2 = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
+          ","
+        );
+        this.transactionlist[0].to_address = res.data[0].search_main_transaction_detailInfo[0].to_address.split(
+          ","
+        );
+        this.transactionlist[0].to_address2 = res.data[0].search_main_transaction_detailInfo[0].to_address.split(
+          ","
+        );
+        // 来的地方
+        //  this.transactionlist[0].from_address.length=7;
+        if (this.transactionlist[0].from_address.length >= 6) {
+          this.from_detail = true;
+          let from_address = [];
+          let from_address2 = [];
+          for (
+            let m = 0;
+            m < this.transactionlist[0].from_address2.length;
+            m++
+          ) {
+            from_address2.push(
+              `<span style="color:blue">${m + 1}:</span>` +
+                this.transactionlist[0].from_address2[m] +
+                `</br>`
+            );
+          }
+
+          this.transactionlist[0].from_address2 = from_address2
+            .toString()
+            .replaceAll(",", "");
+          for (let c = 0; c < 6; c++) {
+            from_address.push(
+              `<span style="color:blue">${c + 1}:</span>` +
+                this.transactionlist[0].from_address[c]
+            );
+          }
+          this.transactionlist[0].from_address =
+            from_address.toString() + "...";
+        } else {
+          // console.log("<6");
+          this.transactionlist[0].from_address =
+            res.data[0].search_main_transaction_detailInfo[0].from_address;
+        }
+        // 至的地方
+        if (this.transactionlist[0].to_address.length >= 2) {
+          // 显示交易详情
+          this.amount_detail = true;
+          this.transactionlist[0].amount_detail = res.data[0].search_main_transaction_detailInfo[0].amount_detail.split(
+            ","
+          );
+          this.transactionlist[0].amount_detail2 = res.data[0].search_main_transaction_detailInfo[0].amount_detail.split(
+            ","
+          );
+          // console.log(this.transactionlist[0].amount_detail2);
+          let amount_detail = [];
+          let amount_detail2 = [];
+          for (
+            let b = 0;
+            b < this.transactionlist[0].amount_detail2.length;
+            b++
+          ) {
+            amount_detail2.push(
+              `<span style="color:blue">${b + 1}:</span>` +
+                this.transactionlist[0].amount_detail2[b] / 1000000 +
+                `</br>`
+            );
+          }
+          this.transactionlist[0].amount_detail2 = amount_detail2
+            .toString()
+            .replaceAll(",", "");
+          // console.log(this.transactionlist[0].amount_detail2);
+          if (this.transactionlist[0].amount_detail.length >= 6) {
+            // 显示交易详情按钮
+            this.amountbutton_detail = true;
+            for (let k = 0; k < 6; k++) {
+              amount_detail.push(
+                `<span style="color:blue">${k + 1}:</span>` +
+                  this.transactionlist[0].amount_detail[k] / 1000000
+              );
+            }
+            // // console.log(to_address.toString());
+            this.transactionlist[0].amount_detail =
+              amount_detail.toString() + "...";
+          } else {
+            // 不显示交易详情按钮
+            this.amountbutton_detail = false;
+            for (
+              let k = 0;
+              k < this.transactionlist[0].amount_detail.length;
+              k++
+            ) {
+              amount_detail.push(
+                `<span style="color:blue">${k + 1}:</span>` +
+                  this.transactionlist[0].amount_detail[k] / 1000000
+              );
+            }
+            // // console.log(to_address.toString());
+            this.transactionlist[0].amount_detail = amount_detail.toString();
+          }
+        } else {
+          // 不显示交易详情
+          this.amount_detail = false;
+        }
+        // 从
+        // console.log(this.transactionlist[0].to_address);
+        if (this.transactionlist[0].to_address.length >= 6) {
+          // 显示去的按钮
+          this.to_detail = true;
+          let to_address = [];
+          let to_address2 = [];
+          for (let a = 0; a < this.transactionlist[0].to_address2.length; a++) {
+            to_address2.push(
+              `<span style="color:blue">${a + 1}:</span>` +
+                this.transactionlist[0].to_address[a] +
+                `</br>`
+            );
+          }
+          //console.log(to_address2);
+          this.transactionlist[0].to_address2 = to_address2
+            .toString()
+            .replaceAll(",", "");
+
+          //  this.transactionlist[0].to_address.length=5
+          for (let s = 0; s < 6; s++) {
+            to_address.push(
+              `<span style="color:blue">${s + 1}:</span>` +
+                this.transactionlist[0].to_address[s]
+            );
+          }
+          this.transactionlist[0].to_address = to_address.toString() + "...";
+          // 交易明细详情
+          // this.amount_detail = true;
+          // 交易地址小于长度6
+        } else {
+          let to_address = [];
+          let to_address2 = [];
+          this.to_detail = false;
+          if (this.transactionlist[0].to_address.length == 1) {
+            this.transactionlist[0].to_address = this.transactionlist[0].to_address.toString();
+          } else {
+            for (
+              let a = 0;
+              a < this.transactionlist[0].to_address.length;
+              a++
+            ) {
+              to_address.push(
+                `<span style="color:blue">${a + 1}:</span>` +
+                  this.transactionlist[0].to_address[a]
+              );
+            }
+            this.transactionlist[0].to_address = to_address.toString();
+          }
+
+          // this.amount_detail = false;
+        }
+      }
     },
     // 高度减
     zijian() {

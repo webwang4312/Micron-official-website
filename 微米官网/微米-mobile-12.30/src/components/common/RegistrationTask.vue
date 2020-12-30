@@ -1,7 +1,6 @@
 <template>
- <van-popup v-model="$store.state.registrationtask">
-  <div class="RegistrationTask">
-   
+  <van-popup v-model="$store.state.registrationtask">
+    <div class="RegistrationTask">
       <div class="dengluzhuce">
         <img
           src="@assets/images/detail/组 372 (1).png"
@@ -65,9 +64,8 @@
           </div>
         </div>
       </div>
-  </div>
-  </van-popup
-    >
+    </div>
+  </van-popup>
 </template>
 
 <script>
@@ -195,11 +193,13 @@ export default {
 </script>
 
 <style lang="less">
- .van-popup{
-   background-color:black!important;
-   overflow: hidden!important;
- 
-  }
+// .van-overlay{
+//   z-index: 0!important;
+// }
+.van-popup {
+  background-color: black !important;
+  overflow: hidden !important;
+}
 .button:hover {
   border: 1px solid#009FCD !important;
 }
@@ -249,9 +249,7 @@ export default {
   opacity: 1 !important;
 }
 .RegistrationTask {
- 
- 
-    border-radius: 10px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center; /*定义body的元素垂直居中*/
