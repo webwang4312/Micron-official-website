@@ -91,7 +91,7 @@ export default {
       this.$refs.pagination.currentPage = this.medianum;
     });
     this.medianum = this.getContextData("currentpage2") || 1;
-    this.medianum = 1;
+    // this.medianum = 1;
     this.getmedialist();
   },
   mounted() {},

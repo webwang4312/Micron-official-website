@@ -527,7 +527,11 @@ export default {
       // }
     },
     downloadbook() {
-      window.open("http://47.75.93.221/video/baipishu.pdf");
+      if (this.nowLang == "cn") {
+      window.open("http://47.75.93.221/video/baipishu.pdf");}
+      else{
+         window.open("http://47.75.93.221/video/baipishu.pdf");
+      }
     },
     playvideo1() {
       var myVideo1 = document.getElementById("video1");

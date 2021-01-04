@@ -173,7 +173,7 @@ export default {
           })
         )
         .then((res) => {
-          // console.log(res);
+           console.log(res);
           let info = res.data.result.taskInfo;
           // 标题
           this.title = info.title;

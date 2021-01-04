@@ -243,6 +243,9 @@ export default {
 };
 </script>
 <style lang="less">
+.ivu-page-next:hover a, .ivu-page-prev:hover a{
+  color: white!important;
+}
 .ivu-page-simple {
   .ivu-page-next {
     background: none !important;
