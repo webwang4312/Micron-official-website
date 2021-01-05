@@ -19,18 +19,6 @@ const en = {
         img2: require('../assets/images/index/关于项目.png')
     },
     {
-        path: "/news",
-        title: "News",
-        img: require('../assets/images/index/媒体公告(1).png'),
-        img2: require('../assets/images/index/媒体公告.png')
-    },
-    {
-        path: "/partner",
-        title: "Partner",
-        img: require('../assets/images/index/合作伙伴(1).png'),
-        img2: require('../assets/images/index/合作伙伴.png')
-    },
-    {
         path: "/proposal",
         title: "Proposal",
         img: require("@assets/images/index/提案(1).png"),
@@ -48,6 +36,19 @@ const en = {
         img: require("@assets/images/index/开发者社区(1).png"),
         img2: require("@assets/images/index/开发者社区.png"),
     },
+    {
+        path: "/news",
+        title: "News",
+        img: require('../assets/images/index/媒体公告(1).png'),
+        img2: require('../assets/images/index/媒体公告.png')
+    },
+    {
+        path: "/partner",
+        title: "Partner",
+        img: require('../assets/images/index/合作伙伴(1).png'),
+        img2: require('../assets/images/index/合作伙伴.png')
+    }
+   
     ],
     zhanwei: ['No more data'],
     registrationtask: ['Contact information', 'WeChat ID', 'Facebook account', 'Github account (required)'],

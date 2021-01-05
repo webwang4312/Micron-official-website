@@ -173,7 +173,7 @@ export default {
           })
         )
         .then((res) => {
-           console.log(res);
+          //console.log(res);
           let info = res.data.result.taskInfo;
           // 标题
           this.title = info.title;
@@ -414,10 +414,14 @@ export default {
         margin-top: 40px;
         word-wrap: break-word;
         word-break: normal;
+        img {
+          width: 100% !important;
+        }
       }
       .detail {
         width: 345px;
-        height: 188px;
+        min-height: 188px;
+        height: auto;
         background: rgba(44, 44, 44);
         border-radius: 10px;
         margin-top: 34px !important;
@@ -442,10 +446,16 @@ export default {
         }
         li:nth-child(4) {
           margin-top: 10px;
+          display: flex;
+          flex-direction: row;
           p {
             span:nth-child(1) {
               display: inline-block;
               width: 132px;
+            }
+            span:nth-child(2) {
+              display: inline-block;
+              width: 190px;
             }
           }
         }

@@ -17,7 +17,7 @@
             <li>
               <img
                 src="@assets/images/developer/矢量智能对象.png"
-                style="width:45px;height:45px"
+                style="width: 45px; height: 45px"
               />
               <div>{{ taskCount }}</div>
               <div>
@@ -27,7 +27,7 @@
             <li>
               <img
                 src="@assets/images/developer/矢量智能对象(1).png"
-                style="width:45px;height:45px"
+                style="width: 45px; height: 45px"
               />
               <div>{{ completeCount }}</div>
               <div>
@@ -37,7 +37,7 @@
             <li>
               <img
                 src="@assets/images/developer/矢量智能对象(2).png"
-                style="width:45px;height:45px"
+                style="width: 45px; height: 45px"
               />
               <div>{{ grantCount }}</div>
               <div>
@@ -55,7 +55,7 @@
         <div class="zhanwei" v-if="zhanwei">
           <img
             src="@assets/images/proposal/矢量智能对象.png"
-            style="width:300px"
+            style="width: 300px"
           />
           <p>{{ $t("zhanwei[0]") }}</p>
         </div>
@@ -188,7 +188,7 @@ export default {
           })
         )
         .then((res) => {
-          // console.log(res);
+          //console.log(res);
           this.developerTotal = res.data.result.total;
           if (res.data.result.total == 0) {
             this.zhanwei = true;
@@ -202,9 +202,9 @@ export default {
             } else {
               res.data.result.list[i].outline = res.data.result.list[i].outline;
             }
-            if (res.data.result.list[i].title.length >= 8) {
+            if (res.data.result.list[i].title.length >= 11) {
               res.data.result.list[i].title =
-                res.data.result.list[i].title.substring(0, 7) + "...";
+                res.data.result.list[i].title.substring(0, 11) + "...";
             } else {
               res.data.result.list[i].title = res.data.result.list[i].title;
             }
@@ -243,8 +243,9 @@ export default {
 };
 </script>
 <style lang="less">
-.ivu-page-next:hover a, .ivu-page-prev:hover a{
-  color: white!important;
+.ivu-page-next:hover a,
+.ivu-page-prev:hover a {
+  color: white !important;
 }
 .ivu-page-simple {
   .ivu-page-next {
@@ -369,17 +370,18 @@ button {
       height: 244px;
       margin: 0 auto;
       position: relative;
+      overflow: hidden;
       // 大方块设置
 
       p:first-child {
-        width: 193px;
+        // width: 193px;
         font-size: 18px;
         font-family: "苹方-简";
         font-weight: normal;
         line-height: 27px;
         color: #ffffff;
         opacity: 1;
-        position: relative;
+        position: absolute;
         left: 179px;
         top: 87px;
 
@@ -395,9 +397,9 @@ button {
         line-height: 18px;
         color: #ffffff;
         opacity: 1;
-        position: relative;
+        position: absolute;
         left: 179px;
-        top: 97px;
+        top:139px;
       }
 
       .partner-button-overflow {
@@ -713,9 +715,13 @@ button {
         .reward_left {
           width: 100%;
           margin-top: 30px;
+
           div {
-            width: 375px;
+            width: 100%;
             margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
           }
           p {
             width: 329px;
@@ -745,12 +751,11 @@ button {
             background: black;
           }
           button:nth-of-type(2) {
-            margin-left: 60px;
           }
         }
         .reward_right {
           margin: 0 auto;
-          width: 375px;
+          width: 100%;
           height: 249px;
           background: url("../../assets/images/developer/矢量智能对象(3).png")
             no-repeat center/100% 100%;
