@@ -11,6 +11,9 @@ import i18n from "./i18n";
 import 'lib-flexible';
 import VueParticles from 'vue-particles';
 Vue.use(VueParticles);
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
+Vue.use(ViewUI);
 // video引入
 // import VueVideoPlayer from "vue-video-player";
 // import "video.js/dist/video-js.css";

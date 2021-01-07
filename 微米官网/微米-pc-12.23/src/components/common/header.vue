@@ -116,6 +116,8 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   created() {
+    this.$store.state.fastoken=false;
+    this.$store.state.fastokensecond=false;
     // console.log(this.username);
     // window.addEventListener("storage", this.pageFresh);
     this.nowLang = this.$i18n.locale;
@@ -164,23 +166,23 @@ export default {
           path: "/FAQ",
         },
         {
-          title: "About",
+          title: "About projects",
           path: "/about",
         },
         {
-          title: "Community",
+          title: "About community",
           path: "/proposal",
         },
         {
-          title: "Developer",
+          title: "Speakers community",
           path: "/developer",
         },
         {
-          title: "News",
+          title: "Media reports",
           path: "/news",
         },
         {
-          title: "Partner",
+          title: "Partners",
           path: "/partner",
         },
       ];
@@ -551,7 +553,7 @@ button {
           }
         }
         #liulanqi {
-          width: 136px;
+          width: 181px;
           height: 36px;
           font-size: 18px;
           font-family: PingFang SC;

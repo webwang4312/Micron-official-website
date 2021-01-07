@@ -477,6 +477,7 @@ button {
 }
 // 主线
 .faq {
+ 
   height: auto;
   position: relative;
   .faqtop {
@@ -835,9 +836,7 @@ button {
       }
     }
     .component {
-      position: absolute;
-      left: 54%;
-      top: 55px;
+     line-height: 111px;
       span {
         margin-left: 39px;
         font-size: 16px;

@@ -302,7 +302,7 @@
             <span>Fastoken</span>
           </li>
         </ul>
-        <div class="component">
+        <div class="component_index">
           <span class="neirong" @click="faqs">FAQ</span>
           <span>|</span>
           <span class="neirong" @click="about">{{ $t("about[0]") }}</span>
@@ -476,10 +476,10 @@ export default {
       this.rules.advice.message = "请输入您的问题";
     } else {
       this.videosource[0].src = "http://47.75.93.221/video/yingwen.mp4";
-      this.rules.name.message = "Please enter your name";
-      this.rules.phone.message = "Please enter your phone number";
-      this.rules.email.message = "Please enter your e-mail address";
-      this.rules.advice.message = "Please enter your question";
+      this.rules.name.message = "Name";
+      this.rules.phone.message = "Mobile no";
+      this.rules.email.message = "Email address";
+      this.rules.advice.message = "Details about your problem";
     }
     // 滚动设置
     window.addEventListener("scroll", this.getScroll);
@@ -1192,7 +1192,7 @@ button {
             text-align: left;
           }
           p:nth-child(5) {
-            width: 90px;
+            width: 180px;
             height: 14px;
             font-size: 14px;
             font-family: PingFang SC;
@@ -1725,10 +1725,8 @@ button {
         }
       }
     }
-    .component {
-      position: absolute;
-      left: 55%;
-      top: 55px;
+    .component_index {
+   line-height: 111px;
       span {
         margin-left: 39px;
         font-size: 16px;

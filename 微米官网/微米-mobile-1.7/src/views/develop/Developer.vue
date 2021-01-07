@@ -102,7 +102,13 @@
               {{ $t("developer[9]") }}
             </p>
             <div>
-              <button @click="CopyUrl">{{ $t("developer[10]") }}</button>
+              <button
+                v-clipboard:copy="f"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onError"
+              >
+                {{ $t("developer[10]") }}
+              </button>
               <button @click="goTogithub">{{ $t("developer[11]") }}</button>
             </div>
           </div>
@@ -123,6 +129,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      f: "tech@uenc.net",
       nowLang: "",
       fullscreenLoading: false,
       show: false,
@@ -150,6 +157,24 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
+    // 复制成功时的回调函数
+    onCopy(e) {
+      this.$message({
+        message: "复制成功!",
+        type: "success",
+        center: true,
+        duration: 2000,
+      });
+    },
+    // 复制失败时的回调函数
+    onError(e) {
+      this.$message({
+        message: "复制失败!",
+        type: "error",
+        center: true,
+        duration: 2000,
+      });
+    },
     goToDeveloperDetail(taskId) {
       this.$router.push({
         path: "/developerdetail",
@@ -164,7 +189,7 @@ export default {
       // this.setContextData("currentpage", this.medianum);
       this.developerInfor();
       localStorage.setItem("uenc-developerpage", page);
-      window.scrollTo(0, 1550);
+      window.scrollTo(0, 550);
     },
     developerSum() {
       this.$http
@@ -212,20 +237,20 @@ export default {
           this.developerlist = res.data.result.list;
         });
     },
-    CopyUrl(data) {
-      var Url2 = "tech@uenc.net";
-      var oInput = document.createElement("input");
-      oInput.value = Url2;
-      document.body.appendChild(oInput);
-      oInput.select(); // 选择对象
-      document.execCommand("Copy"); // 执行浏览器复制命令
-      oInput.className = "oInput";
-      oInput.style.display = "none";
-      this.$message({
-        message: "复制成功!",
-        type: "success",
-      });
-    },
+    // CopyUrl(data) {
+    //   var Url2 = "tech@uenc.net";
+    //   var oInput = document.createElement("input");
+    //   oInput.value = Url2;
+    //   document.body.appendChild(oInput);
+    //   oInput.select(); // 选择对象
+    //   document.execCommand("Copy"); // 执行浏览器复制命令
+    //   oInput.className = "oInput";
+    //   oInput.style.display = "none";
+    //   this.$message({
+    //     message: "复制成功!",
+    //     type: "success",
+    //   });
+    // },
     goTogithub() {
       window.open("https://github.com/uenctech");
     },
@@ -399,7 +424,7 @@ button {
         opacity: 1;
         position: absolute;
         left: 179px;
-        top:139px;
+        top: 139px;
       }
 
       .partner-button-overflow {
@@ -717,15 +742,14 @@ button {
           margin-top: 30px;
 
           div {
-            width: 100%;
+            width: 328px;
             margin: 0 auto;
             display: flex;
             flex-direction: row;
-            justify-content: space-around;
+            justify-content: space-between;
           }
           p {
             width: 329px;
-
             font-size: 12px;
             font-family: "苹方-简";
             font-weight: normal;
@@ -749,6 +773,7 @@ button {
             color: #009fcd;
             margin-bottom: 50px;
             background: black;
+            margin-left: 0px !important;
           }
           button:nth-of-type(2) {
           }

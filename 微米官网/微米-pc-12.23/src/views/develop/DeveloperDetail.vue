@@ -493,6 +493,9 @@ export default {
         margin-top: 40px;
         word-wrap: break-word;
         word-break: normal;
+        table{
+          width: 100%!important;
+        }
       }
       .detail {
         width: 1200px;
@@ -742,9 +745,7 @@ export default {
         }
       }
       .component {
-        position: absolute;
-        left: 56%;
-        top: 55px;
+       line-height: 111px;
         span {
           margin-left: 39px;
           font-size: 16px;

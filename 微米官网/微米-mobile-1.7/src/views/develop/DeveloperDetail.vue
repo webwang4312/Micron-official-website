@@ -415,7 +415,12 @@ export default {
         word-wrap: break-word;
         word-break: normal;
         img {
-          width: 100% !important;
+        width: 100%;
+        height: auto;
+         
+        }
+        table{
+          width:100%!important;
         }
       }
       .detail {

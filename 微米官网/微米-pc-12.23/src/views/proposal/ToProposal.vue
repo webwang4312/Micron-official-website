@@ -686,9 +686,7 @@ export default {
       }
     }
     .component {
-      position: absolute;
-      left: 56%;
-      top: 55px;
+     line-height: 110px;
       span {
         margin-left: 39px;
         font-size: 16px;

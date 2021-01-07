@@ -74,9 +74,7 @@ export default {
   opacity: 0.5!important;
   z-index: 11; //设置absolute,其他DIV设置为relative，这样这个例子效果就作为背景
 }
-#app {
-  width: 100%;
-}
+
 a {
   text-decoration: none;
 }

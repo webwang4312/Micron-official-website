@@ -28,6 +28,9 @@ Vue.config.productionTip = false;
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 Vue.use(ViewUI);
+import VueClipboard from 'vue-clipboard2';
+
+Vue.use(VueClipboard);
 //axios.defaults.timeout = 30000; // 请求超时
 // axios.defaults.baseURL = "http://106.14.125.210:8003"; // 线上环境
 //axios.defaults.baseURL = "http://47.75.93.221:8003"; // 测试环境

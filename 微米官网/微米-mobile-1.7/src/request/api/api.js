@@ -3,4 +3,4 @@
 //http://192.168.1.194:8003
 // 正式地址
 // http://47.75.93.221:8003
-export const BASEURL ='http://192.168.1.194:8003';
+export const BASEURL ='http://47.75.93.221:8003';

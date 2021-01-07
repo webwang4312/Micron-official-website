@@ -5,6 +5,7 @@
 12.24新建develop文件夹，创建developer.vue,developerdetail.vue，初步完成开发者社区
 12.28创建headerdetail詳情頁
 1.5号开始手机端开发者社区测试
+1.7手机端上线
 ## Project setup
 ```
 npm install

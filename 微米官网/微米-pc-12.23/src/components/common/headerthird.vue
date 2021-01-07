@@ -248,7 +248,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     #liulanqi {
-      width: 136px;
+      width: 181px;
       height: 36px;
       font-size: 18px;
       font-family: PingFang SC;

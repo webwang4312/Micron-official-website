@@ -152,11 +152,10 @@ export default {
         this.active = i;
       }
     });
- if (!sessionStorage.getItem('uenc-whilelogin')) {
+    if (!sessionStorage.getItem("uenc-whilelogin")) {
       window.sessionStorage.clear();
       localStorage.clear();
       this.$store.commit("leavelogin");
-     
     }
     // 滚动设置
     // window.addEventListener("scroll", this.getScroll);
@@ -284,7 +283,6 @@ export default {
   .header_selset {
     display: flex;
     flex-direction: row;
-   
   }
 
   .header_icon {
@@ -307,7 +305,7 @@ export default {
     height: 200px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between!important;
+    justify-content: space-between !important;
     align-items: center;
     color: #ffffff;
     margin: 0 auto;
@@ -369,10 +367,11 @@ export default {
         }
       }
       .header-right2 {
-        width: 267px !important;
+        width: 240px !important;
+        margin-right: 30px;
         display: flex;
         flex-direction: row;
-
+        justify-content: space-between;
         li:nth-child(2) {
         }
         li {
@@ -403,7 +402,7 @@ export default {
         height: 200px;
         line-height: 200px;
         margin: 0 auto;
-      
+
         text-align: center;
 
         .header_ululs {

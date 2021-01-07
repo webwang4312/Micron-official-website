@@ -167,7 +167,7 @@ export default {
     //   window.sessionStorage.clear();
     //   localStorage.clear();
     // }
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     // console.log(localStorage.getItem('sliderfastoken1'));
     if (localStorage.getItem("walletAddress") == null) {
       this.fastokenbind = false;
@@ -266,10 +266,10 @@ export default {
       // this.$router.push({
       //   path: "/index",
       // });
-       this.logins = true;
+      this.logins = true;
       this.loginss = false;
-       this.fastokenbind = false;
-      this.fastokenbind2 =false;
+      this.fastokenbind = false;
+      this.fastokenbind2 = false;
       this.reload();
     },
     login() {
@@ -330,7 +330,7 @@ export default {
 };
 </script>
 <style lang="less">
-.headertop{
+.headertop {
   width: 100%;
   height: auto;
 }
@@ -356,9 +356,8 @@ export default {
   }
 }
 .sticky {
-  position: fixed!important;
-top: 0!important;
-
+  position: fixed !important;
+  top: 0 !important;
   // width: 100% !important;
   // position: fixed !important;
   // top: 0px !important;
@@ -367,13 +366,13 @@ top: 0!important;
 
 .slide {
   width: 100%;
-  height: auto;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background: rgba(51, 51, 51, 1) !important;
   opacity: 1 !important;
   padding-bottom: 50px;
+  overflow: auto;
   .blue {
     color: rgba(0, 159, 205, 1) !important;
   }

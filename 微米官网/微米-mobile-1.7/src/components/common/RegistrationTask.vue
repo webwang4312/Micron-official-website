@@ -138,6 +138,17 @@ export default {
             "Please fill in the WeChat account or facebook account"
           );
         } else {
+          // this.$toast.error({
+          //       duration: 2000, // 持续展示 toast
+          //       forbidClick: true, // 禁用背景点击
+          //       loadingType: "spinner",
+          //       message: "请选填微信号或facebook账号",
+          //       position: top,
+          //     });
+          //   this.$Message.info({
+          //     content: '请选填微信号或facebook账号',
+          //     top:'300'
+          // });
           this.$message({
             message: "请选填微信号或facebook账号",
             center: true,
@@ -170,7 +181,7 @@ export default {
             { headers: { token: localStorage.getItem("token") } }
           )
           .then((res) => {
-            console.log(res);
+            //console.log(res);
             // res.data.code = 400
             if (res.data.code == 200) {
               this.$message.success(res.data.result);
@@ -193,6 +204,12 @@ export default {
 </script>
 
 <style lang="less">
+.ivu-message {
+  z-index: 2228 !important;
+}
+.el-message {
+  z-index: 2228 !important;
+}
 // .van-overlay{
 //   z-index: 0!important;
 // }
@@ -254,7 +271,7 @@ export default {
   flex-direction: column;
   align-items: center; /*定义body的元素垂直居中*/
   justify-content: center; /*定义body的里的元素水平居中*/
-  // z-index: 1000;
+  z-index: 1000;
   // position: fixed;
   // left: 0;
   // top: 0;
