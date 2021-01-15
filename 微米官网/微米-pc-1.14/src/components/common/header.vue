@@ -166,19 +166,19 @@ export default {
           path: "/FAQ",
         },
         {
-          title: "About projects",
+          title: "About",
           path: "/about",
         },
         {
-          title: "About community",
+          title: "Community",
           path: "/proposal",
         },
         {
-          title: "Speakers community",
+          title: "Developer",
           path: "/developer",
         },
         {
-          title: "Media reports",
+          title: "Media",
           path: "/news",
         },
         {
