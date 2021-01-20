@@ -2,7 +2,7 @@
   <!-- 搜索栏区域 -->
   <div
     class="indexsearch"
-    :class="{ sticky2: sticky2 }"
+   
     v-loading.fullscreen.lock="fullscreenLoading"
   >
     <div class="searchleft">

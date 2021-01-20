@@ -1,5 +1,5 @@
 <template>
-  <div class="headertop" :class="{ sticky: sticky }">
+  <div class="headertop">
     <div class="headerzong">
       <div class="header-left">
         <img src="@assets/images/header/logo.png" />
@@ -175,14 +175,26 @@ export default {
 </script>
 
 <style lang="less">
+.tuqi:hover {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(255, 255, 255, 1),
+    inset 18px 18px 30px rgba(0, 0, 0, 0.1),
+    inset 0px 0px 30px rgba(255, 255, 255, 1);
+  transition: box-shadow 0.2s ease-out;
+}
 .tuqi {
   width: 136px !important;
   height: 60px;
   position: absolute;
   top: 30px;
+  z-index: 10;
   // background: rgba(234, 235, 243, 0.8);
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+  box-shadow:8px 8px 30px rgba(0, 0, 0, 0.1),-8px -8px 30px rgba(255,255,255,1), ;
+  // box-shadow: -10px 0 10px rgb(244, 244, 248),
+  //   /*左边阴影*/ 10px 0 10px rgb(233, 233, 240),
+  //   /*右边阴影*/ 0 -10px 10px rgb(241, 242, 246),
+  //   /*顶部阴影*/ 0 10px 10px rgb(224, 225, 232); /*底边阴影*/
   border-radius: 16px;
+  transition: box-shadow .2s ease-in-out;
 }
 .sticky {
   width: 1200px !important;

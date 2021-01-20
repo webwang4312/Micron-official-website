@@ -1,7 +1,9 @@
 <template>
   <div class="headertop">
     <van-popup
+    
       v-model="$store.state.slidershow"
+      :lock-scroll="false"
       position="left"
       :style="{ width: '45%', height: '100%' }"
       ><div class="slide">

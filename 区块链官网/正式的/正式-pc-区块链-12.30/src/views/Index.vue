@@ -312,12 +312,18 @@ export default {
     // console.log(this.timestampToTime2(1595692800));
     this.nowLang = this.$i18n.locale;
     // console.log(this.nowLang);
-    this.indexlist();
     this.rank();
+
     // 获取首页数据
   },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
+
   mounted() {
-    this.drawLine();
+    // setInterval(this.timer, 1000);
+    this.indexlist();
+    // this.drawLine();
     // 基于准备好的dom，初始化echarts折线图实例
     // var myChart = echarts.init(document.getElementById("bar"));
     // var option = this.option;
@@ -326,7 +332,13 @@ export default {
     // var options = this.options;
     // myChart.setOption(options);
   },
+  activated() {},
   methods: {
+    // timer() {
+    //   return setTimeout(() => {
+    //     this.indexlist();
+    //   }, 100000);
+    // },
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = echarts.init(document.getElementById("bar"));
@@ -342,7 +354,7 @@ export default {
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
@@ -432,7 +444,7 @@ export default {
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
@@ -675,10 +687,10 @@ export default {
         })
         .catch((e) => {});
     },
-    async rank() {
+    rank() {
       let that = this;
-      await that.$http.get("/search_top_n").then((res) => {
-        // console.log(res);
+      that.$http.get("/search_top_n").then((res) => {
+        //  console.log(res);
         this.tabledataall = res.data.count[0].count;
 
         for (let i = 0; i < res.data.topN.length; i++) {
@@ -690,14 +702,14 @@ export default {
       });
     },
     //获取首页数据
-    async indexlist() {
+    indexlist() {
       let that = this;
-      await that.$http
+      that.$http
         .get("")
         .then((res) => {
-          //  console.log(res);
+          // console.log(res);
           this.loading = false;
-         
+
           // 获取首页数据集合
           var cardleftinformation = res.data[0];
           //console.log(cardleftinformation);
@@ -716,14 +728,14 @@ export default {
               // console.log(strdate + "shuju");
               // 当前日期转时间戳
               // console.log(Date.parse(new Date()));
-              let timestamp =  cardleftinformation.timeStamp;
+              let timestamp = cardleftinformation.timeStamp;
               // console.log(timestamp + "xianzai");
               let s = timestamp - strdate; //9.20
               // console.log(s+'相差');
               // console.log(s/86400000 + "天数");
               // console.log(parseInt(s/86400000*24*60) + "fenzhong");
               let fenzhong = parseInt((s / 86400) * 24 * 60);
-                // console.log(fenzhong);
+              // console.log(fenzhong);
               if (fenzhong < 60) {
                 if (fenzhong == 0) {
                   date.push("刚刚");
@@ -770,7 +782,7 @@ export default {
               let strtime = this.tableData2[j].time;
               // 当前日期转时间戳
               let timestamp = cardleftinformation.timeStamp;
-            // console.log(timestamp + "xianzai");
+              // console.log(timestamp + "xianzai");
               let s = timestamp - strtime; //9.20
               // console.log(s+'相差');
               // console.log(s/86400000 + "天数");
@@ -847,7 +859,7 @@ export default {
               let times = [];
               let strtime = this.tableData2[j].time;
               // 当前日期转时间戳
-              let timestamp =cardleftinformation.timeStamp;
+              let timestamp = cardleftinformation.timeStamp;
               // console.log(timestamp + "xianzai");
               let s = timestamp - strtime; //9.20
               // console.log(s+'相差');
@@ -882,23 +894,28 @@ export default {
           this.blockheigth =
             cardleftinformation.block_height_all[0].block_height;
           // 区块奖励
-          this.blockreward =
-            cardleftinformation.count_block_award_for_all[0].award_total;
+          this.blockreward = Math.trunc(
+            cardleftinformation.count_block_award_for_all[0].award_total
+          );
           // 剩余区块奖励
-          this.blocklastreward =
-            cardleftinformation.count_block_award_for_all[0].award_balance;
+          this.blocklastreward = Math.trunc(
+            cardleftinformation.count_block_award_for_all[0].award_balance
+          );
           //  交易笔数
           this.transnumber =
             cardleftinformation.transaction_num_for_all[0].transaction_num;
-          this.money = res.data[0].usdt[0].usdt;
-          this.money2 = res.data[0].usdt[0].rmb;
+          this.money = res.data[0].usdt[0].usdt.toString().substring(0, 6);
+
+          this.money2 = res.data[0].usdt[0].rmb.toString().substring(0, 4);
           //24小时交易笔数?
           this.transzoom =
             cardleftinformation.transaction_num_for_24h[0].transaction_num;
           // console.log(this.transzoom);
           // 24小时交易总额?
-          this.transmoney =
-            cardleftinformation.transaction_amount_for_24h[0].transaction_amount_24h;
+          this.transmoney = Math.trunc(
+            cardleftinformation.transaction_amount_for_24h[0]
+              .transaction_amount_24h
+          );
 
           // console.log(this.transmoney);
           // console.log(res.data[0].block_height_all[0].block_height);
@@ -1019,7 +1036,6 @@ export default {
       this.$router.push({ path: "/block" });
     },
   },
- 
 };
 </script>
 <style lang="less">
@@ -1048,7 +1064,7 @@ export default {
     height: 220px !important;
     left: 50px !important;
     width: 470px;
-    background: #ffffff;
+
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     opacity: 1;
     border-radius: 15px;
@@ -1060,6 +1076,7 @@ export default {
     font-weight: normal;
     color: #333333;
     opacity: 1;
+    background: red !important;
   }
   .el-table .cell {
     line-height: 35px !important;
@@ -1069,6 +1086,7 @@ export default {
     padding: 0px !important;
   }
 }
+
 // 本页面
 .index {
   width: 1200px;
@@ -1084,7 +1102,7 @@ export default {
   //   background: rgba(40, 96, 149, 0.1) !important;
   // }
   .el-table__header tr th {
-    background: rgba(40, 96, 194, 0.001) !important;
+    // background: rgba(40, 96, 194, 0.001) !important;
   }
   .cardblue {
     color: rgba(40, 96, 194, 1) !important;
@@ -1263,9 +1281,13 @@ export default {
       line-height: 22px;
       color: rgba(51, 51, 51, 1);
     }
-    .el-table {
-      background: rgba(40, 96, 194, 0.1) !important;
+    .el-table__row:hover {
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      td {
+        background-color: rgb(213, 225, 244) !important ;
+      }
     }
+
     .el-table tr {
       background: rgba(40, 96, 194, 0.1) !important;
       //  background: rgba(40, 96, 149) !important;
@@ -1280,18 +1302,34 @@ export default {
       border: none;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
+      background: rgba(40, 96, 194, 0.1);
       cursor: pointer;
+      .el-table td,
+      .el-table th.is-leaf {
+        border-bottom: none !important;
+      }
       .el-table__body tr td {
         text-align: center;
       }
-      .has-gutter tr {
+
+      .el-table__row {
+        background: rgba(233, 239, 249) !important;
+      }
+
+      .has-gutter tr th:nth-child(1) {
+        border-bottom-left-radius: 10px !important;
+      }
+      .has-gutter tr th:nth-last-child(2) {
+        border-bottom-right-radius: 10px !important;
+      }
+      .has-gutter tr th {
         font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
         line-height: 22px;
         color: rgba(40, 96, 194, 1);
-        opacity: 1;
-        background-color: rgba(40, 96, 194, 0.2) !important;
+        background: rgba(40, 96, 194, 0.1);
+        text-align: center;
         th div {
           text-align: center;
         }
@@ -1307,18 +1345,33 @@ export default {
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       cursor: pointer;
+
+      .has-gutter tr th:nth-child(1) {
+        border-bottom-left-radius: 10px !important;
+      }
+      .has-gutter tr th:nth-last-child(2) {
+        border-bottom-right-radius: 10px !important;
+      }
+      .el-table__row {
+        background: rgba(233, 239, 249) !important;
+      }
       .el-table__body tr td {
         text-align: center;
       }
-      .has-gutter tr {
+      .el-table td,
+      .el-table th.is-leaf {
+        border-bottom: none !important;
+      }
+      .has-gutter tr th {
+        text-align: center;
         font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
         line-height: 22px;
         color: rgba(40, 96, 194, 1);
         opacity: 1;
-        border: 1px solid rgba(51, 51, 51, 0.1);
-        background-color: rgba(40, 96, 194, 0.2) !important;
+
+        background: rgba(40, 96, 194, 0.1);
         th div {
           text-align: center;
         }
@@ -1326,7 +1379,7 @@ export default {
     }
     .el-table__header-wrapper {
       width: 100%;
-      border-radius: 15px;
+      // border-radius: 15px;
     }
   }
   // 内容底部

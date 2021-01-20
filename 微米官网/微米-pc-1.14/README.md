@@ -18,6 +18,7 @@ this.\$store.commit("leavelogin");
  }判断关闭页面重新登录,pc端上线
  1.7首页英文翻译更换,为了ivew.css引入组件库ivew  view-design
  1.14修改好英文上线
+ 1.20官网pc端提案投票详情页换行修改
 
 ## Project setup
 

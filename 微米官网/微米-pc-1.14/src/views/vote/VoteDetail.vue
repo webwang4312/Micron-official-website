@@ -645,6 +645,7 @@ export default {
     height: auto;
     background: #0c0c0c;
     .proposal_detail_contentdetail {
+       white-space: pre-line;
       width: 1200px;
       height: auto;
       margin: 0 auto;
