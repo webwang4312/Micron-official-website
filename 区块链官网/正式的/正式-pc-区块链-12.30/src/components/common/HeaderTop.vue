@@ -88,11 +88,11 @@ export default {
     // console.log(this.nowLang);
     if (this.nowLang === "cn") {
       this.nav = cn.nav;
-      this.chose = "语言";
+      this.chose = "中文";
     }
     if (this.nowLang === "en") {
       this.nav = en.nav;
-      this.chose = "lan";
+      this.chose = "En";
     }
     this.nav.forEach((v, i) => {
       //  console.log(this.active);

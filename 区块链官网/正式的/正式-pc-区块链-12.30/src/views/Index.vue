@@ -53,26 +53,7 @@
         <div class="cardright" id="bar" v-show="card"></div>
         <div class="cardright" id="bars" v-show="card2"></div>
         <div class="cardright" id="barss" v-show="card3">
-          <el-table :data="tableData3" height="203" border style="width:470px">
-            <el-table-column
-              prop="Sort_num"
-              :label="$t('page[2]')"
-              width="120"
-              align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="count"
-              :label="$t('page[3]')"
-              width="180"
-              align="center"
-            >
-            </el-table-column>
-            <el-table-column prop="gas" :label="$t('page[4]')" align="center">
-            </el-table-column>
-          </el-table>
-          <p class="number">{{ $t("page[3]") }}:{{ tabledataall }}</p>
-          <p class="number2">{{ $t("page[5]") }}</p>
+          aaa
         </div>
         <div class="cardp">
           <p @click="cardclick1" :class="{ cardblue: card }">
@@ -245,74 +226,15 @@ export default {
         },
       ],
       tabledataall: "",
-      tableData3: [
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-        {
-          Sort_num: "",
-          count: "",
-          gas: "",
-        },
-      ],
+      pie: [],
     };
   },
   watch: {},
   components: { VFooter, Search, headertop },
   created() {
-    // 时间的验证
-    // let timestamp = Date.parse(new Date())/1000;
-    // console.log(timestamp); //1597150172000 1597150210000   1597192326000
-    // let s = 1597192326000 - 1597150172000; //9.20
-    // let fenzhong = parseInt((s / 86400000) * 24 * 60);
-    // console.log(fenzhong);
-    // console.log(parseInt(fenzhong/60));
-    // console.log(this.timestampToTime2(1595692800));
+    
     this.nowLang = this.$i18n.locale;
-    // console.log(this.nowLang);
-    this.rank();
+   
 
     // 获取首页数据
   },
@@ -323,14 +245,8 @@ export default {
   mounted() {
     // setInterval(this.timer, 1000);
     this.indexlist();
-    // this.drawLine();
-    // 基于准备好的dom，初始化echarts折线图实例
-    // var myChart = echarts.init(document.getElementById("bar"));
-    // var option = this.option;
-    // myChart.setOption(option);
-    // var myChart = echarts.init(document.getElementById("bars"));
-    // var options = this.options;
-    // myChart.setOption(options);
+    this.drawLine();
+   
   },
   activated() {},
   methods: {
@@ -343,7 +259,7 @@ export default {
       // 基于准备好的dom，初始化echarts实例
       let myChart = echarts.init(document.getElementById("bar"));
       let myChart2 = echarts.init(document.getElementById("bars"));
-      // let myChart3 = echarts.init(document.getElementById("barss"));
+      let myChart3 = echarts.init(document.getElementById("barss"));
       var data = [];
       // 绘制图表
       myChart.setOption({
@@ -521,6 +437,100 @@ export default {
           },
         ],
       });
+      myChart3.setOption({
+        title: {
+          zlevel: 0,
+          text: ["{name|节点总数}", "{value|" + 6 + "}"].join("\n"),
+          top: "35%",
+          left: "24%",
+          textAlign: "center",
+          textStyle: {
+            rich: {
+              value: {
+                color: "#303133",
+                fontSize: 24,
+                lineHeight: 24,
+              },
+              name: {
+                color: "#909399",
+                fontSize: 14,
+                lineHeight: 35,
+              },
+            },
+          },
+        },
+        formatter: "{a} <br/>{b}: {c} ({d}%)",
+        color: [
+          "#514CDB",
+          "#36cbcb",
+          "#4ecb73",
+          "#fbd437",
+          "#f2637b",
+          "#36cbcb",
+          "#4ecb73",
+          "#fbd437",
+          "#f2637b",
+        ],
+
+        series: [
+          {
+            name: "节点总数",
+            type: "pie",
+            radius: ["60%", "75%"],
+            center: ["15%", "47%"],
+            avoidLabelOverlap: false,
+            stillShowZeroSum: false,
+            zlevel: 1,
+            label: {
+              normal: {
+                padding: [20, 20, 20, 20],
+                backgroundColor: "#fff",
+                show: false,
+                position: "center",
+                formatter: ["{name|{b}}", "{value|{c}}"].join("\n"),
+                rich: {
+                  value: {
+                    color: "#303133",
+                    fontSize: 24,
+                    lineHeight: 24,
+                  },
+                  name: {
+                    color: "#909399",
+                    fontSize: 14,
+                    lineHeight: 35,
+                  },
+                },
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: "16",
+                  fontWeight: "bold",
+                },
+              },
+            },
+            labelLine: {
+              normal: {
+                show: false,
+              },
+            },
+            itemStyle: {
+              // 此配置
+              normal: {
+                borderWidth: 4,
+                borderColor: "#ffffff",
+              },
+              emphasis: {
+                borderWidth: 0,
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+            data: [],
+          },
+        ],
+      });
       // 异步加载数据
       let that = this;
       // 燃料费平均值
@@ -532,7 +542,7 @@ export default {
       // 时间
       var transaction_num_for_7time = [];
       //  燃料费分布
-      var ranliaofei = [];
+
       that.$http
         .get("")
         .then((res) => {
@@ -686,21 +696,162 @@ export default {
           }
         })
         .catch((e) => {});
-    },
-    rank() {
-      let that = this;
-      that.$http.get("/search_top_n").then((res) => {
-        //  console.log(res);
-        this.tabledataall = res.data.count[0].count;
+      that.$http
+        .get("/search_top_n")
+        .then((res) => {
+          console.log(res);
+          var ranliaofei = [
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+            { name: "", value: "" },
+          ];
+          var count = res.data.count[0].count;
+          for (var j = 0; j < res.data.topN.length + 1; j++) {
+            ranliaofei[j].name = Number(res.data.topN[j].gas) / Number(1000000);
 
-        for (let i = 0; i < res.data.topN.length; i++) {
-          this.tableData3[i].Sort_num = "Top" + res.data.topN[i].Sort_num;
-          this.tableData3[i].count = res.data.topN[i].count;
-          this.tableData3[i].gas = res.data.topN[i].gas / 1000000;
-          // this.tableData3[i].
-        }
-      });
+            ranliaofei[j].value = res.data.topN[j].count;
+            console.log(ranliaofei);
+            myChart3.setOption({
+              title: {
+                zlevel: 0,
+                text: ["{name|节点总数}", "{value|" + count + "}"].join("\n"),
+                top: "55%",
+                left: "24%",
+                textAlign: "center",
+                textStyle: {
+                  rich: {
+                    value: {
+                      color: "#303133",
+                      fontSize: 24,
+                      lineHeight: 24,
+                    },
+                    name: {
+                      color: "#909399",
+                      fontSize: 14,
+                      lineHeight: 35,
+                    },
+                  },
+                },
+              },
+              tooltip: {
+                trigger: "item",
+                formatter: "燃料费:{b} </br> 节点数量:{c} </br> 全网占比:{d}%",
+              },
+              color: [
+                "#4C7CDB",
+                "#B9596C",
+                "#514CDB",
+                "#BF74A6",
+                "#DB6B4C",
+                "#63B5B2",
+                "#95B575",
+                "#9D52A5",
+                "#DBBE4C",
+              ],
+              legend: {
+                orient: "vertical",
+                x: "right", //可设定图例在左、右、居中
+                y: "center", //可设定图例在上、下、居中
+                padding: [200, 50, 0, 0], //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+                icon: "circle",
+                itemWidth: 40, // 设置宽度
+                itemHeight: 10, // 设置高度
+                itemGap: 15,
+                formatter: function(name) {
+                  console.log(name);
+                  let data = ranliaofei;
+                  return name;
+                },
+              },
+              series: [
+                {
+                  minAngle: 30,
+                  data: ranliaofei,
+                  name: "节点总数",
+                  type: "pie",
+                  roundCap: true,
+                  radius: ["60%", "75%"],
+                  center: ["25%", "60%"],
+                  avoidLabelOverlap: false,
+                  stillShowZeroSum: false,
+                  zlevel: 1,
+                  label: {
+                    normal: {
+                      padding: [20, 10, 10, 10],
+                      backgroundColor: "#fff",
+                      show: false,
+                      position: "center",
+                      formatter: [
+                        "燃料费:{name|{b}}",
+                        "节点数量:{value|{c}}",
+                      ].join("\n"),
+                      rich: {
+                        value: {
+                          color: "#303133",
+                          fontSize: 24,
+                          lineHeight: 24,
+                        },
+                        name: {
+                          color: "#909399",
+                          fontSize: 14,
+                          lineHeight: 35,
+                        },
+                      },
+                    },
+                    emphasis: {
+                      show: true,
+                      textStyle: {
+                        fontSize: "16",
+                        fontWeight: "bold",
+                      },
+                    },
+                  },
+                  labelLine: {
+                    normal: {
+                      show: false,
+                    },
+                  },
+                  itemStyle: {
+                    // 此配置
+                    normal: {
+                      borderWidth: 4,
+                      borderColor: "#ffffff",
+                    },
+                    emphasis: {
+                      borderWidth: 0,
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: "rgba(0, 0, 0, 0.5)",
+                    },
+                  },
+                },
+              ],
+            });
+          }
+
+          // var ranliaofei =[{
+          //         name: '其它',
+          //         value: 320
+          //     },{
+          //         name: '休闲裤',
+          //         value: 586
+          //     },{
+          //         name: '女士衬衫',
+          //         value: 874
+          //     },{
+          //         name: '运动服',
+          //         value: 725
+          //     }];
+        })
+        .catch((e) => {});
     },
+
     //获取首页数据
     indexlist() {
       let that = this;
@@ -1267,7 +1418,7 @@ export default {
       color: rgba(40, 96, 194, 1);
       opacity: 1;
       cursor: pointer;
-      background: #d5e1f4;
+      background: rgba(40, 96, 194, 0.1);
       border-top: 1px solid rgba(51, 51, 51, 0.1);
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
@@ -1345,7 +1496,7 @@ export default {
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       cursor: pointer;
-
+      background: rgba(40, 96, 194, 0.1);
       .has-gutter tr th:nth-child(1) {
         border-bottom-left-radius: 10px !important;
       }

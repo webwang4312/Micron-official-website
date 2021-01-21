@@ -38,7 +38,19 @@
           ></el-table-column>
         </el-table>
         <div class="block">
-          <el-pagination
+          <div class="blocks">
+            <img
+              src="@assets/images/footer/加载中.gif"
+              style="width:32px;height:32px"
+              v-if="icon"
+            />
+            <span v-if="totalNum == 1">1</span>
+            <span v-else>{{ blockmedianum }}-{{ totalNum }}</span>
+            <img src="@assets/images/footer/组 75.png" @click="pageJian" />
+            <img src="@assets/images/footer/组 76.png" @click="pageJia" />
+          </div>
+
+          <!-- <el-pagination
             :current-page.sync="blockmedianum"
             :page-size="20"
             :pager-count="5"
@@ -47,7 +59,7 @@
             @current-change="change"
             v-if="totalNum != 0"
             ref="pagination"
-          ></el-pagination>
+          ></el-pagination> -->
           <!-- <span class="shouye" @click="gotofirst" :class="{ blue: blue1 }"
             >{{ $t("page[0]") }}</span
           >
@@ -69,16 +81,17 @@ export default {
   name: "block",
   data() {
     return {
+      icon: false,
       loading: true,
-     
+
       // 外部公共部分
       language: "",
-    
+
       // 语言图片显示与隐藏
-     
+
       choselanguage: ["中文", "EN"],
       nowLang: "",
-    
+
       fullscreenLoading: false,
       // 分页
       blockmedianum: 1,
@@ -117,6 +130,30 @@ export default {
     },
   },
   methods: {
+    pageJian() {
+      if (this.blockmedianum >= 2) {
+        if (this.icon == false) {
+          this.blockmedianum -= 1;
+          this.loading = true;
+          this.blocklist();
+        } else {
+        }
+      } else {
+        return false;
+      }
+    },
+    pageJia() {
+      if (this.blockmedianum < this.totalNum) {
+        if (this.icon == false) {
+          this.blockmedianum += 1;
+          this.loading = true;
+          this.blocklist();
+        } else {
+        }
+      } else {
+        return false;
+      }
+    },
     // 页码设置
     // 去首页
     gotofirst() {
@@ -178,6 +215,7 @@ export default {
     },
     //获取MEDIA
     async blocklist() {
+      this.icon = true;
       let that = this;
       var blockData = [];
       // var data = Qs.stringify({ pageNum: this.blockmedianum, pageSize: 20 });
@@ -192,10 +230,11 @@ export default {
           // console.log(res);
           if (res.status == 200) {
             this.loading = false;
+            this.icon = false;
           }
 
           //  console.log(res);
-          this.totalNum = res.data[0].total_record[0].total_record;
+          this.totalNum = res.data[0].total_page[0].totalPageNum;
           //console.log(this.totalNum);
           if (this.nowLang == "cn") {
             for (var i = 0; i < res.data[0].block_list.length + 1; i++) {
@@ -215,7 +254,7 @@ export default {
               // console.log(s/86400000 + "天数");
               // console.log(parseInt(s/86400000*24*60) + "fenzhong");
               let fenzhong = parseInt((s / 86400) * 24 * 60);
-                // console.log(fenzhong);
+              // console.log(fenzhong);
               if (fenzhong < 60) {
                 if (fenzhong == 0) {
                   times.push("刚刚");
@@ -320,8 +359,6 @@ export default {
       return Y + M + D + h + m + s;
     },
   },
-
-
 };
 </script>
 <style lang="less">
@@ -360,16 +397,7 @@ export default {
     opacity: 1;
     border-radius: 20px;
     margin: 0 auto;
-    .el-table__row {
-      height: 51px;
-      line-height: 51px;
-      background: rgba(40, 96, 194, 0.1);
-      font-size: 16px;
-      font-family: "苹方-简";
-      font-weight: normal;
-      line-height: 22px;
-      color: rgba(51, 51, 51, 1);
-    }
+
     .el-table th,
     .el-table tr {
       background-color: #d5e1f4;
@@ -378,28 +406,6 @@ export default {
       text-align: center;
     }
 
-    .has-gutter {
-      background-color: #2860c2 !important;
-      opacity: 0.8;
-      outline: none;
-      border: none;
-    }
-    .el-table__header-wrapper {
-      background-color: #2860c2 !important;
-      width: 100%;
-      border-radius: 15px;
-    }
-    .has-gutter tr {
-      font-size: 16px;
-      font-family: "苹方-简";
-      font-weight: normal;
-      line-height: 22px;
-      color: rgba(40, 96, 194, 1);
-      opacity: 1;
-      th div {
-        text-align: center;
-      }
-    }
     .title {
       position: relative;
       left: 42px;
@@ -416,13 +422,55 @@ export default {
       width: 1040px !important;
       height: 1069px;
       top: 50px;
-      background: rgba(40, 96, 194, 0.2);
+      background: rgba(40, 96, 194, 0.1);
       margin: 0 auto;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       cursor: pointer;
       .el-table__row {
+        background: rgba(233, 239, 249) !important;
+      }
+
+      .has-gutter tr th:nth-child(1) {
+        border-bottom-left-radius: 10px !important;
+      }
+      .has-gutter tr th:nth-last-child(2) {
+        border-bottom-right-radius: 10px !important;
+      }
+      .has-gutter tr th {
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(40, 96, 194, 1);
+        background: rgba(40, 96, 194, 0.1);
+        text-align: center;
+        th div {
+          text-align: center;
+        }
+      }
+      .el-table__row td {
+        background: rgba(233, 239, 249) !important;
+
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(51, 51, 51, 1);
+        opacity: 1;
         height: 51px;
+        border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
+      }
+      .el-table__row:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        td {
+          background-color: rgb(213, 225, 244) !important ;
+        }
+      }
+
+      .el-table tr {
+        background: rgba(40, 96, 194, 0.1) !important;
+        //  background: rgba(40, 96, 149) !important;
       }
     }
     // 页码设置
@@ -432,13 +480,43 @@ export default {
       width: 1040px !important;
       height: 64px;
       line-height: 64px;
-      background: #d5e1f4;
+      background: rgba(40, 96, 194, 0.1);
       margin: 0 auto;
-      padding-left: 30%;
+      // padding-left: 30%;
       border-top-left-radius: 0px;
       border-top-right-radius: 0px;
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
+
+      .blocks {
+        position: absolute;
+        right: 20px;
+        top: 17px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        span {
+          font-size: 16px;
+          font-family: "苹方-简";
+          font-weight: normal;
+          line-height: 22px;
+          color: #666666;
+          opacity: 1;
+          margin-right: 30px;
+        }
+        img {
+          cursor: pointer;
+        }
+        img:nth-of-type(1) {
+          margin-right: 30px;
+        
+        }
+        img:nth-of-type(2) {
+          margin-right: 30px;
+          margin-left: 30px;
+        }
+      }
+
       // .el-pagination__total {
       //   position: absolute;
       //   top: 21px;

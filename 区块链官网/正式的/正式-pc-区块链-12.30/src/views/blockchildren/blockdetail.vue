@@ -61,11 +61,12 @@
       <!-- 内容区域 -->
       <div class="detailcontent">
         <p class="title">{{ $t("block.content[0]") }}</p>
+
         <el-table
           v-loading="loading"
           :data="detailData"
           style="width: 100%"
-          class="addressltable"
+          :class="{addressltable:true,radius:isradius}"
           @row-click="gotoblockdetails"
         >
           <el-table-column
@@ -94,8 +95,27 @@
             :label="$t('publicsection[5]')"
           ></el-table-column>
         </el-table>
-        <div class="block">
-          <el-pagination
+        <div class="block" v-show="totalNum !== 1">
+          <div class="blocks" >
+            <img
+              src="@assets/images/footer/加载中.gif"
+              style="width:32px;height:32px"
+              v-if="icon"
+            />
+            <span v-if="totalNum == 1">1</span>
+            <span v-else>{{ blockmedianum }}-{{ totalNum }}</span>
+            <img
+              src="@assets/images/footer/组 75.png"
+              @click="pageJian"
+              v-if="totalNum !== 1"
+            />
+            <img
+              src="@assets/images/footer/组 76.png"
+              @click="pageJia"
+              v-if="totalNum !== 1"
+            />
+          </div>
+          <!-- <el-pagination
             :current-page.sync="blockmedianum"
             :page-size="20"
             :pager-count="5"
@@ -104,7 +124,7 @@
             @current-change="change"
             v-if="totalNum != 0"
             ref="pagination"
-          ></el-pagination>
+          ></el-pagination> -->
           <!-- <span class="shouye" @click="gotofirst" :class="{ blue: blue1 }">{{
             $t("page[0]")
           }}</span>
@@ -127,6 +147,8 @@ export default {
   name: "searchblockdetail",
   data() {
     return {
+        isradius:false,
+      icon: false,
       loading: true,
       shiyan: "",
       tables: false,
@@ -192,6 +214,30 @@ export default {
   },
 
   methods: {
+    pageJian() {
+      if (this.blockmedianum >= 2) {
+        if (this.icon == false) {
+          this.blockmedianum -= 1;
+          this.loading = true;
+          this.blocksearch();
+        } else {
+        }
+      } else {
+        return false;
+      }
+    },
+    pageJia() {
+      if (this.blockmedianum < this.totalNum) {
+        if (this.icon == false) {
+          this.blockmedianum += 1;
+          this.loading = true;
+          this.blocksearch();
+        } else {
+        }
+      } else {
+        return false;
+      }
+    },
     ceshi(msg) {
       // console.log(msg);
       this.shiyan = msg;
@@ -199,6 +245,7 @@ export default {
     },
     // 区块高度搜索
     async blocksearch() {
+       this.icon =true;
       let that = this;
       var blockData = [];
       await that.$http
@@ -210,9 +257,21 @@ export default {
           },
         })
         .then((res) => {
-          this.loading = false;
-          //  console.log(res);
-          this.totalNum = res.data[0].total_record[0].total_record;
+            if (res.status == 200) {
+            this.icon = false;
+            this.loading = false;
+          }
+          
+          //  console.log(res)res.data[0].total_page[0].totalPageNum;
+          this.totalNum =res.data[0].total_page[0].totalPageNum ;
+           if(this.totalNum==1){
+            this.isradius=true
+
+          }
+          else{
+             this.isradius=false
+          }
+          // 
           // console.log(this.totalNum);
           //console.log(res.data[0].block_list);
           // 高度
@@ -399,6 +458,7 @@ export default {
 };
 </script>
 <style lang="less">
+.radius{ border-radius: 15px !important;}
 th div {
   text-align: center;
 }
@@ -534,79 +594,97 @@ th div {
     }
   }
   .detailcontent {
+    position: relative;
+    top: 0px;
     width: 1120px;
-    height: 1250.5px;
+    height: auto;
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    opacity: 1;
     border-radius: 20px;
     margin: 0 auto;
     margin-top: 20px;
-    .el-table th,
-    .el-table tr {
-      background-color: rgba(40, 96, 194, 0.1);
-    }
-    .has-gutter tr {
-      background-color: rgba(40, 96, 194, 0.3) !important;
-      border-radius: 15px;
-      font-size: 16px;
-      font-family: "苹方-简";
-      font-weight: normal;
-      line-height: 22px;
-      color: rgba(40, 96, 194, 1);
-      opacity: 1;
-      border-bottom-left-radius: 15px !important;
-      border-bottom-right-radius: 15px !important;
-    }
+    padding-bottom: 30px;
     .title {
-      position: relative;
-      left: 42px;
-      top: 30px;
+      width: 80%;
+      padding-top: 30px;
+      padding-left: 42px;
+      padding-bottom: 30px;
+
       font-size: 20px;
       font-family: "苹方-简";
       font-weight: normal;
-      line-height: 28px;
-      color: rgba(40, 96, 194, 1);
-      opacity: 1;
-    }
-    .el-table th,
-    .el-table tr {
-      background-color: #d5e1f4;
-    }
 
-    .has-gutter {
-      background-color: #2860c2 !important;
-      opacity: 0.8;
-      outline: none;
-      border: none;
-    }
-    .el-table__header-wrapper {
-      background-color: #2860c2 !important;
-      width: 100%;
-      border-radius: 15px;
-    }
-    .has-gutter tr {
-      font-size: 16px;
-      font-family: "苹方-简";
-      font-weight: normal;
-      line-height: 22px;
       color: rgba(40, 96, 194, 1);
-      opacity: 1;
-      th div {
-        // text-align: center;
-      }
     }
     .addressltable {
       position: relative;
       width: 1040px !important;
-      height: 1069px;
-      top: 50px;
-      background: rgba(40, 96, 194, 0.2);
+      min-height: 600px;
+      height: auto;
+      background: rgba(40, 96, 194, 0.1) !important;
       margin: 0 auto;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       cursor: pointer;
+      .has-gutter tr {
+        border-radius: 15px;
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(40, 96, 194, 1);
+        opacity: 1;
+        border-bottom-left-radius: 15px !important;
+        border-bottom-right-radius: 15px !important;
+      }
+      .has-gutter tr th {
+        text-align: center;
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(40, 96, 194, 1);
+        opacity: 1;
 
+        background: rgba(40, 96, 194, 0.3);
+        th div {
+          text-align: center;
+        }
+      }
+
+      .has-gutter tr th:nth-child(1) {
+        border-bottom-left-radius: 10px !important;
+      }
+      .has-gutter tr th:nth-last-child(2) {
+        border-bottom-right-radius: 10px !important;
+      }
+      .el-table__row {
+        background: rgba(233, 239, 249) !important;
+      }
+
+      .el-table__header-wrapper {
+        width: 100%;
+        border-radius: 15px;
+      }
+      .has-gutter tr {
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(40, 96, 194, 1);
+        opacity: 1;
+      }
+      .el-table__row td {
+        background: rgba(233, 239, 249) !important;
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(51, 51, 51, 1);
+        opacity: 1;
+        height: 51px;
+        border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
+      }
       .el-table__row {
         font-size: 16px;
         font-family: "苹方-简";
@@ -616,20 +694,54 @@ th div {
         opacity: 1;
         height: 51px;
       }
+      .el-table__row:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        td {
+          background-color: rgb(213, 225, 244) !important ;
+        }
+      }
     }
     .block {
       position: relative;
-      top: 50px;
+
       width: 1040px !important;
       height: 64px;
       line-height: 64px;
-      background: #d4dff3;
+      background: rgba(40, 96, 194, 0.1);
       margin: 0 auto;
-      padding-left: 30%;
+
       border-top-left-radius: 0px;
       border-top-right-radius: 0px;
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
+      .blocks {
+        position: absolute;
+        right: 20px;
+        height: 64px;
+        line-height: 64px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        span {
+          font-size: 16px;
+          font-family: "苹方-简";
+          font-weight: normal;
+          line-height: 22px;
+          color: #666666;
+          opacity: 1;
+          margin-right: 30px;
+        }
+        img {
+          cursor: pointer;
+        }
+        img:nth-of-type(1) {
+          margin-right: 30px;
+        }
+        img:nth-of-type(2) {
+          margin-right: 30px;
+          margin-left: 30px;
+        }
+      }
       .el-pagination {
         position: relative;
         top: 18px;

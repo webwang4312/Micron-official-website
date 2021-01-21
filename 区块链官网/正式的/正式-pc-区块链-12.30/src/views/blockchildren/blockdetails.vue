@@ -1,6 +1,6 @@
 <template>
   <div class="blockdetails">
-   <headertop></headertop>
+    <headertop></headertop>
     <div class="blockdetailzong">
       <!-- 搜索栏区域 -->
       <search @test="ceshi"></search>
@@ -155,17 +155,17 @@ export default {
   data() {
     return {
       loading: true,
-     
+
       shiyan: "",
       tables: false,
       // 外部公共部分
       nowLang: "",
       fullscreenLoading: false,
-    
+
       language: "",
-     
+
       // 语言图片显示与隐藏
-     
+
       height: "",
       choselanguage: ["中文", "EN"],
       detailData: [],
@@ -200,16 +200,15 @@ export default {
       ],
     };
   },
-  components: { VFooter, Search,headertop },
+  components: { VFooter, Search, headertop },
   created() {
     this.nowLang = this.$i18n.locale;
-   
+
     this.shiyan = this.$route.query.blockhaxi;
     this.medianum = this.getContextData("currentpage1") || 1;
     this.blockhaxisearch();
-   
   },
- 
+
   methods: {
     gutotransactiondetail() {
       this.$router.push({
@@ -441,7 +440,7 @@ export default {
       }
       return;
     },
-   
+
     // 高度减
     zijian() {
       this.blockdetailslist[0].block_height =
@@ -466,10 +465,7 @@ export default {
         },
       });
     },
-    
-   
   },
- 
 };
 </script>
 <style lang="less">
@@ -638,15 +634,39 @@ th div {
       position: relative;
       top: 60px;
       margin: 0 auto;
+       background: rgba(40, 96, 194, 0.1);
+      thead tr {
+        td:nth-child(1) {
+          border-bottom-left-radius: 10px !important;
+          border-top-left-radius: 10px !important;
+        }
+        td:nth-child(6) {
+          border-bottom-right-radius: 10px !important;
+          border-top-right-radius: 10px !important;
+        }
+      }
+
       tr {
         height: 50px;
         cursor: pointer;
       }
+
+      tbody tr {
+        background: rgba(233, 239, 249) !important;
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(51, 51, 51, 1);
+        opacity: 1;
+        height: 51px;
+      }
       tbody tr:hover {
-        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        background-color: rgb(213, 225, 244) !important ;
       }
       .tableheader {
-        background-color: #b2c7ea;
+        background: rgba(40, 96, 194, 0.3);
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
         font-size: 16px;
@@ -655,19 +675,18 @@ th div {
         line-height: 22px;
         color: rgba(40, 96, 194, 1);
         opacity: 1;
+
         td:nth-child(1) {
-          border-top-left-radius: 15px;
         }
         td:nth-child(6) {
-          border-top-right-radius: 15px;
         }
       }
       tbody td {
-        border-bottom: 1px solid rgba(102, 102, 102, 0.1);
+        border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
       }
       tr {
         text-align: center;
-        background-color: #d4dff3;
+
         font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -676,22 +695,12 @@ th div {
         opacity: 1;
       }
     }
-    .el-table th,
-    .el-table tr {
-      background-color: #d5e1f4;
-    }
 
     .has-gutter {
-      background-color: #2860c2 !important;
-      opacity: 0.8;
       outline: none;
       border: none;
     }
-    .el-table__header-wrapper {
-      background-color: #2860c2 !important;
-      width: 100%;
-      border-radius: 15px;
-    }
+
     .has-gutter tr {
       font-size: 16px;
       font-family: "苹方-简";
@@ -699,9 +708,6 @@ th div {
       line-height: 22px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
-      th div {
-        // text-align: center;
-      }
     }
     .title {
       position: relative;
@@ -715,26 +721,6 @@ th div {
       opacity: 1;
     }
 
-    .addressltable {
-      position: relative;
-      width: 1040px !important;
-      height: 1069px;
-      top: 50px;
-      background: rgba(40, 96, 194, 0.2);
-      margin: 0 auto;
-      border-top-left-radius: 15px !important;
-      border-top-right-radius: 15px !important;
-      cursor: pointer;
-      .el-table__row {
-        font-size: 16px;
-        font-family: "苹方-简";
-        font-weight: normal;
-        line-height: 22px;
-        color: rgba(51, 51, 51, 1);
-        opacity: 1;
-        height: 51px;
-      }
-    }
     .block {
       position: relative;
       top: 50px;
