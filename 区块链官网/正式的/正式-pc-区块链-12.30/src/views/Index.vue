@@ -174,6 +174,7 @@ export default {
   name: "index",
   data() {
     return {
+      timer: null, //定时器名称
       loading: true,
       // 固定设置
       sticky: false,
@@ -232,28 +233,27 @@ export default {
   watch: {},
   components: { VFooter, Search, headertop },
   created() {
-    
     this.nowLang = this.$i18n.locale;
-   
+    this.indexlist();
 
     // 获取首页数据
   },
   beforeDestroy() {
-    clearInterval(this.timer);
+    clearInterval(this.timer); // 清除定时器
+    this.timer = null;
   },
 
   mounted() {
-    // setInterval(this.timer, 1000);
-    this.indexlist();
+    // setInterval(this.timer, 4000);
+    this.timer = setInterval(this.indexlist, 20000);
     this.drawLine();
-   
   },
   activated() {},
   methods: {
     // timer() {
     //   return setTimeout(() => {
     //     this.indexlist();
-    //   }, 100000);
+    //   }, 4000);
     // },
     drawLine() {
       // 基于准备好的dom，初始化echarts实例
@@ -440,37 +440,10 @@ export default {
       myChart3.setOption({
         title: {
           zlevel: 0,
-          text: ["{name|节点总数}", "{value|" + 6 + "}"].join("\n"),
-          top: "35%",
-          left: "24%",
+
           textAlign: "center",
-          textStyle: {
-            rich: {
-              value: {
-                color: "#303133",
-                fontSize: 24,
-                lineHeight: 24,
-              },
-              name: {
-                color: "#909399",
-                fontSize: 14,
-                lineHeight: 35,
-              },
-            },
-          },
         },
         formatter: "{a} <br/>{b}: {c} ({d}%)",
-        color: [
-          "#514CDB",
-          "#36cbcb",
-          "#4ecb73",
-          "#fbd437",
-          "#f2637b",
-          "#36cbcb",
-          "#4ecb73",
-          "#fbd437",
-          "#f2637b",
-        ],
 
         series: [
           {
@@ -482,32 +455,20 @@ export default {
             stillShowZeroSum: false,
             zlevel: 1,
             label: {
-              normal: {
-                padding: [20, 20, 20, 20],
-                backgroundColor: "#fff",
-                show: false,
-                position: "center",
-                formatter: ["{name|{b}}", "{value|{c}}"].join("\n"),
-                rich: {
-                  value: {
-                    color: "#303133",
-                    fontSize: 24,
-                    lineHeight: 24,
-                  },
-                  name: {
-                    color: "#909399",
-                    fontSize: 14,
-                    lineHeight: 35,
-                  },
-                },
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: "16",
-                  fontWeight: "bold",
-                },
-              },
+              // normal: {
+              //   padding: [20, 20, 20, 20],
+              //   backgroundColor: "#fff",
+              //   show: false,
+              //   position: "center",
+              //   // formatter: ["{name|{b}}", "{value|{c}}"].join("\n"),
+              // },
+              // emphasis: {
+              //   show: true,
+              //   textStyle: {
+              //     fontSize: "16",
+              //     fontWeight: "bold",
+              //   },
+              // },
             },
             labelLine: {
               normal: {
@@ -710,6 +671,7 @@ export default {
             { name: "", value: "" },
             { name: "", value: "" },
             { name: "", value: "" },
+            { name: "", value: "" },
           ];
           var count = res.data.count[0].count;
           for (var j = 0; j < res.data.topN.length + 1; j++) {
@@ -721,20 +683,24 @@ export default {
               title: {
                 zlevel: 0,
                 text: ["{name|节点总数}", "{value|" + count + "}"].join("\n"),
-                top: "55%",
+                top: "50%",
                 left: "24%",
                 textAlign: "center",
                 textStyle: {
                   rich: {
                     value: {
-                      color: "#303133",
-                      fontSize: 24,
+                      fontSize: 26,
+                      lineHeight: 37,
+                      color: "#2860C2",
+                      fontFamily: "苹方-简",
                       lineHeight: 24,
                     },
                     name: {
-                      color: "#909399",
-                      fontSize: 14,
-                      lineHeight: 35,
+                      fontSize: "16px",
+                      color: "#333333",
+                      fontSize: 16,
+                      fontFamily: "苹方-简",
+                      lineHeight: 22,
                     },
                   },
                 },
@@ -752,30 +718,32 @@ export default {
                 "#63B5B2",
                 "#95B575",
                 "#9D52A5",
+                "#6CBE4A",
                 "#DBBE4C",
               ],
               legend: {
-                orient: "vertical",
-                x: "right", //可设定图例在左、右、居中
-                y: "center", //可设定图例在上、下、居中
-                padding: [200, 50, 0, 0], //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+                orient: "horizontal'",
+                x: "50%", //可设定图例在左、右、居中
+                y: "40%", //可设定图例在上、下、居中
+                // padding: [10, 10, 10, 260], //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
                 icon: "circle",
-                itemWidth: 40, // 设置宽度
-                itemHeight: 10, // 设置高度
-                itemGap: 15,
+                itemWidth: 10, // 设置宽度
+                itemHeight: 12, // 设置高度
+                itemGap: 30,
                 formatter: function(name) {
                   console.log(name);
                   let data = ranliaofei;
                   return name;
                 },
               },
+
               series: [
                 {
                   minAngle: 30,
                   data: ranliaofei,
                   name: "节点总数",
                   type: "pie",
-                  roundCap: true,
+                  roundCap: false,
                   radius: ["60%", "75%"],
                   center: ["25%", "60%"],
                   avoidLabelOverlap: false,
@@ -805,7 +773,7 @@ export default {
                       },
                     },
                     emphasis: {
-                      show: true,
+                      show: false,
                       textStyle: {
                         fontSize: "16",
                         fontWeight: "bold",

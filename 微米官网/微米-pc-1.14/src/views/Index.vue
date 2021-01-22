@@ -469,13 +469,13 @@ export default {
     // 视频语言的切换
     if (this.$i18n.locale == "cn") {
       this.videosource[0].src =
-        "http://47.75.93.221/video/8db3eb0b75e94328a2304256012f98b6.mp4";
+        "https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4";
       this.rules.name.message = "请输入您的名字";
       this.rules.phone.message = "请输入您的手机号";
       this.rules.email.message = "请输入您的邮箱地址";
       this.rules.advice.message = "请输入您的问题";
     } else {
-      this.videosource[0].src = "http://47.75.93.221/video/yingwen.mp4";
+      this.videosource[0].src = "https://www.uenc.io/video/yingwen.mp4";
       this.rules.name.message = "Name";
       this.rules.phone.message = "Mobile no";
       this.rules.email.message = "Email address";

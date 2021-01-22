@@ -6,6 +6,7 @@
 12.28创建headerdetail詳情頁
 1.5号开始手机端开发者社区测试
 1.7手机端上线
+1.22换成https请求，上线
 ## Project setup
 ```
 npm install

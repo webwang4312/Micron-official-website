@@ -1,12 +1,18 @@
 <template>
   <!-- 搜索栏区域 -->
-  <div
-    class="indexsearch"
-   
-    v-loading.fullscreen.lock="fullscreenLoading"
-  >
+  <div class="indexsearch" v-loading.fullscreen.lock="fullscreenLoading">
     <div class="searchleft">
-      <select
+      <el-select v-model="value" placeholder="请选择"  @visible-change="right">
+        <el-option
+          @click="right"
+          v-for="item in select"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+      <!-- <select
         v-model="value"
         placeholder="UENC主网"
         @change="searchchange"
@@ -18,13 +24,13 @@
           :label="item.label"
           :value="item.value"
         ></option>
-      </select>
+      </select> -->
       <img
         src="../../assets/images/index/right.png"
         class="right"
         v-if="righticon"
       />
-      <img src="../../assets/images/index/right.png" class="rightxia" v-else />
+      <img src="../../assets/images/index/right.png" class="rightxia"  v-else/>
       <!-- <span>{{ $t("publicsection[0]") }}</span>
       <img src="../../assets/images/index/right.png" alt="" />-->
     </div>
@@ -138,6 +144,7 @@ export default {
       }
     },
     right() {
+      console.log("1");
       this.righticon = !this.righticon;
     },
     searchchange() {
@@ -198,7 +205,9 @@ export default {
         })
         .then((res) => {
           //  console.log(res);
-          if (res.data[0].search_transaction_list_for_walletAddress.length!== 0) {
+          if (
+            res.data[0].search_transaction_list_for_walletAddress.length !== 0
+          ) {
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/transactiondetails",
@@ -211,9 +220,8 @@ export default {
               query: {},
             });
           }
-        }).catch((err)=>{
-          
-        });
+        })
+        .catch((err) => {});
     },
     // 区块高度搜索
     async blocksearch() {
@@ -238,15 +246,14 @@ export default {
               },
             });
           } else {
-             this.fullscreenLoading = false;
+            this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
               query: {},
             });
           }
-        }).catch((err)=>{
-          ;
-        });;
+        })
+        .catch((err) => {});
     },
     // 根据交易易哈希查询相关交易易信息
     async transactiondetaillist() {
@@ -269,15 +276,14 @@ export default {
               },
             });
           } else {
-             this.fullscreenLoading = false;
+            this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
               query: {},
             });
           }
-        }).catch((err)=>{
-          ;
-        });;
+        })
+        .catch((err) => {});
     },
     // 区块哈希搜索
     async blockhaxisearch() {
@@ -291,22 +297,21 @@ export default {
         })
         .then((res) => {
           // console.log(res);
-          if (res.data[0].search_main_transactionInfo.length !==0) {
+          if (res.data[0].search_main_transactionInfo.length !== 0) {
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/blockdetails",
               query: { blockhaxi: this.inputvalue },
             });
           } else {
-             this.fullscreenLoading = false;
+            this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
               query: {},
             });
           }
-        }).catch((err)=>{
-          ;
-        });;
+        })
+        .catch((err) => {});
     },
     handleScroll() {
       let scrollTop =
@@ -325,6 +330,20 @@ export default {
 };
 </script>
 <style lang="less">
+.el-select-dropdown {
+  width: 149px !important;
+  padding: 0px !important;
+  left: 132px !important;
+  top: 259px !important;
+}
+.el-select {
+  left: 50px;
+  top: 30px;
+}
+.el-scrollbar__view li:nth-of-type(4) {
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px !important;
+}
 .el-input__inner {
   background-color: #eaebf3 !important;
 }
@@ -346,16 +365,18 @@ select {
   left: 27px;
   border-radius: 15px;
   border: none !important;
-  outline: none !important;
+
   font-size: 20px !important;
   font-family: "苹方-简";
   font-weight: normal;
   line-height: 28px;
   color: rgba(40, 96, 194, 1);
   opacity: 1;
-  background-color: #eaebf3;
+
   border: none !important;
   cursor: pointer;
+  outline: none;
+
   // #eaebf3
 }
 /* --ie清除--*/
@@ -371,32 +392,32 @@ select {
   -moz-appearance: none;
   -webkit-appearance: none;
   padding-right: 10px;
+
+  box-shadow: 0px 0px 5px #888888;
 }
 option {
-  border: none !important;
+  outline: none;
+  box-shadow: 0px 0px 5px red;
 }
 option:hover {
   color: #fff;
   background-color: #1e90ff;
+  border-radius: 20px;
 }
 .right {
   position: relative;
-  left: 0px;
-  top: 30px !important;
+  left: 30px;
+  top: 35px !important;
 }
 .rightxia {
   position: relative;
-  left: 0px;
-  top: 30px !important;
+  left: 28px;
+  top: 35px !important;
   transform: rotate(90deg);
 }
 /* --箭头就用自己设计的箭头，padding 空出箭头的位置--*/
 option {
   border-radius: 15px;
-}
-.el-select-dropdown {
-  position: relative;
-  top: 259px !important;
 }
 
 .el-select .el-input .el-select__caret {
@@ -446,6 +467,11 @@ option {
   flex-direction: row;
   background: url("../../assets/images/index/Up.png") no-repeat center/100% 100%;
   .el-input__inner {
+     width: 120px;
+      padding: 0px !important;
+      position: relative;
+      left: -2px;
+      top: 4px;
     font-size: 20px !important;
     font-family: "苹方-简" !important;
     font-weight: normal !important;
@@ -462,6 +488,10 @@ option {
     top: 8px;
     background: url("../../assets/images/index/Icon 1.png") no-repeat
       center/100% 100%;
+   
+    .el-input__suffix-inner {
+      display: none !important;
+    }
     span {
       font-size: 20px;
       font-family: "苹方-简";
@@ -508,7 +538,7 @@ option {
       width: 126px;
       height: 50px;
       position: relative;
-      right: -12px;
+      right: -20px;
       top: 35px;
       background: rgba(40, 96, 194, 1);
       box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.8);

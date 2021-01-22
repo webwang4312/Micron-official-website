@@ -66,7 +66,7 @@
           v-loading="loading"
           :data="detailData"
           style="width: 100%"
-          :class="{addressltable:true,radius:isradius}"
+          :class="{ addressltable: true, radius: isradius }"
           @row-click="gotoblockdetails"
         >
           <el-table-column
@@ -96,10 +96,10 @@
           ></el-table-column>
         </el-table>
         <div class="block" v-show="totalNum !== 1">
-          <div class="blocks" >
+          <div class="blocks">
             <img
               src="@assets/images/footer/加载中.gif"
-              style="width:32px;height:32px"
+              style="width:32px;height:32px;margin-right:30px"
               v-if="icon"
             />
             <span v-if="totalNum == 1">1</span>
@@ -107,11 +107,13 @@
             <img
               src="@assets/images/footer/组 75.png"
               @click="pageJian"
+              style="margin-right:30px"
               v-if="totalNum !== 1"
             />
             <img
               src="@assets/images/footer/组 76.png"
               @click="pageJia"
+              style="margin-right:20px"
               v-if="totalNum !== 1"
             />
           </div>
@@ -147,7 +149,7 @@ export default {
   name: "searchblockdetail",
   data() {
     return {
-        isradius:false,
+      isradius: false,
       icon: false,
       loading: true,
       shiyan: "",
@@ -245,7 +247,7 @@ export default {
     },
     // 区块高度搜索
     async blocksearch() {
-       this.icon =true;
+      this.icon = true;
       let that = this;
       var blockData = [];
       await that.$http
@@ -257,21 +259,19 @@ export default {
           },
         })
         .then((res) => {
-            if (res.status == 200) {
+          if (res.status == 200) {
             this.icon = false;
             this.loading = false;
           }
-          
-          //  console.log(res)res.data[0].total_page[0].totalPageNum;
-          this.totalNum =res.data[0].total_page[0].totalPageNum ;
-           if(this.totalNum==1){
-            this.isradius=true
 
+          //  console.log(res)res.data[0].total_page[0].totalPageNum;
+          this.totalNum = res.data[0].total_page[0].totalPageNum;
+          if (this.totalNum == 1) {
+            this.isradius = true;
+          } else {
+            this.isradius = false;
           }
-          else{
-             this.isradius=false
-          }
-          // 
+          //
           // console.log(this.totalNum);
           //console.log(res.data[0].block_list);
           // 高度
@@ -458,7 +458,9 @@ export default {
 };
 </script>
 <style lang="less">
-.radius{ border-radius: 15px !important;}
+.radius {
+  border-radius: 15px !important;
+}
 th div {
   text-align: center;
 }
@@ -733,13 +735,6 @@ th div {
         }
         img {
           cursor: pointer;
-        }
-        img:nth-of-type(1) {
-          margin-right: 30px;
-        }
-        img:nth-of-type(2) {
-          margin-right: 30px;
-          margin-left: 30px;
         }
       }
       .el-pagination {

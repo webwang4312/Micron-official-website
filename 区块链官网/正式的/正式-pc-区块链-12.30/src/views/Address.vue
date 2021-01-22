@@ -1,6 +1,6 @@
 <template>
   <div class="addressed">
-   <headertop></headertop>
+    <headertop></headertop>
     <div class="addresszong">
       <!-- 搜索栏区域 -->
       <search></search>
@@ -23,24 +23,29 @@
             :label="$t('address.content[1]')"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="wallet_address"
             :label="$t('address.content[2]')"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="wallet_address2"
             :label="$t('address.content[2]')"
             v-if="tables"
           ></el-table-column>
 
           <el-table-column
+            align="center"
             prop="transaction_num"
             :label="$t('publicsection[4]')"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="amount"
             :label="$t('address.content[3]')"
           ></el-table-column>
           <el-table-column
+            align="right"
             prop="percentage"
             :label="$t('address.content[4]')"
           ></el-table-column>
@@ -48,14 +53,22 @@
         <div class="addressblock">
           <div class="blocks">
             <img
-             src="@assets/images/footer/加载中.gif"
-              style="width:32px;height:32px"
+              src="@assets/images/footer/加载中.gif"
+              style="width:32px;height:32px;margin-right:30px"
               v-if="icon"
             />
             <span v-if="totalNum == 1">1</span>
             <span v-else>{{ addressmedianum }}-{{ totalNum }}</span>
-            <img src="@assets/images/footer/组 75.png" @click="pageJian" />
-            <img src="@assets/images/footer/组 76.png" @click="pageJia" />
+            <img
+              src="@assets/images/footer/组 75.png"
+              @click="pageJian"
+              style="margin-right:30px"
+            />
+            <img
+              src="@assets/images/footer/组 76.png"
+              @click="pageJia"
+              style="margin-right:20px"
+            />
           </div>
           <!-- <el-pagination
             :current-page.sync="addressmedianum"
@@ -88,16 +101,16 @@ export default {
   name: "addressed",
   data() {
     return {
-       icon: false,
+      icon: false,
       loading: true,
-     
+
       tables: false,
       // 外部公共部分
       fullscreenLoading: false,
-    
+
       language: "",
       nowLang: "",
-    
+
       choselanguage: ["中文", "EN"],
       // 搜索功能
       search: "",
@@ -112,7 +125,7 @@ export default {
       blue2: false,
     };
   },
-  components: { VFooter, Search,headertop },
+  components: { VFooter, Search, headertop },
   // 页码设置
   watch: {
     addressmedianum(val) {
@@ -126,20 +139,17 @@ export default {
   },
   created() {
     this.nowLang = this.$i18n.locale;
-    
+
     this.addressmedianum = 1;
     if (this.addressmedianum == 1) {
       this.blue1 = true;
     }
     this.addresssearch();
-    
   },
- 
-  mounted() {
-    
-  },
+
+  mounted() {},
   methods: {
-      pageJian() {
+    pageJian() {
       if (this.addressmedianum >= 2) {
         if (this.icon == false) {
           this.addressmedianum -= 1;
@@ -155,7 +165,7 @@ export default {
       if (this.addressmedianum < this.totalNum) {
         if (this.icon == false) {
           this.addressmedianum += 1;
-           this.loading = true;
+          this.loading = true;
           this.addresssearch();
         } else {
         }
@@ -164,7 +174,7 @@ export default {
       }
     },
     async addresssearch() {
-       this.icon = true;
+      this.icon = true;
       let that = this;
       var blockData = [];
       await that.$http
@@ -175,11 +185,11 @@ export default {
           },
         })
         .then((res) => {
-           if (res.status == 200) {
+          if (res.status == 200) {
             this.icon = false;
             this.loading = false;
           }
-         
+
           // console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
           //console.log(this.totalNum);
@@ -222,7 +232,7 @@ export default {
       });
       // console.log(row, event, column);
     },
-   
+
     showlist() {
       this.addresssearch();
     },
@@ -267,11 +277,8 @@ export default {
       }
       return;
     },
-   
   },
-  destroyed() {
-  
-  },
+  destroyed() {},
 };
 </script>
 <style lang="less">
@@ -309,32 +316,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .el-table th,
-    .el-table tr {
-    
-      text-align: center;
-    }
-    .el-table__body tr td {
-      text-align: center;
-    }
-    .has-gutter tr th:nth-child(1) {
-        border-bottom-left-radius: 10px !important;
-      }
-      .has-gutter tr th:nth-last-child(2) {
-        border-bottom-right-radius: 10px !important;
-      }
-     .has-gutter tr th {
-        font-size: 16px;
-        font-family: "苹方-简";
-        font-weight: normal;
-        line-height: 22px;
-        color: rgba(40, 96, 194, 1);
-        background: rgba(40, 96, 194, 0.3);
-        text-align: center;
-        th div {
-          text-align: center;
-        }
-      }
+
     .title {
       position: relative;
       left: 42px;
@@ -356,16 +338,40 @@ export default {
       border-top-left-radius: 15px !important;
       border-top-right-radius: 15px !important;
       cursor: pointer;
-      .el-table__row:hover {
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      td {
-        background-color: rgb(213, 225, 244) !important ;
+      .has-gutter tr th {
+        font-size: 16px;
+        font-family: "苹方-简";
+        font-weight: normal;
+        line-height: 22px;
+        color: rgba(40, 96, 194, 1);
+        background: rgba(40, 96, 194, 0.3);
       }
-    }
+      .has-gutter tr th:nth-child(1) {
+        padding-left: 20px !important;
+        border-bottom-left-radius: 10px !important;
+      }
+      .has-gutter tr th:nth-child(5) {
+        padding-right: 20px !important;
+      }
+      .has-gutter tr th:nth-last-child(2) {
+        border-bottom-right-radius: 10px !important;
+      }
+
+      tbody tr td:nth-child(1) {
+        padding-left: 20px !important;
+      }
+      tbody tr td:nth-child(5) {
+        padding-right: 20px !important;
+      }
+      .el-table__row:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        td {
+          background-color: rgb(213, 225, 244) !important ;
+        }
+      }
       .el-table__row td {
-        
         background: rgba(233, 239, 249) !important;
-    
+
         font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -373,12 +379,12 @@ export default {
         color: rgba(51, 51, 51, 1);
         opacity: 1;
         height: 51px;
-        border-bottom: 1px solid rgba(51, 51, 51, 0.1)!important;
+        border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
       }
     }
     // 页码设置
     .addressblock {
-      
+      border-top: 1px solid rgba(51, 51, 51, 0.1) !important;
       position: relative;
       top: 50px;
       width: 1040px !important;
@@ -391,9 +397,9 @@ export default {
       border-top-right-radius: 0px;
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
-        .blocks {
+      .blocks {
         position: absolute;
-        right: 20px;
+        right: 0px;
         top: 17px;
         display: flex;
         flex-direction: row;
@@ -409,14 +415,6 @@ export default {
         }
         img {
           cursor: pointer;
-        }
-        img:nth-of-type(1) {
-          margin-right: 30px;
-        
-        }
-        img:nth-of-type(2) {
-          margin-right: 30px;
-          margin-left: 30px;
         }
       }
       .el-pagination {
@@ -446,7 +444,7 @@ export default {
         opacity: 1;
         cursor: pointer;
       }
-     
+
       .weiye {
         position: absolute;
         top: 21px;
@@ -459,7 +457,6 @@ export default {
         opacity: 1;
         cursor: pointer;
       }
-     
     }
   }
 }

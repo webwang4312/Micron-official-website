@@ -92,7 +92,7 @@ module.exports = {
             "/api": {
                // http://192.168.1.194:8003/
                 // http://192.168.1.3:8003/
-                target: `http://192.168.1.92:8003/`,
+                target: `https://47.75.93.221`,
                 // target: `http://192.168.1.210:8003/`,
                 changeOrigin: true, // 允许websockets跨域
                 // ws: true,

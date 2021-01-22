@@ -15,7 +15,7 @@
           v-loading="loading"
           :data="transactionData"
           style="width: 100%"
-          :class="{addressltable:true,radius:isradius}"
+          :class="{ addressltable: true, radius: isradius }"
           @row-click="gototransactiondetail"
         >
           <el-table-column
@@ -47,6 +47,7 @@
             :label="$t('publicsection[7]')"
           ></el-table-column>
           <el-table-column
+            align="right"
             prop="gas"
             :label="$t('transaction.content[2]')"
           ></el-table-column>
@@ -55,7 +56,7 @@
           <div class="blocks">
             <img
               src="@assets/images/footer/加载中.gif"
-              style="width:32px;height:32px"
+              style="width:32px;height:32px;margin-right:30px"
               v-if="icon"
             />
             <span v-if="totalNum == 1">1</span>
@@ -63,11 +64,13 @@
             <img
               src="@assets/images/footer/组 75.png"
               @click="pageJian"
+              style="margin-right:30px"
               v-if="totalNum !== 1"
             />
             <img
               src="@assets/images/footer/组 76.png"
               @click="pageJia"
+              style="margin-right:20px"
               v-if="totalNum !== 1"
             />
           </div>
@@ -102,7 +105,7 @@ export default {
   name: "transaction",
   data() {
     return {
-      isradius:false,
+      isradius: false,
       icon: false,
       loading: true,
       shiyan: "",
@@ -205,12 +208,10 @@ export default {
               .account_balance + "\n\nUENC";
           // 总条数
           this.totalNum = res.data[0].total_page[0].totalPageNum;
-          if(this.totalNum==1){
-            this.isradius=true
-
-          }
-          else{
-             this.isradius=false
+          if (this.totalNum == 1) {
+            this.isradius = true;
+          } else {
+            this.isradius = false;
           }
           console.log(this.isradius);
           // // table赋值
@@ -413,7 +414,9 @@ export default {
 };
 </script>
 <style lang="less">
-.radius{ border-radius: 15px !important;}
+.radius {
+  border-radius: 15px !important;
+}
 .blue {
   color: rgba(40, 96, 194, 1) !important;
 }
@@ -519,16 +522,16 @@ export default {
       color: rgba(40, 96, 194, 1);
       opacity: 1;
     }
-    
+
     .addressltable {
       position: relative;
       width: 1040px !important;
       height: auto;
-
       background: rgba(40, 96, 194, 0.1);
       margin: 0 auto;
-      border-top-left-radius: 15px ;
-      border-top-right-radius: 15px ;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      margin-top: 50px;
       cursor: pointer;
       .el-table__row:hover {
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -536,12 +539,26 @@ export default {
           background-color: rgb(213, 225, 244) !important ;
         }
       }
-     
+
       .has-gutter tr th:nth-child(1) {
+        text-align: left !important;
+        padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
         border-bottom-right-radius: 10px !important;
+      }
+      .has-gutter tr th:nth-child(6) {
+        text-align: right !important;
+        padding-right: 20px !important;
+      }
+      tbody tr td:nth-child(1) {
+        text-align: left !important;
+        padding-left: 20px !important;
+      }
+      tbody tr td:nth-child(6) {
+        text-align: right !important;
+        padding-right: 20px !important;
       }
       .has-gutter tr th {
         font-size: 16px;
@@ -551,9 +568,6 @@ export default {
         color: rgba(40, 96, 194, 1);
         background: rgba(40, 96, 194, 0.3);
         text-align: center;
-        th div {
-          text-align: center;
-        }
       }
       .el-table__row td {
         background: rgba(233, 239, 249) !important;
@@ -571,7 +585,7 @@ export default {
         width: 100%;
         border-radius: 15px;
       }
-      .el-table__body tr td {
+      tbody tr td {
         text-align: center;
       }
 
@@ -586,9 +600,6 @@ export default {
         line-height: 22px;
         color: rgba(40, 96, 194, 1);
         opacity: 1;
-        th div {
-          text-align: center;
-        }
       }
       .el-table__row {
         font-size: 16px;
@@ -603,7 +614,7 @@ export default {
     // 页码设置
     .block {
       position: relative;
-
+      border-top: 1px solid rgba(51, 51, 51, 0.1) !important;
       width: 1040px !important;
       height: 64px;
       line-height: 64px;
@@ -633,14 +644,6 @@ export default {
         }
         img {
           cursor: pointer;
-        }
-         img:nth-of-type(1) {
-          margin-right: 30px;
-        
-        }
-        img:nth-of-type(2) {
-          margin-right: 30px;
-          margin-left: 30px;
         }
       }
       //.el-pagination__total {

@@ -542,23 +542,23 @@ export default {
     if (this.nowLang == "cn") {
       this.abouttrue = true;
       this.playerOptions1.sources[0].src =
-        "http://47.75.93.221/video/8db3eb0b75e94328a2304256012f98b6.mp4";
+        "https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4";
       this.playerOptions2.sources[0].src =
-        "http://pili-vod.uenc.net/uencVideo2.mp4";
+        "https://pili-vod.uenc.net/uencVideo2.mp4";
       this.playerOptions3.sources[0].src =
-        "http://pili-vod.uenc.net/uencVideo3.mp4";
+        "https://pili-vod.uenc.net/uencVideo3.mp4";
       this.playerOptions4.sources[0].src =
-        "http://pili-vod.uenc.net/uencVideo4.mp4";
+        "https://pili-vod.uenc.net/uencVideo4.mp4";
     } else if (this.nowLang == "en") {
       this.abouttrue = false;
       this.playerOptions1.sources[0].src =
-        "http://47.75.93.221/video/yingwen.mp4";
+        "https://www.uenc.io/video/yingwen.mp4";
       this.playerOptions2.sources[0].src =
-        "http://pili-vod.uenc.net/uencVideo2En.mp4";
+        "https://pili-vod.uenc.net/uencVideo2En.mp4";
       this.playerOptions3.sources[0].src =
-        "http://pili-vod.uenc.net/uencVideo3En.mp4";
+        "https://pili-vod.uenc.net/uencVideo3En.mp4";
       this.playerOptions4.sources[0].src =
-        "http://pili-vod.uenc.net/uencVideo4.mp4";
+        "https://pili-vod.uenc.net/uencVideo4.mp4";
     }
     this.human = human;
     this.step = step;

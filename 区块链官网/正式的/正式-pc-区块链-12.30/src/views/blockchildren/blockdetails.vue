@@ -634,7 +634,21 @@ th div {
       position: relative;
       top: 60px;
       margin: 0 auto;
-       background: rgba(40, 96, 194, 0.1);
+      background: rgba(40, 96, 194, 0.1);
+      border-radius: 20px;
+      tbody {
+        border-radius: 20px;
+        overflow: hidden;
+        tr:nth-child(3) {
+          overflow: hidden;
+          td:nth-child(1) {
+            border-bottom-left-radius: 10px !important;
+          }
+          td:nth-child(6) {
+            border-bottom-right-radius: 10px !important;
+          }
+        }
+      }
       thead tr {
         td:nth-child(1) {
           border-bottom-left-radius: 10px !important;

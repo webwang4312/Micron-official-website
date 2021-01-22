@@ -1,5 +1,5 @@
 <template>
-  <div class="transactiondetail">
+  <div class="transactiondetail" >
     <div
       v-html="transactionlist[0].from_address2"
       v-if="showmore3"
@@ -37,7 +37,7 @@
     <div class="transactiondetailzong">
       <!-- 搜索栏区域 -->
       <search @test="ceshi"></search>
-      <div class="detailcontent">
+      <div class="detailcontent"  v-loading="loading">
         <div class="linezong">
           <div class="line line1" v-show="line1"></div>
           <div class="line line2" v-show="line2"></div>

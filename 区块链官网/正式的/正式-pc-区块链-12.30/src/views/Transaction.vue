@@ -15,34 +15,41 @@
           @row-click="gototransactiondetail"
         >
           <el-table-column
+           
             prop="transaction_hash2"
             :label="$t('transaction.content[1]')"
             v-if="tables"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="transaction_hash"
             :label="$t('transaction.content[1]')"
             width="180"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="transaction_time"
             :label="$t('publicsection[8]')"
             width="180"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="transaction_amount"
             :label="$t('publicsection[5]')"
             width="200"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="from_address"
             :label="$t('publicsection[6]')"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="to_address"
             :label="$t('publicsection[7]')"
           ></el-table-column>
           <el-table-column
+            align="right"
             prop="gas"
             :label="$t('transaction.content[2]')"
           ></el-table-column>
@@ -51,13 +58,21 @@
           <div class="blocks">
             <img
               src="@assets/images/footer/加载中.gif"
-              style="width:32px;height:32px"
+              style="width:32px;height:32px;margin-right:30px"
               v-if="icon"
             />
             <span v-if="totalNum == 1">1</span>
             <span v-else>{{ transmedianum }}-{{ totalNum }}</span>
-            <img src="@assets/images/footer/组 75.png" @click="pageJian" />
-            <img src="@assets/images/footer/组 76.png" @click="pageJia" />
+            <img
+              src="@assets/images/footer/组 75.png"
+              @click="pageJian"
+              style="margin-right:30px"
+            />
+            <img
+              src="@assets/images/footer/组 76.png"
+              @click="pageJia"
+              style="margin-right:20px"
+            />
           </div>
           <!-- <el-pagination
             :current-page.sync="transmedianum"
@@ -512,9 +527,7 @@ export default {
       width: 100%;
       border-radius: 15px;
     }
-    .el-table__body tr td {
-      text-align: center;
-    }
+
     .el-table td,
     .el-table th.is-leaf {
       border-bottom: 1px solid gray;
@@ -558,11 +571,26 @@ export default {
           background-color: rgb(213, 225, 244) !important ;
         }
       }
+      .has-gutter tr th:nth-child(6) {
+        padding-right: 20px !important;
+      }
+      .has-gutter tr th:nth-child(1) {
+        text-align: left!important;
+        padding-left: 20px !important;
+      }
       .has-gutter tr th:nth-child(1) {
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
         border-bottom-right-radius: 10px !important;
+      }
+
+      tbody tr td:nth-child(6) {
+        padding-right: 20px !important;
+      }
+      tbody tr td:nth-child(1) {
+        text-align: left!important;
+        padding-left: 20px !important;
       }
       .has-gutter tr th {
         font-size: 16px;
@@ -571,10 +599,6 @@ export default {
         line-height: 22px;
         color: rgba(40, 96, 194, 1);
         background: rgba(40, 96, 194, 0.3);
-        text-align: center;
-        th div {
-          text-align: center;
-        }
       }
       .el-table__row td {
         background: rgba(233, 239, 249) !important;
@@ -622,14 +646,6 @@ export default {
         }
         img {
           cursor: pointer;
-        }
-        img:nth-of-type(1) {
-          margin-right: 30px;
-        
-        }
-        img:nth-of-type(2) {
-          margin-right: 30px;
-          margin-left: 30px;
         }
       }
       // .el-pagination__total {
