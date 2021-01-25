@@ -70,27 +70,33 @@
           @row-click="gotoblockdetails"
         >
           <el-table-column
+         
             prop="block_hash2"
             :label="$t('block.content2[3]')"
             v-if="tables"
           ></el-table-column>
           <el-table-column
+           align="center"
             prop="block_hash"
             :label="$t('block.content2[3]')"
           ></el-table-column>
           <el-table-column
+           align="center"
             prop="time"
             :label="$t('publicsection[8]')"
           ></el-table-column>
           <el-table-column
+           align="center"
             prop="from_address"
             :label="$t('publicsection[6]')"
           ></el-table-column>
           <el-table-column
+            align="center"
             prop="to_address"
             :label="$t('publicsection[7]')"
           ></el-table-column>
           <el-table-column
+          align="right"
             prop="transaction_amount"
             :label="$t('publicsection[5]')"
           ></el-table-column>
@@ -461,12 +467,8 @@ export default {
 .radius {
   border-radius: 15px !important;
 }
-th div {
-  text-align: center;
-}
-.el-table__body tr td {
-  text-align: center;
-}
+
+
 .transaction .transactioncontent .block .el-pagination__jump {
   font-size: 16px;
   font-family: "苹方-简";
@@ -640,7 +642,7 @@ th div {
         border-bottom-right-radius: 15px !important;
       }
       .has-gutter tr th {
-        text-align: center;
+       
         font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -649,12 +651,16 @@ th div {
         opacity: 1;
 
         background: rgba(40, 96, 194, 0.3);
-        th div {
-          text-align: center;
-        }
+       
       }
 
+    
+      .has-gutter tr th:nth-child(5) {
+        padding-right: 20px !important;
+      }
       .has-gutter tr th:nth-child(1) {
+        text-align: left;
+          padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -662,6 +668,13 @@ th div {
       }
       .el-table__row {
         background: rgba(233, 239, 249) !important;
+      }
+       tbody tr td:nth-child(1) {
+          text-align: left;
+        padding-left: 20px !important;
+      }
+      tbody tr td:nth-child(5) {
+        padding-right: 20px !important;
       }
 
       .el-table__header-wrapper {

@@ -2,7 +2,7 @@
   <!-- 搜索栏区域 -->
   <div class="indexsearch" v-loading.fullscreen.lock="fullscreenLoading">
     <div class="searchleft">
-      <el-select v-model="value" placeholder="请选择"  @visible-change="right">
+      <!-- <el-select v-model="value" placeholder="请选择"  @visible-change="right">
         <el-option
           @click="right"
           v-for="item in select"
@@ -11,8 +11,8 @@
           :value="item.value"
         >
         </el-option>
-      </el-select>
-      <!-- <select
+      </el-select> -->
+      <select
         v-model="value"
         placeholder="UENC主网"
         @change="searchchange"
@@ -24,13 +24,13 @@
           :label="item.label"
           :value="item.value"
         ></option>
-      </select> -->
+      </select>
       <img
         src="../../assets/images/index/right.png"
         class="right"
         v-if="righticon"
       />
-      <img src="../../assets/images/index/right.png" class="rightxia"  v-else/>
+      <img src="../../assets/images/index/right.png" class="rightxia" v-else />
       <!-- <span>{{ $t("publicsection[0]") }}</span>
       <img src="../../assets/images/index/right.png" alt="" />-->
     </div>
@@ -144,7 +144,6 @@ export default {
       }
     },
     right() {
-      console.log("1");
       this.righticon = !this.righticon;
     },
     searchchange() {
@@ -392,33 +391,30 @@ select {
   -moz-appearance: none;
   -webkit-appearance: none;
   padding-right: 10px;
+background:rgb(234,235,243);
+  // box-shadow: 0px 0px 5px #888888;
+}
 
-  box-shadow: 0px 0px 5px #888888;
-}
-option {
-  outline: none;
-  box-shadow: 0px 0px 5px red;
-}
 option:hover {
-  color: #fff;
-  background-color: #1e90ff;
-  border-radius: 20px;
+  color:red!important;
+  background: #1e90ff!important;
+  border-radius: 20px!important;
+  border: none!important;
+  outline: none;
 }
 .right {
   position: relative;
-  left: 30px;
-  top: 35px !important;
+  left: -9px;
+  top: 31px !important;
 }
 .rightxia {
   position: relative;
-  left: 28px;
-  top: 35px !important;
+  left:-9px;
+  top: 31px !important;
   transform: rotate(90deg);
 }
 /* --箭头就用自己设计的箭头，padding 空出箭头的位置--*/
-option {
-  border-radius: 15px;
-}
+
 
 .el-select .el-input .el-select__caret {
   color: blue !important;
@@ -440,7 +436,7 @@ option {
   opacity: 1;
 }
 .el-select input::placeholder {
-  background-color: #eaebf3;
+  // background-color: #eaebf3;
   font-size: 20px;
   font-family: "苹方-简";
   font-weight: normal;
@@ -467,11 +463,11 @@ option {
   flex-direction: row;
   background: url("../../assets/images/index/Up.png") no-repeat center/100% 100%;
   .el-input__inner {
-     width: 120px;
-      padding: 0px !important;
-      position: relative;
-      left: -2px;
-      top: 4px;
+    width: 120px;
+    padding: 0px !important;
+    position: relative;
+    left: -2px;
+    top: 4px;
     font-size: 20px !important;
     font-family: "苹方-简" !important;
     font-weight: normal !important;
@@ -488,7 +484,7 @@ option {
     top: 8px;
     background: url("../../assets/images/index/Icon 1.png") no-repeat
       center/100% 100%;
-   
+
     .el-input__suffix-inner {
       display: none !important;
     }

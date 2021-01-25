@@ -98,7 +98,7 @@ export default {
           boundaryGap: false,
           data: [],
           axisLabel: {
-            interval: 36,
+            interval: 6,
             formatter: function(value) {
               //x轴的文字改为竖版显示
               var str = value.split(" ");

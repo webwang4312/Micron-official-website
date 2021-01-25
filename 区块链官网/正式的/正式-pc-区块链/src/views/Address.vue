@@ -8,7 +8,7 @@
       <div class="addresscontent">
         <p class="title">
           {{ $t("address.content[0]") }}{{ $t("address.content[5]")
-          }}{{ totalNum }}{{ $t("address.content[6]") }}
+          }}{{ alltotal }}{{ $t("address.content[6]") }}
         </p>
 
         <el-table
@@ -117,6 +117,7 @@ export default {
       // 分页
       addressmedianum: 1,
       totalNum: "",
+      alltotal:'',
       addressData: [],
       searchData: "",
       addresszong: "",
@@ -192,6 +193,7 @@ export default {
 
           // console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
+          this.alltotal=res.data[0].total_record[0].total_record
           //console.log(this.totalNum);
           // table赋值
           var addresslist = res.data[0].wallet_address_list;
