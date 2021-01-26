@@ -270,7 +270,7 @@ export default {
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
         tooltip: {
-          trigger: "axis",
+          trigger: "item",
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
@@ -300,6 +300,9 @@ export default {
           },
         },
         yAxis: {
+          max: function(value) {
+            return value.max + 0.01;
+          },
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "right",
@@ -372,6 +375,9 @@ export default {
         },
 
         yAxis: {
+          max: function(value) {
+            return value.max + 100;
+          },
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "right",
@@ -393,9 +399,6 @@ export default {
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
               normal: {
-                color: "fff",
-                borderColor: "blue",
-                borderWidth: 5,
                 label: {
                   show: true,
                   position: "left",
@@ -515,11 +518,14 @@ export default {
                       borderColor: "#FFDAAF",
                       borderWidth: 3,
                       label: {
+                         borderColor:'#FFECD6',
+                         borderWidth:1,
                         extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
                         backgroundColor: "rgba(255,255,255,1)",
                         borderRadius: 10,
+                         
                         textStyle: {
                           fontSize: 12,
                           color: "#666666",
@@ -627,18 +633,21 @@ export default {
               },
               series: [
                 {
-                  symbolSize: 2, //拐点大小
+                  symbolSize: 1, //拐点大小
                   data: transaction_num_for_7,
                   type: "line",
                   areaStyle: {},
-                  symbol: "circle", //拐点样式
+                  symbol: "pin", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
+
                   itemStyle: {
                     normal: {
                       color: "#fff",
                       borderColor: "#2860C2",
                       borderWidth: 3,
                       label: {
+                        borderColor:'#CCDAF0',
+                         borderWidth:1,
                         extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
@@ -655,8 +664,9 @@ export default {
                           borderRadius: 10,
                           padding: 15,
                         },
+
                         formatter: (params) => {
-                          // console.log(params);
+                          console.log(params);
                           // console.log(this.option.series[0].data.length);
                           if (
                             transaction_num_for_7time.length - 1 ==
@@ -761,7 +771,6 @@ export default {
                 },
               },
               tooltip: {
-                
                 trigger: "item",
                 formatter: "燃料费:{b} </br> 节点数量:{c} </br> 全网占比:{d}%",
               },
@@ -794,7 +803,6 @@ export default {
 
               series: [
                 {
-                 
                   minAngle: 30,
                   data: ranliaofei,
                   name: "节点总数",
@@ -1270,6 +1278,7 @@ export default {
   margin-bottom: 20px;
   opacity: 1;
   border-radius: 40px;
+  z-index: 1;
   .el-table td {
     border-bottom: 1px solid rgba(51, 51, 51, 0.1);
   }
@@ -1490,8 +1499,21 @@ export default {
       .el-table__row {
         background: rgba(233, 239, 249) !important;
       }
-
+      tbody tr td:nth-child(1) {
+        text-align: left;
+        padding-left: 20px !important;
+      }
+      tbody tr td:nth-child(6) {
+        text-align: right;
+        padding-right: 20px !important;
+      }
+      .has-gutter tr th:nth-child(6) {
+        text-align: right;
+        padding-right: 20px !important;
+      }
       .has-gutter tr th:nth-child(1) {
+        text-align: left;
+        padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -1521,7 +1543,21 @@ export default {
       border-top-right-radius: 15px;
       cursor: pointer;
       background: rgba(40, 96, 194, 0.1);
+       tbody tr td:nth-child(1) {
+        text-align: left;
+        padding-left: 20px !important;
+      }
+      tbody tr td:nth-child(5) {
+        text-align: right;
+        padding-right: 20px !important;
+      }
+      .has-gutter tr th:nth-child(5) {
+        text-align: right;
+        padding-right: 20px !important;
+      }
       .has-gutter tr th:nth-child(1) {
+        text-align: left;
+        padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {

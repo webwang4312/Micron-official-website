@@ -12,7 +12,32 @@
         >
         </el-option>
       </el-select> -->
-      <select
+      <div class="icons">
+        <div @click="right">{{ iconvalue }}</div>
+        <img
+          src="../../assets/images/index/right.png"
+          class="right"
+          v-if="righticon"
+        />
+        <img
+          src="../../assets/images/index/right.png"
+          class="rightxia"
+          v-else
+        />
+      </div>
+      <div class="icon" v-if="!righticon">
+        <ul>
+          <li
+            v-for="item in select"
+            :key="item.value"
+            @click="selecticon(item)"
+          >
+            {{ item.label }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- <select
         v-model="value"
         placeholder="UENC主网"
         @change="searchchange"
@@ -24,13 +49,8 @@
           :label="item.label"
           :value="item.value"
         ></option>
-      </select>
-      <img
-        src="../../assets/images/index/right.png"
-        class="right"
-        v-if="righticon"
-      />
-      <img src="../../assets/images/index/right.png" class="rightxia" v-else />
+      </select> -->
+
       <!-- <span>{{ $t("publicsection[0]") }}</span>
       <img src="../../assets/images/index/right.png" alt="" />-->
     </div>
@@ -55,6 +75,7 @@ export default {
   name: "foot",
   data() {
     return {
+      iconvalue: "UENC地址",
       fullscreenLoading: false,
       nowLang: "en",
       show: false,
@@ -83,6 +104,11 @@ export default {
     },
   },
   created() {
+    if (this.$i18n.locale == "cn") {
+      this.iconvalue = "UENC地址";
+    } else {
+      this.iconvalue = "Address";
+    }
     //console.log(this.$i18n.locale);
     if (this.$i18n.locale == "cn") {
       this.select = [
@@ -135,6 +161,52 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    selecticon(item) {
+      if (this.righticon == false) {
+        this.righticon = true;
+      }
+
+      this.value = item.value;
+      if (this.$i18n.locale == "cn") {
+        switch (item.value) {
+          // 地址搜索
+          case "0":
+            this.iconvalue = "UENC地址";
+            break;
+          case "1":
+            this.iconvalue = "区块高度";
+            break;
+          // 交易哈希
+          case "2":
+            this.iconvalue = "交易哈希";
+            break;
+          // 区块哈希
+          case "3":
+            this.iconvalue = "区块哈希";
+            break;
+        }
+      }
+      if (this.$i18n.locale == "en") {
+        switch (this.value) {
+          // 地址搜索
+          case "0":
+            this.iconvalue = "Address";
+            break;
+          case "1":
+            this.iconvalue = "Height";
+            break;
+          // 交易哈希
+          case "2":
+            this.iconvalue = "Transaction";
+
+            break;
+          // 区块哈希
+          case "3":
+            this.iconvalue = "Block";
+            break;
+        }
+      }
+    },
     keyup(event) {
       // console.log(event);
       if (this.inputvalue !== "") {
@@ -329,96 +401,71 @@ export default {
 };
 </script>
 <style lang="less">
-.el-select-dropdown {
-  width: 149px !important;
-  padding: 0px !important;
-  left: 132px !important;
-  top: 259px !important;
-}
-.el-select {
-  left: 50px;
-  top: 30px;
-}
-.el-scrollbar__view li:nth-of-type(4) {
-  border-bottom-left-radius: 15px !important;
-  border-bottom-right-radius: 15px !important;
-}
-.el-input__inner {
-  background-color: #eaebf3 !important;
-}
-.el-input .el-input--suffix .is-focus {
-  height: 50px !important;
-}
-.el-select-dropdown__list {
-  background-color: #eaebf3 !important;
-}
-.popper__arrow {
-  display: none !important;
-}
-select {
-  width: 146px;
-  height: 50px;
-  top: 29px;
-  position: relative;
-  padding-left: 15px;
-  left: 27px;
-  border-radius: 15px;
-  border: none !important;
-
-  font-size: 20px !important;
+.icons {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  align-items: center;
+  font-size: 20px;
   font-family: "苹方-简";
   font-weight: normal;
   line-height: 28px;
-  color: rgba(40, 96, 194, 1);
+  color: #2860c2;
   opacity: 1;
-
-  border: none !important;
-  cursor: pointer;
-  outline: none;
-
-  // #eaebf3
-}
-/* --ie清除--*/
-
-select::-ms-expand {
-  display: none;
-}
-
-/* --火狐、谷歌清除--*/
-
-select {
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  padding-right: 10px;
-background:rgb(234,235,243);
-  // box-shadow: 0px 0px 5px #888888;
-}
-
-option:hover {
-  color:red!important;
-  background: #1e90ff!important;
-  border-radius: 20px!important;
-  border: none!important;
-  outline: none;
-}
-.right {
   position: relative;
-  left: -9px;
-  top: 31px !important;
+  left: 50px;
+  top: 40px;
+  cursor: pointer;
+  img {
+    position: relative;
+    left: 5px !important;
+    top: 0px !important;
+  }
+}
+.icon {
+  position: relative;
+  top: 18px;
+  width: 200px;
+  height: 262px;
+  background: url("../../assets/images/index/Icon 11.png") no-repeat center/100%
+    100%;
+  z-index: 50;
+  ul {
+    width: 150px;
+    position: relative;
+    top: 40px;
+
+    margin: 0 auto;
+  }
+  li {
+    text-align: center;
+    height: 28px;
+    font-size: 20px;
+    font-family: "苹方-简";
+    font-weight: normal;
+    line-height: 28px;
+    color: #2860c2;
+    opacity: 1;
+    margin-top: 15px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  li:hover {
+    background: #2860c2;
+    color: white;
+  }
+}
+
+.popper__arrow {
+  display: none !important;
+}
+
+.right {
 }
 .rightxia {
-  position: relative;
-  left:-9px;
-  top: 31px !important;
   transform: rotate(90deg);
 }
-/* --箭头就用自己设计的箭头，padding 空出箭头的位置--*/
 
-
-.el-select .el-input .el-select__caret {
-  color: blue !important;
-}
 .indexsearch .searchleft span {
   color: blue !important;
   width: 14.83px !important;
@@ -427,23 +474,7 @@ option:hover {
   left: 54px !important;
   top: -19px !important;
 }
-.el-select-dropdown__item span {
-  font-size: 20px;
-  font-family: "苹方-简";
-  font-weight: normal;
-  line-height: 28px;
-  color: rgba(40, 96, 194, 1);
-  opacity: 1;
-}
-.el-select input::placeholder {
-  // background-color: #eaebf3;
-  font-size: 20px;
-  font-family: "苹方-简";
-  font-weight: normal;
-  line-height: 28px;
-  color: rgba(40, 96, 194, 1);
-  opacity: 1;
-}
+
 .sticky2 {
   width: 1200px !important;
   height: 120px;
@@ -484,7 +515,7 @@ option:hover {
     top: 8px;
     background: url("../../assets/images/index/Icon 1.png") no-repeat
       center/100% 100%;
-
+    z-index: 40;
     .el-input__suffix-inner {
       display: none !important;
     }

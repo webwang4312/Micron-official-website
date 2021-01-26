@@ -70,13 +70,13 @@
           @row-click="gotoblockdetails"
         >
           <el-table-column
-         
+        
             prop="block_hash2"
             :label="$t('block.content2[3]')"
             v-if="tables"
           ></el-table-column>
           <el-table-column
-           align="center"
+          align="left"
             prop="block_hash"
             :label="$t('block.content2[3]')"
           ></el-table-column>
@@ -629,6 +629,7 @@ export default {
       margin: 0 auto;
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
+      text-align: left;
       cursor: pointer;
       .has-gutter tr {
         border-radius: 15px;
@@ -656,11 +657,12 @@ export default {
 
     
       .has-gutter tr th:nth-child(5) {
+        text-align: right;
         padding-right: 20px !important;
       }
       .has-gutter tr th:nth-child(1) {
-        text-align: left;
-          padding-left: 20px !important;
+       
+           padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
