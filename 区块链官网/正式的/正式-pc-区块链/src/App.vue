@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <keep-alive>
-    <router-view v-if="$route.meta.keepAlive"></router-view>
-</keep-alive>
-<router-view v-if="!$route.meta.keepAlive">
-    <!--因为用的是v-if 所以下面还要创建一个未缓存的路由视图出口-->
-</router-view>
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keepAlive">
+      <!--因为用的是v-if 所以下面还要创建一个未缓存的路由视图出口-->
+    </router-view>
   </div>
 </template>
 
 <style lang="less">
-
+// .el-table__body tr td:nth-child(1){
+//   text-align: left!important;
+// }
 
 a {
   text-decoration: none;

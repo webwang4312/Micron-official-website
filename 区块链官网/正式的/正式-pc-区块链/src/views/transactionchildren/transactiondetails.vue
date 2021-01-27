@@ -540,23 +540,24 @@ export default {
         }
       }
 
-      .has-gutter tr th:nth-child(1) {
+      .has-gutter tr th:nth-child(1) div {
         text-align: left !important;
         padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
-      .has-gutter tr th:nth-last-child(2) {
+      .has-gutter tr th:nth-last-child(2) div{
+        text-align: right!important;
         border-bottom-right-radius: 10px !important;
       }
-      .has-gutter tr th:nth-child(6) {
+      .has-gutter tr th:nth-child(6) div {
         text-align: right !important;
         padding-right: 20px !important;
       }
-      tbody tr td:nth-child(1) {
+      tbody tr td:nth-child(1)  div{
         text-align: left !important;
         padding-left: 20px !important;
       }
-      tbody tr td:nth-child(6) {
+      tbody tr td:nth-child(6) div{
         text-align: right !important;
         padding-right: 20px !important;
       }

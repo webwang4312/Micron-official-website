@@ -656,13 +656,13 @@ export default {
       }
 
     
-      .has-gutter tr th:nth-child(5) {
+      .has-gutter tr th:nth-child(5) div {
         text-align: right;
         padding-right: 20px !important;
       }
-      .has-gutter tr th:nth-child(1) {
-       
-           padding-left: 20px !important;
+      .has-gutter tr th:nth-child(1) div {
+       text-align: left;
+           padding-left: 30px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -671,9 +671,9 @@ export default {
       .el-table__row {
         background: rgba(233, 239, 249) !important;
       }
-       tbody tr td:nth-child(1) {
+       tbody tr td:nth-child(1) div {
           text-align: left;
-        padding-left: 20px !important;
+        padding-left: 30px !important;
       }
       tbody tr td:nth-child(5) {
         padding-right: 20px !important;

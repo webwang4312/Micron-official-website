@@ -358,46 +358,55 @@ export default {
       this.rules.email.message = "Please enter your e-mail address";
       this.rules.advice.message = "Please enter your question";
     }
-     // 请求首页数据
+    // 请求首页数据
     // this.getIndex();
     this.getHomeData();
     // 请求媒体公告数据
     this.getindexrecommend();
   },
+  beforeDestroy() {
+    clearInterval(this.timer); // 清除定时器
+    this.timer = null;
+  },
   computed: {},
   mounted() {
-   
+    this.timer = setInterval(this.getBlock, 20000);
   },
 
   methods: {
-//     initCanvas() {
-// console.log("初始化canvas")
-// let canvas = document.getElementById('canvas');
-// let ctx = canvas.getContext('2d');
-// ctx.beginPath();
-// ctx.strokeStyle = "red";
-// ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // 绘制
-// ctx.moveTo(110, 75);
-// ctx.arc(75, 75, 35, 0, Math.PI, false); // 口(顺时针)
-// ctx.moveTo(65, 65);
-// ctx.arc(60, 65, 5, 0, Math.PI * 2, true); // 左眼
-// ctx.moveTo(95, 65);
-// ctx.arc(90, 65, 5, 0, Math.PI * 2, true); // 右眼
-// ctx.stroke();
-// ctx.beginPath();
-// ctx.strokeStyle = "red";
-// ctx.moveTo(160, 20);
-// ctx.lineTo(160, 120);
-// ctx.lineTo(260, 120);
-// ctx.bezierCurveTo(100, 100, 200, 40, 250, 120);
-// // 登录状态下不会出现这行文字，点击页面右上角一键登录
-// ctx.lineTo(260,20);
-// ctx.stroke();
-// ctx.fillRect(150, 10, 50, 50);
-// ctx.strokeStyle = "red";
-// ctx.fillStyle = "rgba(0,0,0,1)";
-// // 登录状态下不会出现这行文字，点击页面右上角一键登录
-// },
+    timer() {
+      return setTimeout(() => {
+        this.this.getBlock();
+      }, 4000);
+    },
+    //     initCanvas() {
+    // console.log("初始化canvas")
+    // let canvas = document.getElementById('canvas');
+    // let ctx = canvas.getContext('2d');
+    // ctx.beginPath();
+    // ctx.strokeStyle = "red";
+    // ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // 绘制
+    // ctx.moveTo(110, 75);
+    // ctx.arc(75, 75, 35, 0, Math.PI, false); // 口(顺时针)
+    // ctx.moveTo(65, 65);
+    // ctx.arc(60, 65, 5, 0, Math.PI * 2, true); // 左眼
+    // ctx.moveTo(95, 65);
+    // ctx.arc(90, 65, 5, 0, Math.PI * 2, true); // 右眼
+    // ctx.stroke();
+    // ctx.beginPath();
+    // ctx.strokeStyle = "red";
+    // ctx.moveTo(160, 20);
+    // ctx.lineTo(160, 120);
+    // ctx.lineTo(260, 120);
+    // ctx.bezierCurveTo(100, 100, 200, 40, 250, 120);
+    // // 登录状态下不会出现这行文字，点击页面右上角一键登录
+    // ctx.lineTo(260,20);
+    // ctx.stroke();
+    // ctx.fillRect(150, 10, 50, 50);
+    // ctx.strokeStyle = "red";
+    // ctx.fillStyle = "rgba(0,0,0,1)";
+    // // 登录状态下不会出现这行文字，点击页面右上角一键登录
+    // },
     showSliderFalse() {
       this.$store.commit("showSliderFalse");
       this.$store.commit("menCengHide");
@@ -514,6 +523,18 @@ export default {
             }
           });
       }
+    },
+    getBlock() {
+      let that = this;
+      that.$http
+        .get(`${BASEURL}` + "/weimioffice/web/content/getHomeData", {
+          params: {},
+          headers: {},
+        })
+        .then((res) => {
+          //  console.log(res);
+          console.log(res);
+        });
     },
     // http://47.100.227.125:8003
     // 获得区块高度数值
@@ -718,8 +739,8 @@ export default {
     .videoline {
       width: 60px;
       height: 2px;
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
       position: absolute;
       //  left: 158px;
       top: 82px;
@@ -763,11 +784,10 @@ export default {
     .projectline {
       width: 60px;
       height: 2px;
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
       position: absolute;
       top: 82px;
-    
     }
     .project-content {
       display: flex;
@@ -850,9 +870,9 @@ export default {
       position: absolute;
       top: 82px;
       width: 60px;
-     height: 2px;
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+      height: 2px;
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
     }
     ul {
       position: absolute;
@@ -972,8 +992,8 @@ export default {
       top: 82px;
       width: 60px;
       height: 2px;
-      background:  rgba(0, 159, 205, 1);
-   margin: 0 auto;
+      background: rgba(0, 159, 205, 1);
+      margin: 0 auto;
     }
     .contactcontent {
       position: absolute;

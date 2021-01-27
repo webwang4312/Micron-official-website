@@ -78,31 +78,38 @@
           @row-click="gototransactiondetail"
         >
           <el-table-column
+          align="center"
             prop="transaction_hash2"
             :label="$t('home.contenttop[0]')"
             v-if="tables"
           ></el-table-column>
           <el-table-column
+          align="center"
             prop="transaction_hash"
             :label="$t('home.contenttop[1]')"
           ></el-table-column>
           <el-table-column
+          align="center"
             prop="date"
             :label="$t('publicsection[8]')"
           ></el-table-column>
           <el-table-column
+          align="center"
             prop="amount"
             :label="$t('publicsection[5]')"
           ></el-table-column>
           <el-table-column
+          align="center"
             prop="from_address"
             :label="$t('publicsection[6]')"
           ></el-table-column>
           <el-table-column
+          align="center"
             prop="to_address"
             :label="$t('publicsection[7]')"
           ></el-table-column>
           <el-table-column
+          align="center"
             prop="gas"
             :label="$t('home.contenttop[2]')"
           ></el-table-column>
@@ -270,11 +277,13 @@ export default {
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
         tooltip: {
-          trigger: "item",
+          trigger: "axis",
           // trigger: "item",
           axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "line", // 默认为直线，可选为：'line' | 'shadow'
+            type: "none",
+            label: {
+              backgroundColor: "#6a7985",
+            },
           },
         },
         xAxis: {
@@ -324,9 +333,6 @@ export default {
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
               normal: {
-                color: "fff",
-                borderColor: "blue",
-                borderWidth: 2,
                 label: {
                   show: true,
                   position: "left",
@@ -358,7 +364,17 @@ export default {
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
+        tooltip: {
+          trigger: "axis",
 
+          // trigger: "item",
+          axisPointer: {
+            type: "none",
+            label: {
+              backgroundColor: "#6a7985",
+            },
+          },
+        },
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
@@ -367,6 +383,16 @@ export default {
           axisLine: {
             //y轴
             show: false,
+          },
+          axisLabel: {
+            interval: 0,
+            // 横坐标数据间隔
+            // formatter: function(value) {
+            //   // console.log(value)
+            //   //x轴的文字改为竖版显示
+            //   var str = value.split(" ");
+            //   return str[0];
+            // },
           },
           axisTick: {
             //y轴刻度线
@@ -416,57 +442,32 @@ export default {
         ],
       });
       myChart3.setOption({
-        title: {
-          zlevel: 0,
-
-          textAlign: "center",
+        tooltip: {
+          trigger: "item",
         },
-        formatter: "{a} <br/>{b}: {c} ({d}%)",
-
+        legend: {},
         series: [
           {
-            name: "节点总数",
             type: "pie",
-            radius: ["60%", "75%"],
-            center: ["15%", "47%"],
+
             avoidLabelOverlap: false,
-            stillShowZeroSum: false,
-            zlevel: 1,
+            itemStyle: {
+              borderRadius: 20,
+            },
             label: {
-              // normal: {
-              //   padding: [20, 20, 20, 20],
-              //   backgroundColor: "#fff",
-              //   show: false,
-              //   position: "center",
-              //   // formatter: ["{name|{b}}", "{value|{c}}"].join("\n"),
-              // },
-              // emphasis: {
-              //   show: true,
-              //   textStyle: {
-              //     fontSize: "16",
-              //     fontWeight: "bold",
-              //   },
-              // },
+              show: false,
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: "10",
+                fontWeight: "bold",
+              },
             },
             labelLine: {
-              normal: {
-                show: false,
-              },
+              show: false,
             },
-            itemStyle: {
-              // 此配置
-              normal: {
-                borderWidth: 4,
-                borderColor: "#ffffff",
-              },
-              emphasis: {
-                borderWidth: 0,
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)",
-              },
-            },
-            data: [],
+            data: data,
           },
         ],
       });
@@ -499,6 +500,7 @@ export default {
             //  console.log(ranliaoaverage);
             //  console.log(shijianchuo);
             // 填入数据
+            var size = [0, 0, 0, 0, 0, 0, 6];
             myChart.setOption({
               xAxis: {
                 data: shijianchuo,
@@ -508,7 +510,10 @@ export default {
                 {
                   data: ranliaoaverage,
                   type: "line",
-                  symbolSize: 3,
+                  symbolSize: (rawValue, params) => {
+                    params.symbolSize = size[params.dataIndex];
+                    return params.symbolSize;
+                  },
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -518,14 +523,14 @@ export default {
                       borderColor: "#FFDAAF",
                       borderWidth: 3,
                       label: {
-                         borderColor:'#FFECD6',
-                         borderWidth:1,
+                        borderColor: "#FFECD6",
+                        borderWidth: 1,
                         extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
                         backgroundColor: "rgba(255,255,255,1)",
                         borderRadius: 10,
-                         
+
                         textStyle: {
                           fontSize: 12,
                           color: "#666666",
@@ -542,7 +547,7 @@ export default {
                           if (ranliaoaverage.length - 1 == params.dataIndex) {
                             return (
                               "{a|" +
-                              "2021-" +
+                              "" +
                               params.name +
                               "\n" +
                               "\n" +
@@ -610,30 +615,18 @@ export default {
             //  console.log(ranliaoaverage);
             //  console.log(shijianchuo);
             // 填入数据
+            var size = [0, 0, 0, 0, 0, 0, 6];
             myChart2.setOption({
               xAxis: {
                 data: transaction_num_for_7time,
               },
-              tooltip: {
-                trigger: "item",
-                axisPointer: {
-                  lineStyle: {
-                    color: "#666666",
-                  },
-                },
-                formatter: (params) => {
-                  return params.value;
-                },
-                backgroundColor: "rgba(255,255,255,1)",
-                padding: [5, 10],
-                textStyle: {
-                  color: "#666666",
-                },
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
-              },
+
               series: [
                 {
-                  symbolSize: 1, //拐点大小
+                  symbolSize: (rawValue, params) => {
+                    params.symbolSize = size[params.dataIndex];
+                    return params.symbolSize;
+                  },
                   data: transaction_num_for_7,
                   type: "line",
                   areaStyle: {},
@@ -643,11 +636,11 @@ export default {
                   itemStyle: {
                     normal: {
                       color: "#fff",
-                      borderColor: "#2860C2",
-                      borderWidth: 3,
+                      borderColor: "blue",
+                      borderWidth: 1,
                       label: {
-                        borderColor:'#CCDAF0',
-                         borderWidth:1,
+                        borderColor: "#CCDAF0",
+                        borderWidth: 1,
                         extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
@@ -674,7 +667,7 @@ export default {
                           ) {
                             return (
                               "{a|" +
-                              "2021-" +
+                              "" +
                               params.name +
                               "\n" +
                               "\n" +
@@ -748,8 +741,8 @@ export default {
               title: {
                 zlevel: 0,
                 text: ["{name|节点总数}", "{value|" + count + "}"].join("\n"),
-                top: "50%",
-                left: "24%",
+                top: "45%",
+                left: "21%",
                 textAlign: "center",
                 textStyle: {
                   rich: {
@@ -788,12 +781,14 @@ export default {
               ],
               legend: {
                 orient: "horizontal",
-                top: "20%",
+                top: "25%",
                 right: "0%",
                 padding: [40, 50],
                 width: 220,
                 pageButtonItemGap: 20,
-                itemGap: 15,
+                itemGap: 25,
+                icon: "circle",
+
                 formatter: function(name) {
                   // console.log(name);
                   let data = ranliaofei;
@@ -808,14 +803,15 @@ export default {
                   name: "节点总数",
                   type: "pie",
                   roundCap: false,
-                  radius: ["60%", "75%"],
-                  center: ["25%", "60%"],
+                  radius: ["50%", "60%"],
+                  center: ["22%", "55%"],
                   avoidLabelOverlap: false,
+
                   stillShowZeroSum: false,
                   zlevel: 1,
                   label: {
                     normal: {
-                      padding: [20, 10, 10, 10],
+                      padding: [],
                       backgroundColor: "#fff",
                       show: false,
                       position: "center",
@@ -850,6 +846,9 @@ export default {
                     },
                   },
                   itemStyle: {
+                    borderRadius: 200,
+                    borderColor: "#f00",
+                    borderWidth: 2,
                     // 此配置
                     normal: {
                       borderWidth: 4,
@@ -1507,13 +1506,16 @@ export default {
         text-align: right;
         padding-right: 20px !important;
       }
-      .has-gutter tr th:nth-child(6) {
-        text-align: right;
-        padding-right: 20px !important;
+      .has-gutter tr th:nth-child(6) div {
+        text-align: right!important;
+        padding-right: 30px !important;
       }
-      .has-gutter tr th:nth-child(1) {
-        text-align: left;
-        padding-left: 20px !important;
+      .has-gutter tr th:nth-child(1)  {
+        div{
+  text-align: left!important;
+        padding-left: 30px !important;
+        }
+      
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -1543,7 +1545,7 @@ export default {
       border-top-right-radius: 15px;
       cursor: pointer;
       background: rgba(40, 96, 194, 0.1);
-       tbody tr td:nth-child(1) {
+      tbody tr td:nth-child(1) {
         text-align: left;
         padding-left: 20px !important;
       }
@@ -1551,13 +1553,16 @@ export default {
         text-align: right;
         padding-right: 20px !important;
       }
-      .has-gutter tr th:nth-child(5) {
+      .has-gutter tr th:nth-child(5) div {
         text-align: right;
-        padding-right: 20px !important;
+        padding-right: 30px !important;
       }
-      .has-gutter tr th:nth-child(1) {
-        text-align: left;
-        padding-left: 20px !important;
+      .has-gutter tr th:nth-child(1)  {
+        div{
+ text-align: left;
+        padding-left: 30px !important;
+        }
+       
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {

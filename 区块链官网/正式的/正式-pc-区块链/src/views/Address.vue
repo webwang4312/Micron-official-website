@@ -117,7 +117,7 @@ export default {
       // 分页
       addressmedianum: 1,
       totalNum: "",
-      alltotal:'',
+      alltotal: "",
       addressData: [],
       searchData: "",
       addresszong: "",
@@ -193,7 +193,7 @@ export default {
 
           // console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
-          this.alltotal=res.data[0].total_record[0].total_record
+          this.alltotal = res.data[0].total_record[0].total_record;
           //console.log(this.totalNum);
           // table赋值
           var addresslist = res.data[0].wallet_address_list;
@@ -349,21 +349,28 @@ export default {
         background: rgba(40, 96, 194, 0.3);
       }
       .has-gutter tr th:nth-child(1) {
-        padding-left: 20px !important;
+        div {
+          text-align: left;
+          padding-left: 30px !important;
+        }
+
         border-bottom-left-radius: 10px !important;
       }
-      .has-gutter tr th:nth-child(5) {
-        padding-right: 20px !important;
+      .has-gutter tr th:nth-child(5) div {
+        text-align: right;
+        padding-right: 30px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
         border-bottom-right-radius: 10px !important;
       }
 
-      tbody tr td:nth-child(1) {
-        padding-left: 20px !important;
+      tbody tr td:nth-child(1) div {
+        text-align: left;
+        padding-left: 30px !important;
       }
-      tbody tr td:nth-child(5) {
-        padding-right: 20px !important;
+      tbody tr td:nth-child(5) div {
+        text-align: right;
+        padding-right: 30px !important;
       }
       .el-table__row:hover {
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

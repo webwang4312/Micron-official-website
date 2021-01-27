@@ -17,13 +17,13 @@
           <el-table-column
             prop="block_height"
             :label="$t('publicsection[3]')"
-            width="180"
+          
           ></el-table-column>
           <el-table-column
             align="center"
             prop="block_time"
             :label="$t('publicsection[8]')"
-            width="180"
+         
           ></el-table-column>
           <el-table-column
             align="center"
@@ -440,17 +440,23 @@ export default {
         background: rgba(233, 239, 249) !important;
       }
 
-      .has-gutter tr th:nth-child(1) {
-        padding-left: 20px !important;
+      .has-gutter tr th:nth-child(1)  {
+        div{
+text-align: left;
+        padding-left: 30px !important;
+        }
+        
         border-bottom-left-radius: 10px !important;
       }
-      .has-gutter tr th:nth-child(5) {
-        padding-right: 20px !important;
+      .has-gutter tr th:nth-child(5) div {
+        text-align: right;
+        padding-right: 30px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
         border-bottom-right-radius: 10px !important;
       }
       tbody tr td:nth-child(1) {
+        text-align: left;
         padding-left: 20px !important;
       }
       tbody tr td:nth-child(5) {

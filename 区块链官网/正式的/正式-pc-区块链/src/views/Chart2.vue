@@ -54,7 +54,6 @@ export default {
     return {
       fullscreenLoading: false,
       language: "",
-      size: 0.1,
     };
   },
   components: { VFooter, Search, headertop },
@@ -86,7 +85,7 @@ export default {
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
+            type: "line", // 默认为直线，可选为：'line' | 'shadow'
           },
         },
         xAxis: {
@@ -161,10 +160,8 @@ export default {
           trigger: "axis",
           // trigger: "item",
           axisPointer: {
-            type: "none",
-            label: {
-              backgroundColor: "#6a7985",
-            },
+            // 坐标轴指示器，坐标轴触发有效
+            type: "line", // 默认为直线，可选为：'line' | 'shadow'
           },
         },
         xAxis: {
@@ -202,7 +199,11 @@ export default {
             symbol: "circle", //拐点样式
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
-              normal: {},
+              normal: {
+                color: "fff",
+                borderColor: "blue",
+                borderWidth: 5,
+              },
               lineStyle: {
                 // 系列级个性化折线样式
                 width: 3,
@@ -233,7 +234,7 @@ export default {
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
+            type: "line", // 默认为直线，可选为：'line' | 'shadow'
           },
         },
         xAxis: {
@@ -312,7 +313,7 @@ export default {
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
+            type: "line", // 默认为直线，可选为：'line' | 'shadow'
           },
         },
         xAxis: {
@@ -386,7 +387,7 @@ export default {
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
+            type: "line", // 默认为直线，可选为：'line' | 'shadow'
           },
         },
         xAxis: {
@@ -482,58 +483,8 @@ export default {
             // 每日uenc交易指数;
             usdt.unshift(res.data[0].usdt[i].usdt);
             usdttime.unshift(
-              this.timestampToTime2(res.data[0].usdt[i].time).substring(5, 10)
+              this.timestampToTime2(res.data[0].usdt[i].time).substring(5)
             );
-            var size = [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              6,
-            ];
             // 填入数据
             myChart1.setOption({
               xAxis: {
@@ -543,10 +494,7 @@ export default {
                 {
                   data: usdt,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  symbolSize: 0.001,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -554,7 +502,7 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
                         borderColor: "#CCDAF0",
                         borderWidth: 1,
@@ -580,7 +528,7 @@ export default {
                           if (usdttime.length - 1 == params.dataIndex) {
                             return (
                               "{a|" +
-                              "" +
+                              "2021-" +
                               params.name +
                               "\n" +
                               "\n" +
@@ -649,7 +597,6 @@ export default {
                 res.data[0].transaction_num_for_7[i].date
               ).substring(5, 10)
             );
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart2.setOption({
               xAxis: {
@@ -659,11 +606,7 @@ export default {
                 {
                   data: transaction_num_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
-
+                  symbolSize: 0.001,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -671,7 +614,7 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
                         borderColor: "#CCDAF0",
                         borderWidth: 1,
@@ -679,7 +622,7 @@ export default {
                         show: true,
                         position: "left",
                         backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 5,
+                        borderRadius: 10,
 
                         textStyle: {
                           fontSize: 12,
@@ -700,7 +643,7 @@ export default {
                           ) {
                             return (
                               "{a|" +
-                              "" +
+                              "2021-" +
                               params.name +
                               "\n" +
                               "\n" +
@@ -768,7 +711,6 @@ export default {
                 res.data[0].transaction_amount_for_7[i].date
               ).substring(5, 10)
             );
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart3.setOption({
               xAxis: {
@@ -793,10 +735,7 @@ export default {
                 {
                   data: transaction_amount_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  symbolSize: 0.001,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -804,7 +743,7 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
                         borderColor: "#CCDAF0",
                         borderWidth: 1,
@@ -826,7 +765,6 @@ export default {
                         },
 
                         formatter: (params) => {
-                          // console.log(params);
                           // console.log(this.option.series[0].data.length);
                           if (
                             transaction_amount_for_7time.length - 1 ==
@@ -834,7 +772,7 @@ export default {
                           ) {
                             return (
                               "{a|" +
-                              "" +
+                              "2021-" +
                               params.name +
                               "\n" +
                               "\n" +
@@ -897,8 +835,6 @@ export default {
                 res.data[0].block_num_for_7[i].date
               ).substring(5, 10)
             );
-
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart4.setOption({
               xAxis: {
@@ -908,10 +844,7 @@ export default {
                 {
                   data: block_num_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  symbolSize: 0.001,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -919,7 +852,7 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
                         borderColor: "#CCDAF0",
                         borderWidth: 1,
@@ -941,7 +874,6 @@ export default {
                         },
 
                         formatter: (params) => {
-                          // console.log(params);
                           // console.log(this.option.series[0].data.length);
                           if (
                             block_num_for_7time.length - 1 ==
@@ -949,7 +881,7 @@ export default {
                           ) {
                             return (
                               "{a|" +
-                              "" +
+                              "2021-" +
                               params.name +
                               "\n" +
                               "\n" +
@@ -1013,7 +945,6 @@ export default {
                 res.data[0].avg_gas_for_7[i].date
               ).substring(5, 10)
             );
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart5.setOption({
               xAxis: {
@@ -1023,10 +954,7 @@ export default {
                 {
                   data: avg_gas_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  symbolSize: 0.001,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -1034,7 +962,7 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
                         borderColor: "#CCDAF0",
                         borderWidth: 1,
@@ -1062,7 +990,7 @@ export default {
                           ) {
                             return (
                               "{a|" +
-                              "" +
+                              "2021-" +
                               params.name +
                               "\n" +
                               "\n" +

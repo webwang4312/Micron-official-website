@@ -426,7 +426,7 @@ export default {
   position: relative;
   top: 18px;
   width: 200px;
-  height: 262px;
+  height: 229px;
   background: url("../../assets/images/index/Icon 11.png") no-repeat center/100%
     100%;
   z-index: 50;

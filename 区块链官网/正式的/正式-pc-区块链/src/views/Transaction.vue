@@ -571,12 +571,13 @@ export default {
           background-color: rgb(213, 225, 244) !important ;
         }
       }
-      .has-gutter tr th:nth-child(6) {
-        padding-right: 20px !important;
+      .has-gutter tr th:nth-child(6) div {
+          text-align: right!important;
+        padding-right: 30px !important;
       }
-      .has-gutter tr th:nth-child(1) {
+      .has-gutter tr th:nth-child(1) div {
         text-align: left!important;
-        padding-left: 20px !important;
+        padding-left: 30px !important;
       }
       .has-gutter tr th:nth-child(1) {
         border-bottom-left-radius: 10px !important;
