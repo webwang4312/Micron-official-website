@@ -30,15 +30,15 @@
           </li>
           <li>
             <p>
-              {{ $t("publicsection[3]") }}:{{
+              {{ $t("publicsection[3]") }}:<span v-html="`&nbsp;&nbsp;`">   </span>  {{
                 blockdetailslist[0].block_height
               }}
             </p>
             <p>
-              {{ $t("publicsection[8]") }}:{{ blockdetailslist[0].block_time }}
+              {{ $t("publicsection[8]") }}:<span v-html="`&nbsp;&nbsp;`">   </span>{{ blockdetailslist[0].block_time }}
             </p>
             <p>
-              {{ $t("block.content3[0]") }}:{{ blockdetailslist[0].prevHash }}
+              {{ $t("block.content3[0]") }}:<span v-html="`&nbsp;&nbsp;`">   </span>{{ blockdetailslist[0].prevHash }}
             </p>
           </li>
         </ul>
@@ -530,7 +530,7 @@ th div {
       top: 30px;
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight: bold;
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
@@ -571,13 +571,16 @@ th div {
           height: 16.83px;
           position: relative;
           top: 10px !important;
+          
           cursor: pointer;
+          margin-right: 10px;
         }
         .left {
           left: 30px;
+          
         }
         .right {
-          left: 58px;
+        left: 20px!important;
         }
         .linumber {
           font-size: 40px;
@@ -587,13 +590,12 @@ th div {
           color: rgba(51, 51, 51, 1);
           opacity: 1;
           position: relative;
-          left: 30px;
+          left: 20px;
           top: 16px;
+        
         }
         .linumber1 {
-          position: relative;
-          left: 49px;
-          top: 16px;
+         
         }
         img {
           width: 22.82px;
@@ -691,6 +693,8 @@ th div {
         opacity: 1;
 
         td:nth-child(1) {
+          text-align: left;
+          padding-left: 20px;
         }
         td:nth-child(6) {
         }
@@ -729,7 +733,7 @@ th div {
       top: 30px;
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight:bold;
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;

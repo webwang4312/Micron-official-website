@@ -41,6 +41,7 @@
       </div>
       <v-footer></v-footer>
     </div>
+    
   </div>
 </template>
 
@@ -54,7 +55,6 @@ export default {
     return {
       fullscreenLoading: false,
       language: "",
-      size: 0.1,
     };
   },
   components: { VFooter, Search, headertop },
@@ -86,7 +86,7 @@ export default {
           // trigger: "item",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
+            type: "line", // 默认为直线，可选为：'line' | 'shadow'
           },
         },
         xAxis: {
@@ -124,28 +124,28 @@ export default {
             show: false,
           },
         },
-        series: [
+     series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
+              normal: {
+                label: {
+                  show: false,
+                  position: "left",
+                  textStyle: {},
+                },
+              },
               lineStyle: {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "#8FD826", //折线的颜色
+                color: "green", //折线的颜色
               },
-            },
-            areaStyle: {
-              normal: {
-                color: " #FFE0BE", //改变区域颜色
-              },
-            },
-            lineStyle: {
-              color: "#FE9D67", //改变折线颜色
             },
           },
         ],
@@ -157,16 +157,7 @@ export default {
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
-        tooltip: {
-          trigger: "axis",
-          // trigger: "item",
-          axisPointer: {
-            type: "none",
-            label: {
-              backgroundColor: "#6a7985",
-            },
-          },
-        },
+
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
@@ -176,12 +167,19 @@ export default {
             //y轴
             show: false,
           },
+          axisLabel: {
+            interval: 0,
+          },
           axisTick: {
             //y轴刻度线
             show: false,
           },
         },
+
         yAxis: {
+          max: function(value) {
+            return value.max + 100;
+          },
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -197,26 +195,25 @@ export default {
         series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
-              normal: {},
+              normal: {
+                label: {
+                  show: false,
+                  position: "left",
+                  textStyle: {},
+                },
+              },
               lineStyle: {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "#8FD826", //折线的颜色
+                color: "green", //折线的颜色
               },
-            },
-            areaStyle: {
-              normal: {
-                color: " #FFE0BE", //改变区域颜色
-              },
-            },
-            lineStyle: {
-              color: "#FE9D67", //改变折线颜色
             },
           },
         ],
@@ -228,14 +225,7 @@ export default {
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
-        tooltip: {
-          trigger: "axis",
-          // trigger: "item",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
-          },
-        },
+
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
@@ -245,20 +235,22 @@ export default {
             //y轴
             show: false,
           },
+          axisLabel: {
+            interval: 0,
+          },
           axisTick: {
             //y轴刻度线
             show: false,
           },
         },
+
         yAxis: {
-          grid: {
-            x: 70,
-            y: 100,
+          max: function(value) {
+            return value.max + 10;
           },
-          scale: true,
           type: "value",
           splitLine: { show: false }, //去除网格线
-
+          position: "left",
           axisLine: {
             //y轴
             show: false,
@@ -271,31 +263,25 @@ export default {
         series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
               normal: {
-                color: "fff",
-                borderColor: "blue",
-                borderWidth: 5,
-                label: {},
+                label: {
+                  show: false,
+                  position: "left",
+                  textStyle: {},
+                },
               },
               lineStyle: {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "#8FD826", //折线的颜色
+                color: "green", //折线的颜色
               },
-            },
-            areaStyle: {
-              normal: {
-                color: " #FFE0BE", //改变区域颜色
-              },
-            },
-            lineStyle: {
-              color: "#FE9D67", //改变折线颜色
             },
           },
         ],
@@ -307,14 +293,7 @@ export default {
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
-        tooltip: {
-          trigger: "axis",
-          // trigger: "item",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
-          },
-        },
+
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
@@ -324,12 +303,19 @@ export default {
             //y轴
             show: false,
           },
+          axisLabel: {
+            interval: 0,
+          },
           axisTick: {
             //y轴刻度线
             show: false,
           },
         },
+
         yAxis: {
+          max: function(value) {
+            return value.max + 100;
+          },
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -345,73 +331,67 @@ export default {
         series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
               normal: {
-                color: "fff",
-                borderColor: "blue",
-                borderWidth: 5,
-                label: {},
+                label: {
+                  show: false,
+                  position: "left",
+                  textStyle: {},
+                },
               },
               lineStyle: {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "#8FD826", //折线的颜色
+                color: "green", //折线的颜色
               },
-            },
-            areaStyle: {
-              normal: {
-                color: " #FFE0BE", //改变区域颜色
-              },
-            },
-            lineStyle: {
-              color: "#FE9D67", //改变折线颜色
             },
           },
         ],
       });
       myChart5.setOption({
+        grid: {
+         x: 60
+       },
         title: {
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
-        tooltip: {
-          trigger: "axis",
-          // trigger: "item",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "none", // 默认为直线，可选为：'line' | 'shadow'
-          },
-        },
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
           boundaryGap: false,
           data: [],
+          axisLine: {
+            //y轴
+            show: false,
+          },
+
+          axisTick: {
+            //y轴刻度线
+            show: false,
+          },
           axisLabel: {
-            interval: 0,
+            interval: 36,
             formatter: function(value) {
               //x轴的文字改为竖版显示
               var str = value.split(" ");
               return str.join("\n");
             },
           },
-          axisLine: {
-            //y轴
-            show: false,
-          },
-          axisTick: {
-            //y轴刻度线
-            show: false,
-          },
         },
+
         yAxis: {
+          max: function(value) {
+            return value.max;
+          },
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -427,25 +407,25 @@ export default {
         series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
             smooth: true, //true 为平滑曲线，false为直线
             itemStyle: {
+              normal: {
+                label: {
+                  show: false,
+                  position: "left",
+                  textStyle: {},
+                },
+              },
               lineStyle: {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "#8FD826", //折线的颜色
+                color: "green", //折线的颜色
               },
-            },
-            areaStyle: {
-              normal: {
-                color: " #FFE0BE", //改变区域颜色
-              },
-            },
-            lineStyle: {
-              color: "#FE9D67", //改变折线颜色
             },
           },
         ],
@@ -482,71 +462,61 @@ export default {
             // 每日uenc交易指数;
             usdt.unshift(res.data[0].usdt[i].usdt);
             usdttime.unshift(
-              this.timestampToTime2(res.data[0].usdt[i].time).substring(5, 10)
+              this.timestampToTime2(res.data[0].usdt[i].time).substring(5)
             );
-            var size = [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              6,
-            ];
             // 填入数据
             myChart1.setOption({
               xAxis: {
                 data: usdttime,
               },
+                tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />交易指数: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
+              },
               series: [
                 {
                   data: usdt,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -554,60 +524,18 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
-                        borderColor: "#CCDAF0",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 10,
-
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 116,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "rgb(40,96,194)",
                         },
-
-                        formatter: (params) => {
-                          // console.log(this.option.series[0].data.length);
-                          if (usdttime.length - 1 == params.dataIndex) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}交易指数:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            marginLeft: 25,
-                            marginTop: 15,
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                        },
+                       
                       },
                     },
                   },
@@ -649,21 +577,59 @@ export default {
                 res.data[0].transaction_num_for_7[i].date
               ).substring(5, 10)
             );
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart2.setOption({
               xAxis: {
                 data: transaction_num_for_7time,
               },
+              tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />交易笔数: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
+              },
               series: [
                 {
                   data: transaction_num_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
-
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -671,62 +637,16 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
-                        borderColor: "#CCDAF0",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 5,
-
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 116,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
-                        },
-
-                        formatter: (params) => {
-                          // console.log(this.option.series[0].data.length);
-                          if (
-                            transaction_num_for_7time.length - 1 ==
-                            params.dataIndex
-                          ) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}交易笔数:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            marginLeft: 25,
-                            marginTop: 15,
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "rgb(40,96,194)",
                         },
                       },
                     },
@@ -768,11 +688,52 @@ export default {
                 res.data[0].transaction_amount_for_7[i].date
               ).substring(5, 10)
             );
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart3.setOption({
               xAxis: {
                 data: transaction_amount_for_7time,
+              },
+              tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />交易总额: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
               },
               yAxis: {
                 type: "value",
@@ -793,10 +754,8 @@ export default {
                 {
                   data: transaction_amount_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -804,63 +763,16 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
-                        borderColor: "#CCDAF0",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 10,
-
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 130,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
-                        },
-
-                        formatter: (params) => {
-                          // console.log(params);
-                          // console.log(this.option.series[0].data.length);
-                          if (
-                            transaction_amount_for_7time.length - 1 ==
-                            params.dataIndex
-                          ) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}交易总额:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            marginLeft: 25,
-                            marginTop: 15,
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "rgb(40,96,194)",
                         },
                       },
                     },
@@ -897,21 +809,59 @@ export default {
                 res.data[0].block_num_for_7[i].date
               ).substring(5, 10)
             );
-
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart4.setOption({
               xAxis: {
                 data: block_num_for_7time,
               },
+              tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />区块总数: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
+              },
               series: [
                 {
                   data: block_num_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -919,63 +869,16 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
-                        borderColor: "#CCDAF0",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 10,
-
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 110,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
-                        },
-
-                        formatter: (params) => {
-                          // console.log(params);
-                          // console.log(this.option.series[0].data.length);
-                          if (
-                            block_num_for_7time.length - 1 ==
-                            params.dataIndex
-                          ) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}区块总数:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            marginLeft: 25,
-                            marginTop: 15,
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "rgb(40,96,194)",
                         },
                       },
                     },
@@ -1004,29 +907,68 @@ export default {
           // console.log(res);
           //  console.log(res.data[0].transaction_amount_for_7.length);
           // 每日区块总数
-          for (var i = 0; i < 7; i++) {
+          for (var i = 0; i < res.data[0].avg_gas_for_7.length + 1; i++) {
             avg_gas_for_7.unshift(
               res.data[0].avg_gas_for_7[i].block_height_for_100
             );
             avg_gas_for_7time.unshift(
               this.timestampToTime2(
                 res.data[0].avg_gas_for_7[i].date
-              ).substring(5, 10)
+              ).substring(5)
             );
-            var size = [0, 0, 0, 0, 0, 0, 6];
             // 填入数据
             myChart5.setOption({
               xAxis: {
                 data: avg_gas_for_7time,
               },
+              tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />燃料费平均值: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
+              },
               series: [
                 {
                   data: avg_gas_for_7,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
@@ -1034,61 +976,16 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 0.5,
+                      borderWidth: 3,
                       label: {
-                        borderColor: "#CCDAF0",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 10,
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 116,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
-                        },
-                        formatter: (params) => {
-                          //  console.log(params);
-                          // console.log(this.option.series[0].data.length);
-                          if (
-                            avg_gas_for_7time.length - 1 ==
-                            params.dataIndex
-                          ) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}交易笔数:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            marginLeft: 25,
-                            marginTop: 15,
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "rgb(40,96,194)",
                         },
                       },
                     },
@@ -1160,9 +1057,13 @@ export default {
   margin-bottom: 20px;
   border-radius: 40px;
   z-index: 1;
+  canvas{
+    height: 260px!important;
+    margin-top: 30px!important;
+  }
   .chartzong {
     width: 1200px;
-    height: 1175px;
+    height: 1267px;
     background: rgba(232, 234, 243, 1);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
     opacity: 1;
@@ -1173,12 +1074,13 @@ export default {
     position: relative;
     font-size: 20px;
     font-family: "苹方-简";
-    font-weight: normal;
+    font-weight: bold;
     line-height: 28px;
     color: rgba(40, 96, 194, 1);
     opacity: 1;
-    width: 300px;
+   
     z-index: 20;
+   
   }
   .chart1 {
     width: 1120px;

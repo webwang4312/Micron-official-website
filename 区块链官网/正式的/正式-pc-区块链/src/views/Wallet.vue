@@ -1,6 +1,6 @@
 <template>
   <div class="wallet">
-   <headertop></headertop>
+    <headertop></headertop>
     <div class="walletzong">
       <!-- 搜索栏区域 -->
       <search></search>
@@ -17,6 +17,20 @@
           src="../assets/images/wallet/手机样机-酷豆旗舰店-020.png"
           class="walletimg2"
         />
+        <div
+          style="position:relative;left:638px;width: 482px;
+height: 437px;
+background: #2860C2;
+opacity: 0.03;
+border-radius: 0px 20px 0px 20px;"
+        ></div>
+        <div
+          style="position:relative;left:0px;top:242px;width: 793px;
+height: 235px;
+background: #2860C2;
+opacity: 0.03;
+border-radius: 0px 20px 20px 0px;"
+        ></div>
         <span class="span2">
           {{ $t("wallet[1]") }}
         </span>
@@ -27,6 +41,13 @@
           src="../assets/images/wallet/手机样机-酷豆旗舰店-021.png"
           class="walletimg3"
         />
+        <div
+          style="position:relative;left:0px;top:765px;width: 793px;
+height: 235px;
+background: #2860C2;
+opacity: 0.03;
+border-radius: 0px 20px 20px 0px;"
+        ></div>
       </div>
       <v-footer></v-footer>
     </div>
@@ -41,40 +62,28 @@ export default {
   name: "wallet",
   data() {
     return {
-     
-
       // 外部公共部分
       fullscreenLoading: false,
-     
+
       language: "",
       nowLang: "",
-     
+
       // 语言图片显示与隐藏
-     
+
       count: this.$store.state.count,
     };
   },
-  components: { VFooter, Search,headertop },
+  components: { VFooter, Search, headertop },
   created() {
     this.nowLang = this.$i18n.locale;
-   
-    
   },
-  mounted() {
-   
-  },
- 
-  methods: {
-   
-    
-  },
-  destroyed() {
- 
-  },
+  mounted() {},
+
+  methods: {},
+  destroyed() {},
 };
 </script>
 <style lang="less">
-
 // 本页面
 .wallet {
   width: 1200px;
@@ -157,5 +166,4 @@ export default {
     }
   }
 }
-
 </style>

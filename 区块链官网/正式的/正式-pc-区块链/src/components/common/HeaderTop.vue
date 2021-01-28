@@ -7,7 +7,7 @@
       <ul class="header-right">
         <li
           v-for="(item, i) in nav"
-          :class="{ nav_li: active === i }"
+          :class="{ bold: active === i }"
           :key="i"
           @click="gorouter(item.path)"
           class="lifirst"
@@ -21,7 +21,7 @@
             <div class="tuqi" v-else></div>
             <li>
               <img :src="item.src" />
-              <span class="title">{{ item.title }}</span>
+              <span :class="{title:true,bold:active === i}">{{ item.title }}</span>
             </li>
           </ul>
         </li>
@@ -117,6 +117,7 @@ export default {
       // console.log(this.$route.path);
       if (v.path === this.$route.path) {
         this.active = i;
+      
       }
     });
   },
@@ -175,6 +176,9 @@ export default {
 </script>
 
 <style lang="less">
+.bold{
+  font-weight: bold;
+}
 .tuqi:hover {
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(255, 255, 255, 1),
     inset 18px 18px 30px rgba(0, 0, 0, 0.1),
@@ -233,7 +237,7 @@ li {
   right: 78px;
   font-size: 20px;
   font-family: "苹方-简";
-  font-weight: normal;
+  font-weight: bold;
   line-height: 28px;
   color: rgba(40, 96, 194, 1);
   opacity: 1;
@@ -258,6 +262,7 @@ li {
 }
 .anxia {
   width: 136px !important;
+  
 }
 // 头部
 .headertop {
@@ -326,8 +331,9 @@ li {
 
           .title {
             position: absolute;
-            left: 55px;
-            top: 7px;
+            left: 59px;
+            top: 5px;
+           
           }
 
           img {

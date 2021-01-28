@@ -78,38 +78,38 @@
           @row-click="gototransactiondetail"
         >
           <el-table-column
-          align="center"
+            align="center"
             prop="transaction_hash2"
             :label="$t('home.contenttop[0]')"
             v-if="tables"
           ></el-table-column>
           <el-table-column
-          align="center"
+            align="center"
             prop="transaction_hash"
             :label="$t('home.contenttop[1]')"
           ></el-table-column>
           <el-table-column
-          align="center"
+            align="center"
             prop="date"
             :label="$t('publicsection[8]')"
           ></el-table-column>
           <el-table-column
-          align="center"
+            align="center"
             prop="amount"
             :label="$t('publicsection[5]')"
           ></el-table-column>
           <el-table-column
-          align="center"
+            align="center"
             prop="from_address"
             :label="$t('publicsection[6]')"
           ></el-table-column>
           <el-table-column
-          align="center"
+            align="center"
             prop="to_address"
             :label="$t('publicsection[7]')"
           ></el-table-column>
           <el-table-column
-          align="center"
+            align="center"
             prop="gas"
             :label="$t('home.contenttop[2]')"
           ></el-table-column>
@@ -276,29 +276,18 @@ export default {
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
-        tooltip: {
-          trigger: "axis",
-          // trigger: "item",
-          axisPointer: {
-            type: "none",
-            label: {
-              backgroundColor: "#6a7985",
-            },
-          },
-        },
+
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
           boundaryGap: false,
           data: [],
           axisLabel: {
-            interval: 0,
-            // 横坐标数据间隔
+            interval: 36,
             formatter: function(value) {
-              // console.log(value)
               //x轴的文字改为竖版显示
               var str = value.split(" ");
-              return str[0];
+              return str.join("\n");
             },
           },
           axisLine: {
@@ -309,9 +298,6 @@ export default {
           },
         },
         yAxis: {
-          max: function(value) {
-            return value.max + 0.01;
-          },
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "right",
@@ -327,6 +313,7 @@ export default {
         series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
@@ -334,7 +321,7 @@ export default {
             itemStyle: {
               normal: {
                 label: {
-                  show: true,
+                  show: false,
                   position: "left",
                   textStyle: {},
                 },
@@ -343,16 +330,8 @@ export default {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "#0180ff", //折线的颜色
+                color: "green", //折线的颜色
               },
-            },
-            areaStyle: {
-              normal: {
-                color: " #FFE0BE", //改变区域颜色
-              },
-            },
-            lineStyle: {
-              color: "#FE9D67", //改变折线颜色
             },
           },
         ],
@@ -364,17 +343,7 @@ export default {
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
-        tooltip: {
-          trigger: "axis",
 
-          // trigger: "item",
-          axisPointer: {
-            type: "none",
-            label: {
-              backgroundColor: "#6a7985",
-            },
-          },
-        },
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
@@ -386,13 +355,6 @@ export default {
           },
           axisLabel: {
             interval: 0,
-            // 横坐标数据间隔
-            // formatter: function(value) {
-            //   // console.log(value)
-            //   //x轴的文字改为竖版显示
-            //   var str = value.split(" ");
-            //   return str[0];
-            // },
           },
           axisTick: {
             //y轴刻度线
@@ -419,6 +381,7 @@ export default {
         series: [
           {
             data: [],
+
             type: "line",
             areaStyle: {},
             symbol: "circle", //拐点样式
@@ -426,7 +389,7 @@ export default {
             itemStyle: {
               normal: {
                 label: {
-                  show: true,
+                  show: false,
                   position: "left",
                   textStyle: {},
                 },
@@ -487,91 +450,89 @@ export default {
         .get("")
         .then((res) => {
           // console.log(res);
-          for (var i = 0; i < 7; i++) {
+          for (var i = 0; i < res.data[0].get_avgGas_for_100.length + 1; i++) {
             ranliaoaverage.unshift(
               res.data[0].get_avgGas_for_100[i].block_height_for_100
             );
             shijianchuo.unshift(
               this.timestampToTime2(
                 res.data[0].get_avgGas_for_100[i].date
-              ).substring(5, 10)
+              ).substring(5)
             );
             // console.log(i);
             //  console.log(ranliaoaverage);
             //  console.log(shijianchuo);
             // 填入数据
-            var size = [0, 0, 0, 0, 0, 0, 6];
+
             myChart.setOption({
               xAxis: {
                 data: shijianchuo,
               },
-
+              tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />燃料费平均值: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
+              },
               series: [
                 {
                   data: ranliaoaverage,
                   type: "line",
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
                   symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
                   itemStyle: {
                     normal: {
                       color: "#fff",
-                      borderColor: "#FFDAAF",
+                      borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        borderColor: "#FFECD6",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
                         show: true,
                         position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 10,
-
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 116,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
-                        },
-                        formatter: (params) => {
-                          // console.log(params);
-                          // console.log(this.option.series[0].data.length);
-                          if (ranliaoaverage.length - 1 == params.dataIndex) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}交易燃料费:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "blue",
                         },
                       },
                     },
@@ -620,13 +581,52 @@ export default {
               xAxis: {
                 data: transaction_num_for_7time,
               },
-
+              tooltip: {
+                borderColor: "#FFECD6",
+                borderWidth: 1,
+                padding: 15,
+                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                show: true,
+                position: "left",
+                backgroundColor: "rgba(255,255,255,1)",
+                borderRadius: 10,
+                textStyle: {
+                  fontSize: 12,
+                  color: "#666666",
+                  width: 166,
+                  height: 54,
+                  backgroundColor: "#fff",
+                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                  borderRadius: 10,
+                  padding: 15,
+                },
+                formatter: "{b0}<br />交易笔数: {c0}",
+                rich: {
+                  a: {
+                    marginLeft: 25,
+                    marginTop: 15,
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                  b: {
+                    color: "#333333",
+                    fontFamily: "苹方-简",
+                    fontSize: 12,
+                  },
+                },
+                trigger: "axis",
+                axisPointer: {
+                  type: "none",
+                  label: {
+                    backgroundColor: "#6a7985",
+                  },
+                },
+              },
               series: [
                 {
-                  symbolSize: (rawValue, params) => {
-                    params.symbolSize = size[params.dataIndex];
-                    return params.symbolSize;
-                  },
+                  showSymbol: false,
+                  symbolSize: 10,
                   data: transaction_num_for_7,
                   type: "line",
                   areaStyle: {},
@@ -637,64 +637,64 @@ export default {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
-                      borderWidth: 1,
+                      borderWidth: 3,
                       label: {
-                        borderColor: "#CCDAF0",
-                        borderWidth: 1,
-                        extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
-                        show: true,
-                        position: "left",
-                        backgroundColor: "rgba(255,255,255,1)",
-                        borderRadius: 10,
+                        // borderColor: "#CCDAF0",
+                        // borderWidth: 1,
+                        // extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+                        // show: true,
+                        // position: "left",
+                        // backgroundColor: "rgba(255,255,255,1)",
+                        // borderRadius: 10,
 
                         textStyle: {
-                          fontSize: 12,
-                          color: "#666666",
-                          width: 116,
-                          height: 54,
-                          backgroundColor: "#fff",
-                          boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          borderRadius: 10,
-                          padding: 15,
+                          // fontSize: 12,
+                          // color: "#666666",
+                          // width: 116,
+                          // height: 54,
+                          // backgroundColor: "#fff",
+                          // boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+                          // borderRadius: 10,
+                          // padding: 15,
                         },
 
-                        formatter: (params) => {
-                          console.log(params);
-                          // console.log(this.option.series[0].data.length);
-                          if (
-                            transaction_num_for_7time.length - 1 ==
-                            params.dataIndex
-                          ) {
-                            return (
-                              "{a|" +
-                              "" +
-                              params.name +
-                              "\n" +
-                              "\n" +
-                              "\n" +
-                              "}交易笔数:{b|" +
-                              "\t" +
-                              params.value +
-                              "}"
-                            );
-                          } else {
-                            return "";
-                          }
-                        },
-                        rich: {
-                          a: {
-                            marginLeft: 25,
-                            marginTop: 15,
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                          b: {
-                            color: "#333333",
-                            fontFamily: "苹方-简",
-                            fontSize: 12,
-                          },
-                        },
+                        // formatter: (params) => {
+                        //   console.log(params);
+                        //   // console.log(this.option.series[0].data.length);
+                        //   if (
+                        //     transaction_num_for_7time.length - 1 ==
+                        //     params.dataIndex
+                        //   ) {
+                        //     return (
+                        //       "{a|" +
+                        //       "" +
+                        //       params.name +
+                        //       "\n" +
+                        //       "\n" +
+                        //       "\n" +
+                        //       "}交易笔数:{b|" +
+                        //       "\t" +
+                        //       params.value +
+                        //       "}"
+                        //     );
+                        //   } else {
+                        //     return "";
+                        //   }
+                        // },
+                        // rich: {
+                        //   a: {
+                        //     marginLeft: 25,
+                        //     marginTop: 15,
+                        //     color: "#333333",
+                        //     fontFamily: "苹方-简",
+                        //     fontSize: 12,
+                        //   },
+                        //   b: {
+                        //     color: "#333333",
+                        //     fontFamily: "苹方-简",
+                        //     fontSize: 12,
+                        //   },
+                        // },
                       },
                     },
                   },
@@ -1289,6 +1289,7 @@ export default {
   }
   .cardblue {
     color: rgba(40, 96, 194, 1) !important;
+    font-weight: bold;
   }
   .indexzong {
     width: 1200px;
@@ -1428,7 +1429,7 @@ export default {
     .last {
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight: bold;
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
@@ -1446,7 +1447,7 @@ export default {
       text-align: center;
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight: bold;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
       cursor: pointer;
@@ -1507,15 +1508,15 @@ export default {
         padding-right: 20px !important;
       }
       .has-gutter tr th:nth-child(6) div {
-        text-align: right!important;
+        text-align: right !important;
         padding-right: 30px !important;
       }
-      .has-gutter tr th:nth-child(1)  {
-        div{
-  text-align: left!important;
-        padding-left: 30px !important;
+      .has-gutter tr th:nth-child(1) {
+        div {
+          text-align: left !important;
+          padding-left: 30px !important;
         }
-      
+
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -1557,12 +1558,12 @@ export default {
         text-align: right;
         padding-right: 30px !important;
       }
-      .has-gutter tr th:nth-child(1)  {
-        div{
- text-align: left;
-        padding-left: 30px !important;
+      .has-gutter tr th:nth-child(1) {
+        div {
+          text-align: left;
+          padding-left: 30px !important;
         }
-       
+
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -1606,6 +1607,7 @@ export default {
     margin: 0 auto;
     background: url("../assets/images/index/Icon 3.png") no-repeat center/100%
       100%;
+      margin-bottom: -28px;
     .footertop {
       position: relative;
       left: 70px;

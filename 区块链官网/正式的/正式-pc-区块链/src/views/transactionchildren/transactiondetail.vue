@@ -1,5 +1,5 @@
 <template>
-  <div class="transactiondetail" >
+  <div class="transactiondetail">
     <div
       v-html="transactionlist[0].from_address2"
       v-if="showmore3"
@@ -37,7 +37,7 @@
     <div class="transactiondetailzong">
       <!-- 搜索栏区域 -->
       <search @test="ceshi"></search>
-      <div class="detailcontent"  v-loading="loading">
+      <div class="detailcontent" v-loading="loading">
         <div class="linezong">
           <div class="line line1" v-show="line1"></div>
           <div class="line line2" v-show="line2"></div>
@@ -46,19 +46,22 @@
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane :label="$t('transaction.content2[2]')" name="first">
             <div class="jiaoyileft">
-              <img
-                src="../../assets/images/transaction/组 32.png"
-                class="leftimg1 leftimg"
-                @click="zijian"
-              />
-              <span class="leftspan1">{{
-                transactionlist[0].block_height
-              }}</span>
-              <img
-                src="../../assets/images/transaction/组 33.png"
-                class="leftimg2 leftimg"
-                @click="zijia"
-              />
+              <div>
+                <img
+                  src="../../assets/images/transaction/组 32.png"
+                  class="leftimg1 leftimg"
+                  @click="zijian"
+                />
+                <span class="leftspan1">{{
+                  transactionlist[0].block_height
+                }}</span>
+                <img
+                  src="../../assets/images/transaction/组 33.png"
+                  class="leftimg2 leftimg"
+                  @click="zijia"
+                />
+              </div>
+
               <img
                 src="../../assets/images/transaction/区块高度.png"
                 class="leftimg3"
@@ -875,37 +878,37 @@ th div {
     opacity: 1;
     border-radius: 20px;
     margin: 0 auto;
-    
+
     .el-table td,
-      .el-table th.is-leaf {
-        border-bottom: none !important;
-      }
-      .el-table__body tr td {
+    .el-table th.is-leaf {
+      border-bottom: none !important;
+    }
+    .el-table__body tr td {
+      text-align: center;
+    }
+
+    .el-table__row {
+      background: rgba(233, 239, 249) !important;
+    }
+
+    .has-gutter tr th:nth-child(1) {
+      border-bottom-left-radius: 10px !important;
+    }
+    .has-gutter tr th:nth-last-child(2) {
+      border-bottom-right-radius: 10px !important;
+    }
+    .has-gutter tr th {
+      font-size: 16px;
+      font-family: "苹方-简";
+      font-weight: normal;
+      line-height: 22px;
+      color: rgba(40, 96, 194, 1);
+      background: rgba(40, 96, 194, 0.3);
+      text-align: center;
+      th div {
         text-align: center;
       }
-
-      .el-table__row {
-        background: rgba(233, 239, 249) !important;
-      }
-
-      .has-gutter tr th:nth-child(1) {
-        border-bottom-left-radius: 10px !important;
-      }
-      .has-gutter tr th:nth-last-child(2) {
-        border-bottom-right-radius: 10px !important;
-      }
-      .has-gutter tr th {
-        font-size: 16px;
-        font-family: "苹方-简";
-        font-weight: normal;
-        line-height: 22px;
-        color: rgba(40, 96, 194, 1);
-        background: rgba(40, 96, 194, 0.3);
-        text-align: center;
-        th div {
-          text-align: center;
-        }
-      }
+    }
     .el-table__row {
       font-size: 16px;
       font-family: "苹方-简";
@@ -915,13 +918,13 @@ th div {
       opacity: 1;
       height: 51px;
     }
-  
+
     .el-table {
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
       border: none;
       outline: none;
-       background: rgba(40, 96, 194, 0.1);
+      background: rgba(40, 96, 194, 0.1);
     }
     .el-table__header-wrapper {
       width: 100%;
@@ -929,8 +932,7 @@ th div {
     }
     .el-table td,
     .el-table th.is-leaf {
-       border-bottom: 1px solid rgba(51, 51, 51, 0.1)!important;
-    
+      border-bottom: 1px solid rgba(51, 51, 51, 0.1) !important;
     }
     .el-tabs__item {
       line-height: 88px;
@@ -955,7 +957,7 @@ th div {
     .el-tabs__item.is-active {
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+       font-weight: bold;
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
@@ -1019,6 +1021,10 @@ th div {
       position: relative;
       left: 38px;
       top: 27px;
+      div {
+        position: relative;
+        left: 22px;
+      }
       .leftimg {
         width: 9.83px;
         height: 16.83px;
@@ -1123,7 +1129,6 @@ th div {
     }
     .el-table th,
     .el-table tr {
-     
     }
     #pane-second {
       height: auto;
@@ -1153,7 +1158,6 @@ th div {
           line-height: 22px;
           color: rgba(40, 96, 194, 1);
           opacity: 1;
-        
         }
         .el-table {
           width: 1040px !important;
@@ -1165,7 +1169,6 @@ th div {
           border-top-right-radius: 15px;
           cursor: pointer;
           .has-gutter {
-          
           }
         }
       }
@@ -1191,7 +1194,6 @@ th div {
         height: 166px;
         border-radius: 15px;
         .has-gutter {
-         
         }
         .has-gutter tr {
           border-radius: 15px;
@@ -1207,7 +1209,7 @@ th div {
           margin: 0 auto;
           outline: none;
           border: none;
-         background: rgba(40, 96, 194, 0.1);
+          background: rgba(40, 96, 194, 0.1);
           border-top-left-radius: 15px;
           border-top-right-radius: 15px;
           cursor: pointer;

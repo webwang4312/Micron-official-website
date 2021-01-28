@@ -325,7 +325,7 @@ export default {
       top: 30px;
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight: bold;
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;

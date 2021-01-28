@@ -524,7 +524,7 @@ export default {
       top: 30px;
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight: bold;
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
@@ -532,7 +532,7 @@ export default {
     ul {
       position: relative;
       left: 40px;
-      top: 58px;
+      top: 30px;
       display: flex;
       flex-direction: row;
       li {
@@ -570,7 +570,7 @@ export default {
         }
         .linumber1 {
           position: relative;
-          left: 49px;
+          left: 43px;
           top: 16px;
         }
         img {
@@ -616,7 +616,7 @@ export default {
 
       font-size: 20px;
       font-family: "苹方-简";
-      font-weight: normal;
+      font-weight: bold;
 
       color: rgba(40, 96, 194, 1);
     }

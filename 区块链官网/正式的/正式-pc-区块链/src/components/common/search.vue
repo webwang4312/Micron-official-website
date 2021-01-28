@@ -12,8 +12,8 @@
         >
         </el-option>
       </el-select> -->
-      <div class="icons">
-        <div @click="right">{{ iconvalue }}</div>
+      <div class="icons" @click="right">
+        <div>{{ iconvalue }}</div>
         <img
           src="../../assets/images/index/right.png"
           class="right"
@@ -408,14 +408,16 @@ export default {
   align-items: center;
   font-size: 20px;
   font-family: "苹方-简";
-  font-weight: normal;
+  font-weight: bold;
   line-height: 28px;
   color: #2860c2;
   opacity: 1;
   position: relative;
+  width: 120px;
   left: 50px;
   top: 40px;
   cursor: pointer;
+
   img {
     position: relative;
     left: 5px !important;
@@ -546,7 +548,13 @@ export default {
     left: -2px;
     background: url("../../assets/images/index/Down.png") no-repeat center/100%
       100%;
-
+    ::-webkit-input-placeholder {
+      /* WebKit browsers */
+      font-size: 20px;
+      font-family: "苹方-简";
+      font-weight: normal;
+      color: #a5a5a5;
+    }
     input {
       width: 818px;
       height: 47px;
