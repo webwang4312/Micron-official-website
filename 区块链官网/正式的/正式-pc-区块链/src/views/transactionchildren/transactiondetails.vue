@@ -12,7 +12,8 @@
         <span class="yue">{{ $t("transaction.content[3]") }}:</span>
         <span class="yue2">{{ yue }}</span>
         <el-table
-          v-loading="loading"
+        empty-text='Loading...'
+     
           :data="transactionData"
           style="width: 100%"
           :class="{ addressltable: true, radius: isradius }"
@@ -52,6 +53,7 @@
             :label="$t('transaction.content[2]')"
           ></el-table-column>
         </el-table>
+
         <div class="block" v-show="totalNum !== 1">
           <div class="blocks">
             <img
@@ -105,6 +107,7 @@ export default {
   name: "transaction",
   data() {
     return {
+      footerhide: true,
       isradius: false,
       icon: false,
       loading: true,
@@ -139,16 +142,18 @@ export default {
   components: { VFooter, Search, headertop },
   created() {
     this.nowLang = this.$i18n.locale;
-
+    this.totalNum = 1;
     this.shiyan = this.$route.query.addressvalue;
     this.transmedianum = 1;
     // console.log(this.transmedianum);
     // console.log(this.shiyan);
-    this.addresssearch();
 
     if (this.transmedianum == 1) {
       this.blue1 = true;
     }
+  },
+  mounted() {
+    this.addresssearch();
   },
 
   methods: {
@@ -213,7 +218,7 @@ export default {
           } else {
             this.isradius = false;
           }
-          console.log(this.isradius);
+
           // // table赋值
           // console.log(
           //   res.data[0].search_transaction_list_for_walletAddress.length
@@ -545,19 +550,19 @@ export default {
         padding-left: 20px !important;
         border-bottom-left-radius: 10px !important;
       }
-      .has-gutter tr th:nth-last-child(2) div{
-        text-align: right!important;
+      .has-gutter tr th:nth-last-child(2) div {
+        text-align: right !important;
         border-bottom-right-radius: 10px !important;
       }
       .has-gutter tr th:nth-child(6) div {
         text-align: right !important;
         padding-right: 20px !important;
       }
-      tbody tr td:nth-child(1)  div{
+      tbody tr td:nth-child(1) div {
         text-align: left !important;
         padding-left: 20px !important;
       }
-      tbody tr td:nth-child(6) div{
+      tbody tr td:nth-child(6) div {
         text-align: right !important;
         padding-right: 20px !important;
       }

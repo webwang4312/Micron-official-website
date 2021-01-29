@@ -12,7 +12,7 @@
         </p>
 
         <el-table
-          v-loading="loading"
+          empty-text='Loading...'
           :data="addressData"
           style="width: 100%"
           class="addressltable"
@@ -50,8 +50,8 @@
             :label="$t('address.content[4]')"
           ></el-table-column>
         </el-table>
-        <div class="addressblock">
-          <div class="blocks">
+        <div class="addressblock" v-show="totalNum !== 1">
+          <div class="blocks" >
             <img
               src="@assets/images/footer/加载中.gif"
               style="width:32px;height:32px;margin-right:30px"
@@ -140,7 +140,7 @@ export default {
   },
   created() {
     this.nowLang = this.$i18n.locale;
-
+ this.totalNum = 1;
     this.addressmedianum = 1;
     if (this.addressmedianum == 1) {
       this.blue1 = true;
@@ -333,7 +333,7 @@ export default {
     .addressltable {
       position: relative;
       width: 1040px !important;
-      height: 1069px;
+      height: auto;
       top: 50px;
       background: rgba(40, 96, 194, 0.1);
       margin: 0 auto;

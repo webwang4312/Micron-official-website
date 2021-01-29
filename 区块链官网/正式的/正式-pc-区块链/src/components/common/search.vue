@@ -1,6 +1,6 @@
 <template>
   <!-- 搜索栏区域 -->
-  <div class="indexsearch" v-loading.fullscreen.lock="fullscreenLoading">
+  <div class="indexsearch">
     <div class="searchleft">
       <!-- <el-select v-model="value" placeholder="请选择"  @visible-change="right">
         <el-option
@@ -12,7 +12,8 @@
         >
         </el-option>
       </el-select> -->
-      <div class="icons" @click="right">
+
+      <div class="icons" @click="right" >
         <div>{{ iconvalue }}</div>
         <img
           src="../../assets/images/index/right.png"
@@ -25,7 +26,7 @@
           v-else
         />
       </div>
-      <div class="icon" v-if="!righticon">
+      <div class="icon" v-if="!righticon" @mouseleave="leave">
         <ul>
           <li
             v-for="item in select"
@@ -65,7 +66,14 @@
     </div>
     <div class="searchright">
       <button @click="searchselect">
-        {{ $t("publicsection[1]") }}
+        <span>{{ $t("publicsection[1]") }}</span>
+
+        <img
+          src="../../assets/images/header/2.gif"
+          alt=""
+          style="transform:scale(3)"
+          v-if="jiazai"
+        />
       </button>
     </div>
   </div>
@@ -93,6 +101,7 @@ export default {
       block_list: [],
       // 交易哈希
       transactionhaxisearch: [],
+      jiazai: false,
       // 区块哈希
     };
   },
@@ -104,6 +113,7 @@ export default {
     },
   },
   created() {
+    this.righticon=true
     if (this.$i18n.locale == "cn") {
       this.iconvalue = "UENC地址";
     } else {
@@ -215,6 +225,10 @@ export default {
         }
       }
     },
+    leave(){
+      console.log('1');
+       this.righticon=true
+    },
     right() {
       this.righticon = !this.righticon;
     },
@@ -230,7 +244,8 @@ export default {
         case "0":
           // console.log('0');
           if (this.inputvalue !== "") {
-            this.fullscreenLoading = true;
+            this.jiazai = true;
+            //this.fullscreenLoading = true;
             this.addresssearch();
           }
 
@@ -239,7 +254,8 @@ export default {
           //  console.log('1');
           // 区块高度
           if (this.inputvalue !== "") {
-            this.fullscreenLoading = true;
+            this.jiazai = true;
+            //this.fullscreenLoading = true;
             this.blocksearch();
           }
           break;
@@ -247,7 +263,8 @@ export default {
         case "2":
           //  console.log('2');
           if (this.inputvalue !== "") {
-            this.fullscreenLoading = true;
+            this.jiazai = true;
+            //this.fullscreenLoading = true;
             this.transactiondetaillist();
           }
 
@@ -256,7 +273,8 @@ export default {
         case "3":
           //  console.log('3');
           if (this.inputvalue !== "") {
-            this.fullscreenLoading = true;
+            this.jiazai = true;
+            //this.fullscreenLoading = true;
             this.blockhaxisearch();
           }
 
@@ -275,16 +293,17 @@ export default {
           },
         })
         .then((res) => {
-          //  console.log(res);
-          if (
-            res.data[0].search_transaction_list_for_walletAddress.length !== 0
-          ) {
+          // console.log(res);
+          //   console.log(res.data[0].total_page[0].totalPageNum);
+          if (res.data[0].total_page[0].totalPageNum !== 0) {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/transactiondetails",
               query: { addressvalue: this.inputvalue },
             });
           } else {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
@@ -308,6 +327,7 @@ export default {
         .then((res) => {
           //  console.log(res);
           if (res.data[0].total_record[0].total_record !== 0) {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/blockdetail",
@@ -317,6 +337,7 @@ export default {
               },
             });
           } else {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
@@ -338,6 +359,7 @@ export default {
         .then((res) => {
           //  console.log(res);
           if (res.data[0].select_status === 1) {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/transactiondetail",
@@ -347,6 +369,7 @@ export default {
               },
             });
           } else {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
@@ -369,12 +392,14 @@ export default {
         .then((res) => {
           // console.log(res);
           if (res.data[0].search_main_transactionInfo.length !== 0) {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/blockdetails",
               query: { blockhaxi: this.inputvalue },
             });
           } else {
+            this.jiazai = false;
             this.fullscreenLoading = false;
             this.$router.push({
               path: "/notfound",
@@ -401,6 +426,13 @@ export default {
 };
 </script>
 <style lang="less">
+svg {
+  width: 150px !important;
+}
+lottie-player {
+  width: 54px !important;
+  transform: scale(2.5);
+}
 .icons {
   display: flex;
   flex-direction: row;
@@ -556,6 +588,10 @@ export default {
       color: #a5a5a5;
     }
     input {
+      font-size: 20px;
+      font-family: "苹方-简";
+      font-weight: normal;
+
       width: 818px;
       height: 47px;
       position: relative;
@@ -572,6 +608,10 @@ export default {
     button {
       width: 126px;
       height: 50px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
       position: relative;
       right: -20px;
       top: 35px;
@@ -587,6 +627,13 @@ export default {
       line-height: 28px;
       color: rgba(255, 255, 255, 1);
       opacity: 1;
+    }
+    img {
+      position: relative;
+      top: 1px;
+      left: -4px;
+      width: 32px;
+      height: 32px;
     }
   }
 }

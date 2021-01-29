@@ -7,7 +7,7 @@
       <!-- 卡片区域 -->
       <div class="card">
         <!-- 卡片左边 -->
-        <div class="cardleft">
+        <div class="cardleft" >
           <div class="cardlefttop">
             <img src="../assets/images/index/uenc.png" />
             <div class="cardlefttopright">
@@ -50,11 +50,28 @@
           </div>
         </div>
         <!-- 卡片右边 -->
-        <div class="cardright" id="bar" v-show="card"></div>
-        <div class="cardright" id="bars" v-show="card2"></div>
-        <div class="cardright" id="barss" v-show="card3">
-          aaa
-        </div>
+        <div
+          class="cardright"
+          id="bar"
+          v-show="card"
+          v-loading="loading2"
+          element-loading-background="rgba(0, 0, 0,0)"
+        ></div>
+
+        <div
+          class="cardright"
+          id="bars"
+          v-show="card2"
+          v-loading="loading2"
+          element-loading-background="rgba(0, 0, 0,0)"
+        ></div>
+        <div
+          class="cardright"
+          id="barss"
+          v-show="card3"
+          v-loading="loading2"
+          element-loading-background="rgba(0, 0, 0,0)"
+        ></div>
         <div class="cardp">
           <p @click="cardclick1" :class="{ cardblue: card }">
             {{ $t("home.cardright[0]") }}
@@ -183,6 +200,7 @@ export default {
     return {
       timer: null, //定时器名称
       loading: true,
+      loading2: true,
       // 固定设置
       sticky: false,
       tables: false,
@@ -287,7 +305,7 @@ export default {
             formatter: function(value) {
               //x轴的文字改为竖版显示
               var str = value.split(" ");
-              return str.join("\n");
+              return str[0];
             },
           },
           axisLine: {
@@ -298,6 +316,7 @@ export default {
           },
         },
         yAxis: {
+          splitNumber: 2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "right",
@@ -307,7 +326,7 @@ export default {
           },
           axisTick: {
             //y轴刻度线
-            show: true,
+            show: false,
           },
         },
         series: [
@@ -366,6 +385,7 @@ export default {
           max: function(value) {
             return value.max + 100;
           },
+          splitNumber: 2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "right",
@@ -449,6 +469,7 @@ export default {
       that.$http
         .get("")
         .then((res) => {
+          this.loading2 = false;
           // console.log(res);
           for (var i = 0; i < res.data[0].get_avgGas_for_100.length + 1; i++) {
             ranliaoaverage.unshift(
@@ -525,7 +546,7 @@ export default {
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        show: true,
+                        show: false,
                         position: "left",
                         textStyle: {
                           fontSize: 16,
@@ -625,76 +646,28 @@ export default {
               },
               series: [
                 {
-                  showSymbol: false,
-                  symbolSize: 10,
                   data: transaction_num_for_7,
                   type: "line",
+                  showSymbol: false,
+                  symbolSize: 10,
                   areaStyle: {},
-                  symbol: "pin", //拐点样式
+                  symbol: "circle", //拐点样式
                   smooth: true, //true 为平滑曲线，false为直线
-
                   itemStyle: {
                     normal: {
                       color: "#fff",
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        // borderColor: "#CCDAF0",
-                        // borderWidth: 1,
-                        // extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
-                        // show: true,
-                        // position: "left",
-                        // backgroundColor: "rgba(255,255,255,1)",
-                        // borderRadius: 10,
-
+                        show: false,
+                        position: "left",
                         textStyle: {
-                          // fontSize: 12,
-                          // color: "#666666",
-                          // width: 116,
-                          // height: 54,
-                          // backgroundColor: "#fff",
-                          // boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                          // borderRadius: 10,
-                          // padding: 15,
+                          fontSize: 16,
+                          color: "#fff",
+                          // width: 54,
+                          // height: 27,
+                          backgroundColor: "blue",
                         },
-
-                        // formatter: (params) => {
-                        //   console.log(params);
-                        //   // console.log(this.option.series[0].data.length);
-                        //   if (
-                        //     transaction_num_for_7time.length - 1 ==
-                        //     params.dataIndex
-                        //   ) {
-                        //     return (
-                        //       "{a|" +
-                        //       "" +
-                        //       params.name +
-                        //       "\n" +
-                        //       "\n" +
-                        //       "\n" +
-                        //       "}交易笔数:{b|" +
-                        //       "\t" +
-                        //       params.value +
-                        //       "}"
-                        //     );
-                        //   } else {
-                        //     return "";
-                        //   }
-                        // },
-                        // rich: {
-                        //   a: {
-                        //     marginLeft: 25,
-                        //     marginTop: 15,
-                        //     color: "#333333",
-                        //     fontFamily: "苹方-简",
-                        //     fontSize: 12,
-                        //   },
-                        //   b: {
-                        //     color: "#333333",
-                        //     fontFamily: "苹方-简",
-                        //     fontSize: 12,
-                        //   },
-                        // },
                       },
                     },
                   },
@@ -1607,7 +1580,7 @@ export default {
     margin: 0 auto;
     background: url("../assets/images/index/Icon 3.png") no-repeat center/100%
       100%;
-      margin-bottom: -28px;
+    margin-bottom: -28px;
     .footertop {
       position: relative;
       left: 70px;

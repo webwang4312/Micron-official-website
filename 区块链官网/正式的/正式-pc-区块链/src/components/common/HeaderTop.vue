@@ -291,7 +291,9 @@ li {
     .header-left {
       position: relative;
       left: 13px;
-
+display: flex;
+flex-direction: row;
+align-items: center;
       img {
       }
     }
@@ -312,7 +314,7 @@ li {
         width: 160px;
         height: 115px;
         line-height: 115px;
-        font-size: 18px;
+        font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
         line-height: 25px;
@@ -332,7 +334,7 @@ li {
           .title {
             position: absolute;
             left: 59px;
-            top: 5px;
+            top: 3px;
            
           }
 

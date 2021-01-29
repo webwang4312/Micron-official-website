@@ -250,6 +250,7 @@ export default {
           var common = res.data[0].search_blockInfo[0];
           // 区块高度
           this.blockdetailslist[0].block_height = common.block_height;
+          //  console.log(this.blockdetailslist[0].block_height);
           // console.log(this.blockdetailslist[0].block_height);
           // 时间
           this.blockdetailslist[0].block_time = this.timestampToTime(
@@ -455,8 +456,10 @@ export default {
     },
     // 高度加
     zijia() {
+      
       this.blockdetailslist[0].block_height =
         this.blockdetailslist[0].block_height + 1;
+        console.log(this.blockdetailslist[0].block_height);
       this.$router.push({
         path: "blockdetail",
         query: {
@@ -534,6 +537,13 @@ th div {
       line-height: 28px;
       color: rgba(40, 96, 194, 1);
       opacity: 1;
+      
+    }
+    p:nth-child(2){
+      margin-top: 6px;
+    }
+     p:nth-child(3){
+      margin-top: 6px;
     }
     ul {
       position: relative;
@@ -607,7 +617,7 @@ th div {
         .detaillifooter span {
           position: relative;
           left: 38px;
-          top: 20px;
+          top: 23px;
           font-size: 16px;
           font-family: "苹方-简";
           font-weight: normal;

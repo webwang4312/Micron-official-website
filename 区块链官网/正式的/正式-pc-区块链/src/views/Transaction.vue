@@ -8,6 +8,7 @@
       <div class="transactioncontent">
         <p class="title">{{ $t("transaction.content[0]") }}</p>
         <el-table
+         empty-text='Loading...'
           v-loading="loading"
           :data="transactionData"
           style="width: 100%"

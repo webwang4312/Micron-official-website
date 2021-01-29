@@ -40,12 +40,12 @@ const en = {
     'Time', 'View More', 'Home Page', 'End Page','amount_detail'],
   home: {
     cardleft: ['24H TX Amount', '24H TX volume', 'Block Reward', ' Remaining Reward'],
-    cardright: ['Average value of transaction fuel fee (first 100 blocks)', 'Number of transactions per day','Fuel cost distribution map'],
+    cardright: ['Average transaction fuel fee', 'transactions per day','Fuel cost distribution map'],
     contenttop: ['Latest Transaction', ' TxHash', 'Gas Fee',],
     contentbottom: ['Latest Block', 'Block Reward'],
     bottom: ['UENC is a scalable blockchain-based public chain system with cross-chain research as its technical direction. Through optimization and innovation on the underlying technology and architecture of the blockchain, it supports the communication between different blockchain networks. Value transfer and improve its security. UENC establishes an efficient node combination structure by developing a hybrid point-to-point network based on DHT technology, cross-parallel storage technology (CPS), and trusted zone technology (TA), thereby rapidly increasing the speed of blockchain transactions. ',
-      'Publish time:',
-      'Total circulation:', 'Total circulation:', 'Official website:'
+      'Time:',
+      'circulation:', 'circulation:', 'Official website:'
     ]
   },
   block: {

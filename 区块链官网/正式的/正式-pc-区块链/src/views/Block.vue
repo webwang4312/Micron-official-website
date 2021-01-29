@@ -8,6 +8,7 @@
       <div class="blockcontent">
         <p class="title">{{ $t("block.content[0]") }}</p>
         <el-table
+         empty-text='Loading...'
           v-loading="loading"
           :data="blockData"
           style="width: 100%"

@@ -18,14 +18,21 @@
           class="walletimg2"
         />
         <div
-          style="position:relative;left:638px;width: 482px;
+          style="width: 779px;
+height: 336px;
+background: #2860C2;
+opacity: 0.03;
+border-radius: 0px 20px 0px 20px;position:relative;left:341px;top:-83px"
+        ></div>
+        <div
+          style="position:relative;left:638px;top:-337px;width: 482px;
 height: 437px;
 background: #2860C2;
 opacity: 0.03;
 border-radius: 0px 20px 0px 20px;"
         ></div>
         <div
-          style="position:relative;left:0px;top:242px;width: 793px;
+          style="position:relative;left:0px;top:-71px;width: 793px;
 height: 235px;
 background: #2860C2;
 opacity: 0.03;
@@ -42,7 +49,15 @@ border-radius: 0px 20px 20px 0px;"
           class="walletimg3"
         />
         <div
-          style="position:relative;left:0px;top:765px;width: 793px;
+          style="width: 793px;
+height: 235px;
+position:relative;left:327px;top:324px;
+background: #2860C2;
+opacity: 0.03;
+border-radius: 20px 0px 0px 20px;"
+        ></div>
+        <div
+          style="position:relative;left:0px;top:243px;width: 793px;
 height: 235px;
 background: #2860C2;
 opacity: 0.03;

@@ -70,23 +70,22 @@
           @row-click="gotoblockdetails"
         >
           <el-table-column
-        
             prop="block_hash2"
             :label="$t('block.content2[3]')"
             v-if="tables"
           ></el-table-column>
           <el-table-column
-          align="left"
+            align="left"
             prop="block_hash"
             :label="$t('block.content2[3]')"
           ></el-table-column>
           <el-table-column
-           align="center"
+            align="center"
             prop="time"
             :label="$t('publicsection[8]')"
           ></el-table-column>
           <el-table-column
-           align="center"
+            align="center"
             prop="from_address"
             :label="$t('publicsection[6]')"
           ></el-table-column>
@@ -96,7 +95,7 @@
             :label="$t('publicsection[7]')"
           ></el-table-column>
           <el-table-column
-          align="right"
+            align="right"
             prop="transaction_amount"
             :label="$t('publicsection[5]')"
           ></el-table-column>
@@ -214,6 +213,7 @@ export default {
     // console.log(this.blockmedianum);
     this.shiyan = this.$route.query.blockheight;
     // console.log(this.shiyan);
+    // console.log(this.shiyan);
     // console.log(this.blockmedianum);
     if (this.blockmedianum == 1) {
       this.blue1 = true;
@@ -269,9 +269,13 @@ export default {
             this.icon = false;
             this.loading = false;
           }
+          // console.log(res);
 
           //  console.log(res)res.data[0].total_page[0].totalPageNum;
           this.totalNum = res.data[0].total_page[0].totalPageNum;
+          // if (this.totalNum == 0) {
+          //   this.$router.go(-1);
+          // }
           if (this.totalNum == 1) {
             this.isradius = true;
           } else {
@@ -468,7 +472,6 @@ export default {
   border-radius: 15px !important;
 }
 
-
 .transaction .transactioncontent .block .el-pagination__jump {
   font-size: 16px;
   font-family: "苹方-简";
@@ -583,7 +586,7 @@ export default {
         .detaillifooter span {
           position: relative;
           left: 38px;
-          top: 20px;
+          top: 22px;
           font-size: 16px;
           font-family: "苹方-简";
           font-weight: normal;
@@ -643,7 +646,6 @@ export default {
         border-bottom-right-radius: 15px !important;
       }
       .has-gutter tr th {
-       
         font-size: 16px;
         font-family: "苹方-简";
         font-weight: normal;
@@ -652,17 +654,15 @@ export default {
         opacity: 1;
 
         background: rgba(40, 96, 194, 0.3);
-       
       }
 
-    
       .has-gutter tr th:nth-child(5) div {
         text-align: right;
         padding-right: 20px !important;
       }
       .has-gutter tr th:nth-child(1) div {
-       text-align: left;
-           padding-left: 30px !important;
+        text-align: left;
+        padding-left: 30px !important;
         border-bottom-left-radius: 10px !important;
       }
       .has-gutter tr th:nth-last-child(2) {
@@ -671,8 +671,8 @@ export default {
       .el-table__row {
         background: rgba(233, 239, 249) !important;
       }
-       tbody tr td:nth-child(1) div {
-          text-align: left;
+      tbody tr td:nth-child(1) div {
+        text-align: left;
         padding-left: 30px !important;
       }
       tbody tr td:nth-child(5) {

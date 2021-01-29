@@ -99,7 +99,7 @@ export default {
             formatter: function(value) {
               //x轴的文字改为竖版显示
               var str = value.split(" ");
-              return str.join("\n");
+              return str[0];
             },
           },
           axisLine: {
@@ -112,6 +112,7 @@ export default {
           },
         },
         yAxis: {
+          splitNumber:2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -180,6 +181,7 @@ export default {
           max: function(value) {
             return value.max + 100;
           },
+          splitNumber:2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -248,6 +250,7 @@ export default {
           max: function(value) {
             return value.max + 10;
           },
+           splitNumber:3,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -316,6 +319,7 @@ export default {
           max: function(value) {
             return value.max + 100;
           },
+          splitNumber:3,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -383,7 +387,7 @@ export default {
             formatter: function(value) {
               //x轴的文字改为竖版显示
               var str = value.split(" ");
-              return str.join("\n");
+              return str[0];
             },
           },
         },
@@ -392,6 +396,7 @@ export default {
           max: function(value) {
             return value.max;
           },
+          splitNumber:2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -526,7 +531,7 @@ export default {
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        show: true,
+                        show: false,
                         position: "left",
                         textStyle: {
                           fontSize: 16,
@@ -639,7 +644,7 @@ export default {
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        show: true,
+                        show: false,
                         position: "left",
                         textStyle: {
                           fontSize: 16,
@@ -765,7 +770,7 @@ export default {
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        show: true,
+                        show: false,
                         position: "left",
                         textStyle: {
                           fontSize: 16,
@@ -871,7 +876,7 @@ export default {
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        show: true,
+                        show: false,
                         position: "left",
                         textStyle: {
                           fontSize: 16,
@@ -978,7 +983,7 @@ export default {
                       borderColor: "blue",
                       borderWidth: 3,
                       label: {
-                        show: true,
+                        show: false,
                         position: "left",
                         textStyle: {
                           fontSize: 16,
