@@ -12,7 +12,7 @@
         </p>
 
         <el-table
-          empty-text='Loading...'
+          empty-text="Loading..."
           :data="addressData"
           style="width: 100%"
           class="addressltable"
@@ -24,6 +24,7 @@
           ></el-table-column>
           <el-table-column
             align="center"
+            width="380"
             prop="wallet_address"
             :label="$t('address.content[2]')"
           ></el-table-column>
@@ -51,7 +52,7 @@
           ></el-table-column>
         </el-table>
         <div class="addressblock" v-show="totalNum !== 1">
-          <div class="blocks" >
+          <div class="blocks">
             <img
               src="@assets/images/footer/加载中.gif"
               style="width:32px;height:32px;margin-right:30px"
@@ -140,7 +141,7 @@ export default {
   },
   created() {
     this.nowLang = this.$i18n.locale;
- this.totalNum = 1;
+    this.totalNum = 1;
     this.addressmedianum = 1;
     if (this.addressmedianum == 1) {
       this.blue1 = true;
@@ -202,8 +203,7 @@ export default {
             var obj = {};
             let times = [];
             obj.rank = addresslist[i].row_num;
-            obj.wallet_address =
-              addresslist[i].wallet_address.substring(0, 11) + "...";
+            obj.wallet_address = addresslist[i].wallet_address;
             obj.wallet_address2 = addresslist[i].wallet_address;
             // console.log(obj);
             obj.transaction_num = addresslist[i].transaction_num;

@@ -244,7 +244,7 @@ export default {
           },
         })
         .then((res) => {
-          // console.log(res);
+           console.log(res);
           this.loading = false;
           // console.log(res.data[0].search_blockInfo);
           var common = res.data[0].search_blockInfo[0];
@@ -459,7 +459,7 @@ export default {
       
       this.blockdetailslist[0].block_height =
         this.blockdetailslist[0].block_height + 1;
-        console.log(this.blockdetailslist[0].block_height);
+        //console.log(this.blockdetailslist[0].block_height);
       this.$router.push({
         path: "blockdetail",
         query: {

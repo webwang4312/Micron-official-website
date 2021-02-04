@@ -247,10 +247,10 @@ export default {
         },
 
         yAxis: {
-          max: function(value) {
-            return value.max + 10;
-          },
-           splitNumber:3,
+          // max: function(value) {
+          //   return parseInt(value.max);
+          // },
+           splitNumber:2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -316,10 +316,10 @@ export default {
         },
 
         yAxis: {
-          max: function(value) {
-            return value.max + 100;
-          },
-          splitNumber:3,
+          // max: function(value) {
+          //   return value.max + 100;
+          // },
+          splitNumber:2,
           type: "value",
           splitLine: { show: false }, //去除网格线
           position: "left",
@@ -393,9 +393,9 @@ export default {
         },
 
         yAxis: {
-          max: function(value) {
-            return value.max;
-          },
+          // max: function(value) {
+          //   return value.max;
+          // },
           splitNumber:2,
           type: "value",
           splitLine: { show: false }, //去除网格线
