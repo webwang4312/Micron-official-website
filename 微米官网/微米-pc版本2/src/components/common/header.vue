@@ -1,5 +1,5 @@
 <template>
-  <div  class="headers">
+  <div class="headers">
     <login v-if="$store.state.showlogin"></login>
     <forget v-if="$store.state.forget"></forget>
     <fastoken v-if="$store.state.fastoken"></fastoken>
@@ -235,9 +235,9 @@ export default {
       } else {
         this.sticky = false;
       }
-        // console.log(this.sticky)
-        },
-  
+      // console.log(this.sticky)
+    },
+
     // pageFresh(e) {
     //   if (e.key === "loginState") {
     //     this.$store.replaceState(
@@ -252,7 +252,7 @@ export default {
     //   }
     // },
     gorouter(index) {
-       console.log(index);
+      console.log(index);
       // console.log(index);
       if (index === "/browser") {
         window.open("http://www.uenc.io/chainExplorer/index.html#/", "_blank");
@@ -309,7 +309,7 @@ export default {
       this.fullscreenLoading = true;
       if (this.nowLang === "cn") {
         this.$i18n.locale = "en";
-        console.log(this.$i18n.locale);
+        // console.log(this.$i18n.locale);
         localStorage.setItem("lang", "en");
         setTimeout(() => {
           this.$router.go(0);
@@ -326,8 +326,8 @@ export default {
 };
 </script>
 <style lang="less">
-.stickys{
-  position: fixed!important;
+.stickys {
+  position: fixed !important;
   left: 0;
   right: 0;
   top: 0;
@@ -469,6 +469,7 @@ button {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+
       .header-center {
         width: 383px;
         height: 36px;
@@ -480,13 +481,16 @@ button {
           margin: 0;
           font-size: 0;
         }
-
+        li:nth-child(1) {
+          margin-left: 0px;
+        }
         li {
-          width: 170px;
           display: flex;
           flex-direction: row;
           align-items: center;
           text-align: center;
+       
+          margin-left: 32px;
         }
         li:hover {
           cursor: pointer;

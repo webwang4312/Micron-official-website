@@ -95,7 +95,7 @@
           <ul class="advantage_detail_ul1">
             <li>
               <div>
-                <img src="@assets/images/wmIndex/Vector.svg" alt="" />
+                <img src="@assets/images/wmIndex/Vector.png" alt="" />
                 <!-- <svg
                   width="38"
                   height="40"
@@ -332,19 +332,52 @@
         <div class="partner_title">
           partner
         </div>
-        <!-- <VueSlickCarousel
-          :arrows="true"
+        <VueSlickCarousel
+          :arrows="false"
           :dots="false"
           :infinite="true"
           :speed="300"
-          :slidesToShow="2"
+          :slidesToShow="1"
           :touchMove="false"
           :slidesToScroll="1"
           ref="carousel"
+          @afterChange="changes"
         >
-         <div>1</div>
-        </VueSlickCarousel> -->
-        <div class="carousel">
+        <div>
+            <ul>
+              <li>
+                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li>
+                <img src="@assets/images/wmIndex/Group 688.png" alt="" />
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li>
+                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+              </li>
+            </ul>
+          </div>
+           <div>
+            <ul>
+              <li>
+                <img src="@assets/images/wmIndex/Group 688.png" alt="" />
+              </li>
+            </ul>
+          </div>
+        </VueSlickCarousel>
+        <div class="carousel_bottom">
+          <img src="@assets/images/wmIndex/left.png" @click="leftMove" />
+          <span>{{ carsoulitem }}/3</span>
+          <img src="@assets/images/wmIndex/right.png" @click="rightMove" />
+        </div>
+        <!-- <div class="carousel">
           <el-carousel
             indicator-position="outside"
             :autoplay="false"
@@ -379,7 +412,7 @@
             <span>{{ carsoulitem }}/3</span>
             <img src="@assets/images/wmIndex/right.png" @click="rightMove" />
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -452,7 +485,7 @@ export default {
   },
   components: { VueSlickCarousel },
   created() {
-    
+    this.carsoulitem = 1;
     this.username = window.sessionStorage.getItem("username");
     // console.log(this.username);
     this.nowLang = this.$i18n.locale;
@@ -486,16 +519,14 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
-   
     changes(index) {
       this.carsoulitem = index + 1;
-     
     },
-    leftMove(index) {
-      this.$refs.car.prev();
+    leftMove() {
+      this.$refs.carousel.prev();
     },
-    rightMove(index) {
-      this.$refs.car.next();
+    rightMove() {
+      this.$refs.carousel.next();
     },
     nameFocus() {
       this.nameblue = true;
@@ -672,13 +703,16 @@ export default {
             if (res.data.code == 200) {
               // setTimeout(this.change2, 0);
               // setTimeout(this.change, 5000);
+
               (this.ruleForm.name = ""),
                 (this.ruleForm.phone = ""),
                 (this.ruleForm.email = ""),
                 (this.ruleForm.advice = "");
+                this.$message.success(res.data.result);
             }
           })
           .catch((err) => {
+             this.$message.error(res.data.result);
             console.log(err);
           });
       }
@@ -1679,16 +1713,16 @@ svg {
         .el-carousel__item {
           width: 1100px;
           height: 100%;
-          left: -297px !important;
+          left: -300px !important;
         }
         .el-carousel__item:nth-child(2n) {
           background-color: #99a9bf;
-          opacity: 0.5;
+          opacity: 0;
         }
 
         .el-carousel__item:nth-child(2n + 1) {
           background-color: #d3dce6;
-          opacity: 0.5;
+          opacity: 0;
         }
         .is-active {
           width: 100%;
@@ -1698,7 +1732,7 @@ svg {
       }
       .carousel_bottom {
         text-align: center;
-        margin-top: 70px;
+        margin-top: 176px;
         img {
           cursor: pointer;
         }
@@ -1722,13 +1756,19 @@ svg {
         font-size: 20px;
         width: 1200px !important;
         background: blue;
+        height: 110px;
         ul {
           display: flex !important;
           flex-direction: row;
+          height: 110px;
           li {
+            height: 110px;
             width: 100%;
+            background: white;
           }
         }
+      }
+      .slick-list {
       }
     }
   }

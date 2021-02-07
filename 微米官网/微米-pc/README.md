@@ -20,7 +20,7 @@ this.\$store.commit("leavelogin");
  1.14修改好英文上线
  1.20官网pc端提案投票详情页换行修改
  1.22换成https请求，上线
- 
+2.7上线
 
 ## Project setup
 

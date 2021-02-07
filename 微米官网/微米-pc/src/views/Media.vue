@@ -95,7 +95,11 @@
           <li>
             <div class="foot-box1">
               <div class="circle">
-                  <img src="@assets/images/footer/github.png" @click="github" style="position:relative;left:10px" />
+                <img
+                  src="@assets/images/footer/github.png"
+                  @click="github"
+                  style="position:relative;left:10px"
+                />
               </div>
             </div>
           </li>
@@ -177,7 +181,7 @@
 </template>
 
 <script>
-import {BASEURL} from '@api/api';
+import { BASEURL } from "@api/api";
 import Qs from "qs";
 import headertop from "../components/common/header";
 export default {
@@ -276,23 +280,23 @@ export default {
       });
     },
     //获取MEDIA
-     getmedialist() {
+    getmedialist() {
       let that = this;
       var data = Qs.stringify({ pageNum: this.medianum, pageSize: 6 });
       that.$http
-        .post(
-          `${BASEURL}`+"/weimioffice/web/content/getNews",
-          data,
-          { headers: { language: this.nowLang } }
-        )
+        .post(`${BASEURL}` + "/weimioffice/web/content/getNews", data, {
+          headers: { language: this.nowLang },
+        })
         .then((res) => {
-            //console.log(res);
+          // console.log(res);
           //console.log(res.data.result.total);
           this.totalNum = res.data.result.total;
           //console.log(this.totalNum);
           this.medialist = res.data.result.list;
           //console.log(this.medialist);
           for (let i = 0; i < this.medialist.length; i++) {
+            // this.medialist[i].thumb=this.medialist[i].thumb.replace("https://47.75.93.221", "https://www.uenc.io")
+            // console.log(this.medialist)
             if (this.medialist[i].title.length > 16) {
               this.medialist[i].title =
                 this.medialist[i].title.substring(0, 16) + "...";
@@ -314,8 +318,8 @@ export default {
     gotohide() {
       this.show = false;
     },
-        github(){
- window.open("https://github.com/uenctech");
+    github() {
+      window.open("https://github.com/uenctech");
     },
     telegram() {
       window.open("https://t.me/UniversalEnergyChain");

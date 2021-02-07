@@ -46,8 +46,8 @@ const routes = [
             },
 
             {
-                path: '/news',
-                name: 'news',
+                path: '/media',
+                name: 'media',
                 component: () =>
                     import("../views/Media.vue"),
                 meta: {

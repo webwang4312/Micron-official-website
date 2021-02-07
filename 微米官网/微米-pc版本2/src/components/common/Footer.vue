@@ -24,15 +24,15 @@
       <div class="footzline"></div>
       <div class="footz_bottom">
         <div class="component">
-          <span class="neirong">About</span>
+          <span class="neirong" @click="goAbout">About</span>
 
-          <span class="neirong">Proposal</span>
+          <span class="neirong" @click="goProposal">Proposal</span>
 
-          <span class="neirong">Developer</span>
+          <span class="neirong" @click="goDeveloper">Developer</span>
 
-          <span class="neirong">Media</span>
+          <span class="neirong" @click="goMedia">Media</span>
 
-          <span class="neirong">Bowser</span>
+          <span class="neirong" @click="goBowser">Bowser</span>
         </div>
         <ul class="foot-box">
           <li>
@@ -66,6 +66,30 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    goAbout() {
+      this.$router.push({
+        path: "/about",
+      });
+    },
+    goProposal() {
+      this.$router.push({
+        path: "/proposal",
+      });
+    },
+    goDeveloper() {
+      this.$router.push({
+        path: "/developer",
+      });
+    },
+    goMedia() {
+      this.$router.push({
+        path: "/news",
+      });
+    },
+    goBowser() {
+      window.open("http://www.uenc.io/chainExplorer/index.html#/");
+    },
+
     gotoshow() {
       this.showfooter = true;
     },

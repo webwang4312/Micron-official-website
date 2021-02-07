@@ -229,6 +229,8 @@ export default {
         .then((res) => {
           this.detaies = res.data.result.title;
           this.content = res.data.result.content;
+          // this.content=this.content.replace("https://47.75.93.221", "https://www.uenc.io")
+          // console.log(this.content);
           //console.log(this.content);
           this.updatedate = res.data.result.updatedate;
           this.description = res.data.result.description;
