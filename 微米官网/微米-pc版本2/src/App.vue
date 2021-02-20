@@ -66,4 +66,5 @@ export default {
 </script>
 <style lang="less">
 @import "./assets/css/normalize.css";
+@import './animate.min.css';
 </style>

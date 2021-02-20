@@ -442,7 +442,7 @@ button {
   width: 100%;
   height: 72px;
   z-index: 100;
-  background: #889fcd;
+  // background: #889fcd;
   .left_nav {
     width: 94.7%;
     height: 36px;
@@ -489,7 +489,7 @@ button {
           flex-direction: row;
           align-items: center;
           text-align: center;
-       
+
           margin-left: 32px;
         }
         li:hover {

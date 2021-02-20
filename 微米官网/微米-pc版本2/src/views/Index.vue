@@ -322,9 +322,11 @@
           Jointly create uenc project ecological community obtain developer
           awards and promote the development of blockchain Technology
         </div>
-        <div class="bottom">
+        <div class="bottom" @click="toDeveloper">
           Learn more
         </div>
+       
+
       </div>
     </div>
     <div class="index_partner">
@@ -345,6 +347,15 @@
         >
         <div>
             <ul>
+              <li>
+                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+              </li>
               <li>
                 <img src="@assets/images/wmIndex/Group 687.png" alt="" />
               </li>
@@ -474,8 +485,7 @@ export default {
         advice: "",
       },
 
-      // 媒体推荐位信息
-      recommendlist: [{ title: "" }, { title: "" }, { title: "" }],
+      
       indexNumTop: "",
       scrollTop: "",
       description1: "",
@@ -510,7 +520,7 @@ export default {
     // this.getIndex();
     this.getHomeData();
     // 请求媒体公告数据
-    this.getindexrecommend();
+   
     // 滚动设置
     window.addEventListener("scroll", this.getScroll);
   },
@@ -519,7 +529,16 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
+    toDeveloper(){
+       this.$router.push({
+        path: "/developer",
+        query: {
+         
+        },
+      });
+    },
     changes(index) {
+      console.log(index);
       this.carsoulitem = index + 1;
     },
     leftMove() {
@@ -750,48 +769,7 @@ export default {
         });
     },
 
-    //获取媒体公告数据
-    getindexrecommend() {
-      let that = this;
-      that.$http
-        .get(`${BASEURL}` + "/weimioffice/web/content/getRecommend", {
-          params: {},
-          headers: { language: this.nowLang },
-        })
-        .then((res) => {
-          // console.log(res);
-          if (res.data.code !== 200) {
-            return false;
-          } else {
-            that.recommendlist = res.data.result;
-            if (that.recommendlist[0].description.length > 63) {
-              that.recommendlist[0].description =
-                that.recommendlist[0].description.substring(0, 62) + "...";
-            } else {
-              that.recommendlist[0].description =
-                that.recommendlist[0].description;
-            }
-            if (that.recommendlist[1].description.length > 63) {
-              that.recommendlist[1].description =
-                that.recommendlist[1].description.substring(0, 62) + "...";
-            } else {
-              that.recommendlist[1].description =
-                that.recommendlist[1].description;
-            }
-            if (that.recommendlist[2].description.length > 63) {
-              that.recommendlist[2].description =
-                that.recommendlist[2].description.substring(0, 62) + "...";
-            } else {
-              that.recommendlist[2].description =
-                that.recommendlist[2].description;
-            }
-          }
-          localStorage.setItem("lang", this.nowLang);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+   
     // 获取滚动高度，设置图片飞入飞出
     getScroll() {
       this.scrollTop =
@@ -874,7 +852,7 @@ svg {
     width: 100%;
     height: 900px;
     margin: auto;
-    background: red;
+    // background: red;
     background: url("../assets/images/wmIndex/Background.png") no-repeat
       center/100% 100%;
     .index_topz {
@@ -882,7 +860,7 @@ svg {
       flex-direction: row;
       width: 1200px;
       margin: 0 auto;
-      background: #801090;
+      // background: #801090;
       position: relative;
       top: 40px;
     }
@@ -953,7 +931,7 @@ svg {
     position: relative;
     width: 100%;
     height: 332px;
-    background: gray;
+    // background: gray;
 
     .index_projectz {
       width: 1200px;
@@ -963,7 +941,7 @@ svg {
       justify-content: space-between;
       position: relative;
       top: 81px;
-      background: #505090;
+      // background: #505090;
       .title {
         display: flex;
         flex-direction: column;
@@ -1084,14 +1062,14 @@ svg {
     width: 100%;
     height: 716px;
 
-    background: red;
+    // background: red;
     .advantagez {
       height: 716px;
       width: 1200px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      background: #836040;
+      // background: #836040;
     }
     .advantage_top {
       display: flex;
@@ -1435,12 +1413,12 @@ svg {
   .index_contact {
     width: 100%;
     height: 838px;
-    background: red;
+    // background: red;
     .index_contactz {
       width: 1200px;
       margin: 0 auto;
       height: 838px;
-      background: #505090;
+      // background: #505090;
       display: flex;
       flex-direction: column;
       .contact_title {
@@ -1586,7 +1564,7 @@ svg {
   .index_developer {
     width: 100%;
     height: 450px;
-    background: red;
+    // background: red;
     background: url("../assets/images/wmIndex/Group 1592.png") no-repeat
       center/100% 100%;
     position: relative;
@@ -1640,13 +1618,14 @@ svg {
         text-align: center;
         font-feature-settings: "liga" off;
         color: #ffffff;
+        cursor: pointer;
       }
     }
   }
   .index_partner {
     width: 100%;
     height: 471px;
-    background: red;
+    // background: red;
     position: relative;
     top: 0;
     .index_partnerz {
@@ -1654,7 +1633,7 @@ svg {
       height: 471px;
       background: #fff;
       margin: 0 auto;
-      background: #505090;
+      // background: #505090;
       position: relative;
 
       .partner_title {
