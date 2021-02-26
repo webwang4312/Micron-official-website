@@ -533,7 +533,7 @@ export default {
         })
         .then((res) => {
           //  console.log(res);
-          console.log(res);
+          // console.log(res);
         });
     },
     // http://47.100.227.125:8003

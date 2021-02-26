@@ -37,8 +37,9 @@
             
                 if(opt.n<liNum){
                     opt.n++;
-                  
+                    
                     (opt.n>=liNum)&&(opt.n=0);
+                  
                     updata();
                 }
             })
@@ -46,11 +47,12 @@
             opt.btnPrev.on("click",function(){
                
                 opt.n--;
-               
+              
                 (opt.n<0)&&(opt.n=liNum-1);
-               
+              
                 updata();
             })
+               
                
 
             function updata(){

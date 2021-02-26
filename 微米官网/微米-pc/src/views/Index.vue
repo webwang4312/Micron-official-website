@@ -239,7 +239,11 @@
           <li>
             <div class="foot-box1">
               <div class="circle">
-                <img src="@assets/images/footer/github.png" @click="github" style="position:relative;left:10px" />
+                <img
+                  src="@assets/images/footer/github.png"
+                  @click="github"
+                  style="position:relative;left:10px"
+                />
               </div>
             </div>
           </li>
@@ -274,6 +278,20 @@
             <div class="foot-box5">
               <div class="circle">
                 <img src="@assets/images/footer/weibo.png" @click="weibo" />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="foot-box6">
+              <div class="circle">
+                <img src="@assets/images/footer/reddit.png" @click="reddit" />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="foot-box7">
+              <div class="circle">
+                <img src="@assets/images/footer/medium.png" @click="medium" />
               </div>
             </div>
           </li>
@@ -735,15 +753,14 @@ export default {
       if (this.scrollTop > 300) {
         this.show = true;
       }
-     
+
       if (this.scrollTop > 900) {
         this.showmedia = true;
       }
-     
+
       if (this.scrollTop > 1400) {
         this.showus = true;
       }
-      
     },
 
     gotoshow() {
@@ -756,7 +773,7 @@ export default {
       window.open("https://github.com/uenctech");
     },
     telegram() {
-      window.open("https://t.me/UniversalEnergyChain1");
+      window.open("https://t.me/UENCOfficial");
     },
     twitter() {
       window.open("https://twitter.com/uencclub");
@@ -766,6 +783,12 @@ export default {
     },
     weibo() {
       window.open("https://weibo.com/u/5580784739");
+    },
+    reddit() {
+      window.open("https://www.reddit.com/r/UENC/");
+    },
+    medium() {
+      window.open("https://uenc.medium.com/");
     },
   },
 };
@@ -1625,7 +1648,7 @@ button {
 //底部
 .indexuenc_foot {
   width: 100%;
-  height:166px;
+  height: 166px;
   background-color: #0c0c0c;
   position: relative;
   top: 409px;
@@ -1695,11 +1718,13 @@ button {
           animation-fill-mode: forwards;
         }
       }
+     
       .foot-box3 {
         img {
           left: 33% !important;
         }
       }
+
       .foot-box2,
       .foot-box3,
       .foot-box4,
@@ -1726,7 +1751,7 @@ button {
       }
     }
     .component_index {
-   line-height: 111px;
+      line-height: 111px;
       span {
         margin-left: 39px;
         font-size: 16px;

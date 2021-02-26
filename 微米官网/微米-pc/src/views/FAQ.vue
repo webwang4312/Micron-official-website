@@ -136,6 +136,20 @@
               </div>
             </div>
           </li>
+           <li>
+            <div class="foot-box6">
+              <div class="circle">
+                <img src="@assets/images/footer/reddit.png" @click="reddit" />
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="foot-box7">
+              <div class="circle">
+                <img src="@assets/images/footer/medium.png" @click="medium" />
+              </div>
+            </div>
+          </li>
           <li>
             <div class="foot-box4">
               <div
@@ -340,7 +354,7 @@ export default {
  window.open("https://github.com/uenctech");
     },
     telegram() {
-      window.open("https://t.me/UniversalEnergyChain1");
+      window.open("https://t.me/UENCOfficial");
     },
     twitter() {
       window.open("https://twitter.com/uencclub");
@@ -350,6 +364,12 @@ export default {
     },
     weibo() {
       window.open("https://weibo.com/u/5580784739");
+    },
+     reddit() {
+      window.open("https://www.reddit.com/r/UENC/");
+    },
+    medium() {
+      window.open("https://uenc.medium.com/");
     },
   },
   computed: {},
@@ -732,6 +752,14 @@ button {
     }
   }
 }
+@keyframes colorchange {
+  0% {
+    background: rgba(51, 51, 51, 1);
+  }
+  100% {
+    background: rgba(0, 159, 205, 1);
+  }
+}
 
 // 底部
 .faquenc_foot {
@@ -810,6 +838,7 @@ button {
           left: 33% !important;
         }
       }
+      
       .foot-box2,
       .foot-box3,
       .foot-box4,

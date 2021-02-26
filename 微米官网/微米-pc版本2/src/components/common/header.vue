@@ -306,7 +306,7 @@ export default {
     // 选择语言
     switchLan() {
       //console.log(this.$i18n.locale);
-      this.fullscreenLoading = true;
+      // this.fullscreenLoading = true;
       if (this.nowLang === "cn") {
         this.$i18n.locale = "en";
         // console.log(this.$i18n.locale);

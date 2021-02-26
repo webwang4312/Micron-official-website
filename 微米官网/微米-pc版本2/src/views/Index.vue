@@ -6,12 +6,41 @@
           <div class="content">
             A public chain with cross chain technology
           </div>
-          <button @click="goVideo">
+          <!-- <button @click="goVideo">
             <img src="@assets/images/wmIndex/Frame.png" alt="" />
             <div>
               Learn more
             </div>
-          </button>
+          </button> -->
+          <div>
+            <button @click="checkVideoFun">
+              <img src="@assets/images/wmIndex/Frame.png" alt="" />
+              <div>
+                {{ $t("learnmore[0]") }}
+              </div>
+            </button>
+
+            <div
+              class="mask"
+              v-if="videoState == true"
+              @click="masksCloseFun"
+            ></div>
+
+            <div class="videomasks" v-if="videoState == true">
+              <video
+                src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4"
+                controls="controls"
+                autoplay
+                v-if="nowLang == 'cn'"
+              />
+              <video
+                src="https://www.uenc.io/video/yingwen.mp4"
+                controls="controls"
+                autoplay
+                v-else
+              />
+            </div>
+          </div>
         </div>
         <div>
           <img src="@assets/images/wmIndex/Frame(1).png" class="svg_img" />
@@ -21,9 +50,9 @@
     <div class="index_project">
       <div class="index_projectz">
         <div class="title">
-          <div>UENC project achievements</div>
+          <div>{{ $t("project[0]") }}</div>
           <div>
-            With our super powers we have reached this
+            {{ $t("project[1]") }}
           </div>
         </div>
         <div class="detail">
@@ -36,7 +65,7 @@
                 </div>
 
                 <div>
-                  Block height
+                  {{ $t("height[0]") }}
                 </div>
               </div>
             </div>
@@ -48,7 +77,7 @@
                 </div>
 
                 <div>
-                  Whole network nodes
+                  {{ $t("number[0]") }}
                 </div>
               </div>
             </div>
@@ -62,7 +91,7 @@
                 </div>
 
                 <div>
-                  Bonus issued
+                  {{ $t("jiangli[0]") }}
                 </div>
               </div>
             </div>
@@ -74,7 +103,7 @@
                 </div>
 
                 <div>
-                  Transactions
+                  {{ $t("sum[0]") }}
                 </div>
               </div>
             </div>
@@ -85,10 +114,9 @@
     <div class="advantage">
       <div class="advantagez">
         <div class="advantage_top">
-          <div>Technical advantages</div>
+          <div>{{ $t("Technical[0]") }}</div>
           <div>
-            UENC has developed dpow consensus algorithm to meet the technical
-            needs of the future economic development of Tongzheng.
+            {{ $t("Technical[1]") }}
           </div>
         </div>
         <div class="advantage_detail">
@@ -247,33 +275,34 @@
     <div class="index_contact">
       <div class="index_contactz">
         <div class="contact_title">
-          <div>Contact Us</div>
+          <div>{{ $t("contactus[0]") }}</div>
           <div>
-            Please fill in the form on the right and we will give you feedback
-            in time.
+            {{ $t("contactus[1]") }}
           </div>
         </div>
         <div class="index_form">
           <div class="index_line1">
             <div>
-              <span>Your Name <span style="color:red">*</span></span
+              <span>
+                {{ $t("contactus[2]") }} <span style="color:red">*</span></span
               ><br />
               <input
                 :class="{ indexblue: nameblue }"
                 type="text"
-                placeholder="Your Name"
+                :placeholder="$t('contactus[2]')"
                 v-model="ruleForm.name"
                 @focus="nameFocus"
                 @blur="nameBlur"
               />
             </div>
             <div>
-              <span>Your Email <span style="color:red">*</span></span
+              <span>
+                {{ $t("contactus[3]") }} <span style="color:red">*</span></span
               ><br />
               <input
                 :class="{ indexblue: emailblue }"
                 type="text"
-                placeholder="Your Email"
+                :placeholder="$t('contactus[3]')"
                 v-model="ruleForm.email"
                 @focus="emailFocus"
                 @blur="emailBlur"
@@ -282,11 +311,12 @@
           </div>
           <div class="index_line2">
             <div>
-              <span>Your phonenumber</span><br />
+              <span> {{ $t("contactus[4]") }}</span
+              ><br />
               <input
                 :class="{ indexblue: phoneblue }"
                 type="text"
-                placeholder="Your phonenumber"
+                :placeholder="$t('contactus[4]')"
                 v-model="ruleForm.phone"
                 @focus="phoneFocus"
                 @blur="phoneBlur"
@@ -295,11 +325,12 @@
           </div>
           <div class="index_line3">
             <div>
-              <span>What's on your mind? <span style="color:red">*</span></span
+              <span>
+                {{ $t("contactus[5]") }} <span style="color:red">*</span></span
               ><br />
               <textarea
                 :class="{ indexblue: mindblue }"
-                placeholder="Jot us a note and we’ll get back to you as quickly as possible"
+                :placeholder="$t('contactus[5]')"
                 v-model="ruleForm.advice"
                 @focus="mindFocus"
                 @blur="mindBlur"
@@ -309,7 +340,7 @@
           </div>
         </div>
         <div class="index_button" @click="submitForm">
-          <span> submit</span>
+          <span> {{ $t("submit[0]") }}</span>
         </div>
       </div>
     </div>
@@ -323,19 +354,18 @@
           awards and promote the development of blockchain Technology
         </div>
         <div class="bottom" @click="toDeveloper">
-          Learn more
+          {{ $t("learnmore[0]") }}
         </div>
-       
-
       </div>
     </div>
     <div class="index_partner">
       <div class="index_partnerz">
         <div class="partner_title">
-          partner
+          {{ $t("Partner[0]") }}
         </div>
         <VueSlickCarousel
           :arrows="false"
+          :autoplay='false'
           :dots="false"
           :infinite="true"
           :speed="300"
@@ -345,47 +375,106 @@
           ref="carousel"
           @afterChange="changes"
         >
-        <div>
+          <div>
             <ul>
               <li>
-                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/1.png" alt="" />
               </li>
               <li>
-                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/2.png" alt="" />
               </li>
               <li>
-                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/3.png" alt="" />
               </li>
               <li>
-                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+                 <img src="@assets/images/wmIndex/partner/4.png" alt="" />
               </li>
             </ul>
           </div>
           <div>
             <ul>
               <li>
-                <img src="@assets/images/wmIndex/Group 688.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/5.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/6.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/7.png" alt="" />
+              </li>
+              <li>
+                 <img src="@assets/images/wmIndex/partner/8.png" alt="" />
               </li>
             </ul>
           </div>
           <div>
             <ul>
               <li>
-                <img src="@assets/images/wmIndex/Group 687.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/9.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/10.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/11.png" alt="" />
+              </li>
+              <li>
+                 <img src="@assets/images/wmIndex/partner/12.png" alt="" />
               </li>
             </ul>
           </div>
-           <div>
+          <div>
             <ul>
               <li>
-                <img src="@assets/images/wmIndex/Group 688.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/13.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/14.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/15.png" alt="" />
+              </li>
+              <li>
+                 <img src="@assets/images/wmIndex/partner/16.png" alt="" />
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li>
+                <img src="@assets/images/wmIndex/partner/17.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/18.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/19.png" alt="" />
+              </li>
+              <li>
+                 <img src="@assets/images/wmIndex/partner/20.png" alt="" />
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li>
+                <img src="@assets/images/wmIndex/partner/21.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/22.png" alt="" />
+              </li>
+              <li>
+                <img src="@assets/images/wmIndex/partner/23.png" alt="" />
+              </li>
+              <li>
+                 <img src="@assets/images/wmIndex/partner/24.png" alt="" />
               </li>
             </ul>
           </div>
         </VueSlickCarousel>
         <div class="carousel_bottom">
           <img src="@assets/images/wmIndex/left.png" @click="leftMove" />
-          <span>{{ carsoulitem }}/3</span>
+          <span>{{ carsoulitem }}/6</span>
           <img src="@assets/images/wmIndex/right.png" @click="rightMove" />
         </div>
         <!-- <div class="carousel">
@@ -453,6 +542,7 @@ export default {
   name: "index",
   data() {
     return {
+      videoState: false,
       nameblue: false,
       emailblue: false,
       phoneblue: false,
@@ -485,7 +575,6 @@ export default {
         advice: "",
       },
 
-      
       indexNumTop: "",
       scrollTop: "",
       description1: "",
@@ -502,10 +591,7 @@ export default {
     //console.log(this.nowLang);
     // 视频语言的切换
     if (this.$i18n.locale == "cn") {
-      this.videosource[0].src =
-        "https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4";
     } else {
-      this.videosource[0].src = "https://www.uenc.io/video/yingwen.mp4";
     }
     // 滚动设置
     window.addEventListener("scroll", this.getScroll);
@@ -520,7 +606,7 @@ export default {
     // this.getIndex();
     this.getHomeData();
     // 请求媒体公告数据
-   
+
     // 滚动设置
     window.addEventListener("scroll", this.getScroll);
   },
@@ -529,12 +615,17 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
-    toDeveloper(){
-       this.$router.push({
+    checkVideoFun(videos) {
+      this.videoState = true;
+      this.videoSrc = videos;
+    },
+    masksCloseFun() {
+      this.videoState = false;
+    },
+    toDeveloper() {
+      this.$router.push({
         path: "/developer",
-        query: {
-         
-        },
+        query: {},
       });
     },
     changes(index) {
@@ -572,15 +663,27 @@ export default {
     mindBlur() {
       this.mindblue = false;
     },
-    goVideo() {
-      if (this.$i18n.locale == "cn") {
-        window.open(
-          "https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4"
-        );
-      } else {
-        window.open("https://www.uenc.io/video/yingwen.mp4");
-      }
-    },
+    // goVideo() {
+    //   this.$alert(
+    //     ' <div style="width:100%;height:100%"><video style="width:100%;height:700px;object-fit:fill;" src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4" controls="controls" autoplay></video></div>',
+    //     {
+    //       dangerouslyUseHTMLString: true,
+    //       showConfirmButton: false,
+    //       showClose: false,
+    //       closeOnClickModal: true,
+    //     }
+    //   )
+    //     .then(() => {})
+    //     .catch((e) => e);
+
+    //   // if (this.$i18n.locale == "cn") {
+    //   //   window.open(
+    //   //     "https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4"
+    //   //   );
+    //   // } else {
+    //   //   window.open("https://www.uenc.io/video/yingwen.mp4", "_self");
+    //   // }
+    // },
     indexDisplay() {
       if (this.$refs.headertop._data.iconshow) {
         this.$refs.headertop._data.iconshow = false;
@@ -603,39 +706,39 @@ export default {
     gotochainexplor() {
       window.open("http://www.uenc.io/chainExplorer/index.html#/");
     },
-    playvideo1() {
-      var indexvideo = document.getElementById("indexvideo");
-      if (indexvideo.requestFullscreen) {
-        indexvideo.requestFullscreen();
-      } else if (indexvideo.mozRequestFullScreen) {
-        indexvideo.mozRequestFullScreen();
-      } else if (indexvideo.webkitRequestFullScreen) {
-        indexvideo.webkitRequestFullScreen();
-      }
-      indexvideo.play();
-      this.startstop = false;
-    },
-    playvideo11() {
-      var indexvideo = document.getElementById("indexvideo");
-      this.startstop = true;
-      indexvideo.pause();
-    },
-    fullScreen() {
-      const player = this.$refs.videoPlayer.player;
-      player.requestFullscreen(); //调用全屏api方法
-      player.isFullscreen(true);
-      player.play();
-    },
-    onPlayerPlay(player) {
-      this.full(player);
-    },
-    onPlayerPause(player) {
-      // alert("pause");
-    },
-    onPlayerFullScreenchange(player) {
-      player.exitFullscreen(); //强制退出全屏，恢复正常大小
-      this.videoDialogVisible = true;
-    },
+    // playvideo1() {
+    //   var indexvideo = document.getElementById("indexvideo");
+    //   if (indexvideo.requestFullscreen) {
+    //     indexvideo.requestFullscreen();
+    //   } else if (indexvideo.mozRequestFullScreen) {
+    //     indexvideo.mozRequestFullScreen();
+    //   } else if (indexvideo.webkitRequestFullScreen) {
+    //     indexvideo.webkitRequestFullScreen();
+    //   }
+    //   indexvideo.play();
+    //   this.startstop = false;
+    // },
+    // playvideo11() {
+    //   var indexvideo = document.getElementById("indexvideo");
+    //   this.startstop = true;
+    //   indexvideo.pause();
+    // },
+    // fullScreen() {
+    //   const player = this.$refs.videoPlayer.player;
+    //   player.requestFullscreen(); //调用全屏api方法
+    //   player.isFullscreen(true);
+    //   player.play();
+    // },
+    // onPlayerPlay(player) {
+    //   this.full(player);
+    // },
+    // onPlayerPause(player) {
+    //   // alert("pause");
+    // },
+    // onPlayerFullScreenchange(player) {
+    //   player.exitFullscreen(); //强制退出全屏，恢复正常大小
+    //   this.videoDialogVisible = true;
+    // },
     learnmore() {
       window.open("http://www.uenc.io/#/detail?content_id=205");
     },
@@ -692,7 +795,6 @@ export default {
     // http://47.100.227.125
     // 提交建议
     submitForm() {
-      console.log(this.ruleForm.name);
       let that = this;
       var data = Qs.stringify({
         nickname: this.ruleForm.name,
@@ -727,11 +829,11 @@ export default {
                 (this.ruleForm.phone = ""),
                 (this.ruleForm.email = ""),
                 (this.ruleForm.advice = "");
-                this.$message.success(res.data.result);
+              this.$message.success(res.data.result);
             }
           })
           .catch((err) => {
-             this.$message.error(res.data.result);
+            this.$message.error(res.data.result);
             console.log(err);
           });
       }
@@ -769,7 +871,6 @@ export default {
         });
     },
 
-   
     // 获取滚动高度，设置图片飞入飞出
     getScroll() {
       this.scrollTop =
@@ -815,6 +916,46 @@ export default {
 };
 </script>
 <style lang="less">
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #000000;
+  opacity: 0.6;
+}
+// 内容层 z-index要比遮罩大，否则会被遮盖
+.videomasks {
+  width: 1200px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+}
+.videomasks video {
+  width: 100%;
+  height: 100%;
+}
+.el-message-box__header {
+  display: none;
+}
+.el-message-box__content {
+  padding: 0;
+}
+.el-message-box__btns {
+  display: none;
+}
+.el-message-box {
+  width: 80%;
+  height: 80%;
+}
+.el-message-box__content {
+  width: 100%;
+  height: 100%;
+}
 svg {
   width: 300px;
   display: block;
@@ -1103,11 +1244,6 @@ svg {
 
         color: #18191f;
 
-        /* Inside Auto Layout */
-
-        flex: none;
-        order: 0;
-        flex-grow: 0;
       }
       div:nth-child(2) {
         position: static;
@@ -1572,7 +1708,6 @@ svg {
     .index_developerz {
       width: 1200px;
       height: 450px;
-
       margin: 0 auto;
       text-align: center;
       position: relative;
@@ -1635,7 +1770,6 @@ svg {
       margin: 0 auto;
       // background: #505090;
       position: relative;
-
       .partner_title {
         text-align: center;
         font-family: Manrope;
@@ -1645,7 +1779,6 @@ svg {
         line-height: 64px;
         font-feature-settings: "liga" off;
         color: #18191f;
-
         position: relative;
         top: 80px;
       }
@@ -1654,7 +1787,6 @@ svg {
         top: 140px;
         .el-carousel {
           height: 110px;
-
           .el-carousel__container {
             height: 100%;
             ul {
@@ -1667,8 +1799,6 @@ svg {
                     width: 270px;
                     height: 110px;
                     display: flex;
-                    /* General / Dark */
-
                     background: #fff;
                     justify-content: space-around;
                     font-size: 30px;
@@ -1731,23 +1861,33 @@ svg {
       .slick-slider {
         position: relative;
         top: 140px;
-        color: red;
+        
         font-size: 20px;
         width: 1200px !important;
-        background: blue;
+       
         height: 110px;
         ul {
           display: flex !important;
           flex-direction: row;
+          justify-content: space-around;
           height: 110px;
           li {
+            width: 270px;
             height: 110px;
-            width: 100%;
-            background: white;
+            background: #F8F8F8;
+            opacity: 1;
+            display: flex !important;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            img {
+              // background: red;
+            }
           }
         }
       }
       .slick-list {
+        
       }
     }
   }

@@ -6,7 +6,9 @@
           Copyright © 2015-2020 UENC. All rights reserved.
         </div>
         <div @mouseleave="gotohide">
-          <div class="xiazai" @mouseenter="gotoshow">Download now</div>
+          <div class="xiazai" @mouseenter="gotoshow">
+            {{ $t("wmfooter[5]") }}
+          </div>
           <ul class="hovershow" v-if="showfooter">
             <li class="club">
               <img src="@assets/images/indexhover/club.png" />
@@ -24,15 +26,19 @@
       <div class="footzline"></div>
       <div class="footz_bottom">
         <div class="component">
-          <span class="neirong" @click="goAbout">About</span>
+          <span class="neirong" @click="goAbout">{{ $t("wmfooter[0]") }}</span>
 
-          <span class="neirong" @click="goProposal">Proposal</span>
+          <span class="neirong" @click="goProposal">{{
+            $t("wmfooter[1]")
+          }}</span>
 
-          <span class="neirong" @click="goDeveloper">Developer</span>
+          <span class="neirong" @click="goDeveloper">{{
+            $t("wmfooter[2]")
+          }}</span>
 
-          <span class="neirong" @click="goMedia">Media</span>
+          <span class="neirong" @click="goMedia">{{ $t("wmfooter[3]") }}</span>
 
-          <span class="neirong" @click="goBowser">Bowser</span>
+          <span class="neirong" @click="goBowser">{{ $t("wmfooter[4]") }}</span>
         </div>
         <ul class="foot-box">
           <li>
@@ -49,6 +55,12 @@
           </li>
           <li>
             <img src="@assets/images/footer/weibo.png" @click="weibo" />
+          </li>
+          <li>
+            <img src="@assets/images/footer/reddit.png" @click="reddit" />
+          </li>
+          <li>
+            <img src="@assets/images/footer/medium.png" @click="medium" />
           </li>
         </ul>
       </div>
@@ -111,6 +123,12 @@ export default {
     },
     facebook() {
       window.open("https://fb.me/uencclubglobal");
+    },
+    reddit() {
+      window.open("https://www.reddit.com/r/UENC/");
+    },
+    medium() {
+      window.open("https://uenc.medium.com/");
     },
   },
 };
@@ -229,6 +247,9 @@ export default {
           align-content: center;
           cursor: pointer;
         }
+        img:hover {
+          transform: scale(1.5);
+        }
       }
       .component {
         span {
@@ -239,10 +260,11 @@ export default {
           line-height: 24px;
           /* identical to box height, or 171% */
           margin-right: 50px;
-
           color: #ffffff;
-
           cursor: pointer;
+        }
+        span:hover {
+          color: #30b3f5;
         }
       }
     }

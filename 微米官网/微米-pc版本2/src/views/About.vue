@@ -9,38 +9,54 @@
       </div>
     </div>
     <div class="about_swiper">
-      <div class="team">Team</div>
+      <div class="team">{{ $t("aboutcontent[0]") }}</div>
       <div id="root" style="overflow: hidden">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div class="swiper-slide" v-for="item in human" :key="item.id">
               <div class="swiper_gray">
                 <img src="@assets/images/wmAbout/left.png" class="leftimg" />
-                111111111111111111111111
-                <img src="@assets/images/wmAbout/right.png" class="rightimg" />
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="swiper_gray">
-                <img src="@assets/images/wmAbout/left.png" class="leftimg" />
-               2222222222222222222222222
-                <img src="@assets/images/wmAbout/right.png" class="rightimg" />
-              </div>
-            </div>
+                <div v-if="nowLang == 'cn'" class="humancontent">
+                  {{ item.detail }}
+                  <!-- I used landify and created a landing page for my startup
+                  within a week. The Landify UI Kit is simple and highly
+                  intuitive, so anyone can use it.I used landify and created a
+                  landing page for my startup within a week. The Landify UI Kit
+                  is simple and highly intuitive, so anyone can use it. -->
+                </div>
+                <div v-else class="humancontent">
+                  {{ item.detail2 }}
+                  <!-- I used landify and created a landing page for my startup
+                  within a week. The Landify UI Kit is simple and highly
+                  intuitive, so anyone can use it.I used landify and created a
+                  landing page for my startup within a week. The Landify UI Kit
+                  is simple and highly intuitive, so anyone can use it. -->
+                </div>
 
-            <div class="swiper-slide">
-              <div class="swiper_gray">
-                <img src="@assets/images/wmAbout/left.png" class="leftimg" />
-               33333333333333333333333
                 <img src="@assets/images/wmAbout/right.png" class="rightimg" />
+              </div>
+              <div class="human_img"></div>
+              <div class="human_img_content">
+                <div v-if="nowLang == 'cn'" class="humanname">
+                  {{ item.name }}
+                </div>
+                <div v-else class="humanname">
+                  {{ item.name2 }}
+                </div>
+                <div v-if="nowLang == 'cn'" class="humanzhiwei">
+                  {{ item.zhiwei }}
+                </div>
+                <div v-else class="humanzhiwei">
+                  {{ item.zhiwei2 }}
+                </div>
               </div>
             </div>
           </div>
-          <!-- <div class="swiper-pagination"></div> -->
+          <div class="swiper-pagination"></div>
 
           <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+          <!-- <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div> -->
         </div>
       </div>
       <!-- <div class="swiper-container">
@@ -63,32 +79,78 @@
           </div>
           <div>
             <p>
-              The underlying technology principle of UENC
+              {{ $t("aboutdescription[0]") }}
             </p>
             <p>
-              Gain brand authority and visibility with the help of the largest
-              IT service ecosystem. Find customers who are looking for your
-              solution right now!
+              {{ $t("aboutdescription[1]") }}
             </p>
-            <div class="button">
-              <img src="@assets/images/wmAbout/Frame.png" alt="" />
-              <span>Learn more</span>
+            <div>
+              <button @click="checkVideoFun" class="button">
+                <img src="@assets/images/wmIndex/Frame.png" alt="" />
+                <div>
+                  {{ $t("learnmore[0]") }}
+                </div>
+              </button>
+
+              <div
+                class="mask"
+                v-if="videoState == true"
+                @click="masksCloseFun"
+              ></div>
+
+              <div class="videomasks" v-if="videoState == true">
+                <video
+                  src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4"
+                  controls="controls"
+                  autoplay
+                  v-if="nowLang == 'cn'"
+                />
+                <video
+                  src="https://www.uenc.io/video/yingwen.mp4"
+                  controls="controls"
+                  autoplay
+                  v-else
+                />
+              </div>
             </div>
           </div>
         </div>
         <div class="content_bottom">
           <div>
             <p>
-              The underlying technology principle of UENC
+              {{ $t("aboutdescription[2]") }}
             </p>
             <p>
-              Gain brand authority and visibility with the help of the largest
-              IT service ecosystem. Find customers who are looking for your
-              solution right now!
+              {{ $t("aboutdescription[3]") }}
             </p>
-            <div class="button">
-              <img src="@assets/images/wmAbout/Frame.png" alt="" />
-              <span>Learn more</span>
+            <div>
+              <button @click="checkVideoFun2" class="button">
+                <img src="@assets/images/wmIndex/Frame.png" alt="" />
+                <div>
+                  {{ $t("learnmore[0]") }}
+                </div>
+              </button>
+
+              <div
+                class="mask"
+                v-if="videoState2 == true"
+                @click="masksCloseFun2"
+              ></div>
+
+              <div class="videomasks" v-if="videoState2 == true">
+                <video
+                  src="https://pili-vod.uenc.net/uencVideo2.mp4"
+                  controls="controls"
+                  autoplay
+                  v-if="nowLang == 'cn'"
+                />
+                <video
+                  src="https://pili-vod.uenc.net/uencVideo2En.mp4"
+                  controls="controls"
+                  autoplay
+                  v-else
+                />
+              </div>
             </div>
           </div>
           <div>
@@ -100,38 +162,58 @@
     <div class="about_media">
       <div class="media_content">
         <div class="media_left">
-          <img src="@assets/images/wmAbout/p1.png" alt="" />
-          <p>The underlying technology</p>
+          <!-- <img src="@assets/images/wmAbout/video3.png" alt="" @click="checkVideoFun2"/> -->
+
+          <video
+            src="https://pili-vod.uenc.net/uencVideo3.mp4"
+            controls
+            style="width:580px;height:332px"
+            v-if="nowLang == 'cn'"
+          />
+          <video
+            src="https://pili-vod.uenc.net/uencVideo3En.mp4"
+            controls
+            style="width:580px;height:332px"
+            v-else
+          />
+          <p>{{ $t("aboutdescription[4]") }}</p>
           <p>
-            Gain brand authority and visibility with the help of the largest IT
-            service ecosystem. Find customers who are looking for your solution
-            right now!
+            {{ $t("aboutdescription[5]") }}
           </p>
         </div>
         <div class="media_right">
           <p>
             Related media reports
           </p>
-          <img src="@assets/images/wmAbout/p2.png" alt="" />
-          <p>The underlying technology</p>
+          <video
+            src="https://pili-vod.uenc.net/uencVideo4.mp4"
+            controls
+            style="width:580px;height:332px"
+            v-if="nowLang == 'cn'"
+          />
+          <video
+            src="https://pili-vod.uenc.net/uencVideo4.mp4"
+            controls
+            style="width:580px;height:332px"
+            v-else
+          />
+          <p>{{ $t("aboutdescription[6]") }}</p>
           <p>
-            Gain brand authority and visibility with the help of the largest IT
-            service ecosystem. Find customers who are looking for your solution
-            right now!
+            {{ $t("aboutdescription[7]") }}
           </p>
         </div>
       </div>
     </div>
     <div class="about_parper">
       <div class="paper_content">
-        <div>White paper</div>
+        <div>{{ $t("baipishu[0]") }}</div>
         <div>
           Please fill in the form on the right and we will give you feedback in
           time.
         </div>
         <div class="parper_download" @click="downloadbook">
           <img src="@assets/images/wmAbout/download.png" alt="" />
-          <span>Download</span>
+          <span>{{ $t("baipishu[1]") }}</span>
         </div>
       </div>
     </div>
@@ -141,7 +223,8 @@
           <div class="line"></div>
           <ul>
             <li v-for="item in 5" :key="item">
-              <img src="@assets/images/wmAbout/Group 1597.png" alt="" />
+              <img src="@assets/images/wmAbout/Group 1597.png" />
+              <!-- <img src="@assets/images/wmAbout/Group 1597.png"  :class="{scale:item==scale}"/> -->
             </li>
           </ul>
         </div>
@@ -291,7 +374,7 @@ import swiper from "@components/common/swiper";
 import "../assets/timer/css/timeline.less";
 import "../assets/timer/js/jquery.min";
 import "../assets/timer/js/jquery-timeLine";
-// import { human } from "../components/human";
+import { human } from "../components/human";
 import { step } from "../components/step";
 // import {
 //   GET,
@@ -304,6 +387,9 @@ export default {
   name: "about",
   data() {
     return {
+      scale: "",
+      videoState: false,
+      videoState2: false,
       // 媒体推荐位信息
       recommendlist: [{ title: "" }, { title: "" }, { title: "" }],
       yearactive: 0,
@@ -347,7 +433,7 @@ export default {
       this.videosource[2].src = "https://pili-vod.uenc.net/uencVideo3En.mp4";
       this.videosource[3].src = "https://pili-vod.uenc.net/uencVideo4.mp4";
     }
-    // this.human = human;
+    this.human = human;
     // this.step = step;
   },
   computed: {},
@@ -363,18 +449,17 @@ export default {
     //     })
     //   })
     var swiper = new Swiper(".swiper-container", {
-      // pagination: {
-      //   el: ".swiper-pagination",
-      // },
-      nextButton: ".swiper-button-next",
-      prevButton: ".swiper-button-prev",
+      // pagination: '.swiper-pagination',
+      // nextButton: ".swiper-button-next",
+      // prevButton: ".swiper-button-prev",
       loop: true,
       grabCursor: true,
-      pagination: ".ppagination", // 定义一个Swiper的分页器。默认会在这个分页器里面生成与slide对应的span标签
+      //pagination: ".pagination", // 定义一个Swiper的分页器。默认会在这个分页器里面生成与slide对应的span标签
       paginationClickable: true, // 值为true时，点击分页器的指示点时会发生Swiper。
       centeredSlides: true,
       slidesPerView: "auto",
-      autoplay: 500000,
+      slideToClickedSlide: true,
+      autoplay: 5000,
       autoplayDisableOnInteraction: false,
       coverflow: {
         stretch: 0,
@@ -417,6 +502,18 @@ export default {
   },
 
   methods: {
+    checkVideoFun(videos) {
+      this.videoState = true;
+    },
+    masksCloseFun() {
+      this.videoState = false;
+    },
+    checkVideoFun2(videos) {
+      this.videoState2 = true;
+    },
+    masksCloseFun2() {
+      this.videoState2 = false;
+    },
     //获取媒体公告数据
     getindexrecommend() {
       let that = this;
@@ -464,12 +561,14 @@ export default {
       if (this.yearactive < 0) {
         this.yearactive = 3;
       }
+      // this.scale=this.yearactive+1
     },
     yearRight() {
       this.yearactive += 1;
       if (this.yearactive >= 4) {
         this.yearactive = 0;
       }
+      // this.scale=this.yearactive+1
     },
     carouselChange(index) {
       console.log(index);
@@ -598,6 +697,32 @@ export default {
 </script>
 <style lang="less">
 @import "../animate.min.css";
+.scale {
+  transform: scale(2) !important;
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  background-color: #000000;
+  opacity: 0.6;
+}
+// 内容层 z-index要比遮罩大，否则会被遮盖
+.videomasks {
+  width: 1200px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 20;
+  transform: translate(-50%, -50%);
+}
+.videomasks video {
+  width: 100%;
+  height: 100%;
+}
 /*从右到左进入*/
 .fadeInRight {
   display: block !important;
@@ -664,29 +789,104 @@ export default {
 .swiper-container {
   overflow: visible !important;
   width: 1200px;
-  height: 314px;
+  min-height: 314px;
+  height: auto;
   .swiper-wrapper .swiper-slide {
     width: 700px !important;
     border-radius: 20px;
-    width: 700px;
-    height: 314px;
+    min-height: 205px;
+    height: auto;
 
-    background: #f00;
     border-radius: 10px;
+    .human_img {
+      width: 100px;
+
+      min-height: 100px;
+      height: auto;
+      background: yellow;
+
+      position: relative;
+      top: -50px;
+      left: 45%;
+      z-index: 9999;
+      .humanname {
+        font-family: PingFang SC;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 21px;
+      }
+      .humanzhiwei {
+        font-family: PingFang SC;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 21px;
+        text-align: center;
+        color: #30b3f5;
+      }
+    }
+    .human_img_content {
+      position: relative;
+      top: -38px;
+      left: 10px;
+      text-align: center;
+
+      .humanname {
+        font-family: PingFang SC;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        color: #000000;
+      }
+      .humanzhiwei {
+        font-family: PingFang SC;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 21px;
+        text-align: center;
+        color: #30b3f5;
+      }
+    }
     .swiper_gray {
       width: 700px;
-      height: 205px;
-      left: 0px;
-      top: 0px;
+      min-height: 205px;
+      height: auto;
 
       background: #f5f5f5;
       border-radius: 10px;
+      z-index: 1;
+      position: relative;
+      .humancontent {
+        width: 580px;
+        padding-top: 38px;
+        padding-bottom: 83px;
+        margin: 0 auto;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 21px;
+
+        font-feature-settings: "liga" off;
+
+        color: #666666;
+        background: #30b3f5;
+        z-index: 1;
+      }
+
       .leftimg {
-        position: relative;
+        position: absolute;
         left: 25px;
         top: 20px;
       }
       .rightimg {
+        position: absolute;
+        left: 652px;
+        bottom: 65px;
       }
     }
   }
@@ -695,14 +895,17 @@ export default {
 .swiper-container .swiper-wrapper .swiper-slide-prev {
   width: 700px !important;
   margin-top: 18px;
-  height: 284px !important;
+  min-height: 314px !important;
+  height: auto;
   opacity: 0.5;
 }
 
 .swiper-container .swiper-wrapper .swiper-slide-next {
   width: 700px !important;
-  margin-top: 18px;
-  height: 284px !important;
+  position: relative;
+  top: 18px;
+  min-height: 284px !important;
+  height: auto;
   opacity: 0.5;
 }
 
@@ -710,7 +913,6 @@ export default {
   width: 700px !important;
   margin-right: 30px;
   margin-left: 30px;
-  height: 314px;
 }
 .about {
   position: relative;
@@ -780,7 +982,6 @@ export default {
       top: 140px;
     }
     .swiper-container {
-      z-index: 0;
       width: 100%;
       padding-top: 10px;
       padding-bottom: 15px;
@@ -927,6 +1128,7 @@ export default {
           width: 580px;
           height: 332px;
           border-radius: 10px;
+          cursor: pointer;
         }
         p:nth-child(2) {
           width: 379px;
@@ -952,11 +1154,11 @@ export default {
       .media_right {
         position: relative;
         top: 100px;
-
         img {
           width: 580px;
           height: 332px;
           border-radius: 10px;
+          cursor: pointer;
         }
         p:nth-child(1) {
           width: 445px;

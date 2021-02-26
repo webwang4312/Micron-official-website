@@ -34,6 +34,16 @@
           <br />
           <span>{{ $t("contactus[5]") }}</span>
         </li>
+         <li>
+          <img src="@assets/images/index/reddit.png" @click="reddit" />
+          <br />
+          <span>{{ $t("contactus[6]") }}</span>
+        </li>
+         <li>
+          <img src="@assets/images/index/medium.png" @click="medium" />
+          <br />
+          <span>{{ $t("contactus[7]") }}</span>
+        </li>
       </ul>
       <ul class="saoma">
         <li>
@@ -75,7 +85,7 @@ export default {
       window.location.href = "http://www.uenc.net/down/uenc.html";
     },
     telegram() {
-      window.open("https://t.me/UniversalEnergyChain1");
+      window.open("https://t.me/UENCOfficial");
     },
     twitter() {
       window.open("https://twitter.com/uencclub");
@@ -88,7 +98,14 @@ export default {
     },
     github(){
        window.open("https://github.com/uenctech");
+    },
+    reddit(){
+ window.open("https://www.reddit.com/r/UENC/");
+    },
+    medium(){
+ window.open("https://uenc.medium.com/");
     }
+
   }
 };
 </script>
@@ -140,7 +157,7 @@ export default {
     }
 
     .fangshi {
-      width: 350px;
+      width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-around;

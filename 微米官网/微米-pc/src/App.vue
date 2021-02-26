@@ -66,6 +66,48 @@ export default {
 </script>
 <style lang="less">
 @import "./assets/css/normalize.css";
+ .foot-box6:hover {
+        .circle {
+          animation: colorchange 0.1s linear;
+          animation-fill-mode: forwards;
+        }
+      }
+      .foot-box7:hover {
+        .circle {
+          animation: colorchange 0.1s linear;
+          animation-fill-mode: forwards;
+        }
+      }
+      .foot-box6 {
+        width: 50px;
+        height: 50px;
+        background: rgba(51, 51, 51, 1);
+        border-radius: 50%;
+        // position: relative;
+        margin-left: 0px;
+        margin-top: 30px;
+        img {
+          cursor: pointer;
+          position: relative;
+          top: 7px;
+          left: 12%;
+        }
+      }
+      .foot-box7 {
+        width: 50px;
+        height: 50px;
+        background: rgba(51, 51, 51, 1);
+        border-radius: 50%;
+        // position: relative;
+        margin-left: 0px;
+        margin-top: 30px;
+        img {
+          cursor: pointer;
+          position: relative;
+          top: 7px;
+          left: 17%;
+        }
+      }
 //@import "./assets/css/media.less";
 #particles-js {
   width: 100%;

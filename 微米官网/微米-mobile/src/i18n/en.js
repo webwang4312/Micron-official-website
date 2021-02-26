@@ -71,7 +71,7 @@ const en = {
     number: ['Full network nodes'],
     jiangli: ['Rewards'],
     sum: ['Transactions'],
-    contactus: ['Contact Us', 'Telegram', 'Twitter', 'Weibo', 'Facebook', 'Github'],
+    contactus: ['Contact Us', 'Telegram', 'Twitter', 'Weibo', 'Facebook', 'Github','Reddit','Medium'],
     contactcontent: ['UENC implements a non-competitive mining and decentralized mechanism that enables everyone to build UENC network infrastructure and ecosystem and share dividends of global token economic growth altogether.', 'Welcome to contact us.', 'We need more information to provide a better solution.Please fill in the blanks and we will get back to you asap.'],
     meidaannouncement: ['Media announcement'],
     phone: ['phone'],
