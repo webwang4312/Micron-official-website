@@ -13,14 +13,27 @@
         <ul class="header-center">
           <li
             v-for="(item, i) in nav"
-            :class="{ nav_li: active === i }"
             :key="i"
-            @click="gorouter(item.path)"
             @mouseenter="navehover(item, index)"
             @mouseleave="naveleave"
             ref="tabber"
           >
-            <div class="div1">{{ item.title }}</div>
+            <div class="div1">
+              <router-link
+                tag="div"
+                class="tab_item "
+                :to="item.path"
+                :key="index"
+              >
+                <span class="tab_span">{{ item.title }}</span>
+              </router-link>
+            </div>
+          </li>
+          <li>
+            <span class="tab_span" @click="goToBrower" v-if="nowLang == 'cn'"
+              >浏览器</span
+            >
+            <span class="tab_span" @click="goToBrower" v-else>Brower</span>
           </li>
         </ul>
 
@@ -71,6 +84,7 @@ import Login from "@components/common/Login";
 import Forget from "@components/common/ForgetPassword";
 import Fastoken from "@components/common/Fastoken";
 import FastokenSecond from "@components/common/FastokenSecond";
+
 var qs = require("qs");
 export default {
   name: "index",
@@ -127,12 +141,7 @@ export default {
         },
         {
           title: "媒体公告",
-          path: "/news",
-        },
-        {
-          title: "浏览器",
-
-          path: "/browser",
+          path: "/media",
         },
       ];
     }
@@ -153,16 +162,12 @@ export default {
         },
         {
           title: "Media",
-          path: "/news",
-        },
-        {
-          title: "Browser",
-          path: "/browser",
+          path: "/media",
         },
       ];
     }
     this.nav.forEach((v, i) => {
-      //  console.log(v);
+      //console.log(v);
       // console.log(this.$route.path);
       // console.log(this.$route.path);
       if (v.path === this.$route.path) {
@@ -189,6 +194,9 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
+    goToBrower() {
+      window.open("http://www.uenc.io/chainExplorer/index.html#/", "_blank");
+    },
     goIndex() {
       this.$router.push({
         path: "/index",
@@ -251,15 +259,23 @@ export default {
     //     );
     //   }
     // },
-    gorouter(index) {
-      console.log(index);
-      // console.log(index);
-      if (index === "/browser") {
-        window.open("http://www.uenc.io/chainExplorer/index.html#/", "_blank");
-      } else {
-        this.$router.push({ path: index });
-      }
-    },
+    // gorouter(index, i) {
+    //   // console.log(index);
+    //   // console.log(i);
+    //   this.active = 6;
+    //   if (this.active == -1) {
+    //     this.active !== i;
+    //   } else {
+    //     this.active = i;
+    //   }
+
+    //   // console.log(index);
+    //   if (index === "/browser") {
+    //     window.open("http://www.uenc.io/chainExplorer/index.html#/", "_blank");
+    //   } else {
+    //     this.$router.push({ path: index });
+    //   }
+    // },
     fastoken() {
       this.$store.dispatch("fastokenShow");
       // 根据userid绑定权益
@@ -326,6 +342,9 @@ export default {
 };
 </script>
 <style lang="less">
+.router-link-active {
+  color: blue;
+}
 .stickys {
   position: fixed !important;
   left: 0;
@@ -337,9 +356,9 @@ export default {
   z-index: 100;
   background: #889fcd;
 }
-// .nav_li{
-//   color: red;
-// }
+.nav_li {
+  color: red !important;
+}
 #loginregister {
   font-size: 18px;
   font-family: PingFang SC;

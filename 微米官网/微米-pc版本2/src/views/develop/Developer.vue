@@ -1,69 +1,53 @@
 <template>
   <div class="developer">
-    <vue-particles
-      color="#dedede"
-      :particleOpacity="0.3"
-      :particlesNumber="50"
-      shapeType="polygon"
-      :particleSize="1"
-      linesColor="#dedede"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      hoverMode="grab"
-      :clickEffect="true"
-      clickMode="push"
-      class="lizi"
-    >
-    </vue-particles>
-
+ 
     <div class="developer_top">
-    
       <div class="partnertop-content">
-        <div class="partner-more">
-          <p>{{ $t("developer[0]") }}</p>
-          <p>{{ $t("developer[1]") }}</p>
-          <!-- <p>{{ $t("recommendshorttitle[0]") }}</p> -->
-        </div>
+        <p class="content1">Capture your leads</p>
+        <p class="content2">
+          This is a lead capture oriented landing page template, hence oriented
+          landing page the name.
+        </p>
+        <!-- <p>{{ $t("recommendshorttitle[0]") }}</p> -->
       </div>
     </div>
     <div class="developer_total">
       <div class="partnerfooter-content">
         <p>{{ $t("developer[2]") }}</p>
-        <div class="partner-line"></div>
+        <div class="partner-line">
+          UENC has developed dpow consensus algorithm to meet the technical
+          needs of the future economic development of Tongzheng.
+        </div>
         <div class="developer_total-img">
           <ul>
             <li>
-              <img
-                src="@assets/images/developer/矢量智能对象.png"
-                style="width:80px;height:80px"
-              />
-              <div>{{ taskCount }}</div>
               <div>
-                {{ $t("developer[3]") }}
+                <img src="@assets/images/wmDeveloper/Frame.png" />
+                <span> {{ $t("developer[3]") }}</span>
+              </div>
+
+              <div>
+                {{ taskCount }}
               </div>
             </li>
             <li>
-              <img
-                src="@assets/images/developer/矢量智能对象(1).png"
-                style="width:59px;height:80px"
-              />
-              <div>{{ completeCount }}</div>
               <div>
-                {{ $t("developer[4]") }}
+                <img src="@assets/images/wmDeveloper/Frame (1).png" />
+                <span> {{ $t("developer[4]") }}</span>
+              </div>
+
+              <div>
+                {{ completeCount }}
               </div>
             </li>
             <li>
-              <img
-                src="@assets/images/developer/矢量智能对象(2).png"
-                style="width:60px;height:80px"
-              />
-              <div>{{ grantCount }}</div>
               <div>
-                {{ $t("developer[5]") }}
+                <img src="@assets/images/wmDeveloper/Frame (2).png" />
+                <span> {{ $t("developer[5]") }}</span>
+              </div>
+
+              <div>
+                {{ grantCount }}
               </div>
             </li>
           </ul>
@@ -73,7 +57,7 @@
     <div class="developer_task">
       <div class="developer_task-content">
         <p>{{ $t("developer[6]") }}</p>
-        <div class="developer_task-line"></div>
+
         <div class="zhanwei" v-if="zhanwei">
           <img
             src="@assets/images/proposal/矢量智能对象.png"
@@ -83,36 +67,52 @@
         </div>
 
         <ul class="developer_task-img" v-else>
-          <li v-for="item in developerlist" :key="item">
+          <li
+            v-for="item in developerlist"
+            :key="item"
+            @click="goToDeveloperDetail(item.taskId)"
+          >
             <div class="developer_task_header">
-              <span>{{ item.title }}</span>
-              <span>{{ item.amount }}UENC</span>
+              {{ item.title }}
             </div>
             <div class="developer_task_content">
               {{ item.outline }}
             </div>
-            <div class="align">
+            <div class="developer_task_footer">
+              <span> {{ $t("meidaannouncement[1]") }}:</span>
+              {{ item.amount }}UENC
+            </div>
+            <!-- <div class="align">
               <button @click="goToDeveloperDetail(item.taskId)">
                 {{ $t("developerdetail[8]") }}
               </button>
-            </div>
+            </div> -->
           </li>
         </ul>
         <div class="blocksdevelop" v-if="!zhanwei">
-          <Page
+          <!-- <Page
             :total="developerTotal"
-            :page-size="9"
+            :page-size="6"
             @on-change="developerChange"
             v-if="developerTotal != 0"
             ref="pagination"
-          />
+          /> -->
+
+          <el-pagination
+            layout="prev, pager, next"
+            :page-size="6"
+            background
+            @current-change="developerChange"
+            :total="developerTotal"
+          >
+          </el-pagination>
         </div>
       </div>
     </div>
     <div class="developer_reward">
       <div class="developer_reward-content">
         <p class="rewardp">{{ $t("developer[7]") }}</p>
-        <div class="partner-line"></div>
+        <!-- <div class="partner-line"></div> -->
         <div class="developer_reward-img">
           <div class="reward_left">
             <p>
@@ -125,12 +125,25 @@
             <button @click="goTogithub">{{ $t("developer[11]") }}</button>
           </div>
           <div class="reward_right">
-            <img src="@assets/images/developer/矢量智能对象(3).png" alt="" />
+            <img src="@assets/images/wmDeveloper/Frame (3).png" />
           </div>
         </div>
       </div>
     </div>
-   
+    <div class="developer_vote">
+      <div class="developer_votecontent">
+        <p class="top">
+          {{ $t("meidaannouncement[2]") }}
+        </p>
+        <p class="center">
+          Please fill in the form on the right and we will give you feedback in
+          time.
+        </p>
+        <div class="bottom" @click="goToVote">
+          {{ $t("meidaannouncement[3]") }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -156,7 +169,7 @@ export default {
       zhanwei: false,
     };
   },
-  components: {  },
+  components: {},
   created() {
     this.nowLang = this.$i18n.locale;
     this.developernum = 1;
@@ -166,6 +179,11 @@ export default {
   computed: {},
   mounted() {},
   methods: {
+    goToVote() {
+      this.$router.push({
+        path: "/vote",
+      });
+    },
     goToDeveloperDetail(taskId) {
       this.$router.push({
         path: "/developerdetail",
@@ -198,11 +216,12 @@ export default {
           `${BASEURL}` + "/weimioffice/task/list",
           qs.stringify({
             pageNum: this.developernum,
-            pageSize: 9,
+            pageSize: 6,
           })
         )
         .then((res) => {
-          // console.log(res);
+          //console.log(res);
+
           this.developerTotal = res.data.result.total;
           if (res.data.result.total == 0) {
             this.zhanwei = true;
@@ -246,52 +265,39 @@ export default {
     gotochainexplor() {
       window.open("http://www.uenc.io/chainExplorer/index.html#/");
     },
-    faqs() {
-      this.$router.push({
-        path: "/FAQ",
-      });
-    },
-    partner() {
-      this.$router.push({
-        path: "/partner",
-      });
-    },
-    news() {
-      this.$router.push({
-        path: "/news",
-      });
-    },
-    about() {
-      this.$router.push({
-        path: "/about",
-      });
-    },
+
     gotoshow() {
       this.show = true;
     },
     gotohide() {
       this.show = false;
     },
-    github() {
-      window.open("https://github.com/uenctech");
-    },
-    telegram() {
-      window.open("https://t.me/UniversalEnergyChain1");
-    },
-    twitter() {
-      window.open("https://twitter.com/uencclub");
-    },
-    facebook() {
-      window.open("https://fb.me/uencclub");
-    },
-    weibo() {
-      window.open("https://weibo.com/u/5580784739");
-    },
+
     // 选择语言
   },
 };
 </script>
 <style lang="less">
+svg{
+font-size: 62.5%;
+line-height: 1.15;
+-webkit-text-size-adjust: 100%;
+-webkit-font-smoothing: antialiased;
+-webkit-box-direction: normal;
+color: #1d1d1d;
+font-family: "Montserrat", sans-serif;
+text-align: center;
+box-sizing: inherit;
+width: 20.9rem !important;
+height: 23.4rem !important;
+transform: translate3d(0px, 0px, 0px);
+
+}
+
+.btn-prev,
+.btn-next {
+  width: 23px !important;
+}
 #liulanqi {
   font-size: 18px;
   font-family: PingFang SC;
@@ -374,11 +380,12 @@ button {
   width: 100%;
   height: auto;
   position: relative;
+  z-index: 1;
   .developer_top {
-    height: 900px;
+    height: 800px;
     position: relative;
     margin: 0 auto;
-    background: url("../../assets/images/developer/developer.png") no-repeat
+    background: url("../../assets/images/wmDeveloper/banner 2.png") no-repeat
       center/100% 100%;
 
     // 头部内容区域
@@ -387,133 +394,121 @@ button {
       height: 800px;
       margin: 0 auto;
       position: relative;
-      // 大方块设置
-      .partner-more {
-        background: rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        width: 600px;
-        height: 297px;
-        background: rgba(255, 255, 255, 0.05);
-        font-size: 20px;
-        font-family: PingFang SC;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 1);
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        position: relative;
-        left: 597px;
-        top: 156px;
-        cursor: pointer;
-        z-index: 20;
-        p:first-child {
-          z-index: 10;
-          margin-left: 80px;
-          margin-top: 90px;
-          width: 481px;
-
-          font-size: 40px;
-          font-family: PingFang SC;
-          font-weight: 600;
-          color: rgba(255, 255, 255, 1);
-        }
-        p:nth-child(2) {
-          z-index: 10;
-          width: 500px;
-          margin-left: 80px;
-          margin-top: 40px;
-          font-size: 20px;
-          font-family: PingFang SC;
-          font-weight: 400;
-          color: #ffffff;
-        }
+      .content1 {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 70px;
+        line-height: 82px;
+        position: absolute;
+        top: 279px;
+        right: 0px;
+        color: #18191f;
+        background: #009fcd;
       }
-
-      .partner-button-overflow {
-        width: 600px;
-        height: 263px;
-        border-radius: 10px;
-        position: relative;
-        top: -97px;
-        overflow: hidden;
-        cursor: pointer;
-        opacity: 1;
-      }
-      .partner-button-left {
-        width: 5px;
-        height: 263px;
-        position: relative;
-        left: -2px;
-        color: rgba(0, 159, 205, 1);
-        background: rgba(0, 159, 205, 1);
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-        overflow: hidden;
-        opacity: 1;
-      }
-      .partner-button-left:hover {
-        cursor: pointer;
+      .content2 {
+        position: absolute;
+        background: red;
+        bottom: 300px;
+        right: 0px;
+        width: 560px;
+        height: 108px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 36px;
+        text-align: right;
+        color: #18191f;
+        opacity: 0.75;
       }
     }
   }
   .developer_total {
     width: 100%;
-    height: 542px;
+    height: 604px;
     position: relative;
-    background-color: #0c0c0c;
+    background: #e5e5e5;
     .partnerfooter-content {
       width: 1200px;
       height: auto;
       margin: 0 auto;
       p {
-        width: 356px;
-        height: 33px;
-        font-size: 34px;
-        position: relative;
-        top: 80px;
-        font-family: PingFang SC;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 1);
-        line-height: 22px;
-      }
-      .partner-line {
-        width: 100px;
-        height: 2px;
+        width: 1200px;
+        height: 64px;
+        left: 0px;
+        top: 0px;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 48px;
+        line-height: 64px;
+        text-align: center;
+        font-feature-settings: "liga" off;
+        color: #18191f;
         position: relative;
         top: 100px;
-        background: rgba(0, 159, 205, 1);
+        background: red;
+      }
+      .partner-line {
+        width: 668px;
+        height: 64px;
+        left: 0px;
+        top: 72px;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 32px;
+        text-align: center;
+        font-feature-settings: "liga" off;
+        color: #18191f;
+        margin: 108px auto 0px;
       }
       .developer_total-img {
         width: 1200px;
-        height: 288px;
-
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
+        height: auto;
         position: relative;
-        top: 140px;
+        top: 60px;
         ul {
           width: 100%;
           display: flex;
           flex-direction: row;
-          justify-content: space-around;
+          li:nth-child(1) {
+            margin-left: 0px;
+          }
           li {
-            width: 400px;
             display: flex;
             flex-direction: column;
-            text-align: center;
-            position: relative;
-            align-items: center;
-            top: 50px;
-            overflow: hidden;
+            margin-left: 30px;
+            width: 380px;
+            height: 208px;
+            background: #f5f5f5;
+            border-radius: 10px;
             div:nth-of-type(1) {
-              font-size: 50px;
-              font-family: PingFang SC;
-              font-weight: 600;
-              color: #009fcd;
+              display: flex;
+              flex-direction: row;
+              img {
+                margin: 30px 20px 0 40px;
+              }
+              span {
+                font-family: PingFang SC;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 22px;
+                line-height: 36px;
+                color: #000000;
+                margin-top: 32px;
+              }
             }
             div:nth-of-type(2) {
-              font-size: 20px;
               font-family: PingFang SC;
-              font-weight: 400;
-              color: #ffffff;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 64px;
+              line-height: 90px;
+              color: #30b3f5;
+              text-align: center;
             }
           }
         }
@@ -523,11 +518,12 @@ button {
   .developer_task {
     width: 100%;
     height: auto;
-    background: rgb(20, 20, 20);
-    padding-bottom: 122px;
+    background: #b1e5ff;
+    padding-bottom: 100px;
     .developer_task-content {
       width: 1200px;
       height: auto;
+
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -578,15 +574,16 @@ button {
         }
       }
       p {
-        width: 356px;
-        height: 33px;
-        line-height: 33px;
-        font-size: 34px;
-        font-family: PingFang SC;
-        font-weight: 600;
-
-        color: rgba(255, 255, 255, 1);
-        margin-top: 80px;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 48px;
+        line-height: 64px;
+        font-feature-settings: "liga" off;
+        color: #18191f;
+        text-align: center;
+        margin-top: 100px;
+        margin-bottom: 60px;
       }
       .developer_task-line {
         width: 100px;
@@ -618,94 +615,115 @@ button {
           margin-left: 0px !important;
         }
         li {
-          width: 387px;
-          height: 268px;
-          background: rgba(44, 44, 44);
+          cursor: pointer;
+          width: 380px;
+          height: 226px;
+
+          background: #ffffff;
+          box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04),
+            0px 0px 1px rgba(0, 0, 0, 0.04);
           border-radius: 10px;
-          margin-top: 40px;
-          margin-left: 15px;
+          margin-top: 30px;
+          margin-left: 30px;
           .developer_task_header {
             width: 80%;
             margin: 0 auto;
-            margin-top: 39px;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            margin-top: 30px;
+            font-family: PingFang SC;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 28px;
+            line-height: 39px;
+
+            color: #000000;
             // padding-left: 40px;
             // padding-right: 40px;
-            span:nth-child(1) {
-              font-size: 28px;
-              font-family: PingFang SC;
-              font-weight: 600;
-              color: #ffffff;
-              line-height: 17px;
-            }
-            span:nth-child(2) {
-              font-size: 24px;
-              font-family: PingFang SC;
-              font-weight: 400;
-              color: #009fcd;
-              line-height: 17px;
-            }
           }
           .developer_task_content {
             width: 303px;
             height: 64px;
-            font-size: 16px;
             font-family: PingFang SC;
-            font-weight: 400;
-            color: #ffffff;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 24px;
+            /* or 150% */
+
+            color: #000000;
             margin: 0 auto;
-            margin-top: 28px !important;
+            margin-top: 20px !important;
           }
-          .align {
-            text-align: center;
-            button {
-              margin-top: 30px !important;
-              width: 307px;
-              height: 40px;
-              border: 1px solid #009fcd;
-              border-radius: 8px;
-              background: none;
-              margin: 0 auto;
-              text-align: center;
-              font-size: 16px;
-              font-family: PingFang SC;
-              font-weight: 400;
-              color: #009fcd;
-              line-height: 40px;
-              cursor: pointer;
+          .developer_task_footer {
+            span {
             }
-            button:hover {
-              background: #009fcd;
-              color: white;
-            }
+            width: 303px;
+            height: 64px;
+            font-family: PingFang SC;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 25px;
+
+            /* #30B3F5 */
+
+            color: #30b3f5;
+            margin: 0 auto;
+            margin-top: 10px !important;
           }
+          // .align {
+          //   text-align: center;
+          //   button {
+          //     margin-top: 30px !important;
+          //     width: 307px;
+          //     height: 40px;
+          //     border: 1px solid #009fcd;
+          //     border-radius: 8px;
+          //     background: none;
+          //     margin: 0 auto;
+          //     text-align: center;
+          //     font-size: 16px;
+          //     font-family: PingFang SC;
+          //     font-weight: 400;
+          //     color: #009fcd;
+          //     line-height: 40px;
+          //     cursor: pointer;
+          //   }
+          //   button:hover {
+          //     background: #009fcd;
+          //     color: white;
+          //   }
+          // }
         }
       }
     }
   }
   .developer_reward {
     width: 100%;
-    height: 521px;
+    height: 617px;
     position: relative;
-    background: rgb(12, 12, 12);
+    background: white;
     .developer_reward-content {
       width: 1200px;
-      height: 595px;
+      height: 617px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       .rewardp {
         width: 571px;
         height: 33px;
-        font-size: 34px;
+
         position: relative;
         top: 80px;
-        font-family: PingFang SC;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 1);
-        line-height: 22px;
+
+        font-style: normal;
+        font-weight: bold;
+        font-size: 28px;
+        line-height: 37px;
+        /* identical to box height, or 132% */
+
+        /* #18191F */
+
+        color: #18191f;
       }
       .partner-line {
         width: 100px;
@@ -729,24 +747,31 @@ button {
           width: 568px;
           p {
             width: 568px;
-            font-size: 16px;
             font-family: PingFang SC;
-            font-weight: 400;
-            color: #dddddd;
-            line-height: 24px;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 27px;
+            /* or 169% */
+
+            letter-spacing: 0.01em;
+
+            /* #18191F */
+
+            color: #18191f;
           }
           button {
             width: 176px;
             height: 45px;
             border: 1px solid #009fcd;
             border-radius: 10px;
-            background: rgba(12, 12, 12);
-            margin-top: 60px;
 
+            margin-top: 60px;
+            background: white;
             font-size: 16px;
             font-family: PingFang SC;
             font-weight: 300;
-            color: #009fcd;
+            color: #30b3f5;
             line-height: 24px;
           }
           button:nth-of-type(2) {
@@ -759,12 +784,71 @@ button {
         }
         .reward_right {
           position: relative;
-          top: -141px;
+          top: -5px;
+          img {
+          }
         }
       }
     }
   }
+  .developer_vote {
+    width: 100%;
+    height: 450px;
+    background: url("../../assets/images/wmDeveloper/18963134-[转换] 1.png")
+      no-repeat center/100% 100%;
+    .developer_votecontent {
+      width: 1200px;
+      height: 100%;
+      margin: 0 auto;
+
+      .top {
+        width: 100%;
+        height: 64px;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 48px;
+        line-height: 64px;
+        text-align: center;
+        font-feature-settings: "liga" off;
+        color: #18191f;
+        position: relative;
+        top: 100px;
+      }
+      .center {
+        width: 464px;
+        height: 64px;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 32px;
+        text-align: center;
+        font-feature-settings: "liga" off;
+        color: #18191f;
+        margin: 0 auto;
+        position: relative;
+        top: 108px;
+      }
+      .bottom {
+        position: relative;
+        top: 184px;
+        height: 62px;
+        width: 201px;
+        background: #30b3f5;
+        border-radius: 8px;
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 62px;
+        text-align: center;
+        font-feature-settings: "liga" off;
+        color: #ffffff;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+    }
+  }
 }
-
-
 </style>

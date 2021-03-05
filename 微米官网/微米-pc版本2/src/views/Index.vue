@@ -123,6 +123,20 @@
           <ul class="advantage_detail_ul1">
             <li>
               <div>
+                <!-- <svg
+                  width="500"
+                  height="800"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 100,L50 100,A50 50 0 0 0 1511 3197,L100 300Z"
+                    stroke="red"
+                    stroke-width="5"
+                    fill="none"
+                    class="path1"
+                  ></path>
+                </svg> -->
+              
                 <img src="@assets/images/wmIndex/Vector.png" alt="" />
                 <!-- <svg
                   width="38"
@@ -136,8 +150,8 @@
                     stroke="#30B3F5"
                     stroke-width="2"
                     stroke-miterlimit="10"
-                    class="path"
-                  />
+                    class="path1"
+                  ></path>
                 </svg> -->
               </div>
               <span>High velocity</span>
@@ -365,7 +379,7 @@
         </div>
         <VueSlickCarousel
           :arrows="false"
-          :autoplay='false'
+          :autoplay="false"
           :dots="false"
           :infinite="true"
           :speed="300"
@@ -387,7 +401,7 @@
                 <img src="@assets/images/wmIndex/partner/3.png" alt="" />
               </li>
               <li>
-                 <img src="@assets/images/wmIndex/partner/4.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/4.png" alt="" />
               </li>
             </ul>
           </div>
@@ -403,7 +417,7 @@
                 <img src="@assets/images/wmIndex/partner/7.png" alt="" />
               </li>
               <li>
-                 <img src="@assets/images/wmIndex/partner/8.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/8.png" alt="" />
               </li>
             </ul>
           </div>
@@ -419,7 +433,7 @@
                 <img src="@assets/images/wmIndex/partner/11.png" alt="" />
               </li>
               <li>
-                 <img src="@assets/images/wmIndex/partner/12.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/12.png" alt="" />
               </li>
             </ul>
           </div>
@@ -435,7 +449,7 @@
                 <img src="@assets/images/wmIndex/partner/15.png" alt="" />
               </li>
               <li>
-                 <img src="@assets/images/wmIndex/partner/16.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/16.png" alt="" />
               </li>
             </ul>
           </div>
@@ -451,7 +465,7 @@
                 <img src="@assets/images/wmIndex/partner/19.png" alt="" />
               </li>
               <li>
-                 <img src="@assets/images/wmIndex/partner/20.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/20.png" alt="" />
               </li>
             </ul>
           </div>
@@ -467,7 +481,7 @@
                 <img src="@assets/images/wmIndex/partner/23.png" alt="" />
               </li>
               <li>
-                 <img src="@assets/images/wmIndex/partner/24.png" alt="" />
+                <img src="@assets/images/wmIndex/partner/24.png" alt="" />
               </li>
             </ul>
           </div>
@@ -522,6 +536,15 @@ import { BASEURL } from "@api/api";
 import VueSlickCarousel from "vue-slick-carousel";
 
 import Qs from "qs";
+// $(function(){
+//  var namespace = 'http://www.w3.org/2000/svg',
+//             path = document.getElementsByTagNameNS(namespace, 'path')[0]
+//             console.log("🚀 ~ file: Index.vue ~ line 562 ~ path", path)
+//             pathLen =path.getTotalLength();//获取路径总长度
+//             console.log("🚀 ~ file: Index.vue ~ line 564 ~ pathLen", pathLen)
+
+// })
+
 import {
   zhCN,
   country,
@@ -957,24 +980,22 @@ export default {
   height: 100%;
 }
 svg {
-  width: 300px;
-  display: block;
+  
 
-  .paths {
-    stroke-dasharray: 320;
-    stroke-dashoffset: 0;
-    animation: dash 1s linear infinite;
+  .path1 {
+   
+    background: #8c8c8c!important;
+    stroke-dasharray:500px ;stroke-dashoffset:500px;
+    animation: dash 3s linear infinite;
   }
   @keyframes dash {
     from {
-      // stroke-dashoffset: 320;
-      transform: rotateY(0deg);
-      transform-origin: 50% 0;
+      stroke-dashoffset:500px;
+     
     }
     to {
-      // stroke-dashoffset: 0;
-      transform: rotateY(360deg);
-      transform-origin: 50% 0;
+      stroke-dashoffset: 0px;
+     
     }
   }
 }
@@ -1243,7 +1264,6 @@ svg {
         /* Text / Gray 900 */
 
         color: #18191f;
-
       }
       div:nth-child(2) {
         position: static;
@@ -1861,10 +1881,10 @@ svg {
       .slick-slider {
         position: relative;
         top: 140px;
-        
+
         font-size: 20px;
         width: 1200px !important;
-       
+
         height: 110px;
         ul {
           display: flex !important;
@@ -1874,7 +1894,7 @@ svg {
           li {
             width: 270px;
             height: 110px;
-            background: #F8F8F8;
+            background: #f8f8f8;
             opacity: 1;
             display: flex !important;
             flex-direction: row;
@@ -1887,7 +1907,6 @@ svg {
         }
       }
       .slick-list {
-        
       }
     }
   }

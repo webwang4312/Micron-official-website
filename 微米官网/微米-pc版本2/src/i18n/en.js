@@ -21,7 +21,7 @@ const en = {
   sum: ['transactions'],
   contactus: ['Contact Us','Please fill in the form on the right and we will give you feedback in time.','Your Name','Your Email','Your Phone Number','What"s on your mind?'],
   contactcontent: ['UENC features a non-competitive mining and decentralization mechanism, which means that everyone can participate in the construction of the UENC network infrastructure and ecosystem, and share in the growth dividends of the global token economy.', 'We welcome you to contact us.', 'So that we may provide you with a better solution, please provide us with the details of your problem and more information about you in this form on the right.'],
-  meidaannouncement: ['Media reports'], 
+  meidaannouncement: ['Media reports','Bounty','Community vote',"let's vote"], 
   phone: ['phone'],
   email: ['Our email'],
   submit: ['Submit', 'success'],

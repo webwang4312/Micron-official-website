@@ -523,7 +523,7 @@ export default {
           headers: { language: this.nowLang },
         })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           if (res.data.code !== 200) {
             return false;
           } else {
@@ -571,7 +571,7 @@ export default {
       // this.scale=this.yearactive+1
     },
     carouselChange(index) {
-      console.log(index);
+      //console.log(index);
     },
     leftMove() {
       this.$refs.elcarousel.prev();

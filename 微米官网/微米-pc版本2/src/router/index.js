@@ -198,12 +198,15 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  
+  
     routes,
 });
 
 // 挂载路由导航守卫,to表示将要访问的路径，from表示从哪里来，next是下一个要做的操作 next('/login')强制跳转login
 router.beforeEach((to, from, next) => {
-    // console.log(to);
+     //console.log(to.path);
+     
     // 访问登录页，放行
     // if (to.path === '/proposal') {
     //     const tokenStr = window.sessionStorage.getItem('token')
