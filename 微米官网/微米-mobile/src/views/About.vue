@@ -140,7 +140,7 @@
                 @show="popshow1"
               >
                 <p class="pop" slot="reference">
-                  {{ $t("aboutdescription[1]").substring(1, 60) + "..." }}
+                  {{ $t("aboutdescription[1]").substring(0, 60) + "..." }}
                 </p>
               </el-popover>
             </div>
@@ -177,7 +177,7 @@
                 :content="$t('aboutdescription[3]')"
               >
                 <p class="pop" slot="reference">
-                  {{ $t("aboutdescription[3]").substring(1, 60) + "..." }}
+                  {{ $t("aboutdescription[3]").substring(0, 60) + "..." }}
                 </p>
               </el-popover>
             </div>
@@ -215,7 +215,7 @@
                 :content="$t('aboutdescription[5]')"
               >
                 <p class="pop" slot="reference">
-                  {{ $t("aboutdescription[5]").substring(1, 60) + "..." }}
+                  {{ $t("aboutdescription[5]").substring(0, 50) + "..." }}
                 </p>
               </el-popover>
             </div>
@@ -251,7 +251,7 @@
                 :content="$t('aboutdescription[7]')"
               >
                 <p class="pop" slot="reference">
-                  {{ $t("aboutdescription[7]").substring(1, 60) + "..." }}
+                  {{ $t("aboutdescription[7]").substring(0, 60) + "..." }}
                 </p>
               </el-popover>
             </div>
