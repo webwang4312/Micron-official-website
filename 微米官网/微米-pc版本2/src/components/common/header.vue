@@ -514,9 +514,9 @@ button {
         li:hover {
           cursor: pointer;
           //  animation: bordertop 2s lin;
-          font-weight: 600;
-          // border-top: 2px solid rgba(0, 159, 205, 1);
-          color: rgba(0, 159, 205, 1) !important;
+          // font-weight: 600;
+          // // border-top: 2px solid rgba(0, 159, 205, 1);
+           color: rgba(0, 159, 205, 1) !important;
         }
         .div1 {
           text-align: center;

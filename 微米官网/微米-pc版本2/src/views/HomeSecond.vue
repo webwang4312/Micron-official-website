@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <v-header></v-header>
+
     <router-view></router-view>
     <v-footer></v-footer>
   </div>

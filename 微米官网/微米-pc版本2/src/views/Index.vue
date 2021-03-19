@@ -1,497 +1,488 @@
 <template>
-  <div class="index">
-    <div class="index_top">
-      <div class="index_topz">
-        <div class="index_top_content">
-          <div class="content">
-            A public chain with cross chain technology
-          </div>
-          <!-- <button @click="goVideo">
+  <div>
+    <div class="index" v-if="indexstart">
+      <div id="Loading" :class="{ display: displays }">
+        <div class="loader-inner ball-beat">
+          <h1>UENC</h1>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      <div class="index_top">
+        <div id="app1" v-drag class="drag" @mouseover="drag"></div>
+        <div class="index_topz">
+          <div class="index_top_content">
+            <div class="content">
+              A public chain with cross chain technology
+            </div>
+            <!-- <button @click="goVideo">
             <img src="@assets/images/wmIndex/Frame.png" alt="" />
             <div>
               Learn more
             </div>
           </button> -->
+            <div>
+              <button @click="checkVideoFun">
+                <img src="@assets/images/wmIndex/Frame.png" alt="" />
+                <div>
+                  {{ $t("learnmore[0]") }}
+                </div>
+              </button>
+
+              <div
+                class="mask"
+                v-if="videoState == true"
+                @click="masksCloseFun"
+              ></div>
+
+              <div class="videomasks" v-if="videoState == true">
+                <video
+                  src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4"
+                  controls="controls"
+                  autoplay
+                  v-if="nowLang == 'cn'"
+                />
+                <video
+                  src="https://www.uenc.io/video/yingwen.mp4"
+                  controls="controls"
+                  autoplay
+                  v-else
+                />
+              </div>
+            </div>
+          </div>
           <div>
-            <button @click="checkVideoFun">
-              <img src="@assets/images/wmIndex/Frame.png" alt="" />
-              <div>
-                {{ $t("learnmore[0]") }}
-              </div>
-            </button>
-
-            <div
-              class="mask"
-              v-if="videoState == true"
-              @click="masksCloseFun"
-            ></div>
-
-            <div class="videomasks" v-if="videoState == true">
-              <video
-                src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4"
-                controls="controls"
-                autoplay
-                v-if="nowLang == 'cn'"
-              />
-              <video
-                src="https://www.uenc.io/video/yingwen.mp4"
-                controls="controls"
-                autoplay
-                v-else
-              />
-            </div>
-          </div>
-        </div>
-        <div>
-          <img src="@assets/images/wmIndex/Frame(1).png" class="svg_img" />
-        </div>
-      </div>
-    </div>
-    <div class="index_project">
-      <div class="index_projectz">
-        <div class="title">
-          <div>{{ $t("project[0]") }}</div>
-          <div>
-            {{ $t("project[1]") }}
-          </div>
-        </div>
-        <div class="detail">
-          <div class="detail_top">
-            <div class="detail_top_left">
-              <img src="@assets/images/wmIndex/Icon.png" />
-              <div class="detail_top_top2">
-                <div>
-                  {{ columndata[0] }}
-                </div>
-
-                <div>
-                  {{ $t("height[0]") }}
-                </div>
-              </div>
-            </div>
-            <div class="detail_top_right">
-              <img src="@assets/images/wmIndex/Icon2.png" />
-              <div class="detail_top_top2">
-                <div>
-                  {{ columndata[1] }}
-                </div>
-
-                <div>
-                  {{ $t("number[0]") }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="detail_bottom">
-            <div class="detail_top_left">
-              <img src="@assets/images/wmIndex/Icon3.png" />
-              <div class="detail_top_top2">
-                <div>
-                  {{ columndata[2] }}
-                </div>
-
-                <div>
-                  {{ $t("jiangli[0]") }}
-                </div>
-              </div>
-            </div>
-            <div class="detail_top_right">
-              <img src="@assets/images/wmIndex/Icon4.png" />
-              <div class="detail_top_top2">
-                <div>
-                  {{ columndata[3] }}
-                </div>
-
-                <div>
-                  {{ $t("sum[0]") }}
-                </div>
-              </div>
-            </div>
+            <img src="@assets/images/wmIndex/Frame(1).png" class="svg_img" />
           </div>
         </div>
       </div>
-    </div>
-    <div class="advantage">
-      <div class="advantagez">
-        <div class="advantage_top">
-          <div>{{ $t("Technical[0]") }}</div>
-          <div>
-            {{ $t("Technical[1]") }}
+      <div class="index_project">
+        <div class="index_projectz">
+          <div class="title">
+            <div>{{ $t("project[0]") }}</div>
+            <div>
+              {{ $t("project[1]") }}
+            </div>
           </div>
-        </div>
-        <div class="advantage_detail">
-          <ul class="advantage_detail_ul1">
-            <li>
-              <div>
-                <!-- <svg
-                  width="500"
-                  height="800"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 100,L50 100,A50 50 0 0 0 1511 3197,L100 300Z"
-                    stroke="red"
-                    stroke-width="5"
-                    fill="none"
-                    class="path1"
-                  ></path>
-                </svg> -->
-              
-                <img src="@assets/images/wmIndex/Vector.png" alt="" />
-                <!-- <svg
-                  width="38"
-                  height="40"
-                  viewBox="0 0 38 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19.0138 1.25C18.6738 1.25 18.3452 1.31153 18.0339 1.436C17.2035 1.76813 14.2874 3.09109 11.6305 6.25513C10.1209 8.05636 8.94484 10.145 8.1267 12.4818C7.1468 15.2913 6.69156 18.4666 6.77817 21.9117C6.78962 22.2998 6.65148 22.6942 6.39737 23.0039C4.71457 25.0702 1.84428 29.332 1.50428 34.6749C1.45775 35.3951 1.79274 36.0712 2.4033 36.4824C2.76621 36.7243 3.18709 36.8481 3.61369 36.8481C3.90716 36.8481 4.19562 36.7914 4.46691 36.6677C5.38883 36.2621 7.84397 35.2881 10.5239 35.035C10.5818 35.0294 10.6334 35.0294 10.6906 35.0294C11.1459 35.0294 11.5782 35.2042 11.8781 35.5021C12.7428 36.3747 14.3619 37.5963 17.1456 38.4745C17.7447 38.6549 18.3674 38.75 19.0073 38.75C19.6472 38.75 20.2692 38.6598 20.8569 38.4745C23.6406 37.5963 25.2597 36.3747 26.1244 35.5021C26.4236 35.2035 26.8616 35.0294 27.3111 35.0294C27.3691 35.0294 27.4206 35.0294 27.4779 35.035C30.1578 35.2888 32.6072 36.2565 33.5349 36.6677C33.8111 36.7858 34.0996 36.8481 34.3931 36.8481C34.8197 36.8481 35.2406 36.7243 35.5977 36.4824C36.2026 36.0712 36.5368 35.3902 36.4968 34.6749C36.151 29.3376 33.2865 25.0757 31.6037 23.0039C31.3503 22.6886 31.2179 22.3054 31.2229 21.9117C31.3095 18.4659 30.8542 15.2906 29.8743 12.4818C29.0619 10.145 27.8802 8.05076 26.3706 6.25513C23.7372 3.09109 20.8204 1.76813 19.9908 1.436C19.6823 1.31153 19.3545 1.25 19.0138 1.25Z"
-                    stroke="#30B3F5"
-                    stroke-width="2"
-                    stroke-miterlimit="10"
-                    class="path1"
-                  ></path>
-                </svg> -->
-              </div>
-              <span>High velocity</span>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                erat nibh tristique ipsum.
-              </div>
-            </li>
-            <li>
-              <div>
-                <img src="@assets/images/wmIndex/02.png" />
-              </div>
-              <span>High concurrency</span>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                erat nibh tristique ipsum.
-              </div>
-            </li>
-            <li>
-              <div>
-                <img src="@assets/images/wmIndex/Group2.png" />
-              </div>
-              <span>Low cost</span>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                erat nibh tristique ipsum.
-              </div>
-            </li>
-          </ul>
-          <ul class="advantage_detail_ul1">
-            <li>
-              <div>
-                <img src="@assets/images/wmIndex/Group 1593.png" />
-              </div>
+          <div class="detail">
+            <div class="detail_top">
+              <div class="detail_top_left">
+                <img src="@assets/images/wmIndex/Icon.png" />
+                <div class="detail_top_top2">
+                  <div>
+                    {{ columndata[0] }}
+                  </div>
 
-              <span>Decentralization</span>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                erat nibh tristique ipsum.
+                  <div>
+                    {{ $t("height[0]") }}
+                  </div>
+                </div>
               </div>
-            </li>
-            <li>
-              <div>
-                <img src="@assets/images/wmIndex/Group 1594.png" />
+              <div class="detail_top_right">
+                <img src="@assets/images/wmIndex/Icon2.png" />
+                <div class="detail_top_top2">
+                  <div>
+                    {{ columndata[1] }}
+                  </div>
+
+                  <div>
+                    {{ $t("number[0]") }}
+                  </div>
+                </div>
               </div>
-              <span>DPOW consensus algorithm</span>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                erat nibh tristique ipsum.
+            </div>
+            <div class="detail_bottom">
+              <div class="detail_top_left">
+                <img src="@assets/images/wmIndex/Icon3.png" />
+                <div class="detail_top_top2">
+                  <div>
+                    {{ columndata[2] }}
+                  </div>
+
+                  <div>
+                    {{ $t("jiangli[0]") }}
+                  </div>
+                </div>
               </div>
-            </li>
-            <li>
-              <div>
-                <img src="@assets/images/wmIndex/Group.png" />
+              <div class="detail_top_right">
+                <img src="@assets/images/wmIndex/Icon4.png" />
+                <div class="detail_top_top2">
+                  <div>
+                    {{ columndata[3] }}
+                  </div>
+
+                  <div>
+                    {{ $t("sum[0]") }}
+                  </div>
+                </div>
               </div>
-              <span>Cross parallel storage</span>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                erat nibh tristique ipsum.
-              </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="index_media">
-      <div class="index_mediaz">
-        <img
-          src="@assets/images/wmIndex/zuo.png"
-          style="position:relative;top:64px;left:40px;z-index:1;opacity:0.2"
-        />
-        <div class="media_title">
-          <div>
-            Related media reports
-          </div>
-          <div>
-            Pay attention to the latest development of uenc.
-          </div>
-        </div>
-        <div class="media_content1">
-          <img src="@assets/images/wmIndex/Layer 2.png" class="media_imgtop" />
-          <div class="media_content_content">
-            <img src="@assets/images/wmIndex/“2.png" alt="" />
-            <div class="contentz">
-              To quickly start my startup landing page design, I was looking for
-              a landing page UI Kit. Landify is one of the best landing page UI
-              kit I have come across. It’s so flexible, well organised and
-              easily editable.
-              <div>
-                2021.2.1
-              </div>
-              <div>
-                Vice President, GoPro
-              </div>
+      <div class="advantage">
+        <div class="advantagez">
+          <div class="advantage_top">
+            <div>{{ $t("Technical[0]") }}</div>
+            <div>
+              {{ $t("Technical[1]") }}
             </div>
           </div>
-        </div>
-        <div class="media_content2">
-          <img src="@assets/images/wmIndex/Vector3.png" class="media_imgtop" />
-          <div class="media_content_content">
-            <img src="@assets/images/wmIndex/“2.png" alt="" />
-            <div class="contentz2">
-              I used landify and created a landing page for my startup within a
-              week. The Landify UI Kit is simple and highly intuitive, so anyone
-              can use it.
-              <div>
-                2021.2.1
-              </div>
-              <div>
-                Vice President, GoPro
-              </div>
-            </div>
+          <div class="advantage_detail">
+            <ul class="advantage_detail_ul1">
+              <li>
+                <div>
+                  <img src="@assets/images/wmIndex/Vector.png" alt="" />
+                </div>
+                <span>High velocity</span>
+                <div>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  erat nibh tristique ipsum.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <img src="@assets/images/wmIndex/02.png" />
+                </div>
+                <span>High concurrency</span>
+                <div>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  erat nibh tristique ipsum.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <img src="@assets/images/wmIndex/Group2.png" />
+                </div>
+                <span>Low cost</span>
+                <div>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  erat nibh tristique ipsum.
+                </div>
+              </li>
+            </ul>
+            <ul class="advantage_detail_ul1">
+              <li>
+                <div>
+                  <img src="@assets/images/wmIndex/Group 1593.png" />
+                </div>
+
+                <span>Decentralization</span>
+                <div>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  erat nibh tristique ipsum.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <img src="@assets/images/wmIndex/Group 1594.png" />
+                </div>
+                <span>DPOW consensus algorithm</span>
+                <div>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  erat nibh tristique ipsum.
+                </div>
+              </li>
+              <li>
+                <div>
+                  <img src="@assets/images/wmIndex/Group.png" />
+                </div>
+                <span>Cross parallel storage</span>
+                <div>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                  erat nibh tristique ipsum.
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
-        <div class="media_content3">
-          <img src="@assets/images/wmIndex/Group4.png" class="media_imgtop" />
-          <div class="media_content_content">
+      </div>
+      <div class="index_media">
+        <div class="index_mediaz">
+          <img
+            src="@assets/images/wmIndex/zuo.png"
+            style="position:relative;top:64px;left:40px;z-index:1;opacity:0.2"
+          />
+          <div class="media_title">
+            <div>
+              Related media reports
+            </div>
+            <div>
+              Pay attention to the latest development of uenc.
+            </div>
+          </div>
+          <div class="media_content1">
             <img
-              src="@assets/images/wmIndex/“2.png"
-              style="position:relative;top:50px"
+              src="@assets/images/wmIndex/Layer 2.png"
+              class="media_imgtop"
             />
-            <div class="contentz3">
-              Landify saved our time in designing my company page.
+            <div class="media_content_content">
+              <img src="@assets/images/wmIndex/“2.png" alt="" />
+              <div class="contentz">
+                To quickly start my startup landing page design, I was looking
+                for a landing page UI Kit. Landify is one of the best landing
+                page UI kit I have come across. It’s so flexible, well organised
+                and easily editable.
+                <div>
+                  2021.2.1
+                </div>
+                <div>
+                  Vice President, GoPro
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="media_content2">
+            <img
+              src="@assets/images/wmIndex/Vector3.png"
+              class="media_imgtop"
+            />
+            <div class="media_content_content">
+              <img src="@assets/images/wmIndex/“2.png" alt="" />
+              <div class="contentz2">
+                I used landify and created a landing page for my startup within
+                a week. The Landify UI Kit is simple and highly intuitive, so
+                anyone can use it.
+                <div>
+                  2021.2.1
+                </div>
+                <div>
+                  Vice President, GoPro
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="media_content3">
+            <img src="@assets/images/wmIndex/Group4.png" class="media_imgtop" />
+            <div class="media_content_content">
+              <img
+                src="@assets/images/wmIndex/“2.png"
+                style="position:relative;top:50px"
+              />
+              <div class="contentz3">
+                Landify saved our time in designing my company page.
+                <div>
+                  2021.2.1
+                </div>
+                <div>
+                  Vice President, GoPro
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="index_contact">
+        <div class="index_contactz">
+          <div class="contact_title">
+            <div>{{ $t("contactus[0]") }}</div>
+            <div>
+              {{ $t("contactus[1]") }}
+            </div>
+          </div>
+          <div class="index_form">
+            <div class="index_line1">
               <div>
-                2021.2.1
+                <span>
+                  {{ $t("contactus[2]") }}
+                  <span style="color:red">*</span></span
+                ><br />
+                <input
+                  :class="{ indexblue: nameblue }"
+                  type="text"
+                  :placeholder="$t('contactus[2]')"
+                  v-model="ruleForm.name"
+                  @focus="nameFocus"
+                  @blur="nameBlur"
+                />
               </div>
               <div>
-                Vice President, GoPro
+                <span>
+                  {{ $t("contactus[3]") }}
+                  <span style="color:red">*</span></span
+                ><br />
+                <input
+                  :class="{ indexblue: emailblue }"
+                  type="text"
+                  :placeholder="$t('contactus[3]')"
+                  v-model="ruleForm.email"
+                  @focus="emailFocus"
+                  @blur="emailBlur"
+                />
+              </div>
+            </div>
+            <div class="index_line2">
+              <div>
+                <span> {{ $t("contactus[4]") }}</span
+                ><br />
+                <input
+                  :class="{ indexblue: phoneblue }"
+                  type="text"
+                  :placeholder="$t('contactus[4]')"
+                  v-model="ruleForm.phone"
+                  @focus="phoneFocus"
+                  @blur="phoneBlur"
+                />
+              </div>
+            </div>
+            <div class="index_line3">
+              <div>
+                <span>
+                  {{ $t("contactus[5]") }}
+                  <span style="color:red">*</span></span
+                ><br />
+                <textarea
+                  :class="{ indexblue: mindblue }"
+                  :placeholder="$t('contactus[5]')"
+                  v-model="ruleForm.advice"
+                  @focus="mindFocus"
+                  @blur="mindBlur"
+                >
+                </textarea>
               </div>
             </div>
           </div>
+          <div class="index_button" @click="submitForm">
+            <span> {{ $t("submit[0]") }}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="index_contact">
-      <div class="index_contactz">
-        <div class="contact_title">
-          <div>{{ $t("contactus[0]") }}</div>
-          <div>
-            {{ $t("contactus[1]") }}
+      <div class="index_developer">
+        <div class="index_developerz">
+          <div class="title">
+            Join the developer community
           </div>
-        </div>
-        <div class="index_form">
-          <div class="index_line1">
-            <div>
-              <span>
-                {{ $t("contactus[2]") }} <span style="color:red">*</span></span
-              ><br />
-              <input
-                :class="{ indexblue: nameblue }"
-                type="text"
-                :placeholder="$t('contactus[2]')"
-                v-model="ruleForm.name"
-                @focus="nameFocus"
-                @blur="nameBlur"
-              />
-            </div>
-            <div>
-              <span>
-                {{ $t("contactus[3]") }} <span style="color:red">*</span></span
-              ><br />
-              <input
-                :class="{ indexblue: emailblue }"
-                type="text"
-                :placeholder="$t('contactus[3]')"
-                v-model="ruleForm.email"
-                @focus="emailFocus"
-                @blur="emailBlur"
-              />
-            </div>
+          <div class="content">
+            Jointly create uenc project ecological community obtain developer
+            awards and promote the development of blockchain Technology
           </div>
-          <div class="index_line2">
-            <div>
-              <span> {{ $t("contactus[4]") }}</span
-              ><br />
-              <input
-                :class="{ indexblue: phoneblue }"
-                type="text"
-                :placeholder="$t('contactus[4]')"
-                v-model="ruleForm.phone"
-                @focus="phoneFocus"
-                @blur="phoneBlur"
-              />
-            </div>
+          <div class="bottom" @click="toDeveloper">
+            {{ $t("learnmore[0]") }}
           </div>
-          <div class="index_line3">
-            <div>
-              <span>
-                {{ $t("contactus[5]") }} <span style="color:red">*</span></span
-              ><br />
-              <textarea
-                :class="{ indexblue: mindblue }"
-                :placeholder="$t('contactus[5]')"
-                v-model="ruleForm.advice"
-                @focus="mindFocus"
-                @blur="mindBlur"
-              >
-              </textarea>
-            </div>
-          </div>
-        </div>
-        <div class="index_button" @click="submitForm">
-          <span> {{ $t("submit[0]") }}</span>
         </div>
       </div>
-    </div>
-    <div class="index_developer">
-      <div class="index_developerz">
-        <div class="title">
-          Join the developer community
-        </div>
-        <div class="content">
-          Jointly create uenc project ecological community obtain developer
-          awards and promote the development of blockchain Technology
-        </div>
-        <div class="bottom" @click="toDeveloper">
-          {{ $t("learnmore[0]") }}
-        </div>
-      </div>
-    </div>
-    <div class="index_partner">
-      <div class="index_partnerz">
-        <div class="partner_title">
-          {{ $t("Partner[0]") }}
-        </div>
-        <VueSlickCarousel
-          :arrows="false"
-          :autoplay="false"
-          :dots="false"
-          :infinite="true"
-          :speed="300"
-          :slidesToShow="1"
-          :touchMove="false"
-          :slidesToScroll="1"
-          ref="carousel"
-          @afterChange="changes"
-        >
-          <div>
-            <ul>
-              <li>
-                <img src="@assets/images/wmIndex/partner/1.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/2.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/3.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/4.png" alt="" />
-              </li>
-            </ul>
+      <div class="index_partner">
+        <div class="index_partnerz">
+          <div class="partner_title">
+            {{ $t("Partner[0]") }}
           </div>
-          <div>
-            <ul>
-              <li>
-                <img src="@assets/images/wmIndex/partner/5.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/6.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/7.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/8.png" alt="" />
-              </li>
-            </ul>
+          <VueSlickCarousel
+            :arrows="false"
+            :autoplay="false"
+            :dots="false"
+            :infinite="true"
+            :speed="300"
+            :slidesToShow="1"
+            :touchMove="false"
+            :slidesToScroll="1"
+            ref="carousel"
+            @afterChange="changes"
+          >
+            <div>
+              <ul>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/1.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/2.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/3.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/4.png" alt="" />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/5.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/6.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/7.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/8.png" alt="" />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/9.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/10.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/11.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/12.png" alt="" />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/13.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/14.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/15.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/16.png" alt="" />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/17.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/18.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/19.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/20.png" alt="" />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/21.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/22.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/23.png" alt="" />
+                </li>
+                <li>
+                  <img src="@assets/images/wmIndex/partner/24.png" alt="" />
+                </li>
+              </ul>
+            </div>
+          </VueSlickCarousel>
+          <div class="carousel_bottom">
+            <img src="@assets/images/wmIndex/left.png" @click="leftMove" />
+            <span>{{ carsoulitem }}/6</span>
+            <img src="@assets/images/wmIndex/right.png" @click="rightMove" />
           </div>
-          <div>
-            <ul>
-              <li>
-                <img src="@assets/images/wmIndex/partner/9.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/10.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/11.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/12.png" alt="" />
-              </li>
-            </ul>
-          </div>
-          <div>
-            <ul>
-              <li>
-                <img src="@assets/images/wmIndex/partner/13.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/14.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/15.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/16.png" alt="" />
-              </li>
-            </ul>
-          </div>
-          <div>
-            <ul>
-              <li>
-                <img src="@assets/images/wmIndex/partner/17.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/18.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/19.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/20.png" alt="" />
-              </li>
-            </ul>
-          </div>
-          <div>
-            <ul>
-              <li>
-                <img src="@assets/images/wmIndex/partner/21.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/22.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/23.png" alt="" />
-              </li>
-              <li>
-                <img src="@assets/images/wmIndex/partner/24.png" alt="" />
-              </li>
-            </ul>
-          </div>
-        </VueSlickCarousel>
-        <div class="carousel_bottom">
-          <img src="@assets/images/wmIndex/left.png" @click="leftMove" />
-          <span>{{ carsoulitem }}/6</span>
-          <img src="@assets/images/wmIndex/right.png" @click="rightMove" />
-        </div>
-        <!-- <div class="carousel">
+          <!-- <div class="carousel">
           <el-carousel
             indicator-position="outside"
             :autoplay="false"
@@ -527,24 +518,19 @@
             <img src="@assets/images/wmIndex/right.png" @click="rightMove" />
           </div>
         </div> -->
+        </div>
       </div>
+    </div>
+    <div v-else>
+      三生三世
     </div>
   </div>
 </template>
+
 <script>
 import { BASEURL } from "@api/api";
 import VueSlickCarousel from "vue-slick-carousel";
-
 import Qs from "qs";
-// $(function(){
-//  var namespace = 'http://www.w3.org/2000/svg',
-//             path = document.getElementsByTagNameNS(namespace, 'path')[0]
-//             console.log("🚀 ~ file: Index.vue ~ line 562 ~ path", path)
-//             pathLen =path.getTotalLength();//获取路径总长度
-//             console.log("🚀 ~ file: Index.vue ~ line 564 ~ pathLen", pathLen)
-
-// })
-
 import {
   zhCN,
   country,
@@ -565,6 +551,8 @@ export default {
   name: "index",
   data() {
     return {
+      displays: false,
+      indexstart: true,
       videoState: false,
       nameblue: false,
       emailblue: false,
@@ -606,8 +594,10 @@ export default {
     };
   },
   components: { VueSlickCarousel },
+  beforeCreate() {},
   created() {
     this.carsoulitem = 1;
+
     this.username = window.sessionStorage.getItem("username");
     // console.log(this.username);
     this.nowLang = this.$i18n.locale;
@@ -625,6 +615,13 @@ export default {
     },
   },
   mounted() {
+    this.displays = true;
+    console.log(this.indexstart);
+    // setTimeout(() => {
+    //   this.changeState(); //娃娃消失
+    // }, 4000);
+
+    console.log(this.indexstart);
     // 请求首页数据
     // this.getIndex();
     this.getHomeData();
@@ -638,6 +635,49 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
+    changeState() {
+      console.log(this);
+      this.indexstart = true;
+    },
+    drag(e) {
+      const el = document.getElementById("app1");
+      var disx = e.pageX - el.offsetLeft;
+      var disy = e.pageY - el.offsetTop;
+      document.onmousemove = function(e) {
+        el.style.left = e.pageX - disx + "px";
+        el.style.top = e.pageY - disy + "px";
+      };
+      document.onmouseup = function() {
+        document.onmousemove = document.onmouseup = null;
+      };
+    },
+
+    // 获取滚动高度，设置图片飞入飞出
+    getScroll() {
+      this.scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      console.log(this.scrollTop);
+
+      if (this.scrollTop > 333) {
+        $(".index_project").addClass("animated fadeInUp ");
+      } else {
+        $(".index_project").removeClass("animated fadeInUp ");
+      }
+
+      if (this.scrollTop > 300) {
+        this.show = true;
+      }
+
+      if (this.scrollTop > 900) {
+        this.showmedia = true;
+      }
+
+      if (this.scrollTop > 1400) {
+        this.showus = true;
+      }
+    },
     checkVideoFun(videos) {
       this.videoState = true;
       this.videoSrc = videos;
@@ -894,26 +934,6 @@ export default {
         });
     },
 
-    // 获取滚动高度，设置图片飞入飞出
-    getScroll() {
-      this.scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      //console.log(this.scrollTop);
-      if (this.scrollTop > 300) {
-        this.show = true;
-      }
-
-      if (this.scrollTop > 900) {
-        this.showmedia = true;
-      }
-
-      if (this.scrollTop > 1400) {
-        this.showus = true;
-      }
-    },
-
     gotoshow() {
       this.showfooter = true;
     },
@@ -939,6 +959,28 @@ export default {
 };
 </script>
 <style lang="less">
+.drag {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  z-index: 120;
+  background-size: cover;
+}
+.drag:hover {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  cursor: pointer;
+  background-color: red;
+
+  background-size: cover;
+}
 .mask {
   position: fixed;
   top: 0;
@@ -980,22 +1022,18 @@ export default {
   height: 100%;
 }
 svg {
-  
-
   .path1 {
-   
-    background: #8c8c8c!important;
-    stroke-dasharray:500px ;stroke-dashoffset:500px;
+    background: red !important;
+    stroke-dasharray: 500px;
+    stroke-dashoffset: 500px;
     animation: dash 3s linear infinite;
   }
   @keyframes dash {
     from {
-      stroke-dashoffset:500px;
-     
+      stroke-dashoffset: 500px;
     }
     to {
       stroke-dashoffset: 0px;
-     
     }
   }
 }
@@ -1010,7 +1048,7 @@ svg {
   z-index: 1;
   .index_top {
     position: relative;
-
+    overflow: hidden;
     width: 100%;
     height: 900px;
     margin: auto;

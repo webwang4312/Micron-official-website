@@ -86,15 +86,6 @@ const routes = [
         }
     },
     {
-        path: "/toproposal",
-        name: "toproposal",
-        component: () =>
-            import("../views/proposal/ToProposal.vue"),
-        meta: {
-            keepAlive: false // 需要被缓存
-        }
-    },
-    {
         path: "/proposaldetail",
         name: "proposaldetail",
         component: () =>
@@ -103,6 +94,16 @@ const routes = [
             keepAlive: false // 需要被缓存
         }
     },
+    {
+        path: "/toproposal",
+        name: "toproposal",
+        component: () =>
+            import("../views/proposal/ToProposal.vue"),
+        meta: {
+            keepAlive: false // 需要被缓存
+        }
+    },
+   
     {
         path: "/vote",
         name: "vote",
@@ -205,16 +206,13 @@ const router = new VueRouter({
 
 // 挂载路由导航守卫,to表示将要访问的路径，from表示从哪里来，next是下一个要做的操作 next('/login')强制跳转login
 router.beforeEach((to, from, next) => {
-     //console.log(to.path);
+     console.log(to.path);
      
     // 访问登录页，放行
-    // if (to.path === '/proposal') {
-    //     const tokenStr = window.sessionStorage.getItem('token')
-    //     // 没有token, 强制跳转到登录页
-    //     if (!tokenStr) return next('/')
-    // }
-    // 获取token
-    next()
+   
+        next();
+       
+    
 })
 
 export default router;

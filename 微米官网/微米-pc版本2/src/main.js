@@ -14,6 +14,9 @@ Vue.use(VueParticles);
 import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 Vue.use(ViewUI);
+import animated from 'animate.css' // npm install animate.css --save安装，在引入
+
+Vue.use(animated)
 // video引入
 // import VueVideoPlayer from "vue-video-player";
 // import "video.js/dist/video-js.css";
@@ -30,9 +33,9 @@ Vue.use(preventClick);
 // import ViewUI from 'view-design';
 // import 'view-design/dist/styles/iview.css';
 // Vue.use(ViewUI);
-// import ElementUI from 'element-ui';
-// import 'element-ui/lib/theme-chalk/index.css';
-// Vue.use(ElementUI);
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 // import ViewUI from 'view-design';
 // import 'view-design/dist/styles/iview.css';
 // Vue.use(ViewUI);
@@ -48,6 +51,7 @@ import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 // optional style for arrows & dots
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 Vue.use(VueSlickCarousel);
+//轮播图
 import Swiper from "swiper";
 
 import 'swiper/dist/css/swiper.min.css';

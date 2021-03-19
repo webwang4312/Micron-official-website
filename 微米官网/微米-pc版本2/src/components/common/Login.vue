@@ -63,6 +63,7 @@
             class="button"
             @focus="imgyanzhengfocus"
             @blur="imgyanzhengblur"
+            @keyup="keyup"
           />
           <button @click="createCode" id="imgcode">
             {{ imgCode }}
@@ -420,7 +421,10 @@ export default {
       // this.blue9 = true;
     },
     imgyanzhengblur() {
+      this.password22 = this.password22.toString().toUpperCase();
+
       // if (this.password22 == "") {
+
       //   // this.blue9 = false;
       // } else {
       //   if (this.username1 !== "" && this.password1 !== "") {
@@ -839,6 +843,14 @@ export default {
           });
       }
     },
+    //监控enter键并登录
+    keyup(event) {
+      if (event.keyCode == "13") {
+        this.password22 = this.password22.toString().toUpperCase();
+        this.submit1();
+      }
+    },
+
     //登录
     async submit1() {
       if (this.password22 !== this.imgCode) {
@@ -858,6 +870,8 @@ export default {
             this.$message.error("Please fill in the complete information");
           }
         } else {
+          // 忽略大小写
+          this.password22 = this.password22.toString().toUpperCase();
           this.$http
             .post(
               // 测试上
