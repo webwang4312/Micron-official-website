@@ -1,21 +1,38 @@
 <template>
   <div>
-    <div class="index" v-if="indexstart">
-      <div id="Loading" :class="{ display: displays }">
-        <div class="loader-inner ball-beat">
-          <h1>UENC</h1>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
+    <div class="index">
+      <!-- <video src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4" style="width:100%;opacity:0.5" autoplay="autoplay" muted>
+
+</video> -->
+
       <div class="index_top">
-        <div id="app1" v-drag class="drag" @mouseover="drag"></div>
+        <!-- <div id="app1" v-drag class="drag" @mouseover="drag"></div> -->
         <div class="index_topz">
           <div class="index_top_content">
+             <!-- <button @click="ceshi">测试</button> -->
             <div class="content">
               A public chain with cross chain technology
+             
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="#181e32"
+                xmlns="http://www.w3.org/2000/svg"
+                class="svelte-csnp7s"
+              >
+                <circle
+                  cx="25"
+                  cy="25"
+                  r="24"
+                  stroke="#ffffff"
+                  fill='red'
+                  stroke-width="10"
+                  class="path1"
+                ></circle>
+                <path d="M23 19L29 25L23 31" stroke="white"></path>
+              </svg>
+             
             </div>
             <!-- <button @click="goVideo">
             <img src="@assets/images/wmIndex/Frame.png" alt="" />
@@ -521,16 +538,15 @@
         </div>
       </div>
     </div>
-    <div v-else>
-      三生三世
-    </div>
   </div>
 </template>
 
 <script>
+
 import { BASEURL } from "@api/api";
 import VueSlickCarousel from "vue-slick-carousel";
 import Qs from "qs";
+
 import {
   zhCN,
   country,
@@ -551,8 +567,6 @@ export default {
   name: "index",
   data() {
     return {
-      displays: false,
-      indexstart: true,
       videoState: false,
       nameblue: false,
       emailblue: false,
@@ -593,8 +607,12 @@ export default {
       videosource: [{ src: "" }],
     };
   },
+
   components: { VueSlickCarousel },
-  beforeCreate() {},
+  beforeRouteEnter(to, from, next) {
+    //console.log(to);
+    next();
+  },
   created() {
     this.carsoulitem = 1;
 
@@ -607,7 +625,7 @@ export default {
     } else {
     }
     // 滚动设置
-    window.addEventListener("scroll", this.getScroll);
+    //window.addEventListener("scroll", this.getScroll);
   },
   computed: {
     player() {
@@ -615,13 +633,10 @@ export default {
     },
   },
   mounted() {
-    this.displays = true;
-    console.log(this.indexstart);
     // setTimeout(() => {
     //   this.changeState(); //娃娃消失
     // }, 4000);
 
-    console.log(this.indexstart);
     // 请求首页数据
     // this.getIndex();
     this.getHomeData();
@@ -635,10 +650,21 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
-    changeState() {
-      console.log(this);
-      this.indexstart = true;
-    },
+//     ceshi(){
+// console.log('11');
+//   that.$http
+//           .post(`${BASEURL}` + "/weimioffice/web/content/callback", data, {
+//             headers: { language: this.nowLang },
+//           })
+//           .then((res) => {
+//             console.log(res);
+           
+//           })
+//           .catch((err) => {
+            
+//             console.log(err);
+//           });
+//     },
     drag(e) {
       const el = document.getElementById("app1");
       var disx = e.pageX - el.offsetLeft;
@@ -658,9 +684,9 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      console.log(this.scrollTop);
+      //console.log(this.scrollTop);
 
-      if (this.scrollTop > 333) {
+      if (this.scrollTop > 333 && this.scrollTop < 1200) {
         $(".index_project").addClass("animated fadeInUp ");
       } else {
         $(".index_project").removeClass("animated fadeInUp ");
@@ -752,23 +778,23 @@ export default {
         this.$refs.headertop._data.iconshow = false;
       }
     },
-    // 头部公共部分
-    logins() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow");
-    },
-    register() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow2");
-    },
-    leavelogin() {
-      // 清除缓存
-      window.sessionStorage.clear();
-      this.$store.dispatch("leavelogin");
-    },
-    gotochainexplor() {
-      window.open("http://www.uenc.io/chainExplorer/index.html#/");
-    },
+    // // 头部公共部分
+    // logins() {
+    //   this.$store.dispatch("loginShow");
+    //   this.$store.commit("numberShow");
+    // },
+    // register() {
+    //   this.$store.dispatch("loginShow");
+    //   this.$store.commit("numberShow2");
+    // },
+    // leavelogin() {
+    //   // 清除缓存
+    //   window.sessionStorage.clear();
+    //   this.$store.commit("leavelogin");
+    // },
+    // gotochainexplor() {
+    //   window.open("http://www.uenc.io/chainExplorer/index.html#/");
+    // },
     // playvideo1() {
     //   var indexvideo = document.getElementById("indexvideo");
     //   if (indexvideo.requestFullscreen) {
@@ -958,995 +984,6 @@ export default {
   },
 };
 </script>
-<style lang="less">
-.drag {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: red;
-  z-index: 120;
-  background-size: cover;
-}
-.drag:hover {
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 120;
-  cursor: pointer;
-  background-color: red;
-
-  background-size: cover;
-}
-.mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 10;
-  background-color: #000000;
-  opacity: 0.6;
-}
-// 内容层 z-index要比遮罩大，否则会被遮盖
-.videomasks {
-  width: 1200px;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  z-index: 20;
-  transform: translate(-50%, -50%);
-}
-.videomasks video {
-  width: 100%;
-  height: 100%;
-}
-.el-message-box__header {
-  display: none;
-}
-.el-message-box__content {
-  padding: 0;
-}
-.el-message-box__btns {
-  display: none;
-}
-.el-message-box {
-  width: 80%;
-  height: 80%;
-}
-.el-message-box__content {
-  width: 100%;
-  height: 100%;
-}
-svg {
-  .path1 {
-    background: red !important;
-    stroke-dasharray: 500px;
-    stroke-dashoffset: 500px;
-    animation: dash 3s linear infinite;
-  }
-  @keyframes dash {
-    from {
-      stroke-dashoffset: 500px;
-    }
-    to {
-      stroke-dashoffset: 0px;
-    }
-  }
-}
-
-.indexblue {
-  border: 1px solid #30b3f5 !important;
-}
-.index {
-  position: relative;
-  width: 100%;
-  height: auto;
-  z-index: 1;
-  .index_top {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 900px;
-    margin: auto;
-    // background: red;
-    background: url("../assets/images/wmIndex/Background.png") no-repeat
-      center/100% 100%;
-    .index_topz {
-      display: flex;
-      flex-direction: row;
-      width: 1200px;
-      margin: 0 auto;
-      // background: #801090;
-      position: relative;
-      top: 40px;
-    }
-    .svg_img {
-      width: 437px;
-      height: 350px;
-      margin-top: 150px;
-    }
-    .index_top_content {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-right: 57px;
-      margin-top: 150px;
-
-      .content {
-        width: 706px;
-        height: 294px;
-
-        /* Heading / H1 */
-
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: 800;
-        font-size: 72px;
-        line-height: 98px;
-
-        font-feature-settings: "liga" off;
-
-        color: #18191f;
-      }
-      button {
-        position: static;
-        width: 227px;
-        height: 62px;
-        left: 0px;
-        top: 334px;
-        background: #30b3f5;
-        border-radius: 8px;
-        flex: none;
-        order: 1;
-        flex-grow: 0;
-        margin: 40px 0px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        img {
-          position: relative;
-          left: 40px;
-        }
-        div {
-          position: relative;
-          right: 40px;
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: bold;
-          font-size: 20px;
-          line-height: 30px;
-          text-align: center;
-          font-feature-settings: "liga" off;
-          color: #ffffff;
-        }
-      }
-    }
-  }
-  .index_project {
-    position: relative;
-    width: 100%;
-    height: 332px;
-    // background: gray;
-
-    .index_projectz {
-      width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      position: relative;
-      top: 81px;
-      // background: #505090;
-      .title {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-
-        div:nth-child(1) {
-          position: static;
-          width: 540px;
-          height: 128px;
-          left: 0px;
-          top: 0px;
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: 800;
-          font-size: 48px;
-          line-height: 64px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-          flex: none;
-          order: 0;
-          flex-grow: 0;
-          margin: 8px 0px;
-        }
-        div:nth-child(2) {
-          position: static;
-          width: 540px;
-          height: 32px;
-          left: 0px;
-          top: 136px;
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 32px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-          flex: none;
-          order: 1;
-          align-self: stretch;
-          flex-grow: 0;
-          margin: 8px 0px;
-        }
-      }
-      .detail {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0px;
-
-        width: 540px;
-        height: 172px;
-
-        .detail_top_left {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          img {
-            width: 48px;
-            height: 48px;
-          }
-        }
-        .detail_top_right {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          img {
-            width: 48px;
-            height: 48px;
-          }
-        }
-        .detail_top_top2 {
-          margin-left: 16px;
-          div:nth-child(1) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: 800;
-            font-size: 28px;
-            line-height: 40px;
-            color: #18191f;
-          }
-          div:nth-child(2) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 26px;
-            color: #18191f;
-          }
-        }
-        .detail_top {
-          display: flex;
-          flex-direction: row;
-
-          align-items: center;
-          width: 540px;
-          height: 66px;
-          .detail_top_right {
-            margin-left: 140px;
-          }
-        }
-        .detail_bottom {
-          display: flex;
-          flex-direction: row;
-
-          align-items: center;
-          width: 540px;
-          height: 66px;
-          margin-top: 40px;
-          .detail_top_right {
-            margin-left: 24px;
-          }
-        }
-      }
-    }
-  }
-  .advantage {
-    position: relative;
-    width: 100%;
-    height: 716px;
-
-    // background: red;
-    .advantagez {
-      height: 716px;
-      width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      // background: #836040;
-    }
-    .advantage_top {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      top: 80px;
-      width: 668px;
-      height: 136px;
-      margin: 0 auto;
-      div:nth-child(1) {
-        position: static;
-        width: 540px;
-        height: 64px;
-        left: 0px;
-        top: 0px;
-
-        /* Heading / H2 */
-
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: 800;
-        font-size: 48px;
-        line-height: 64px;
-        /* identical to box height, or 133% */
-
-        text-align: center;
-        font-feature-settings: "liga" off;
-
-        /* Text / Gray 900 */
-
-        color: #18191f;
-      }
-      div:nth-child(2) {
-        position: static;
-        width: 668px;
-        height: 64px;
-        left: 0px;
-        top: 72px;
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 32px;
-        text-align: center;
-        font-feature-settings: "liga" off;
-        color: #18191f;
-        flex: none;
-        order: 1;
-        align-self: stretch;
-        flex-grow: 0;
-      }
-    }
-    .advantage_detail {
-      display: flex;
-      flex-direction: column;
-
-      position: relative;
-      top: 134.75px;
-      .advantage_detail_ul1:nth-child(2) {
-        margin-top: 65px;
-      }
-      .advantage_detail_ul1 {
-        display: flex;
-        flex-direction: row;
-        margin: 0 auto;
-        li {
-          display: flex;
-          flex-direction: column;
-          span {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 24px;
-            line-height: 32px;
-            text-align: center;
-            font-feature-settings: "liga" off;
-            color: #18191f;
-            flex: none;
-            order: 0;
-            flex-grow: 0;
-            margin: 8px 0px;
-          }
-          img {
-            position: relative;
-            left: 46%;
-            right: 15%;
-            top: 3.12%;
-            bottom: 3.12%;
-          }
-          div:nth-child(3) {
-            position: static;
-            width: 350px;
-            height: 52px;
-            left: 0px;
-            top: 40px;
-
-            /* Body / Body 1 */
-
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 16px;
-            line-height: 26px;
-            /* or 162% */
-
-            text-align: center;
-            font-feature-settings: "liga" off;
-          }
-        }
-      }
-    }
-  }
-  .index_media {
-    position: relative;
-    width: 100%;
-    height: 896px;
-    background: #b1e5ff;
-    .index_mediaz {
-      width: 1200px;
-      margin: 0 auto;
-      height: 100%;
-
-      .media_title {
-        position: relative;
-        margin-top: -14px;
-        margin-left: 134px;
-        z-index: 100;
-
-        div:nth-child(1) {
-          z-index: 100;
-          width: 445px;
-          height: 128px;
-
-          font-family: PingFang SC;
-          font-style: normal;
-          font-weight: 600;
-          font-size: 48px;
-          line-height: 64px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-          flex: none;
-          order: 0;
-          flex-grow: 0;
-          margin: 8px 0px;
-        }
-        div:nth-child(2) {
-          width: 445px;
-          height: 32px;
-
-          top: 136px;
-          font-family: PingFang SC;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 32px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-          flex: none;
-          order: 1;
-          align-self: stretch;
-          flex-grow: 0;
-          margin: 8px 0px;
-        }
-      }
-      .media_imgtop {
-        position: relative;
-        left: 32px;
-        top: 38px;
-      }
-      .media_content_content {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        img {
-          position: relative;
-          left: 32px;
-          top: 68px;
-          height: 14px;
-          width: 15.929831504821777px;
-          opacity: 0.5;
-        }
-        .contentz3 {
-          width: 254px;
-          min-height: 140px;
-          height: auto;
-          position: relative;
-
-          top: 40px;
-
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 32px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-
-          margin-right: 24px 0px;
-          div:nth-child(1) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 18px;
-            line-height: 28px;
-            font-feature-settings: "liga" off;
-            color: #18191f;
-
-            margin-top: 24px;
-          }
-          div:nth-child(2) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-            font-feature-settings: "liga" off;
-            color: #969bab;
-          }
-        }
-        .contentz2 {
-          width: 349px;
-          min-height: 128px;
-          height: auto;
-          position: relative;
-          // right: 32px;
-          top: 38.42px;
-
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 32px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-
-          margin: 24px 0px;
-          div:nth-child(1) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 18px;
-            line-height: 28px;
-            font-feature-settings: "liga" off;
-            color: #18191f;
-
-            margin-top: 24px;
-          }
-          div:nth-child(2) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-            font-feature-settings: "liga" off;
-            color: #969bab;
-          }
-        }
-        .contentz {
-          width: 314px;
-          min-height: 192px;
-          height: auto;
-          position: relative;
-          right: 32px;
-          top: 38.42px;
-
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 32px;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-
-          margin: 24px 0px;
-          div:nth-child(1) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: bold;
-            font-size: 18px;
-            line-height: 28px;
-            font-feature-settings: "liga" off;
-            color: #18191f;
-
-            margin-top: 24px;
-          }
-          div:nth-child(2) {
-            font-family: Manrope;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 24px;
-            font-feature-settings: "liga" off;
-            color: #969bab;
-          }
-        }
-      }
-      .media_content1 {
-        height: auto;
-        min-height: 404px;
-        width: 410px;
-        border-radius: 8px;
-        background: #ffffff;
-        box-shadow: 0px 10px 20px rgba(41, 41, 42, 0.07);
-        border-radius: 8px;
-        position: relative;
-        left: 215px;
-      }
-      .media_content2 {
-        height: auto;
-        min-height: 340px;
-        width: 410px;
-        border-radius: 8px;
-        background: #ffffff;
-        position: relative;
-        left: 655px;
-        top: -532px;
-        box-shadow: 0px 10px 20px rgba(41, 41, 42, 0.07);
-        border-radius: 8px;
-      }
-      .media_content3 {
-        height: auto;
-        min-height: 276px;
-        width: 350px;
-        position: relative;
-        left: 655px;
-        top: -500px;
-        border-radius: 8px;
-        background: #ffffff;
-        box-shadow: 0px 10px 20px rgba(41, 41, 42, 0.07);
-        border-radius: 8px;
-      }
-    }
-  }
-  .index_contact {
-    width: 100%;
-    height: 838px;
-    // background: red;
-    .index_contactz {
-      width: 1200px;
-      margin: 0 auto;
-      height: 838px;
-      // background: #505090;
-      display: flex;
-      flex-direction: column;
-      .contact_title {
-        text-align: center;
-        position: relative;
-        top: 80px;
-        div:nth-child(1) {
-          width: 100%;
-          height: 64px;
-
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: 800;
-          font-size: 48px;
-          line-height: 64px;
-          text-align: center;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-          flex: none;
-          order: 0;
-          flex-grow: 0;
-        }
-        div:nth-child(2) {
-          width: 100%;
-          height: 64px;
-          left: 0px;
-          top: 72px;
-          font-family: Manrope;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 18px;
-          line-height: 32px;
-          text-align: center;
-          font-feature-settings: "liga" off;
-          color: #18191f;
-          flex: none;
-          order: 1;
-          align-self: stretch;
-          flex-grow: 0;
-          margin: 8px 0px;
-        }
-      }
-      .index_form {
-        position: relative;
-        top: 127px;
-        input {
-          height: 50px;
-          width: 580.6034545898438px;
-          left: 0px;
-          top: 38px;
-          border-radius: 4px;
-          border: 1px solid #8c8c8c;
-          padding-left: 17px;
-          outline: none;
-        }
-        .index_line1 {
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          span {
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 13px;
-            line-height: 210%;
-            /* or 27px */
-
-            display: flex;
-            align-items: center;
-
-            /* Color - 8 */
-
-            color: #000000;
-          }
-        }
-        .index_line2 {
-          margin-top: 11px;
-          span {
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 13px;
-            line-height: 210%;
-            /* or 27px */
-
-            display: flex;
-            align-items: center;
-
-            /* Color - 8 */
-
-            color: #000000;
-          }
-        }
-        .index_line3 {
-          span {
-            font-family: Poppins;
-            font-style: normal;
-            font-weight: 600;
-            font-size: 13px;
-            line-height: 210%;
-            /* or 27px */
-
-            display: flex;
-            align-items: center;
-
-            /* Color - 8 */
-
-            color: #000000;
-          }
-          margin-top: 11px;
-          textarea {
-            height: 180px;
-            width: 1199.9998779296875px;
-            left: 405px;
-            top: 512px;
-            border-radius: 4px;
-            resize: none;
-            border: 1px solid #8c8c8c;
-            padding-left: 17px;
-            padding-top: 17px;
-          }
-        }
-      }
-      .index_button {
-        cursor: pointer;
-        position: relative;
-        top: 136px;
-        height: 50px;
-        width: 194.59457397460938px;
-        border-radius: 50px;
-        background: #30b3f5;
-        border-radius: 50px;
-        font-family: Poppins;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 50px;
-        text-align: center;
-        color: #ffffff;
-      }
-    }
-  }
-  .index_developer {
-    width: 100%;
-    height: 450px;
-    // background: red;
-    background: url("../assets/images/wmIndex/Group 1592.png") no-repeat
-      center/100% 100%;
-    position: relative;
-    top: 0;
-    .index_developerz {
-      width: 1200px;
-      height: 450px;
-      margin: 0 auto;
-      text-align: center;
-      position: relative;
-      top: 0;
-      .title {
-        position: relative;
-        top: 80px;
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: 800;
-        font-size: 48px;
-        line-height: 64px;
-        font-feature-settings: "liga" off;
-        color: #18191f;
-      }
-      .content {
-        position: relative;
-        top: 88px;
-        width: 792px;
-        height: 96px;
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 32px;
-        font-feature-settings: "liga" off;
-        color: #18191f;
-        margin: 0 auto;
-      }
-      .bottom {
-        position: relative;
-        top: 148px;
-        margin: 0 auto;
-        width: 196px;
-        height: 62px;
-        background: #30b3f5;
-        border-radius: 8px;
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: bold;
-        font-size: 20px;
-        line-height: 62px;
-        text-align: center;
-        font-feature-settings: "liga" off;
-        color: #ffffff;
-        cursor: pointer;
-      }
-    }
-  }
-  .index_partner {
-    width: 100%;
-    height: 471px;
-    // background: red;
-    position: relative;
-    top: 0;
-    .index_partnerz {
-      width: 1200px;
-      height: 471px;
-      background: #fff;
-      margin: 0 auto;
-      // background: #505090;
-      position: relative;
-      .partner_title {
-        text-align: center;
-        font-family: Manrope;
-        font-style: normal;
-        font-weight: 800;
-        font-size: 48px;
-        line-height: 64px;
-        font-feature-settings: "liga" off;
-        color: #18191f;
-        position: relative;
-        top: 80px;
-      }
-      .carousel {
-        position: relative;
-        top: 140px;
-        .el-carousel {
-          height: 110px;
-          .el-carousel__container {
-            height: 100%;
-            ul {
-              li {
-                ul {
-                  display: flex;
-                  flex-direction: row;
-                  justify-content: space-around;
-                  li {
-                    width: 270px;
-                    height: 110px;
-                    display: flex;
-                    background: #fff;
-                    justify-content: space-around;
-                    font-size: 30px;
-                    align-items: center;
-                    align-content: center;
-                    img {
-                      width: 170px;
-                      height: 70px;
-                    }
-                    // margin-left: 30px;
-                  }
-                }
-              }
-            }
-          }
-          .el-carousel__indicator {
-            display: none;
-          }
-        }
-
-        .el-carousel__item {
-          width: 1100px;
-          height: 100%;
-          left: -300px !important;
-        }
-        .el-carousel__item:nth-child(2n) {
-          background-color: #99a9bf;
-          opacity: 0;
-        }
-
-        .el-carousel__item:nth-child(2n + 1) {
-          background-color: #d3dce6;
-          opacity: 0;
-        }
-        .is-active {
-          width: 100%;
-          margin: 0 auto;
-          opacity: 1 !important;
-        }
-      }
-      .carousel_bottom {
-        text-align: center;
-        margin-top: 176px;
-        img {
-          cursor: pointer;
-        }
-        span {
-          font-family: Raleway;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 16px;
-          line-height: 24px;
-          align-items: center;
-          text-align: center;
-          color: #222222;
-          opacity: 0.3;
-          margin: 0px 15px;
-        }
-      }
-      .slick-slider {
-        position: relative;
-        top: 140px;
-
-        font-size: 20px;
-        width: 1200px !important;
-
-        height: 110px;
-        ul {
-          display: flex !important;
-          flex-direction: row;
-          justify-content: space-around;
-          height: 110px;
-          li {
-            width: 270px;
-            height: 110px;
-            background: #f8f8f8;
-            opacity: 1;
-            display: flex !important;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            img {
-              // background: red;
-            }
-          }
-        }
-      }
-      .slick-list {
-      }
-    }
-  }
-}
+<style lang='less'>
+@import './index.less';
 </style>

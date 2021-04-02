@@ -32,6 +32,7 @@ export default new Vuex.Store({
         },
         // 登陆的显示与隐藏
         loginShow(state) {
+            console.log(state.showlogin);
             state.showlogin = !state.showlogin;
 
         },
@@ -99,53 +100,52 @@ export default new Vuex.Store({
             }
         },
         // 绑定钱包隐藏
-        forgetFastoken(state) {
-            if (state.fastoken == true) {
-                return state.fastoken = false
-            }
-        },
+        // forgetFastoken(state) {
+        //     if (state.fastoken == true) {
+        //         return state.fastoken = false
+        //     }
+        // },
     },
     actions: {
-        login(context) {
-            context.commit('login')
-        },
+        // login(context) {
+        //     context.commit('login')
+        // },
         // 登陆的显示与隐藏
-        loginShow(context) {
-            context.commit('loginShow')
-        },
+        // loginShow(context) {
+        //     context.commit('loginShow')
+        // },
         // 绑定钱包显示与隐藏
-        fastokenShow(context) {
-            context.commit('fastokenShow')
-        },
-        fastokensecondShow(context) {
-            context.commit('fastokensecondShow')
-        },
-        fastokenHide(context) {
-            context.commit('fastokenHide')
-        },
-
+        // fastokenShow(context) {
+        //     context.commit('fastokenShow')
+        // },
+        // fastokensecondShow(context) {
+        //     context.commit('fastokensecondShow')
+        // },
+        // fastokenHide(context) {
+        //     context.commit('fastokenHide')
+        // },
         // 头部登录注册选择
-        numberShow(context) {
-            context.commit('numberShow')
-        },
-        numberShow2(context) {
-            context.commit('numberShow2')
-        },
-        leavelogin(context) {
-            context.commit('leavelogin')
-        },
+        // numberShow(context) {
+        //     context.commit('numberShow')
+        // },
+        // numberShow2(context) {
+        //     context.commit('numberShow2')
+        // },
+        // leavelogin(context) {
+        //     context.commit('leavelogin')
+        // },
         // 忘记密码页面显示
-        forget(context) {
-            context.commit('forget')
-        },
+        // forget(context) {
+        //     context.commit('forget')
+        // },
         // 忘记密码页面隐藏
-        forgetlogin(context) {
-            context.commit('forgetlogin')
-        },
+        // forgetlogin(context) {
+        //     context.commit('forgetlogin')
+        // },
         // 绑定钱包隐藏
-        forgetFastoken(context) {
-            context.commit('forgetFastoken')
-        },
+        // forgetFastoken(context) {
+        //     context.commit('forgetFastoken')
+        // },
     },
     modules: {}
 });

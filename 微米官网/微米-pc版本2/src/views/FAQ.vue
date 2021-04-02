@@ -136,17 +136,17 @@ export default {
     },
     // 头部公共部分
     logins() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow");
+      this.$store.commit("loginShow");
+      this.$store.commit("numberShow");
     },
     register() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow2");
+      this.$store.commit("loginShow");
+      this.$store.commit("numberShow2");
     },
     leavelogin() {
       // 清除缓存
       window.sessionStorage.clear();
-      this.$store.dispatch("leavelogin");
+      this.$store.commit("leavelogin");
     },
     gotochainexplor() {
       window.open("http://www.uenc.io/chainExplorer/index.html#/");

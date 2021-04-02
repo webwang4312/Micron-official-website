@@ -11,9 +11,9 @@ import i18n from "./i18n";
 import 'lib-flexible';
 import VueParticles from 'vue-particles';
 Vue.use(VueParticles);
-import ViewUI from 'view-design';
-import 'view-design/dist/styles/iview.css';
-Vue.use(ViewUI);
+// import ViewUI from 'view-design';
+// import 'view-design/dist/styles/iview.css';
+// Vue.use(ViewUI);
 import animated from 'animate.css' // npm install animate.css --save安装，在引入
 
 Vue.use(animated)
@@ -53,9 +53,7 @@ import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 Vue.use(VueSlickCarousel);
 //轮播图
 import Swiper from "swiper";
-
 import 'swiper/dist/css/swiper.min.css';
-
 // axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
 //     var config = err.config;
 //     // If config does not exist or the retry option is not set, reject

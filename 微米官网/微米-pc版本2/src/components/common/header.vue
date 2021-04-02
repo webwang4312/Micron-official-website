@@ -4,6 +4,21 @@
     <forget v-if="$store.state.forget"></forget>
     <fastoken v-if="$store.state.fastoken"></fastoken>
     <fastoken-second v-if="$store.state.fastokensecond"></fastoken-second>
+    <!-- <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      router
+      @select="handleSelect"
+      active-text-color="#009EFF"
+      background-color="#8B8B7A"
+      text-color="#00FF00"
+    >
+      <el-menu-item :index="item.path" v-for="(item, i) in nav" :key="i">{{
+        item.title
+      }}</el-menu-item>
+    </el-menu>
+    <div class="line"></div> -->
     <!-- 内容部分 -->
     <div class="left_nav">
       <div class="header-left">
@@ -90,6 +105,8 @@ export default {
   name: "index",
   data() {
     return {
+      activeIndex: "1",
+      activeIndex2: "1",
       sticky: false,
       active: "",
       // 头部公共部分
@@ -128,18 +145,22 @@ export default {
     if (this.nowLang === "cn") {
       this.nav = [
         {
+          key: 1,
           title: "关于项目",
           path: "/about",
         },
         {
+          key: 2,
           title: "关于社区",
           path: "/proposal",
         },
         {
+          key: 3,
           title: "开发者社区",
           path: "/developer",
         },
         {
+          key: 4,
           title: "媒体公告",
           path: "/media",
         },
@@ -149,18 +170,22 @@ export default {
     if (this.nowLang === "en") {
       this.nav = [
         {
+          key: 1,
           title: "About",
           path: "/about",
         },
         {
+          key: 2,
           title: "Proposal",
           path: "/proposal",
         },
         {
+          key: 3,
           title: "Developer",
           path: "/developer",
         },
         {
+          key: 4,
           title: "Media",
           path: "/media",
         },
@@ -194,6 +219,9 @@ export default {
     window.removeEventListener("scroll", this.getScroll);
   },
   methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
     goToBrower() {
       window.open("http://www.uenc.io/chainExplorer/index.html#/", "_blank");
     },
@@ -277,11 +305,11 @@ export default {
     //   }
     // },
     fastoken() {
-      this.$store.dispatch("fastokenShow");
+      this.$store.commit("fastokenShow");
       // 根据userid绑定权益
     },
     fastokensecond() {
-      this.$store.dispatch("fastokensecondShow");
+      this.$store.commit("fastokensecondShow");
     },
     iconShow() {
       this.iconshow = !this.iconshow;
@@ -294,13 +322,13 @@ export default {
     },
     // 头部公共部分
     logins() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow");
+      this.$store.commit("loginShow");
+      this.$store.commit("numberShow");
       // console.log("登录");
     },
     register() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow2");
+      this.$store.commit("loginShow");
+      this.$store.commit("numberShow2");
     },
     leavelogin() {
       // 清除缓存
@@ -516,7 +544,7 @@ button {
           //  animation: bordertop 2s lin;
           // font-weight: 600;
           // // border-top: 2px solid rgba(0, 159, 205, 1);
-           color: rgba(0, 159, 205, 1) !important;
+          color: rgba(0, 159, 205, 1) !important;
         }
         .div1 {
           text-align: center;

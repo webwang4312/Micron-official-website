@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="Loading" :class="{ display: displays }">
+    <!-- <div id="Loading" :class="{ display: displays }">
       <div class="loader-inner ball-beat">
         <h1>UENC</h1>
         
@@ -9,7 +9,8 @@
         <div></div>
         <div></div>
       </div>
-    </div>
+      
+    </div> -->
 
     <keep-alive v-if="$route.meta.keepAlive && isRouterAlive">
       <router-view> </router-view>

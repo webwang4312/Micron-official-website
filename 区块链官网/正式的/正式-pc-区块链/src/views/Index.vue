@@ -222,7 +222,7 @@ export default {
       // 24小时交易笔数?
       transzoom: "",
       // 24小时交易总额?
-      transmoney: "",
+      transmoney: ""||0,
       //  交易笔数
       transnumber: "",
       // 区块奖励
@@ -1067,10 +1067,12 @@ export default {
             cardleftinformation.transaction_num_for_24h[0].transaction_num;
           // console.log(this.transzoom);
           // 24小时交易总额?
-          this.transmoney = Math.trunc(
+        
+  this.transmoney = Math.trunc(
             cardleftinformation.transaction_amount_for_24h[0]
               .transaction_amount_24h
           );
+         
 
           // console.log(this.transmoney);
           // console.log(res.data[0].block_height_all[0].block_height);

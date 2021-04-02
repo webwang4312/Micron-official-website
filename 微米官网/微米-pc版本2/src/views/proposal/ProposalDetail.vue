@@ -1459,7 +1459,7 @@ export default {
       });
     },
     fastoken() {
-      this.$store.dispatch("fastokenShow");
+      this.$store.commit("fastokenShow");
     },
     iconShow() {
       this.iconshow = !this.iconshow;

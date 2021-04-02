@@ -357,7 +357,7 @@ export default {
       });
     },
     fastoken() {
-      this.$store.dispatch("fastokenShow");
+      this.$store.commit("fastokenShow");
     },
 
     leavelogin() {

@@ -157,7 +157,7 @@ export default {
     //         if (res.data.code == 200) {
     //           if (this.$i18n.locale == "cn") {
     //             this.$message.success(res.data.result);
-    //             this.$store.dispatch("fastokenHide");
+    //             this.$store.commit("fastokenHide");
     //             // this.tel = "";
     //             // this.password = "";
     //             // this.confirmpassword = "";
@@ -165,7 +165,7 @@ export default {
     //           }
     //           if (this.$i18n.locale == "en") {
     //             this.$message.success(res.data.result);
-    //             this.$store.dispatch("fastokenHide");
+    //             this.$store.commit("fastokenHide");
     //             // this.tel = "";
     //             // this.password = "";
     //             // this.confirmpassword = "";

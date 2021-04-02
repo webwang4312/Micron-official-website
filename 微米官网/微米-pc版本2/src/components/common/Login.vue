@@ -363,7 +363,7 @@ export default {
     },
     login() {
       // console.log(this.$store.state.showlogin);
-      this.$store.dispatch("loginShow");
+      this.$store.commit("loginShow");
     },
 
     // 设置Cookie
@@ -401,8 +401,8 @@ export default {
 
     // 忘记密码
     forgetPassword() {
-      this.$store.dispatch("forget");
-      this.$store.dispatch("loginShow");
+      this.$store.commit("forget");
+      this.$store.commit("loginShow");
     },
 
     tabsName(index) {
@@ -893,7 +893,7 @@ export default {
                 if (this.$i18n.locale == "en") {
                   this.$message.success("login successful");
                 }
-                this.$store.dispatch("leavelogin");
+                this.$store.commit("leavelogin");
                 this.$store.commit("loginShow");
                 // this.username1 = "";
                 // this.password1 = "";

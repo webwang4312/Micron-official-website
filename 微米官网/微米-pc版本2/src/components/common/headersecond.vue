@@ -110,7 +110,7 @@ export default {
     // window.addEventListener("storage", this.pageFresh);
     if (!this.$store.username) {
     } else {
-      this.$store.dispatch("login");
+      this.$store.commit("login");
     }
     // console.log(this.username);
 
@@ -203,10 +203,10 @@ export default {
       this.$router.push({ path: index });
     },
     fastoken() {
-      this.$store.dispatch("fastokenShow");
+      this.$store.commit("fastokenShow");
     },
     fastokensecond() {
-      this.$store.dispatch("fastokensecondShow");
+      this.$store.commit("fastokensecondShow");
     },
     iconShow() {
       this.iconshow = !this.iconshow;
@@ -219,14 +219,14 @@ export default {
     },
     // 头部公共部分
     logins() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow");
+      this.$store.commit("loginShow");
+      this.$store.commit("numberShow");
       // console.log('登录');
       // console.log(this.$refs);
     },
     register() {
-      this.$store.dispatch("loginShow");
-      this.$store.dispatch("numberShow2");
+      this.$store.commit("loginShow");
+      this.$store.commit("numberShow2");
     },
     leavelogin() {
       // 清除缓存

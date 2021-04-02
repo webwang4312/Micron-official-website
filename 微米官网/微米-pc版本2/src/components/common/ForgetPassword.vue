@@ -160,7 +160,7 @@ export default {
   methods: {
     forgetLogin() {
       // console.log(this.$store.state.showlogin);
-      this.$store.dispatch("forgetlogin");
+      this.$store.commit("forgetlogin");
     },
     // 设置Cookie
     setCookie(username, password, exdays) {
@@ -410,7 +410,7 @@ export default {
                 this.password = "";
                 this.confirmpassword = "";
                 this.yanzheng = "";
-                this.$store.dispatch("forgetlogin");
+                this.$store.commit("forgetlogin");
               }
               if (this.$i18n.locale == "en") {
                 this.$message.success(res.data.result);
@@ -418,7 +418,7 @@ export default {
                 this.password = "";
                 this.confirmpassword = "";
                 this.yanzheng = "";
-                this.$store.dispatch("forgetlogin");
+                this.$store.commit("forgetlogin");
               }
             } else {
               if (this.$i18n.locale == "cn") {
