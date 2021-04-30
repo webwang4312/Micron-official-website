@@ -112,12 +112,14 @@
             </div>
             <div class="content_center">
               从
-              <span>
+              <span @click="goToAddressDetail(item.from_address)
+              ">
                 {{ item.from_address }}
               </span>
               <br />
               至
-              <span>
+              <span @click="goToAddressDetail(item.to_address)
+              ">
                 {{ item.to_address }}
               </span>
             </div>
@@ -236,6 +238,14 @@ export default {
     this.drawLine();
   },
   methods: {
+    goToAddressDetail(item){
+ this.$router.push({
+        path: "/addressdetail",
+        query:{
+         address:item
+        }
+      });
+    },
     goToTransaction() {
       this.$router.push({
         path: "/tranaction",
@@ -1155,6 +1165,7 @@ export default {
             font-weight: bold;
             line-height: 17px;
             color: #5583ff;
+            cursor: pointer;
           }
         }
         .content_right {

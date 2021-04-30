@@ -54,6 +54,16 @@ const routes = [
             }
     
         },
+        {
+            path: "/addressdetail",
+            name: "addressdetail",
+            component: () =>
+                import("../views/addressDetail.vue"),
+            meta: {
+                keepAlive: false// 需要被缓存
+            }
+    
+        },
         
     ]
         

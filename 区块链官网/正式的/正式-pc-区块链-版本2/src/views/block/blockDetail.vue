@@ -88,7 +88,7 @@ export default {
   },
   components: {},
   created() {
-    console.log(this.$route.query.block);
+    //console.log(this.$route.query.block);
     this.blockmedianum = 1;
     this.blocklist();
   },
@@ -118,7 +118,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
           //console.log(this.totalNum);
           if (this.nowLang == "cn") {
@@ -224,7 +224,7 @@ export default {
               //console.log(obj);
             }
           }
-          console.log(this.blockData);
+         
         })
         .catch((e) => {});
     },

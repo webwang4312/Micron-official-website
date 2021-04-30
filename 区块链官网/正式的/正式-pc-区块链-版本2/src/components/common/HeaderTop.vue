@@ -116,11 +116,10 @@ export default {
         this.language = "2";
         this.language2 = "1";
       }
-      console.log(this.language);
-      console.log(this.language2);
+     
     },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+     
     },
   },
   mounted() {},

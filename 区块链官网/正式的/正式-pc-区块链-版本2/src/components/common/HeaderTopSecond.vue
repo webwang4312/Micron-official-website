@@ -205,7 +205,7 @@ export default {
     },
     handleSelect(key, keyPath) {},
     selectChanged(value) {
-      console.log(value);
+     
       switch (value) {
         // 地址搜索
         case "0":

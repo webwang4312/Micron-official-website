@@ -1,25 +1,54 @@
 <template>
-  <div class="block">
+  <div class="addressdetail">
     <div class="top">
-      <img src="@assets/images/second/footer/组 33.png" alt="" />
-      <span>区块列表</span>
+      <img src="@assets/images/second/地址概览@2x.png" alt="" />
+      <span>地址概览</span>
+    </div>
+    <div class="detail_content">
+      <ul>
+        <li>
+          地址:
+        </li>
+        <li>余额:</li>
+        <li>交易数:</li>
+        <li>收入合计:</li>
+        <li>支出合计:</li>
+        <li>排名:</li>
+      </ul>
+      <ul>
+        <li class="blue">
+          1
+        </li>
+        <li>2</li>
+        <li>3UENC</li>
+        <li>4UENC</li>
+        <li>3UENC</li>
+        <li>4UENC</li>
+      </ul>
+    </div>
+    <div class="top">
+      <img src="@assets/images/second/交易列表@2x.png" alt="" />
+      <span>交易列表</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
         <li>
           <div>
-            区块高度
+            交易哈希
           </div>
           <div>时间</div>
-          <div>交易笔数</div>
+          <div>从</div>
           <div>
-            交易额
+            至
           </div>
-          <div>区块奖励</div>
+          <div>交易额</div>
+          <div>
+            燃料费
+          </div>
         </li>
       </ul>
       <ul v-for="item in blockData" :key="item" class="info_content">
-        <li @click="goToBlockDetail(item.block_height)">
+        <li @click="goToTransactionDetail(item.block_height)">
           <div>
             {{ item.block_height }}
           </div>
@@ -35,29 +64,20 @@
           <div>
             {{ item.transaction_award }}
           </div>
+          <div>
+            {{ item.transaction_amount }}
+          </div>
         </li>
       </ul>
-    </div>
-    <div class="block_pagination">
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="totalNum"
-        @current-change="change"
-      >
-      </el-pagination>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "block",
+  name: "addressdetail",
   data() {
     return {
-    
-
       nowLang: "",
-
       // 分页
       blockmedianum: 1,
       internalCurrentPage: "",
@@ -67,7 +87,7 @@ export default {
   },
   components: {},
   created() {
-    this.nowLang = this.$i18n.locale;
+    //console.log(this.$route.query.address);
     this.blockmedianum = 1;
     this.blocklist();
   },
@@ -75,20 +95,14 @@ export default {
   // 页码设置
   watch: {},
   methods: {
-    goToBlockDetail(item) {
+    goToTransactionDetail(item) {
       this.$router.push({
-        path: "/blockdetail",
+        path: "/transactiondetail",
 
-         query: {
+        query: {
           block: item,
         },
       });
-    },
-    change(val) {
-      //console.log(val);
-      this.blockmedianum = val;
-      //console.log(this.medianum);
-      this.blocklist();
     },
     //获取MEDIA
     async blocklist() {
@@ -103,7 +117,7 @@ export default {
           },
         })
         .then((res) => {
-         // console.log(res);
+          //console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
           //console.log(this.totalNum);
           if (this.nowLang == "cn") {
@@ -209,7 +223,6 @@ export default {
               //console.log(obj);
             }
           }
-        
         })
         .catch((e) => {});
     },
@@ -230,8 +243,15 @@ export default {
 };
 </script>
 <style lang="less">
-.block {
-  background: #f9fafd;
+.blue {
+  font-size: 17px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  line-height: 22px;
+  color: #5583ff;
+}
+.addressdetail {
+  height: auto;
   .top {
     width: 1275px;
     height: 38px;
@@ -244,20 +264,60 @@ export default {
     display: flex;
     align-items: center;
     span {
-      margin-left: 21px;
+      margin-left: 5px;
+    }
+  }
+  .detail_content {
+    width: 1275px;
+    height: 360px;
+    background: #ffffff;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
+    opacity: 1;
+    border-radius: 11px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    background: chocolate;
+    ul {
+      li {
+        margin-top: 28px;
+      }
+    }
+    ul:nth-child(1) {
+      font-size: 17px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      line-height: 22px;
+      color: #666666;
+      margin-left: 53px;
+      margin-top: 18px;
+    }
+    ul:nth-child(2) {
+      margin-top: 18px;
+      font-size: 17px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      line-height: 22px;
+      color: #333333;
+      margin-left: 94px;
     }
   }
   .block_info {
     width: 1275px;
-    height: 975px;
+    height: auto;
     background: gainsboro;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
-    margin: 0 auto 31px;
+    margin: 0 auto 373px;
     .info_title {
       height: 75px;
       line-height: 75px;
+      font-size: 17px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+
+      color: #000000;
       li {
         display: flex;
         flex-direction: row;
@@ -268,7 +328,7 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #000000;
-          width: 148px;
+          width: 100px;
         }
         div:nth-child(3) {
           text-align: center;
@@ -283,7 +343,9 @@ export default {
         height: 45px;
         cursor: pointer;
         background: #fcfcfc;
-        div:nth-child(1) {
+        div:nth-child(1),
+        div:nth-child(3),
+        div:nth-child(4) {
           font-size: 15px;
           font-family: Microsoft YaHei;
           font-weight: 400;
@@ -299,35 +361,8 @@ export default {
           font-weight: 400;
           line-height: 45px;
           color: #333333;
-          width: 148px;
+          width: 100px;
         }
-      }
-    }
-  }
-  .block_pagination {
-    width: 1275px;
-    height: 37px;
-    background: #ffffff;
-    margin: 0 auto 128px;
-    text-align: right;
-    .el-pagination {
-      padding: 0;
-      font-size: 15px;
-      font-family: Microsoft YaHei;
-      font-weight: 400;
-      line-height: 20px;
-      color: #666666;
-      .number,
-      button,
-      .more {
-        background: #ffffff;
-      }
-      .active {
-        color: #5583ff;
-        border: 1px solid #5583ff;
-
-        border-radius: 6px;
-        background-color: #ffffff !important;
       }
     }
   }
