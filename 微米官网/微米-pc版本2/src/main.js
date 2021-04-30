@@ -54,6 +54,7 @@ Vue.use(VueSlickCarousel);
 //轮播图
 import Swiper from "swiper";
 import 'swiper/dist/css/swiper.min.css';
+
 // axios.interceptors.response.use(undefined, function axiosRetryInterceptor(err) {
 //     var config = err.config;
 //     // If config does not exist or the retry option is not set, reject

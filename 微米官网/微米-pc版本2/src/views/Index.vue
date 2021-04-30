@@ -4,7 +4,7 @@
       <!-- <video src="https://www.uenc.io/video/8db3eb0b75e94328a2304256012f98b6.mp4" style="width:100%;opacity:0.5" autoplay="autoplay" muted>
 
 </video> -->
-
+ 
       <div class="index_top">
         <!-- <div id="app1" v-drag class="drag" @mouseover="drag"></div> -->
         <div class="index_topz">
@@ -89,7 +89,8 @@
                 <img src="@assets/images/wmIndex/Icon.png" />
                 <div class="detail_top_top2">
                   <div>
-                    {{ columndata[0] }}
+                  <countTo :startVal='startVal' :endVal='columndata1' :duration='2000' autoplay></countTo>
+                   
                   </div>
 
                   <div>
@@ -542,7 +543,7 @@
 </template>
 
 <script>
-
+import countTo from 'vue-count-to';
 import { BASEURL } from "@api/api";
 import VueSlickCarousel from "vue-slick-carousel";
 import Qs from "qs";
@@ -567,6 +568,8 @@ export default {
   name: "index",
   data() {
     return {
+      startVal: 0,
+        endVal: 2017,
       videoState: false,
       nameblue: false,
       emailblue: false,
@@ -608,12 +611,15 @@ export default {
     };
   },
 
-  components: { VueSlickCarousel },
+  components: { VueSlickCarousel,countTo },
   beforeRouteEnter(to, from, next) {
     //console.log(to);
     next();
   },
   created() {
+    //  window.setInterval(() => {
+    //   setTimeout(this.getHomeData(), 0);
+    // }, 300000);
     this.carsoulitem = 1;
 
     this.username = window.sessionStorage.getItem("username");
@@ -633,10 +639,7 @@ export default {
     },
   },
   mounted() {
-    // setTimeout(() => {
-    //   this.changeState(); //娃娃消失
-    // }, 4000);
-
+ 
     // 请求首页数据
     // this.getIndex();
     this.getHomeData();
@@ -941,7 +944,7 @@ export default {
           } else {
             that.columndata = res.data.result;
 
-            // this.columndata1 = Number(res.result[0])
+            this.columndata1 = Number(res.data.result[0])
             //   .toFixed(1)
             //   .replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
             // this.columndata2 = Number(res.result[1])

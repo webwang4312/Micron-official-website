@@ -14,12 +14,15 @@
 
     <keep-alive v-if="$route.meta.keepAlive && isRouterAlive">
       <router-view> </router-view>
+     
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive && isRouterAlive"> </router-view>
   </div>
 </template>
 
 <script>
+
+
 export default {
   name: "app",
   provide() {
@@ -27,6 +30,7 @@ export default {
     return {
       reload: this.reload,
       displays: false,
+     
     };
   },
   data() {
@@ -81,6 +85,7 @@ export default {
 <style lang="less">
 @import "./assets/css/normalize.less";
 @import "./animate.min.css";
+
 .display {
   display: none;
 }

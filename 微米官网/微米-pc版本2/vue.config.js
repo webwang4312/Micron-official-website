@@ -4,6 +4,8 @@ const path = require("path");
 const CompressionPlugin = require("compression-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 let { version, version_lib, openGzip, library } = require("./package.json");
+
+
 module.exports = {
     publicPath: "./", // 基本路径
     outputDir: "pcdist", // 输出文件目录
@@ -41,6 +43,8 @@ module.exports = {
             'axios': 'axios',
         },
         plugins: [
+           
+            
             new webpack.ProvidePlugin({
                 jQuery: "jquery",
                 $: "jquery",

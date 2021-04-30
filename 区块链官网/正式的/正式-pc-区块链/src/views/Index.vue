@@ -316,6 +316,7 @@ export default {
           },
         },
         yAxis: {
+          
           splitNumber: 2,
           type: "value",
           splitLine: { show: false }, //去除网格线

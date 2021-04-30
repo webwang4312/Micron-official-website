@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 // }
 
 const routes = [
-    { path: '/', redirect: '/index' },
+    // { path: '/', redirect: '/index' },
     {
         path: '/',
         name: 'home',

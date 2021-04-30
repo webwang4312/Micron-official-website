@@ -452,6 +452,7 @@ export default {
       // pagination: '.swiper-pagination',
       // nextButton: ".swiper-button-next",
       // prevButton: ".swiper-button-prev",
+      
       loop: true,
       grabCursor: true,
       //pagination: ".pagination", // 定义一个Swiper的分页器。默认会在这个分页器里面生成与slide对应的span标签
@@ -934,7 +935,7 @@ export default {
       height: auto;
       margin: 0 auto;
       text-align: center;
-      background: red;
+      // background: red;
       p:nth-child(1) {
         font-family: Roboto;
         font-style: normal;
@@ -962,7 +963,7 @@ export default {
   .about_swiper {
     width: 100%;
     height: 636px;
-    background: bisque;
+    // background: bisque;
     .team {
       width: 1200px;
       position: relative;
@@ -997,12 +998,12 @@ export default {
   .about_video {
     width: 100%;
     height: 962px;
-    background: chocolate;
+    // background: chocolate;
     .video_content {
       width: 1200px;
       height: 100%;
       margin: 0 auto;
-      background: blanchedalmond;
+      // background: blanchedalmond;
       .content_top {
         display: flex;
         flex-direction: row;
@@ -1112,7 +1113,7 @@ export default {
   .about_media {
     width: 100%;
     height: 821px;
-    background: gray;
+    // background: gray;
     .media_content {
       display: flex;
       flex-direction: row;
@@ -1120,7 +1121,7 @@ export default {
       height: 100%;
       width: 1200px;
       margin: 0 auto;
-      background: yellowgreen;
+      // background: yellowgreen;
       .media_left {
         position: relative;
         top: 100px;
@@ -1170,7 +1171,7 @@ export default {
           line-height: 64px;
           text-align: right;
           color: #18191f;
-          background: red;
+          // background: red;
           position: relative;
           left: 135px;
         }
@@ -1206,7 +1207,7 @@ export default {
       height: 100%;
       width: 1200px;
       margin: 0 auto;
-      background: blanchedalmond;
+      // background: blanchedalmond;
       div:nth-child(1) {
         position: relative;
         top: 100px;

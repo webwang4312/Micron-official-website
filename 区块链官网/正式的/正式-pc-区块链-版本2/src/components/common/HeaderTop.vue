@@ -1,0 +1,242 @@
+<template>
+  <div class="header_top">
+    <div class="index_left">
+      <img src="@assets/images/second/logo.png" alt="" />
+      <span>
+        UENC
+      </span>
+      <span>
+        Explorer
+      </span>
+    </div>
+    <ul>
+      <li>
+        <router-link :to="{ path: '/' }">首页</router-link>
+      </li>
+      <li>
+        <el-dropdown :hide-on-click="false">
+          <span class="el-dropdown-link">
+            区块链<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <router-link :to="{ path: '/block' }"
+                >区块</router-link
+              ></el-dropdown-item
+            >
+            <el-dropdown-item>
+              <router-link :to="{ path: '/transaction' }"
+                >交易</router-link
+              ></el-dropdown-item
+            >
+            <el-dropdown-item>
+              富豪榜</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
+      </li>
+      <li><router-link :to="{ path: '/address' }">图表</router-link></li>
+      <li>
+        <el-dropdown :hide-on-click="false">
+          <span class="el-dropdown-link">
+            {{ language }}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>
+              <div @click="changeLanguage" style="width:100%;height:100%">
+                {{ language2 }}
+              </div>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </li>
+    </ul>
+    <!-- <el-menu
+      :default-active="activeIndex"
+      class="el-menu-demo"
+      mode="horizontal"
+      @select="handleSelect"
+      active-text-color="#4276FF"
+      router
+    >
+      <el-menu-item index="/">首页</el-menu-item>
+      <el-submenu index="2">
+        <template slot="title">区块链</template>
+        <el-menu-item index="2-1">选项1</el-menu-item>
+        <el-menu-item index="2-2">选项2</el-menu-item>
+        <el-menu-item index="2-3">选项3</el-menu-item>
+      </el-submenu>
+      <el-menu-item index="/address">图表</el-menu-item>
+      <el-submenu index="4">
+        <template slot="title">中文</template>
+        <el-menu-item index="4-1" @click="language">英文</el-menu-item>
+      </el-submenu>
+    </el-menu> -->
+  </div>
+</template>
+
+<script>
+import cn from "../../i18n/cn";
+import en from "../../i18n/en";
+export default {
+  name: "headertop",
+  inject: ["reload"],
+  data() {
+    return {
+      activeIndex: "1",
+      nowLang: "",
+      language: "",
+      language2: "",
+    };
+  },
+  created() {
+    this.nowLang = this.$i18n.locale;
+    this.language = this.nowLang;
+    if (this.language == "cn") {
+      this.language='中文'
+      this.language2 = "EN";
+    } else {
+      this.language='EN'
+      this.language2 = "中文";
+    }
+    //console.log(this.$i18n.locale);
+  },
+  mounted() {},
+
+  methods: {
+    changeLanguage() {
+      if (this.$i18n.locale == "cn") {
+        this.$i18n.locale = "en";
+        this.reload();
+        this.language = "1";
+        this.language2 = "2";
+      } else {
+        this.$i18n.locale = "cn";
+        this.reload();
+        this.language = "2";
+        this.language2 = "1";
+      }
+      console.log(this.language);
+      console.log(this.language2);
+    },
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath);
+    },
+  },
+  mounted() {},
+  destroyed() {},
+};
+</script>
+
+<style lang="less">
+.el-dropdown-menu__item{
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+}
+.el-menu.el-menu--horizontal {
+  border-bottom: none;
+}
+.el-menu--horizontal > .el-menu-item.is-active {
+  font-size: 15px !important;
+}
+
+.el-menu {
+  background-color: goldenrod !important;
+
+  justify-content: center;
+  align-items: center;
+  li {
+    font-size: 15px;
+    font-family: Arial;
+    font-weight: bold;
+    line-height: 12px;
+    color: #4276ff;
+  }
+}
+.header_top {
+  width: 100%;
+  height: 60px;
+
+  background-color: #fff !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 100;
+  ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .index_left {
+    display: flex;
+    flex-direction: row; /*这里可以不写，flex布局默认方向横向即row*/
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    img {
+      width: 38px;
+      height: 46px;
+      margin-right: 14px;
+      margin-top: 7px;
+    }
+    span:nth-child(2) {
+      font-size: 15px;
+      font-family: Arial;
+      font-weight: bold;
+      line-height: 12px;
+      color: #4276ff;
+    }
+    span:nth-child(3) {
+      font-size: 15px;
+      font-family: Arial;
+      font-weight: bold;
+      line-height: 12px;
+      color: #000000;
+    }
+  }
+  ul {
+    display: flex;
+    flex-direction: row;
+    margin-right: 36px;
+    .el-dropdown {
+      font-size: 15px;
+      font-family: Arial;
+      font-weight: 400;
+      line-height: 12px;
+      color: #000000;
+    }
+    li {
+      font-size: 15px;
+      font-family: Arial;
+      font-weight: 400;
+      line-height: 40px;
+      color: #000000;
+      margin-left: 60px;
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      // transition: all 0.5s;
+    }
+    // li::before {
+    //   content: "";
+    //   display: block;
+    //   position: absolute;
+    //   width: 0%;
+    //   bottom: 15px;
+    //   left: 100%;
+    //   border-bottom: 2px solid red;
+    //   transition: all 0.5s;
+    // }
+    // li:hover::before {
+    //   left: 0;
+    //   width: 100%;
+    // }
+    // li:hover ~ li::before {
+    //   left: 0;
+    // }
+  }
+}
+</style>

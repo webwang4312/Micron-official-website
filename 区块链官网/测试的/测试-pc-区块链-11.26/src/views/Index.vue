@@ -304,7 +304,7 @@ export default {
   components: { VFooter, Search, headertop },
   created() {
     this.nowLang = this.$i18n.locale;
-    // console.log(this.nowLang);
+     //console.log(this.nowLang);
 
     // 获取首页数据
     this.indexlist();

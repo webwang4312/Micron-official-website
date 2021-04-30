@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --report",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "slider-verification-code": "^1.0.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^2.6.11",
+    "vue-count-to": "^1.0.13",
     "vue-i18n": "^8.18.2",
     "vue-router": "^3.2.0",
     "vue-slick-carousel": "^1.0.6",
