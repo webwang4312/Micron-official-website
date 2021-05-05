@@ -16,7 +16,7 @@
               {{ blockheigth }}
             </div>
             <div class="center_bottom">
-              区块高度
+             {{ $t('publicsection')[3]}}
             </div>
           </div>
           <div class="line_right"></div>

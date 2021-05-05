@@ -2,40 +2,39 @@
   <div class="headersecond_top">
     <div class="index_left">
       <img src="@assets/images/second/logo.png" alt="" />
-      <span>
-        UENC
-      </span>
-      <span>
-        Explorer
-      </span>
+      <span> UENC </span>
+      <span> Explorer </span>
     </div>
     <ul class="second_center">
       <li>
-        <router-link :to="{ path: '/' }">首页</router-link>
+        <router-link :to="{ path: '/' }">{{ $t('nav')[0]}}</router-link>
       </li>
       <li>
         <el-dropdown :hide-on-click="false">
-          <span class="el-dropdown-link">
-            区块链<i class="el-icon-arrow-down el-icon--right"></i>
+          <span :class="{ 'el-dropdown-link': true, blue: blues }">
+           {{ $t('nav')[1]}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <router-link :to="{ path: '/block' }"
-                >区块</router-link
-              ></el-dropdown-item
+              <router-link :to="{ path: '/block' }">
+                <span @click="blueClass">{{ $t('nav')[2]}} </span>
+              </router-link></el-dropdown-item
             >
             <el-dropdown-item>
               <router-link :to="{ path: '/transaction' }"
-                >交易</router-link
+                >{{ $t('nav')[3]}}</router-link
               ></el-dropdown-item
             >
-            <el-dropdown-item>
-              富豪榜</el-dropdown-item
-            >
+            <el-dropdown-item>{{ $t('nav')[4]}}</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </li>
-      <li><router-link :to="{ path: '/address' }">图表</router-link></li>
+      <li><router-link :to="{ path: '/chart' }">
+      <span @click="blueClass2">
+  {{ $t('nav')[5]}}
+      </span>
+    
+      </router-link></li>
       <li>
         <div class="indexsecondsearch">
           <div class="searchleft">
@@ -55,8 +54,12 @@
           </div>
           <i
             class="el-icon-minus"
-            style="color:rgba(85, 131, 255, 1);transform:rotate(90deg);width: 0px;
-height: 33px;"
+            style="
+              color: rgba(85, 131, 255, 1);
+              transform: rotate(90deg);
+              width: 0px;
+              height: 33px;
+            "
           ></i>
           <div class="searchcenter">
             <input
@@ -70,7 +73,7 @@ height: 33px;"
 
           <img
             src="@assets/images/second/搜索按钮.png"
-            style="cursor:pointer"
+            style="cursor: pointer"
             @click="searchselect"
           />
         </div>
@@ -82,7 +85,7 @@ height: 33px;"
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <div @click="changeLanguage" style="width:100%;height:100%">
+              <div @click="changeLanguage" style="width: 100%; height: 100%">
                 {{ language2 }}
               </div>
             </el-dropdown-item>
@@ -101,6 +104,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      blues: Boolean,
       activeIndex: "1",
       nowLang: "",
       language: "",
@@ -127,6 +131,8 @@ export default {
     };
   },
   created() {
+    this.blues = this.$store.state.blues;
+    console.log(this.blues);
     this.nowLang = this.$i18n.locale;
     this.language = this.nowLang;
     if (this.language == "cn") {
@@ -190,6 +196,14 @@ export default {
   mounted() {},
 
   methods: {
+    blueClass() {
+      this.$store.commit("bluesState", true);
+      this.reload()
+    },
+     blueClass2(){
+this.$store.commit("bluesState", false);
+ this.reload()
+     },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
@@ -205,7 +219,6 @@ export default {
     },
     handleSelect(key, keyPath) {},
     selectChanged(value) {
-     
       switch (value) {
         // 地址搜索
         case "0":
@@ -418,7 +431,19 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" >
+
+.headersecond_top {
+  width: 100%;
+  height: 60px;
+  background-color: #fff !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 100;
+  .blue {
+  color: blue !important;
+}
 .el-dropdown-menu__item {
   width: 80px;
   padding: 10px;
@@ -444,14 +469,6 @@ export default {
     color: #4276ff;
   }
 }
-.headersecond_top {
-  width: 100%;
-  height: 60px;
-  background-color: #fff !important;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  z-index: 100;
   ul {
     display: flex;
     flex-direction: row;
@@ -464,7 +481,8 @@ export default {
     align-items: center;
     justify-content: center;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 30px;
+
     img {
       width: 38px;
       height: 46px;
@@ -489,8 +507,8 @@ export default {
   .second_center {
     display: flex;
     flex-direction: row;
-    margin-right: 36px;
-    margin-left: 200px;
+    // margin-right: 36px;
+    // margin-left: 632px;
     .el-dropdown {
       font-size: 15px;
       font-family: Arial;
@@ -499,11 +517,12 @@ export default {
       color: #000000;
     }
     li:nth-child(1),
-    li:nth-child(2) {
+    li:nth-child(2),
+    li:nth-child(3) {
       margin-right: 60px;
     }
     li {
-      font-size: 15px;
+      font-size: 17px;
       font-family: Arial;
       font-weight: 400;
       line-height: 40px;
@@ -545,8 +564,8 @@ export default {
     background: #ffffff;
     opacity: 1;
     border-radius: 11px;
-    margin-right: 53px;
-    margin-left: 61px;
+    // margin-right: 53px;
+    // margin-left: 61px;
     .searchleft {
     }
     .el-input__inner {

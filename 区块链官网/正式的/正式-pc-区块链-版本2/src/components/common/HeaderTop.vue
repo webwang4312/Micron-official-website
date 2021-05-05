@@ -11,31 +11,39 @@
     </div>
     <ul>
       <li>
-        <router-link :to="{ path: '/' }">首页</router-link>
+        <router-link :to="{ path: '/' }">{{ $t('nav')[0]}}</router-link>
       </li>
       <li>
         <el-dropdown :hide-on-click="false">
-          <span class="el-dropdown-link">
-            区块链<i class="el-icon-arrow-down el-icon--right"></i>
+          <span :class="{'el-dropdown-link':true,'blue':blues}">
+           {{ $t('nav')[1]}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <router-link :to="{ path: '/block' }"
-                >区块</router-link
+                >
+                <span @click="blueClass">
+{{ $t('nav')[2]}}
+                </span>
+               </router-link
               ></el-dropdown-item
             >
             <el-dropdown-item>
               <router-link :to="{ path: '/transaction' }"
-                >交易</router-link
+                >{{ $t('nav')[3]}}</router-link
               ></el-dropdown-item
             >
             <el-dropdown-item>
-              富豪榜</el-dropdown-item
+             {{ $t('nav')[4]}}</el-dropdown-item
             >
           </el-dropdown-menu>
         </el-dropdown>
       </li>
-      <li><router-link :to="{ path: '/address' }">图表</router-link></li>
+      <li><router-link :to="{ path: '/chart' }">
+      <span @click="blueClass2">
+{{ $t('nav')[5]}}
+      </span>
+     </router-link></li>
       <li>
         <el-dropdown :hide-on-click="false">
           <span class="el-dropdown-link">
@@ -83,6 +91,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+       blues:false,
       activeIndex: "1",
       nowLang: "",
       language: "",
@@ -104,6 +113,13 @@ export default {
   mounted() {},
 
   methods: {
+       blueClass(){  this.$store.commit("bluesState", true);
+      this.reload()
+    },
+     blueClass2(){
+this.$store.commit("bluesState", false);
+ this.reload()
+     },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
@@ -127,7 +143,20 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" >
+
+.header_top {
+  width: 100%;
+  height: 60px;
+
+  background-color: #fff !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 100;
+  .blue{
+  color:blue!important;
+}
 .el-dropdown-menu__item{
   width: 80px;
   padding: 10px;
@@ -153,15 +182,6 @@ export default {
     color: #4276ff;
   }
 }
-.header_top {
-  width: 100%;
-  height: 60px;
-
-  background-color: #fff !important;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  z-index: 100;
   ul {
     display: flex;
     flex-direction: row;
