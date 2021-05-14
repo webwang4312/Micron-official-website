@@ -7,34 +7,39 @@
     </div>
     <ul class="second_center">
       <li>
-        <router-link :to="{ path: '/' }">{{ $t('nav')[0]}}</router-link>
+        <router-link :to="{ path: '/' }">{{ $t("nav")[0] }}</router-link>
       </li>
       <li>
         <el-dropdown :hide-on-click="false">
           <span :class="{ 'el-dropdown-link': true, blue: blues }">
-           {{ $t('nav')[1]}}<i class="el-icon-arrow-down el-icon--right"></i>
+            {{ $t("nav")[1] }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <router-link :to="{ path: '/block' }">
-                <span @click="blueClass">{{ $t('nav')[2]}} </span>
+                <span @click="blueClass">{{ $t("nav")[2] }} </span>
               </router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/transaction' }"
-                >{{ $t('nav')[3]}}</router-link
-              ></el-dropdown-item
+              <router-link :to="{ path: '/transaction' }">{{
+                $t("nav")[3]
+              }}</router-link></el-dropdown-item
             >
-            <el-dropdown-item>{{ $t('nav')[4]}}</el-dropdown-item>
+            <el-dropdown-item
+              ><router-link :to="{ path: '/address' }">{{
+                $t("nav")[4]
+              }}</router-link></el-dropdown-item
+            >
           </el-dropdown-menu>
         </el-dropdown>
       </li>
-      <li><router-link :to="{ path: '/chart' }">
-      <span @click="blueClass2">
-  {{ $t('nav')[5]}}
-      </span>
-    
-      </router-link></li>
+      <li>
+        <router-link :to="{ path: '/chart' }">
+          <span @click="blueClass2">
+            {{ $t("nav")[5] }}
+          </span>
+        </router-link>
+      </li>
       <li>
         <div class="indexsecondsearch">
           <div class="searchleft">
@@ -64,7 +69,7 @@
           <div class="searchcenter">
             <input
               type="text"
-              :placeholder="$t('publicsection[2]')"
+              :placeholder="$t('search[0]')"
               v-model="inputvalue"
               ref="search"
               @keyup="keyup"
@@ -162,10 +167,10 @@ export default {
           value: "2",
           label: "交易哈希",
         },
-        {
-          value: "3",
-          label: "区块哈希",
-        },
+        // {
+        //   value: "3",
+        //   label: "区块哈希",
+        // },
       ];
     }
     if (this.$i18n.locale == "en") {
@@ -182,10 +187,10 @@ export default {
           value: "2",
           label: "Transaction",
         },
-        {
-          value: "3",
-          label: "Block",
-        },
+        // {
+        //   value: "3",
+        //   label: "Block",
+        // },
       ];
     }
     if (this.value == "") {
@@ -194,16 +199,15 @@ export default {
     //console.log(this.$i18n.locale);
   },
   mounted() {},
-
   methods: {
     blueClass() {
       this.$store.commit("bluesState", true);
-      this.reload()
+      this.reload();
     },
-     blueClass2(){
-this.$store.commit("bluesState", false);
- this.reload()
-     },
+    blueClass2() {
+      this.$store.commit("bluesState", false);
+      this.reload();
+    },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
@@ -218,50 +222,35 @@ this.$store.commit("bluesState", false);
       }
     },
     handleSelect(key, keyPath) {},
-    selectChanged(value) {
-      switch (value) {
-        // 地址搜索
-        case "0":
-          // console.log('0');
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.addresssearch();
-          }
+    // selectChanged(value) {
+    //   switch (value) {
+    //     // 地址搜索
+    //     case "0":
+    //       if (this.inputvalue !== "") {
+    //         this.addresssearch();
+    //       }
+    //       break;
+    //     case "1":
+    //       // 区块高度
+    //       if (this.inputvalue !== "") {
+    //         this.blocksearch();
+    //       }
+    //       break;
+    //     // 交易哈希
+    //     case "2":
+    //       if (this.inputvalue !== "") {
+    //         this.transactiondetaillist();
 
-          break;
-        case "1":
-          //  console.log('1');
-          // 区块高度
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.blocksearch();
-          }
-          break;
-        // 交易哈希
-        case "2":
-          //  console.log('2');
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.transactiondetaillist();
-          }
-
-          break;
-        // 区块哈希
-        case "3":
-          //  console.log('3');
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.blockhaxisearch();
-          }
-
-          break;
-      }
-    },
-
+    //       }
+    //       break;
+    //     // 区块哈希
+    //     case "3":
+    //       if (this.inputvalue !== "") {
+    //         this.blockhaxisearch();
+    //       }
+    //       break;
+    //   }
+    // },
     keyup(event) {
       // console.log(event);
       if (this.inputvalue !== "") {
@@ -270,46 +259,45 @@ this.$store.commit("bluesState", false);
         }
       }
     },
+    errmsg(){
+ if (this.$i18n.locale == "cn") {
+    this.$message({
+              message: "请输入正确查询信息",
+              type: "error",
+            });
+ }
+ else{
+    this.$message({
+              message: "Please enter the correct query information",
+              type: "error",
+            });
+ }
+    },
     searchselect() {
       switch (this.value) {
         // 地址搜索
         case "0":
-          // console.log('0');
           if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
             this.addresssearch();
           }
-
           break;
         case "1":
-          //  console.log('1');
-          // 区块高度
           if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
             this.blocksearch();
+            
           }
           break;
         // 交易哈希
         case "2":
-          //  console.log('2');
           if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
             this.transactiondetaillist();
           }
-
           break;
         // 区块哈希
         case "3":
-          //  console.log('3');
           if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
             this.blockhaxisearch();
           }
-
           break;
       }
     },
@@ -329,14 +317,16 @@ this.$store.commit("bluesState", false);
           //   console.log(res.data[0].total_page[0].totalPageNum);
           if (res.data[0].total_page[0].totalPageNum !== 0) {
             this.$router.push({
-              path: "/transactiondetails",
+              path: "/transactiondetail",
               query: { addressvalue: this.inputvalue },
             });
+            this.reload();
           } else {
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
+            this.errmsg()
+            // this.$router.push({
+            //   path: "/notfound",
+            //   query: {},
+            // });
           }
         })
         .catch((err) => {});
@@ -358,21 +348,24 @@ this.$store.commit("bluesState", false);
             this.$router.push({
               path: "/blockdetail",
               query: {
-                blockheight: this.inputvalue,
+                block: this.inputvalue,
                 // transaction_award:this.transaction_award
               },
             });
+            this.reload();
           } else {
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
+             this.errmsg()
+            // this.$router.push({
+            //   path: "/notfound",
+            //   query: {},
+            // });
           }
         })
         .catch((err) => {});
     },
     // 根据交易易哈希查询相关交易易信息
     async transactiondetaillist() {
+      //console.log(this.inputvalue);
       let that = this;
       await that.$http
         .get("/search_transactionHash_detailInfo", {
@@ -381,7 +374,7 @@ this.$store.commit("bluesState", false);
           },
         })
         .then((res) => {
-          //  console.log(res);
+          //console.log(res);
           if (res.data[0].select_status === 1) {
             this.$router.push({
               path: "/transactiondetail",
@@ -390,11 +383,13 @@ this.$store.commit("bluesState", false);
                 // transaction_award:this.transaction_award
               },
             });
+            this.reload();
           } else {
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
+             this.errmsg()
+            // this.$router.push({
+            //   path: "/notfound",
+            //   query: {},
+            // });
           }
         })
         .catch((err) => {});
@@ -416,6 +411,7 @@ this.$store.commit("bluesState", false);
               path: "/blockdetails",
               query: { blockhaxi: this.inputvalue },
             });
+            this.reload();
           } else {
             this.$router.push({
               path: "/notfound",
@@ -431,8 +427,7 @@ this.$store.commit("bluesState", false);
 };
 </script>
 
-<style lang="less" >
-
+<style lang="less">
 .headersecond_top {
   width: 100%;
   height: 60px;
@@ -442,33 +437,31 @@ this.$store.commit("bluesState", false);
   justify-content: space-between;
   z-index: 100;
   .blue {
-  color: blue !important;
-}
-.el-dropdown-menu__item {
-  width: 80px;
-  padding: 10px;
-  text-align: center;
-}
-.el-menu.el-menu--horizontal {
-  border-bottom: none;
-}
-.el-menu--horizontal > .el-menu-item.is-active {
-  font-size: 15px !important;
-}
-
-.el-menu {
-  background-color: goldenrod !important;
-
-  justify-content: center;
-  align-items: center;
-  li {
-    font-size: 15px;
-    font-family: Arial;
-    font-weight: bold;
-    line-height: 12px;
-    color: #4276ff;
+    color: blue !important;
   }
-}
+  .el-dropdown-menu__item {
+    width: 80px;
+    padding: 10px;
+    text-align: center;
+  }
+  .el-menu.el-menu--horizontal {
+    border-bottom: none;
+  }
+  .el-menu--horizontal > .el-menu-item.is-active {
+    font-size: 15px !important;
+  }
+  .el-menu {
+    background-color: goldenrod !important;
+    justify-content: center;
+    align-items: center;
+    li {
+      font-size: 15px;
+      font-family: Arial;
+      font-weight: bold;
+      line-height: 12px;
+      color: #4276ff;
+    }
+  }
   ul {
     display: flex;
     flex-direction: row;
@@ -482,7 +475,6 @@ this.$store.commit("bluesState", false);
     justify-content: center;
     align-items: center;
     margin-left: 30px;
-
     img {
       width: 38px;
       height: 46px;
@@ -507,7 +499,7 @@ this.$store.commit("bluesState", false);
   .second_center {
     display: flex;
     flex-direction: row;
-    // margin-right: 36px;
+    margin-right: 54px;
     // margin-left: 632px;
     .el-dropdown {
       font-size: 15px;
@@ -527,7 +519,6 @@ this.$store.commit("bluesState", false);
       font-weight: 400;
       line-height: 40px;
       color: #000000;
-
       display: inline-block;
       position: relative;
       cursor: pointer;
@@ -580,7 +571,6 @@ this.$store.commit("bluesState", false);
     }
     .el-input--suffix {
       width: 122px;
-
       outline: none;
       input {
         border-top: 2px solid #e9eced;
@@ -621,7 +611,6 @@ this.$store.commit("bluesState", false);
         line-height: 12px;
         color: #cccccc;
       }
-
       input:-ms-input-placeholder {
         /* Internet Explorer 10-11 */
         font-size: 15px;
@@ -630,7 +619,6 @@ this.$store.commit("bluesState", false);
         line-height: 18px;
         color: #cccccc;
       }
-
       input::placeholder {
         font-size: 15px;
         font-family: Arial;

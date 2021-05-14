@@ -19,8 +19,8 @@
         </li>
       </ul>
       <ul v-for="item in blockData" :key="item" class="info_content">
-        <li @click="goToBlockDetail(item.block_height)">
-          <div>
+        <li>
+          <div @click="goToBlockDetail(item.block_height)">
             {{ item.block_height }}
           </div>
           <div>
@@ -39,13 +39,22 @@
       </ul>
     </div>
     <div class="block_pagination">
-      <el-pagination
+      <div  @click="pagesMinus()">
+        <i class="el-icon-arrow-left"></i>
+      </div>
+      <div>{{ blockmedianum }}-{{ totalNum }}</div>
+
+      <div @click="pagesPlus()">
+        <i class="el-icon-arrow-right" ></i>
+      </div>
+
+      <!-- <el-pagination
         background
         layout="prev, pager, next"
         :total="totalNum"
         @current-change="change"
       >
-      </el-pagination>
+      </el-pagination> -->
     </div>
   </div>
 </template>
@@ -54,8 +63,6 @@ export default {
   name: "block",
   data() {
     return {
-    
-
       nowLang: "",
 
       // 分页
@@ -79,15 +86,25 @@ export default {
       this.$router.push({
         path: "/blockdetail",
 
-         query: {
+        query: {
           block: item,
         },
       });
     },
-    change(val) {
-      //console.log(val);
-      this.blockmedianum = val;
-      //console.log(this.medianum);
+    pagesMinus() {
+      if (this.blockmedianum == 1) {
+        this.$message({
+          message: "已到底",
+          type: "error",
+        });
+      } else {
+        this.blockmedianum -= 1;
+        this.blocklist();
+      }
+    },
+    pagesPlus() {
+      this.blockmedianum += 1;
+      // //console.log(this.medianum);
       this.blocklist();
     },
     //获取MEDIA
@@ -103,7 +120,7 @@ export default {
           },
         })
         .then((res) => {
-         // console.log(res);
+          //console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
           //console.log(this.totalNum);
           if (this.nowLang == "cn") {
@@ -209,7 +226,6 @@ export default {
               //console.log(obj);
             }
           }
-        
         })
         .catch((e) => {});
     },
@@ -244,13 +260,17 @@ export default {
     display: flex;
     align-items: center;
     span {
-      margin-left: 21px;
+      margin-left: 15px;
+    }
+    img {
+      width: 38px;
+      height: 38px;
     }
   }
   .block_info {
     width: 1275px;
     height: 975px;
-    background: gainsboro;
+    background: #ffffff;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
@@ -261,8 +281,8 @@ export default {
       li {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
-
+        justify-content: space-between;
+        padding: 0 53px;
         div {
           font-size: 17px;
           font-family: Microsoft YaHei;
@@ -279,7 +299,8 @@ export default {
       li {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 53px;
         height: 45px;
         cursor: pointer;
         background: #fcfcfc;
@@ -309,27 +330,53 @@ export default {
     height: 37px;
     background: #ffffff;
     margin: 0 auto 128px;
-    text-align: right;
-    .el-pagination {
-      padding: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    div {
       font-size: 15px;
       font-family: Microsoft YaHei;
       font-weight: 400;
       line-height: 20px;
       color: #666666;
-      .number,
-      button,
-      .more {
-        background: #ffffff;
-      }
-      .active {
-        color: #5583ff;
-        border: 1px solid #5583ff;
-
-        border-radius: 6px;
-        background-color: #ffffff !important;
-      }
     }
+    div:nth-child(1),
+    div:nth-child(3) {
+      cursor: pointer;
+      width: 37px;
+height: 37px;
+line-height: 37px;
+background: #FFFFFF;
+border: 1px solid #EDF1F6;
+border-radius: 6px;
+text-align: center;
+    }
+    div:nth-child(1),
+    div:nth-child(2) {
+      margin-right: 23px;
+    }
+    // .el-pagination {
+    //   padding: 0;
+    //   font-size: 15px;
+    //   font-family: Microsoft YaHei;
+    //   font-weight: 400;
+    //   line-height: 20px;
+    //   color: #666666;
+    //   .number,
+    //   button,
+    //   .more {
+    //     background: #ffffff;
+    //   }
+    //   .active {
+    //     color: #5583ff;
+    //     border: 1px solid #5583ff;
+
+    //     border-radius: 6px;
+    //     background-color: #ffffff !important;
+    //   }
+    // }
   }
 }
 </style>

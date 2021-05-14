@@ -15,10 +15,10 @@
       </ul>
       <ul>
         <li>
-          1
+          {{ datalist[0].block_height }}
         </li>
-        <li>2</li>
-        <li>3UENC</li>
+        <li>{{ datalist[0].transaction_num }}</li>
+        <li>{{ datalist[0].transaction_award }}UENC</li>
         <li>4UENC</li>
       </ul>
     </div>
@@ -44,8 +44,8 @@
           <div>区块奖励</div>
         </li>
       </ul>
-      <ul v-for="item in blockData" :key="item" class="info_content">
-        <li @click="goToTransactionDetail(item.block_height)">
+      <ul  class="info_content">
+        <li v-for="item in blockData" :key="item" @click="goToTransactionDetail(item.block_height)">
           <div>
             {{ item.block_height }}
           </div>
@@ -70,6 +70,24 @@
         </li>
       </ul>
     </div>
+     <div class="block_pagination" v-if="totalNum > 1">
+        <div @click="pagesMinus()">
+          <i class="el-icon-arrow-left"></i>
+        </div>
+        <div>{{ blockmedianum }}-{{ totalNum }}</div>
+
+        <div @click="pagesPlus()">
+          <i class="el-icon-arrow-right"></i>
+        </div>
+
+        <!-- <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="totalNum"
+        @current-change="change"
+      >
+      </el-pagination> -->
+      </div>
   </div>
 </template>
 <script>
@@ -84,13 +102,25 @@ export default {
       internalCurrentPage: "",
       totalNum: "",
       blockData: [],
+      shiyan: "",
+      datalist: [
+        {
+          block_height: "", //高度
+          transaction_award: "", // 区块奖励
+          transaction_num: "", // 交易笔数
+          transaction_amount: "", // 交易总额
+        },
+      ],
     };
   },
   components: {},
   created() {
+    
+    this.shiyan = this.$route.query.block;
     //console.log(this.$route.query.block);
     this.blockmedianum = 1;
     this.blocklist();
+    this.blocksearch();
   },
 
   // 页码设置
@@ -101,9 +131,112 @@ export default {
         path: "/transactiondetail",
 
         query: {
-          block: item,
+          transaction_hash: item,
         },
       });
+    },
+    pagesMinus() {
+      if (this.blockmedianum == 1) {
+        this.$message({
+          message: "已到底",
+          type: "error",
+        });
+      } else {
+        this.blockmedianum -= 1;
+        this.blocksearch();
+      }
+    },
+    pagesPlus() {
+      this.blockmedianum += 1;
+      // //console.log(this.medianum);
+      this.blocksearch();
+    },
+    async blocksearch() {
+      this.icon = true;
+      let that = this;
+      var blockData = [];
+      await that.$http
+        .get("/search_blockHeight_for_height", {
+          params: {
+            block_height: this.shiyan,
+            pageNum: this.blockmedianum,
+            pageSize: 20,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          this.totalNum = res.data[0].total_page[0].totalPageNum;
+
+          // 高度
+          this.datalist[0].block_height =
+            res.data[0].block_height[0].block_height;
+          // 区块奖励
+          this.datalist[0].transaction_award =
+            res.data[0].block_height[0].block_award;
+          // 交易笔数
+          this.datalist[0].transaction_num = res.data[0].block_height[0].tx_num;
+          // 交易总额
+          this.datalist[0].transaction_amount = res.data[0].block_height[0].transaction_amount.toLocaleString();
+          // table赋值
+          //console.log(res.data[0].block_list.length);
+          for (let i = 0; i < res.data[0].block_list.length + 1; i++) {
+            var obj = {};
+            //console.log(res.data[0].transaction_hash);
+            //console.log(res.data[0].from_address);
+            obj.block_hash2 = res.data[0].block_list[i].block_hash;
+            obj.block_hash =
+              res.data[0].block_list[i].block_hash.substring(0, 10) + "...";
+            obj.time = this.timestampToTime(
+              Number(res.data[0].block_list[i].time)
+            );
+
+            obj.transaction_amount =
+              res.data[0].block_list[i].transaction_amount;
+            if (
+              res.data[0].block_list[i].to_address ==
+                "0000000000000000000000000000000000" ||
+              res.data[0].block_list[i].pledge == "1"
+            ) {
+              // 从
+              obj.from_address =
+                res.data[0].block_list[i].from_address.substring(0, 10) + "...";
+              if (this.nowLang == "cn") {
+                obj.to_address = "质押";
+              } else {
+                obj.to_address = "Pledge";
+              }
+            } else if (
+              res.data[0].block_list[i].from_address ==
+                res.data[0].block_list[i].to_address ||
+              res.data[0].block_list[i].redeem == "1"
+            ) {
+              if (this.nowLang == "cn") {
+                // 从
+                obj.from_address = "质押";
+              } else {
+                obj.from_address = "Pledge";
+              }
+              // 至
+              obj.to_address =
+                res.data[0].block_list[i].to_address.substring(0, 10) + "...";
+            } else {
+              obj.from_address =
+                res.data[0].block_list[i].from_address.substring(0, 10) + "...";
+              obj.to_address =
+                res.data[0].block_list[i].to_address.substring(0, 10) + "...";
+            }
+            obj.gas = res.data[0].block_list[i].gas;
+            // console.log(obj);
+            blockData[i] = obj;
+            //console.log(blockData);
+            this.detailData = blockData;
+            //console.log(obj);
+            //console.log(this.transactionData);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     //获取MEDIA
     async blocklist() {
@@ -224,7 +357,6 @@ export default {
               //console.log(obj);
             }
           }
-         
         })
         .catch((e) => {});
     },
@@ -247,6 +379,7 @@ export default {
 <style lang="less">
 .blockdetail {
   height: auto;
+   margin-bottom: 373px;
   .top {
     width: 1275px;
     height: 38px;
@@ -259,7 +392,11 @@ export default {
     display: flex;
     align-items: center;
     span {
-      margin-left: 5px;
+      margin-left: 15px;
+    }
+    img {
+      width: 38px;
+      height: 38px;
     }
   }
   .detail_content {
@@ -272,7 +409,7 @@ export default {
     margin: 0 auto;
     display: flex;
     flex-direction: row;
-    background: chocolate;
+
     ul {
       li {
         margin-top: 28px;
@@ -304,7 +441,7 @@ export default {
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
-    margin: 0 auto 373px;
+    margin: 0 auto 31px;
     .info_title {
       height: 75px;
       line-height: 75px;
@@ -316,14 +453,15 @@ export default {
       li {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 53px;
 
         div {
+          width: 100px;
           font-size: 17px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #000000;
-          width: 100px;
         }
         div:nth-child(3) {
           text-align: center;
@@ -334,10 +472,15 @@ export default {
       li {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 53px;
         height: 45px;
         cursor: pointer;
         background: #fcfcfc;
+
+        div:nth-child(1) {
+          padding-left: 9px;
+        }
         div:nth-child(1),
         div:nth-child(3),
         div:nth-child(4) {
@@ -351,15 +494,69 @@ export default {
           text-align: center;
         }
         div {
+          width: 100px;
+
           font-size: 15px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           line-height: 45px;
           color: #333333;
-          width: 100px;
         }
       }
     }
+  }
+   .block_pagination {
+    width: 1275px;
+    height: 37px;
+    background: #ffffff;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    div {
+      font-size: 15px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      line-height: 20px;
+      color: #666666;
+    }
+    div:nth-child(1),
+    div:nth-child(3) {
+      cursor: pointer;
+      width: 37px;
+      height: 37px;
+      line-height: 37px;
+      background: #ffffff;
+      border: 1px solid #edf1f6;
+      border-radius: 6px;
+      text-align: center;
+    }
+    div:nth-child(1),
+    div:nth-child(2) {
+      margin-right: 23px;
+    }
+    // .el-pagination {
+    //   padding: 0;
+    //   font-size: 15px;
+    //   font-family: Microsoft YaHei;
+    //   font-weight: 400;
+    //   line-height: 20px;
+    //   color: #666666;
+    //   .number,
+    //   button,
+    //   .more {
+    //     background: #ffffff;
+    //   }
+    //   .active {
+    //     color: #5583ff;
+    //     border: 1px solid #5583ff;
+
+    //     border-radius: 6px;
+    //     background-color: #ffffff !important;
+    //   }
+    // }
   }
 }
 </style>

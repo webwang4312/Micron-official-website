@@ -44,10 +44,30 @@ const routes = [
 
             },
             {
+                path: "/transaction",
+                name: "transaction",
+                component: () =>
+                    import ("../views/transaction/transaction.vue"),
+                meta: {
+                    keepAlive: false // 需要被缓存
+                }
+
+            },
+            {
                 path: "/transactiondetail",
                 name: "transactiondetail",
                 component: () =>
-                    import ("../views/transactionDetail.vue"),
+                    import ("../views/transaction/transactionDetail.vue"),
+                meta: {
+                    keepAlive: false // 需要被缓存
+                }
+
+            },
+            {
+                path: "/address",
+                name: "address",
+                component: () =>
+                    import ("../views/address/address.vue"),
                 meta: {
                     keepAlive: false // 需要被缓存
                 }
@@ -57,7 +77,7 @@ const routes = [
                 path: "/addressdetail",
                 name: "addressdetail",
                 component: () =>
-                    import ("../views/addressDetail.vue"),
+                    import ("../views/address/addressDetail.vue"),
                 meta: {
                     keepAlive: false // 需要被缓存
                 }

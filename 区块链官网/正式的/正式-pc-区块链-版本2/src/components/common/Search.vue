@@ -20,7 +20,7 @@ height: 33px;"
     <div class="searchcenter">
       <input
         type="text"
-        :placeholder="$t('publicsection[2]')"
+        :placeholder="$t('search[0]')"
         v-model="inputvalue"
         ref="search"
         @keyup="keyup"
@@ -90,10 +90,10 @@ export default {
           value: "2",
           label: "交易哈希",
         },
-        {
-          value: "3",
-          label: "区块哈希",
-        },
+        // {
+        //   value: "3",
+        //   label: "区块哈希",
+        // },
       ];
     }
     if (this.$i18n.locale == "en") {
@@ -110,10 +110,10 @@ export default {
           value: "2",
           label: "Transaction",
         },
-        {
-          value: "3",
-          label: "Block",
-        },
+        // {
+        //   value: "3",
+        //   label: "Block",
+        // },
       ];
     }
     if (this.value == "") {
@@ -127,51 +127,64 @@ export default {
    
   },
   methods: {
-    selectChanged(value) {
+    // selectChanged(value) {
     
-      switch (value) {
-        // 地址搜索
-        case "0":
-          // console.log('0');
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.addresssearch();
-          }
+    //   switch (value) {
+    //     // 地址搜索
+    //     case "0":
+    //       // console.log('0');
+    //       if (this.inputvalue !== "") {
+    //         this.jiazai = true;
+    //         //this.fullscreenLoading = true;
+    //         this.addresssearch();
+    //       }
 
-          break;
-        case "1":
-          //  console.log('1');
-          // 区块高度
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.blocksearch();
-          }
-          break;
-        // 交易哈希
-        case "2":
-          //  console.log('2');
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.transactiondetaillist();
-          }
+    //       break;
+    //     case "1":
+    //       //  console.log('1');
+    //       // 区块高度
+    //       if (this.inputvalue !== "") {
+    //         this.jiazai = true;
+    //         //this.fullscreenLoading = true;
+    //         this.blocksearch();
+    //       }
+    //       break;
+    //     // 交易哈希
+    //     case "2":
+    //       //  console.log('2');
+    //       if (this.inputvalue !== "") {
+    //         this.jiazai = true;
+    //         //this.fullscreenLoading = true;
+    //         this.transactiondetaillist();
+    //       }
 
-          break;
-        // 区块哈希
-        case "3":
-          //  console.log('3');
-          if (this.inputvalue !== "") {
-            this.jiazai = true;
-            //this.fullscreenLoading = true;
-            this.blockhaxisearch();
-          }
+    //       break;
+    //     // 区块哈希
+    //     case "3":
+    //       //  console.log('3');
+    //       if (this.inputvalue !== "") {
+    //         this.jiazai = true;
+    //         //this.fullscreenLoading = true;
+    //         this.blockhaxisearch();
+    //       }
 
-          break;
-      }
+    //       break;
+    //   }
+    // },
+   errmsg(){
+ if (this.$i18n.locale == "cn") {
+    this.$message({
+              message: "请输入正确查询信息",
+              type: "error",
+            });
+ }
+ else{
+    this.$message({
+              message: "Please enter the correct query information",
+              type: "error",
+            });
+ }
     },
- 
     keyup(event) {
       // console.log(event);
       if (this.inputvalue !== "") {
@@ -187,7 +200,7 @@ export default {
         case "0":
           // console.log('0');
           if (this.inputvalue !== "") {
-            this.jiazai = true;
+           
             //this.fullscreenLoading = true;
             this.addresssearch();
           }
@@ -197,7 +210,7 @@ export default {
           //  console.log('1');
           // 区块高度
           if (this.inputvalue !== "") {
-            this.jiazai = true;
+          
             //this.fullscreenLoading = true;
             this.blocksearch();
           }
@@ -206,7 +219,7 @@ export default {
         case "2":
           //  console.log('2');
           if (this.inputvalue !== "") {
-            this.jiazai = true;
+           
             //this.fullscreenLoading = true;
             this.transactiondetaillist();
           }
@@ -216,7 +229,7 @@ export default {
         case "3":
           //  console.log('3');
           if (this.inputvalue !== "") {
-            this.jiazai = true;
+           
             //this.fullscreenLoading = true;
             this.blockhaxisearch();
           }
@@ -239,19 +252,18 @@ export default {
           // console.log(res);
           //   console.log(res.data[0].total_page[0].totalPageNum);
           if (res.data[0].total_page[0].totalPageNum !== 0) {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
+           
             this.$router.push({
-              path: "/transactiondetails",
-              query: { addressvalue: this.inputvalue },
+              path: "/transactiondetail",
+              query: { address: this.inputvalue },
             });
           } else {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
+            
+            this.errmsg()
+            // this.$router.push({
+            //   path: "/notfound",
+            //   query: {},
+            // });
           }
         })
         .catch((err) => {});
@@ -270,22 +282,20 @@ export default {
         .then((res) => {
           //  console.log(res);
           if (res.data[0].total_record[0].total_record !== 0) {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
+           
             this.$router.push({
               path: "/blockdetail",
               query: {
-                blockheight: this.inputvalue,
+                block: this.inputvalue,
                 // transaction_award:this.transaction_award
               },
             });
           } else {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
+            this.errmsg()
+            // this.$router.push({
+            //   path: "/notfound",
+            //   query: {},
+            // });
           }
         })
         .catch((err) => {});
@@ -302,8 +312,7 @@ export default {
         .then((res) => {
           //  console.log(res);
           if (res.data[0].select_status === 1) {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
+           
             this.$router.push({
               path: "/transactiondetail",
               query: {
@@ -312,12 +321,11 @@ export default {
               },
             });
           } else {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
+            this.errmsg()
+            // this.$router.push({
+            //   path: "/notfound",
+            //   query: {},
+            // });
           }
         })
         .catch((err) => {});
@@ -335,15 +343,13 @@ export default {
         .then((res) => {
           // console.log(res);
           if (res.data[0].search_main_transactionInfo.length !== 0) {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
+           
             this.$router.push({
               path: "/blockdetails",
               query: { blockhaxi: this.inputvalue },
             });
           } else {
-            this.jiazai = false;
-            this.fullscreenLoading = false;
+           
             this.$router.push({
               path: "/notfound",
               query: {},

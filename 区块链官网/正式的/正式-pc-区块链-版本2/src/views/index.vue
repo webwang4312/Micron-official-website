@@ -16,7 +16,7 @@
               {{ blockheigth }}
             </div>
             <div class="center_bottom">
-             {{ $t('publicsection')[3]}}
+              {{ $t("index")[0] }}
             </div>
           </div>
           <div class="line_right"></div>
@@ -28,7 +28,7 @@
               {{ transzoom }}
             </div>
             <div class="center_bottom">
-              24H交易数
+              {{ $t("index")[1] }}
             </div>
           </div>
           <div class="line_right"></div>
@@ -37,10 +37,10 @@
           <div class="award"></div>
           <div>
             <div class="center_top">
-              22
+              {{ blockreward }}
             </div>
             <div class="center_bottom">
-              已发放奖励
+              {{ $t("index")[2] }}
             </div>
           </div>
           <div class="line_right2"></div>
@@ -52,10 +52,10 @@
           <div class="alljiedian"></div>
           <div>
             <div class="center_top">
-              {{ blockheigth }}
+              {{ jiediancount }}
             </div>
             <div class="center_bottom">
-              节点总数
+              {{ $t("index")[3] }}
             </div>
           </div>
           <div class="line_right"></div>
@@ -64,10 +64,10 @@
           <div class="alltransaction"></div>
           <div>
             <div class="center_top">
-              {{ transzoom }}
+              {{ transnumber }}
             </div>
             <div class="center_bottom">
-              累计交易数
+              {{ $t("index")[4] }}
             </div>
           </div>
           <div class="line_right"></div>
@@ -76,10 +76,10 @@
           <div class="last_award"></div>
           <div>
             <div class="center_top">
-              22
+              {{ blocklastreward }}
             </div>
             <div class="center_bottom">
-              剩余区块奖励
+              {{ $t("index")[5] }}
             </div>
           </div>
           <div class="line_right2"></div>
@@ -94,32 +94,32 @@
       <div class="last_transaction">
         <div class="subject">
           <div>
-            最新交易
+            {{ $t("index")[6] }}
           </div>
           <div class="more" @click="goToTransaction">
-            更多<i class="el-icon-arrow-right"></i>
+            {{ $t("index")[8] }}<i class="el-icon-arrow-right"></i>
           </div>
         </div>
 
         <ul class="content" v-for="item in tableData" :key="item">
           <li>
             <div class="content_left">
-              TX<span> {{ item.date.toString() }}</span>
+              TX<span @click="goToTransactionDetail(item.transaction_hash)">
+                {{ item.transaction_hash }}</span
+              >
               <br />
               <span>
                 {{ item.date.toString() }}
               </span>
             </div>
             <div class="content_center">
-              从
-              <span @click="goToAddressDetail(item.from_address)
-              ">
+              {{ $t("index")[9] }}
+              <span @click="goToAddressDetail(item.from_address2)">
                 {{ item.from_address }}
               </span>
               <br />
-              至
-              <span @click="goToAddressDetail(item.to_address)
-              ">
+              {{ $t("index")[10] }}
+              <span @click="goToAddressDetail(item.to_address2)">
                 {{ item.to_address }}
               </span>
             </div>
@@ -135,10 +135,10 @@
       <div class="last_block">
         <div class="subject">
           <div>
-            最新出块
+            {{ $t("index")[7] }}
           </div>
           <div class="more" @click="goToBlock">
-            更多<i class="el-icon-arrow-right"></i>
+            {{ $t("index")[8] }}<i class="el-icon-arrow-right"></i>
           </div>
         </div>
 
@@ -185,6 +185,8 @@ export default {
       tables: false,
       nowLang: "",
       language: "",
+      test1: "",
+      test2: "",
       // 语言图片显示与隐藏
       show: true,
       money: "",
@@ -212,6 +214,8 @@ export default {
           amount: "",
           from_address: "",
           to_address: "",
+          from_address2: "",
+          to_address2: "",
           gas: "",
         },
       ],
@@ -226,43 +230,64 @@ export default {
       ],
       tabledataall: "",
       pie: [],
+      jiediancount: "",
     };
   },
   watch: {},
   components: { headertop, Search, VFooter },
   created() {
     this.nowLang = this.$i18n.locale;
+    if (this.nowLang == "cn") {
+      (this.test1 = "区块奖励"), (this.test2 = "每日交易总额");
+    } else {
+      (this.test1 = "Block reward"), (this.test2 = "Total daily transactions");
+    }
+    // window.setInterval(() => {
+    //   setTimeout(this.indexlist(), 0);
+    // }, 30000);
+    //  window.setInterval(() => {
+    //   setTimeout(this.jiedian(), 0);
+    // }, 30000);
     this.indexlist();
+    this.jiedian();
   },
   mounted() {
     this.drawLine();
   },
   methods: {
-    goToAddressDetail(item){
- this.$router.push({
+    goToAddressDetail(item) {
+      //console.log(item);
+      this.$router.push({
         path: "/addressdetail",
-        query:{
-         address:item
-        }
+        query: {
+          address: item,
+        },
       });
     },
     goToTransaction() {
       this.$router.push({
-        path: "/tranaction",
+        path: "/transaction",
       });
     },
-
+    goToTransactionDetail(item) {
+      this.$router.push({
+        path: "/transactiondetail",
+        query: {
+          address: item,
+        },
+      });
+    },
     goToBlock() {
       this.$router.push({
         path: "/block",
       });
     },
     goToBlockDetail(item) {
-     this.$router.push({
+      this.$router.push({
         path: "/blockdetail",
-        query:{
-          block:item
-        }
+        query: {
+          block: item,
+        },
       });
     },
     drawLine() {
@@ -273,7 +298,7 @@ export default {
       // 绘制图表
       myChart.setOption({
         title: {
-          text: "区块奖励",
+          text: this.test1,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
           padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
@@ -281,11 +306,10 @@ export default {
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
-            fontFamily: "Arial",
+            fontFamily: "Microsoft YaHei",
             fontWeight: "bolder",
           },
         },
-
         xAxis: {
           type: "category",
           splitLine: { show: false }, //去除网格线
@@ -303,17 +327,14 @@ export default {
             show: false,
           },
         },
-
         yAxis: {
           max: function(value) {
             return value.max + 100;
           },
           splitNumber: 4,
-
           type: "value",
           position: "left",
           splitLine: { show: false }, //去除网格线
-
           axisLine: {
             //y轴
             show: false,
@@ -350,15 +371,15 @@ export default {
       });
       myChart2.setOption({
         title: {
-          text: "每日交易总额",
+          text: this.test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-         padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
-            fontFamily: "Arial",
+            fontFamily: "Microsoft YaHei",
             fontWeight: "bolder",
           },
         },
@@ -378,7 +399,6 @@ export default {
         yAxis: {
           type: "value",
           splitLine: { show: false }, //去除网格线
-
           axisLine: {
             //y轴
             show: false,
@@ -423,7 +443,6 @@ export default {
       var transaction_num_for_7time = [];
       var transaction_num_for_7time2 = [];
       //  燃料费分布
-
       that.$http
         .get("")
         .then((res) => {
@@ -451,37 +470,21 @@ export default {
               },
               tooltip: {
                 borderWidth: 1,
-                padding: 13,
 
                 show: true,
                 position: "left",
                 backgroundColor: "rgba(238, 240, 242, 1)",
-                borderRadius: 7,
-                extraCssText: "background:rgba(238, 240, 242, 1)",
+
                 textStyle: {
-                  fontFamily: "Arial",
+                  fontFamily: "Microsoft YaHei",
                   fontWeight: "bold",
                   lineHeight: 5,
                   fontSize: 15,
                   color: "#5583FF",
-
                   backgroundColor: "rgba(238, 240, 242, 1)",
                 },
                 formatter: "{c0}",
-                rich: {
-                  a: {
-                    marginLeft: 25,
 
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                  b: {
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                },
                 trigger: "axis",
                 axisPointer: {
                   type: "none",
@@ -554,15 +557,12 @@ export default {
             );
             //console.log(transaction_num_for_77);
             //console.log(transaction_num_for_7time2);
-
             myChart2.setOption({
               title: {
-                text: "每日交易总额",
-              
                 textStyle: {
                   color: "rgba(81, 81, 81, 1)",
                   fontSize: "18px",
-                  fontFamily: "Arial",
+                  fontFamily: "Microsoft YaHei",
                   fontWeight: "bolder",
                 },
               },
@@ -582,7 +582,6 @@ export default {
               yAxis: {
                 type: "value",
                 splitLine: { show: false }, //去除网格线
-
                 axisLine: {
                   //y轴
                   show: false,
@@ -592,7 +591,17 @@ export default {
                   show: false,
                 },
               },
-              tooltip: { trigger: "item" },
+              tooltip: {
+                trigger: "item",
+                formatter: "{c0}",
+                backgroundColor: "#EEF0F2",
+                borderColor: "#EEF0F2",
+                borderWidth: "1",
+                textStyle: {
+                  color: "#5583FF",
+                  fontWeight: "bold",
+                },
+              },
               series: [
                 {
                   data: transaction_num_for_77,
@@ -618,6 +627,14 @@ export default {
         })
         .catch((e) => {});
     },
+    jiedian() {
+      let that = this;
+      that.$http.get("/search_top_n").then((res) => {
+        this.jiediancount = res.data.count[0].count;
+        // console.log(res.data.count[0].count);
+      });
+    },
+
     indexlist() {
       let that = this;
       that.$http
@@ -656,7 +673,6 @@ export default {
                 } else {
                   date.push(parseInt(fenzhong) + "分钟前");
                 }
-
                 this.tableData[i].date = date;
               }
               if (fenzhong >= 60 && fenzhong <= 1440) {
@@ -671,10 +687,13 @@ export default {
               this.tableData[i].transaction_hash2 = this.tableData[
                 i
               ].transaction_hash;
+              this.tableData[i].from_address2 = this.tableData[i].from_address;
               this.tableData[i].transaction_hash =
                 this.tableData[i].transaction_hash.substring(0, 10) + "...";
               this.tableData[i].from_address =
                 this.tableData[i].from_address.substring(0, 10) + "...";
+
+              this.tableData[i].to_address2 = this.tableData[i].to_address;
               if (
                 this.tableData[i].to_address ==
                 "0000000000000000000000000000000000"
@@ -709,10 +728,8 @@ export default {
                 } else {
                   times.push(parseInt(fenzhong) + "分钟前");
                 }
-
                 this.tableData2[j].time = times;
               }
-
               if (fenzhong >= 60 && fenzhong <= 1440) {
                 times.push(parseInt(fenzhong / 60) + "小时前");
                 this.tableData2[j].time = times;
@@ -746,7 +763,6 @@ export default {
                 } else {
                   date.push(parseInt(fenzhong) + "minutes ago");
                 }
-
                 this.tableData[i].date = date;
               }
               if (fenzhong >= 60 && fenzhong <= 1440) {
@@ -763,10 +779,13 @@ export default {
               ].transaction_hash;
               this.tableData[i].transaction_hash =
                 this.tableData[i].transaction_hash.substring(0, 10) + "...";
+              this.tableData[i].from_address2 = this.tableData[i].from_address;
               this.tableData[i].from_address =
                 this.tableData[i].from_address.substring(0, 10) + "...";
               this.tableData[i].to_address =
                 this.tableData[i].to_address.substring(0, 10) + "...";
+
+              this.tableData[i].to_address2 = this.tableData[i].to_address;
             }
             //console.log(this.tableData2.length);
             for (var j = 0; j < this.tableData2.length; j++) {
@@ -787,10 +806,8 @@ export default {
                 } else {
                   times.push(parseInt(fenzhong) + "minutes ago");
                 }
-
                 this.tableData2[j].time = times;
               }
-
               if (fenzhong >= 60 && fenzhong <= 1440) {
                 times.push(parseInt(fenzhong / 60) + "hour ago");
                 this.tableData2[j].time = times;
@@ -821,14 +838,12 @@ export default {
           this.transnumber =
             cardleftinformation.transaction_num_for_all[0].transaction_num;
           this.money = res.data[0].usdt[0].usdt.toString().substring(0, 6);
-
           this.money2 = res.data[0].usdt[0].rmb.toString().substring(0, 4);
           //24小时交易笔数?
           this.transzoom =
             cardleftinformation.transaction_num_for_24h[0].transaction_num;
           // console.log(this.transzoom);
           // 24小时交易总额?
-
           this.transmoney = Math.trunc(
             cardleftinformation.transaction_amount_for_24h[0]
               .transaction_amount_24h
@@ -861,14 +876,12 @@ export default {
       } else {
         m = m + ":";
       }
-
       var s = date.getSeconds();
       if (s < 10) {
         s = "0" + s;
       } else {
         s = s;
       }
-
       return Y + M + D + h + m + s;
     },
   },
@@ -915,7 +928,7 @@ export default {
     width: 100%;
     text-align: center;
     font-size: 53px;
-    font-family: Arial;
+    font-family: Microsoft YaHei;
     font-weight: bold;
     line-height: 40px;
     color: rgba(255, 255, 255, 0.9);
@@ -944,7 +957,7 @@ export default {
   top: -103px;
   .center_bottom {
     font-size: 15px;
-    font-family: Arial;
+    font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 15px;
     color: #666666;
@@ -953,7 +966,7 @@ export default {
   }
   .center_top {
     font-size: 18px;
-    font-family: Arial;
+    font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 18px;
     color: #000000;
@@ -1089,18 +1102,15 @@ export default {
   width: 1274px;
   height: 889px;
   margin: 105.5px auto 115px;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
   .last_transaction {
     width: 626px;
     height: 847px;
     border: 1px solid #e9eced;
     opacity: 1;
     border-radius: 18px;
-
     .subject {
       width: 551.74px;
       margin: 33.48px auto 23.5px;
@@ -1109,14 +1119,14 @@ export default {
       justify-content: space-between;
       div:nth-child(1) {
         font-size: 18px;
-        font-family: Arial;
+        font-family: Microsoft YaHei;
         font-weight: bold;
         line-height: 21px;
         color: #515151;
       }
       div:nth-child(2) {
         font-size: 18px;
-        font-family: Arial;
+        font-family: Microsoft YaHei;
         font-weight: bold;
         line-height: 21px;
         color: #5583ff;
@@ -1131,7 +1141,6 @@ export default {
         border-top: 2px solid #ebeeef;
         display: flex;
         flex-direction: row;
-
         // justify-content: space-between;
         padding-top: 19px;
         padding-bottom: 18px;
@@ -1141,7 +1150,7 @@ export default {
           margin-right: 85px;
           span:nth-child(1) {
             font-size: 15px;
-            font-family: Arial;
+            font-family: Microsoft YaHei;
             font-weight: bold;
             line-height: 17px;
             color: #5583ff;
@@ -1149,7 +1158,7 @@ export default {
           }
           span:nth-child(3) {
             font-size: 15px;
-            font-family: Arial;
+            font-family: Microsoft YaHei;
             font-weight: 400;
             line-height: 17px;
             color: #666666;
@@ -1161,7 +1170,7 @@ export default {
           span:nth-child(1),
           span:nth-child(3) {
             font-size: 15px;
-            font-family: Arial;
+            font-family: Microsoft YaHei;
             font-weight: bold;
             line-height: 17px;
             color: #5583ff;
@@ -1172,7 +1181,7 @@ export default {
           width: 118px;
           text-align: right;
           font-size: 15px;
-          font-family: Arial;
+          font-family: Microsoft YaHei;
           font-weight: 400;
           line-height: 17px;
           color: #666666;
@@ -1197,14 +1206,14 @@ export default {
       justify-content: space-between;
       div:nth-child(1) {
         font-size: 18px;
-        font-family: Arial;
+        font-family: Microsoft YaHei;
         font-weight: bold;
         line-height: 21px;
         color: #515151;
       }
       div:nth-child(2) {
         font-size: 18px;
-        font-family: Arial;
+        font-family: Microsoft YaHei;
         font-weight: bold;
         line-height: 21px;
         color: #5583ff;
@@ -1227,7 +1236,7 @@ export default {
           width: 140px;
           span:nth-child(1) {
             font-size: 15px;
-            font-family: Arial;
+            font-family: Microsoft YaHei;
             font-weight: bold;
             line-height: 17px;
             color: #5583ff;
@@ -1235,7 +1244,7 @@ export default {
           }
           span:nth-child(3) {
             font-size: 15px;
-            font-family: Arial;
+            font-family: Microsoft YaHei;
             font-weight: 400;
             line-height: 17px;
             color: #666666;
@@ -1245,7 +1254,7 @@ export default {
           text-align: center;
           span {
             font-size: 15px;
-            font-family: Arial;
+            font-family: Microsoft YaHei;
             font-weight: 400;
             line-height: 17px;
             color: #666666;
@@ -1253,7 +1262,7 @@ export default {
         }
         .content_right {
           font-size: 15px;
-          font-family: Arial;
+          font-family: Microsoft YaHei;
           font-weight: 400;
           line-height: 17px;
           color: #666666;

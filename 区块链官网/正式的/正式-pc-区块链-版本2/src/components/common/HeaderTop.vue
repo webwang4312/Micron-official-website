@@ -34,7 +34,10 @@
               ></el-dropdown-item
             >
             <el-dropdown-item>
-             {{ $t('nav')[4]}}</el-dropdown-item
+              <router-link :to="{ path: '/address' }"
+                >{{ $t('nav')[4]}}</router-link
+              >
+             </el-dropdown-item
             >
           </el-dropdown-menu>
         </el-dropdown>
@@ -111,7 +114,6 @@ export default {
     //console.log(this.$i18n.locale);
   },
   mounted() {},
-
   methods: {
        blueClass(){  this.$store.commit("bluesState", true);
       this.reload()
@@ -144,11 +146,9 @@ this.$store.commit("bluesState", false);
 </script>
 
 <style lang="less" >
-
 .header_top {
   width: 100%;
   height: 60px;
-
   background-color: #fff !important;
   display: flex;
   flex-direction: row;
@@ -168,10 +168,8 @@ this.$store.commit("bluesState", false);
 .el-menu--horizontal > .el-menu-item.is-active {
   font-size: 15px !important;
 }
-
 .el-menu {
   background-color: goldenrod !important;
-
   justify-content: center;
   align-items: center;
   li {
