@@ -70,7 +70,7 @@ export default {
 .uenc_foot {
   width: 100%;
   height: 75px;
-  background: #4a6df4;
+  background: #291247;
   position: relative;
   
   .content{

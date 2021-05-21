@@ -92,7 +92,7 @@ export default {
     font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 20px;
-    color: #4a6df4;
+    color: #9760E5;
     margin-left: 440px;
   }
   ul {

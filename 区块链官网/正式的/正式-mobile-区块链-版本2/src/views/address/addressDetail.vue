@@ -68,12 +68,15 @@ opacity: 1;"
     <div class="top">
       <span>交易列表</span>
     </div>
-    <div class="block_info" >
-      <ul class="info_title" v-loading="loading"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)">
-        <li v-for="item in transactionData" :key="item" class="info_content" >
+    <div class="block_info">
+      <ul
+        class="info_title"
+        v-loading="loading"
+        element-loading-text="拼命加载中"
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="rgba(0, 0, 0, 0.8)"
+      >
+        <li v-for="item in transactionData" :key="item" class="info_content">
           <ul>
             <li>
               <div>
@@ -151,12 +154,13 @@ opacity: 1;"
   </div>
 </template>
 <script>
+var qs = require("qs");
 export default {
   name: "addressdetail",
   inject: ["reload"],
   data() {
     return {
-      loading:true,
+      loading: true,
       nowLang: "",
       // 分页
       transmedianum: 1,
@@ -176,6 +180,7 @@ export default {
     this.shiyan = this.$route.query.address;
     this.transmedianum = 1;
     this.addresssearch();
+    this.search();
   },
 
   // 页码设置
@@ -202,7 +207,7 @@ export default {
           type: "error",
         });
       } else {
-         this.loading=true
+        this.loading = true;
         this.transmedianum -= 1;
         this.addresssearch();
       }
@@ -214,10 +219,32 @@ export default {
           type: "error",
         });
       } else {
-         this.loading=true
+        this.loading = true;
         this.transmedianum += 1;
         this.addresssearch();
       }
+    },
+    search() {
+      let that = this;
+      that.$http
+        .post(
+          `/api`,
+          {
+            headers: {
+              "content-type": "application/json",
+            },
+          },
+
+          qs.stringify({
+            jsonrpc: "2.0",
+            method: "get_balance",
+            id: 1,
+            params: { address: this.shiyan },
+          })
+        )
+        .then((res) => {
+          console.log(res);
+        });
     },
     //地址搜索
     async addresssearch() {
@@ -233,7 +260,7 @@ export default {
           },
         })
         .then((res) => {
-          this.loading=false
+          this.loading = false;
           //console.log(res);
           // 余额
           this.yue =
@@ -394,7 +421,7 @@ export default {
   font-family: Microsoft YaHei;
   font-weight: 400;
   line-height: 22px;
-  color: #5583ff!important;
+  color: #965ee5 !important;
 }
 
 .addressdetail {
@@ -546,8 +573,8 @@ export default {
     //     background: #ffffff;
     //   }
     //   .active {
-    //     color: #5583ff;
-    //     border: 1px solid #5583ff;
+    //     color: #965EE5;
+    //     border: 1px solid #965EE5;
 
     //     border-radius: 6px;
     //     background-color: #ffffff !important;

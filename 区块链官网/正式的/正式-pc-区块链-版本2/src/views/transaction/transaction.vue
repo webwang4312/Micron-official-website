@@ -8,20 +8,20 @@
       <ul class="info_title">
         <li>
           <div>
-            交易哈希
+             {{ $t("blockdetail")[3] }}
           </div>
-          <div>时间</div>
-          <div>从</div>
+          <div>{{ $t("block")[1] }}</div>
+          <div>{{ $t("index")[9] }}</div>
           <div>
-            至
+            {{ $t("index")[10] }}
           </div>
-          <div>交易额</div>
-          <div>燃料费</div>
-          <div>区块奖励</div>
+          <div>{{ $t("block")[3] }}</div>
+          <div> {{ $t("blockdetail")[2] }}</div>
+          <div>{{ $t("block")[4] }}</div>
         </li>
       </ul>
-      <ul v-for="item in transactionData" :key="item" class="info_content">
-        <li>
+      <ul  class="info_content">
+        <li v-for="item in transactionData" :key="item">
           <div @click="goToTransactionDetail(item.transaction_hash2)">
             {{ item.transaction_hash }}
           </div>
@@ -397,6 +397,12 @@ export default {
       }
     }
     .info_content {
+     li:nth-child(odd) {
+        background: #fcfcfc;
+      }
+      li:nth-child(even) {
+        background: #ffffff;
+      }
       li {
         display: flex;
         flex-direction: row;
@@ -410,7 +416,7 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
 
-          color: #5583ff;
+          color: #965EE5;
         }
 
         div {
@@ -469,8 +475,8 @@ text-align: center;
     //     background: #ffffff;
     //   }
     //   .active {
-    //     color: #5583ff;
-    //     border: 1px solid #5583ff;
+    //     color: #965EE5;
+    //     border: 1px solid #965EE5;
 
     //     border-radius: 6px;
     //     background-color: #ffffff !important;

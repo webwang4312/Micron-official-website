@@ -69,7 +69,7 @@ module.exports = {
     }, // 错误、警告在页面弹出
     proxy: {
       "/api": {
-        target: `http://www.baidu.com`,
+        target: `http://47.116.69.138:11190`,
         changeOrigin: true, // 允许websockets跨域
         // ws: true,
         pathRewrite: {

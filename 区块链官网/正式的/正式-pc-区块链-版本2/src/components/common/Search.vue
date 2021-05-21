@@ -27,11 +27,9 @@ height: 33px;"
       />
     </div>
 
-    <img
-      src="../../assets/images/second/搜索按钮.png"
-      style="cursor:pointer"
-      @click="searchselect"
-    />
+    <div class="search_img" @click="searchselect">
+      <img src="@assets/images/second/搜索按钮@2x.png" alt="" />
+    </div>
   </div>
 </template>
 <script>
@@ -69,7 +67,6 @@ export default {
     },
   },
   created() {
-   
     if (this.$i18n.locale == "cn") {
       this.iconvalue = "UENC地址";
     } else {
@@ -120,15 +117,11 @@ export default {
       this.value = "0";
     }
   },
-  mounted() {
-   
-  },
-  destroyed() {
-   
-  },
+  mounted() {},
+  destroyed() {},
   methods: {
     // selectChanged(value) {
-    
+
     //   switch (value) {
     //     // 地址搜索
     //     case "0":
@@ -171,19 +164,18 @@ export default {
     //       break;
     //   }
     // },
-   errmsg(){
- if (this.$i18n.locale == "cn") {
-    this.$message({
-              message: "请输入正确查询信息",
-              type: "error",
-            });
- }
- else{
-    this.$message({
-              message: "Please enter the correct query information",
-              type: "error",
-            });
- }
+    errmsg() {
+      if (this.$i18n.locale == "cn") {
+        this.$message({
+          message: "请输入正确查询信息",
+          type: "error",
+        });
+      } else {
+        this.$message({
+          message: "Please enter the correct query information",
+          type: "error",
+        });
+      }
     },
     keyup(event) {
       // console.log(event);
@@ -194,13 +186,11 @@ export default {
       }
     },
     searchselect() {
-     
       switch (this.value) {
         // 地址搜索
         case "0":
           // console.log('0');
           if (this.inputvalue !== "") {
-           
             //this.fullscreenLoading = true;
             this.addresssearch();
           }
@@ -210,7 +200,6 @@ export default {
           //  console.log('1');
           // 区块高度
           if (this.inputvalue !== "") {
-          
             //this.fullscreenLoading = true;
             this.blocksearch();
           }
@@ -219,7 +208,6 @@ export default {
         case "2":
           //  console.log('2');
           if (this.inputvalue !== "") {
-           
             //this.fullscreenLoading = true;
             this.transactiondetaillist();
           }
@@ -229,7 +217,6 @@ export default {
         case "3":
           //  console.log('3');
           if (this.inputvalue !== "") {
-           
             //this.fullscreenLoading = true;
             this.blockhaxisearch();
           }
@@ -249,21 +236,20 @@ export default {
           },
         })
         .then((res) => {
-          // console.log(res);
           //   console.log(res.data[0].total_page[0].totalPageNum);
-          if (res.data[0].total_page[0].totalPageNum !== 0) {
-           
+          if (res.data[0].search_wallet_balance_for_walletAddress.length == 0) {
             this.$router.push({
-              path: "/transactiondetail",
+              path: "/notfound",
+              query: { address: "address" },
+            });
+            this.reload();
+          } else {
+            this.$router.push({
+              path: "/addressdetail",
               query: { address: this.inputvalue },
             });
-          } else {
-            
-            this.errmsg()
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
+             this.reload();
+             this.inputvalue=''
           }
         })
         .catch((err) => {});
@@ -282,7 +268,6 @@ export default {
         .then((res) => {
           //  console.log(res);
           if (res.data[0].total_record[0].total_record !== 0) {
-           
             this.$router.push({
               path: "/blockdetail",
               query: {
@@ -290,8 +275,14 @@ export default {
                 // transaction_award:this.transaction_award
               },
             });
+             this.reload();
+             this.inputvalue=''
           } else {
-            this.errmsg()
+             this.$router.push({
+              path: "/notfound",
+              query: { address: "height" },
+            });
+            this.reload();
             // this.$router.push({
             //   path: "/notfound",
             //   query: {},
@@ -312,7 +303,6 @@ export default {
         .then((res) => {
           //  console.log(res);
           if (res.data[0].select_status === 1) {
-           
             this.$router.push({
               path: "/transactiondetail",
               query: {
@@ -320,8 +310,14 @@ export default {
                 // transaction_award:this.transaction_award
               },
             });
+             this.reload();
+             this.inputvalue=''
           } else {
-            this.errmsg()
+            this.$router.push({
+              path: "/notfound",
+              query: { address: "transaction" },
+            });
+            this.reload();
             // this.$router.push({
             //   path: "/notfound",
             //   query: {},
@@ -343,32 +339,32 @@ export default {
         .then((res) => {
           // console.log(res);
           if (res.data[0].search_main_transactionInfo.length !== 0) {
-           
             this.$router.push({
               path: "/blockdetails",
               query: { blockhaxi: this.inputvalue },
             });
           } else {
-           
             this.$router.push({
               path: "/notfound",
               query: {},
             });
+            this.reload();
           }
         })
         .catch((err) => {});
     },
-   
   },
 };
 </script>
 <style lang="less">
+.selected {
+  color: #9760e5 !important;
+}
 .el-scrollbar__wrap {
   overflow: none;
 }
 // 搜索栏
 .indexsecondsearch {
-  
   width: 600px;
   height: 45px;
   // position: sticky;
@@ -384,15 +380,16 @@ export default {
   }
   .el-input__inner {
     height: 45px;
-    font-size:15px;
-    font-family: Arial;
+    font-size: 15px;
+
+    font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 18px;
     color: #515151;
     border: none;
   }
   .el-input--suffix {
-    width: 165px;
+    width: 123px;
     border: none;
     outline: none;
   }
@@ -404,7 +401,7 @@ export default {
   }
   .searchcenter {
     input {
-      width: 346.5px;
+      width: 387px;
       height: 100%;
       border: none;
       border-left: none;
@@ -440,6 +437,22 @@ export default {
       font-weight: 400;
       line-height: 18px;
       color: #cccccc;
+    }
+  }
+  .search_img {
+    cursor: pointer;
+    width: 600px;
+    height: 45px;
+    background: #4b3eff;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
+    opacity: 1;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 19px;
+      height: 19px;
     }
   }
 }

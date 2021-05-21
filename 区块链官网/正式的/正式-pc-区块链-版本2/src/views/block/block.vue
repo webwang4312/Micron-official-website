@@ -2,24 +2,24 @@
   <div class="block">
     <div class="top">
       <img src="@assets/images/second/footer/组 33.png" alt="" />
-      <span>区块列表</span>
+      <span> {{ $t("block")[0] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
         <li>
           <div>
-            区块高度
+           {{ $t("index")[0] }}
           </div>
-          <div>时间</div>
-          <div>交易笔数</div>
+          <div>{{ $t("block")[1] }}</div>
+          <div>{{ $t("block")[2] }}</div>
           <div>
-            交易额
+           {{ $t("block")[3] }}
           </div>
-          <div>区块奖励</div>
+          <div>{{ $t("block")[4] }}</div>
         </li>
       </ul>
-      <ul v-for="item in blockData" :key="item" class="info_content">
-        <li>
+      <ul class="info_content">
+        <li v-for="item in blockData" :key="item">
           <div @click="goToBlockDetail(item.block_height)">
             {{ item.block_height }}
           </div>
@@ -39,13 +39,13 @@
       </ul>
     </div>
     <div class="block_pagination">
-      <div  @click="pagesMinus()">
+      <div @click="pagesMinus()">
         <i class="el-icon-arrow-left"></i>
       </div>
       <div>{{ blockmedianum }}-{{ totalNum }}</div>
 
       <div @click="pagesPlus()">
-        <i class="el-icon-arrow-right" ></i>
+        <i class="el-icon-arrow-right"></i>
       </div>
 
       <!-- <el-pagination
@@ -59,6 +59,7 @@
   </div>
 </template>
 <script>
+var qs = require("qs");
 export default {
   name: "block",
   data() {
@@ -76,12 +77,29 @@ export default {
   created() {
     this.nowLang = this.$i18n.locale;
     this.blockmedianum = 1;
-    this.blocklist();
+     this.blocklist();
+    // this.search();
   },
 
   // 页码设置
   watch: {},
   methods: {
+    // search() {
+    //   let that = this;
+    //   that.$http
+    //     .post(`/api`, {
+    //       headers: {
+    //         "content-type": "application/json",
+    //       },
+    //       jsonrpc: "2.0",
+    //       method: "get_balance",
+    //       id: "1",
+    //       params: { address: "1KVZpXbAg64PCxf2HVLnMZCo7R91PTYHgp" },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //     });
+    // },
     goToBlockDetail(item) {
       this.$router.push({
         path: "/blockdetail",
@@ -278,6 +296,7 @@ export default {
     .info_title {
       height: 75px;
       line-height: 75px;
+
       li {
         display: flex;
         flex-direction: row;
@@ -288,7 +307,7 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #000000;
-          width: 148px;
+          width: 160px;
         }
         div:nth-child(3) {
           text-align: center;
@@ -296,6 +315,12 @@ export default {
       }
     }
     .info_content {
+      li:nth-child(odd) {
+        background: #fcfcfc;
+      }
+      li:nth-child(even) {
+        background: #ffffff;
+      }
       li {
         display: flex;
         flex-direction: row;
@@ -303,13 +328,13 @@ export default {
         padding: 0 53px;
         height: 45px;
         cursor: pointer;
-        background: #fcfcfc;
+       
         div:nth-child(1) {
           font-size: 15px;
           font-family: Microsoft YaHei;
           font-weight: 400;
 
-          color: #5583ff;
+          color: #965ee5;
         }
         div:nth-child(3) {
           text-align: center;
@@ -346,12 +371,12 @@ export default {
     div:nth-child(3) {
       cursor: pointer;
       width: 37px;
-height: 37px;
-line-height: 37px;
-background: #FFFFFF;
-border: 1px solid #EDF1F6;
-border-radius: 6px;
-text-align: center;
+      height: 37px;
+      line-height: 37px;
+      background: #ffffff;
+      border: 1px solid #edf1f6;
+      border-radius: 6px;
+      text-align: center;
     }
     div:nth-child(1),
     div:nth-child(2) {
@@ -370,8 +395,8 @@ text-align: center;
     //     background: #ffffff;
     //   }
     //   .active {
-    //     color: #5583ff;
-    //     border: 1px solid #5583ff;
+    //     color: #965EE5;
+    //     border: 1px solid #965EE5;
 
     //     border-radius: 6px;
     //     background-color: #ffffff !important;

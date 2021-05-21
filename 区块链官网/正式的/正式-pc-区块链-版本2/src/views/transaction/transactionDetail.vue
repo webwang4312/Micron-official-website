@@ -2,12 +2,12 @@
   <div class="transactiondetail">
     <div class="top">
       <img src="@assets/images/second/交易明细.png" alt="" />
-      <span>交易明细</span>
+      <span>{{ $t("transactiondetail")[0] }}</span>
     </div>
     <div class="detail_content">
       <ul class="all_content">
         <li>
-          <div>所属区块:</div>
+          <div>{{ $t("transactiondetail")[1] }}:</div>
           <div
             class="blue"
             @click="goToBlockDetail(transactionlist[0].block_height)"
@@ -16,15 +16,15 @@
           </div>
         </li>
         <li>
-          <div>交易哈希:</div>
+          <div> {{ $t("blockdetail")[3] }}:</div>
           <div class="strong">{{ transactionlist[0].transaction_hash }}</div>
         </li>
         <li>
-          <div>交易时间:</div>
+          <div>{{ $t("transactiondetail")[2] }}:</div>
           <div class="strong">{{ transactionlist[0].transaction_time }}</div>
         </li>
         <li>
-          <div>从:</div>
+          <div>{{ $t("index")[9] }}:</div>
           <div
             class="blue"
             @click="goToAddressDetail(transactionlist[0].from_address)"
@@ -33,7 +33,7 @@
           </div>
         </li>
         <li>
-          <div>至:</div>
+          <div>{{ $t("index")[10] }}:</div>
           <ul v-if="showmore" id="address_information">
             <li
               class="blue"
@@ -64,7 +64,7 @@
           </ul>
         </li>
         <li>
-          <div>交易额:</div>
+          <div>{{ $t("block")[3] }}:</div>
           <div class="strong">{{ transactionlist[0].transaction_amount }}</div>
         </li>
         <li v-show="amount_detail">
@@ -81,11 +81,11 @@
           </div>
         </li>
         <li>
-          <div>共识数:</div>
+          <div>{{ $t("transactiondetail")[3] }}:</div>
           <div class="strong">{{ transactionlist[0].extra }}</div>
         </li>
         <li>
-          <div>交易签名节点:</div>
+          <div>{{ $t("transactiondetail")[4] }}:</div>
           <ul class="blue detail_info2">
             <li
               v-for="item in transactionlist[0].sign_node"
@@ -97,11 +97,11 @@
           </ul>
         </li>
         <li>
-          <div>燃料费:</div>
+          <div> {{ $t("blockdetail")[2] }}:</div>
           <div class="strong">{{ transactionlist[0].gas }}</div>
         </li>
         <li>
-          <div>区块奖励:</div>
+          <div>{{ $t("block")[4] }}:</div>
           <div class="strong">{{ transactionlist[0].award }}</div>
         </li>
         <li
@@ -109,14 +109,14 @@
 font-family: Microsoft YaHei;
 font-weight: 400;
 line-height: 22px;
-color: #5583FF;cursor:pointer"
+color: #965EE5;cursor:pointer"
           @click="moreClick"
           v-show="!moreclick"
         >
-          点击查看更多
+          {{ $t("transactiondetail")[5] }}
         </li>
         <li v-show="moreclick">
-          <div>燃料费信息:</div>
+          <div> {{ $t("transactiondetail")[6] }}:</div>
           <ul class="detail_info detail_info2">
             <li v-for="item in detail1Data" :key="item">
               {{ item.sign_node }}
@@ -129,13 +129,13 @@ color: #5583FF;cursor:pointer"
           </ul>
         </li>
         <li v-show="moreclick">
-          <div>区块奖励信息:</div>
-          <ul class="detail_info detail_info2">
+          <div> {{ $t("transactiondetail")[7] }}:</div>
+          <ul class="detail_info ">
             <li v-for="item in detail2Data" :key="item">
               {{ item.sign_node }}
             </li>
           </ul>
-          <ul class="detail_info2">
+          <ul >
             <li v-for="item in detail2Data" :key="item">
               {{ item.detail }}
             </li>
@@ -223,7 +223,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           // 区块高度
           this.transactionlist[0].block_height =
             res.data[0].search_main_transaction_detailInfo[0].block_height;
@@ -535,7 +535,7 @@ export default {
     font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 18px;
-    color: #5583ff;
+    color: #965EE5;
     cursor: pointer;
     margin-top: 27px;
   }
@@ -547,7 +547,7 @@ export default {
     font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 18px;
-    color: #5583ff;
+    color: #965EE5;
     cursor: pointer;
   }
   .strong {
@@ -608,6 +608,9 @@ export default {
           width: 243px;
         }
         .detail_info2 {
+          li{
+           
+          }
           li:nth-child(1) {
             margin-top: 0px;
           }

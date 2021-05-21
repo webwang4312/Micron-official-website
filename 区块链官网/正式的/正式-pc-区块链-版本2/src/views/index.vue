@@ -19,9 +19,9 @@
               {{ $t("index")[0] }}
             </div>
           </div>
-          <div class="line_right"></div>
+          <!-- <div class="line_right"></div> -->
         </ul>
-        <ul class="top_left">
+        <ul>
           <div class="transaction24"></div>
           <div>
             <div class="center_top">
@@ -31,9 +31,9 @@
               {{ $t("index")[1] }}
             </div>
           </div>
-          <div class="line_right"></div>
+          <!-- <div class="line_right"></div> -->
         </ul>
-        <ul class="top_left">
+        <ul class="last">
           <div class="award"></div>
           <div>
             <div class="center_top">
@@ -43,7 +43,7 @@
               {{ $t("index")[2] }}
             </div>
           </div>
-          <div class="line_right2"></div>
+          <!-- <div class="line_right2"></div> -->
         </ul>
       </div>
       <div class="info_line"></div>
@@ -58,9 +58,9 @@
               {{ $t("index")[3] }}
             </div>
           </div>
-          <div class="line_right"></div>
+          <!-- <div class="line_right"></div> -->
         </ul>
-        <ul class="top_left">
+        <ul>
           <div class="alltransaction"></div>
           <div>
             <div class="center_top">
@@ -70,9 +70,9 @@
               {{ $t("index")[4] }}
             </div>
           </div>
-          <div class="line_right"></div>
+          <!-- <div class="line_right"></div> -->
         </ul>
-        <ul class="top_left">
+        <ul class="last">
           <div class="last_award"></div>
           <div>
             <div class="center_top">
@@ -82,7 +82,7 @@
               {{ $t("index")[5] }}
             </div>
           </div>
-          <div class="line_right2"></div>
+          <!-- <div class="line_right2"></div> -->
         </ul>
       </div>
     </div>
@@ -104,7 +104,7 @@
         <ul class="content" v-for="item in tableData" :key="item">
           <li>
             <div class="content_left">
-              TX<span @click="goToTransactionDetail(item.transaction_hash)">
+              TX<span @click="goToTransactionDetail(item.transaction_hash2)">
                 {{ item.transaction_hash }}</span
               >
               <br />
@@ -244,10 +244,10 @@ export default {
     }
     // window.setInterval(() => {
     //   setTimeout(this.indexlist(), 0);
-    // }, 30000);
+    // }, 3000);
     //  window.setInterval(() => {
     //   setTimeout(this.jiedian(), 0);
-    // }, 30000);
+    // }, 3000);
     this.indexlist();
     this.jiedian();
   },
@@ -273,7 +273,7 @@ export default {
       this.$router.push({
         path: "/transactiondetail",
         query: {
-          address: item,
+         transaction_hash: item,
         },
       });
     },
@@ -480,7 +480,7 @@ export default {
                   fontWeight: "bold",
                   lineHeight: 5,
                   fontSize: 15,
-                  color: "#5583FF",
+                  color: "#965EE5",
                   backgroundColor: "rgba(238, 240, 242, 1)",
                 },
                 formatter: "{c0}",
@@ -494,6 +494,23 @@ export default {
                 },
               },
               series: [
+                // {
+                //   name: "军费支出",
+                //   type: "bar",
+                //   barWidth: "20%",
+
+                //   itemStyle: {
+                //     normal: {
+                //       color: "#4169E1", //柱子的颜色
+                //     },
+                //   },
+                //   backgroundStyle: {
+                //     borderRadius: 10, // 统一设置四个角的圆角大小
+                //     shadowColor: "rgba(0, 0, 0, 0.5)",
+                //     shadowBlur: 10,
+                //   },
+                //   data: transaction_num_for_7,
+                // },
                 {
                   data: transaction_num_for_7,
                   type: "line",
@@ -505,7 +522,7 @@ export default {
                   itemStyle: {
                     normal: {
                       color: "#fff",
-                      borderColor: "blue",
+                      borderColor: "#965EE5",
                       borderWidth: 3,
                       label: {
                         show: false,
@@ -515,7 +532,7 @@ export default {
                           color: "#fff",
                           // width: 54,
                           // height: 27,
-                          backgroundColor: "blue",
+                          backgroundColor: "#965EE5",
                         },
                       },
                     },
@@ -523,14 +540,14 @@ export default {
                   areaStyle: {
                     normal: {
                       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "#2860C2" },
-                        { offset: 0.4, color: "#2860C2" },
+                        { offset: 0, color: "#965EE5" },
+                        { offset: 0.4, color: "#965EE5" },
                         { offset: 1, color: "#fff" },
                       ]),
                     },
                   },
                   lineStyle: {
-                    color: "#2860C2", //改变折线颜色
+                    color: "#965EE5", //改变折线颜色
                   },
                 },
               ],
@@ -598,7 +615,7 @@ export default {
                 borderColor: "#EEF0F2",
                 borderWidth: "1",
                 textStyle: {
-                  color: "#5583FF",
+                  color: "#965EE5",
                   fontWeight: "bold",
                 },
               },
@@ -617,6 +634,7 @@ export default {
                       barBorderRadius: 7,
                     },
                     normal: {
+                        color:'#965EE5',
                       barBorderRadius: 7,
                     },
                   },
@@ -934,7 +952,7 @@ export default {
     color: rgba(255, 255, 255, 0.9);
     padding-top: 68.4px;
     margin-bottom: 36.6px;
-    letter-spacing: 12px;
+    letter-spacing: 13px;
   }
   .indexsecondsearch {
     width: 600px;
@@ -973,23 +991,40 @@ export default {
     opacity: 1;
   }
   .info_top {
-    width: 1274px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     height: 60px;
-    justify-content: center;
     align-items: center;
     // margin-left: 97.13px;
-    margin-top: 45.38px;
+    margin: 45.38px auto 0;
+    .last {
+      // width: 332px;
+      border: none;
+      // justify-content: space-between;
+    }
+    ul:nth-child(2) {
+      // margin-left: 95px;
+    }
+    ul:nth-child(3) {
+      // margin-left: 95px;
+    }
     ul {
-      width: 325.5px;
-      margin-left: 97.13px;
+      width: 422px;
+      border-right: 2px solid #e9eced;
       //background: chocolate;
       display: flex;
       flex-direction: row;
-      justify-content: center;
       align-items: center;
-      justify-content: space-between;
+      padding-left: 97px;
+      div:nth-child(2) {
+        width: 100px;
+
+        overflow: hidden;
+      }
+      div:nth-child(1) {
+        margin-right: 78px;
+      }
       .block_height {
         width: 60px;
         height: 60px;
@@ -1063,9 +1098,9 @@ export default {
           center/100% 100%;
       }
     }
-    .top_left {
-      margin-left: 63.5px;
-    }
+    // .top_left {
+    //   margin-left: 63.5px;
+    // }
   }
   .info_bottom {
     margin-top: 18px !important;
@@ -1074,9 +1109,8 @@ export default {
     width: 1080px;
     height: 0px;
     border: 1px solid #e9eced;
-    opacity: 1;
-    margin-top: 30px;
-    margin-left: 64.5px;
+
+    margin: 30px auto 0;
   }
   .line_right {
     width: 0px;
@@ -1129,7 +1163,7 @@ export default {
         font-family: Microsoft YaHei;
         font-weight: bold;
         line-height: 21px;
-        color: #5583ff;
+        color: #965EE5;
       }
     }
     .content {
@@ -1153,7 +1187,7 @@ export default {
             font-family: Microsoft YaHei;
             font-weight: bold;
             line-height: 17px;
-            color: #5583ff;
+            color: #965EE5;
             cursor: pointer;
           }
           span:nth-child(3) {
@@ -1173,7 +1207,7 @@ export default {
             font-family: Microsoft YaHei;
             font-weight: bold;
             line-height: 17px;
-            color: #5583ff;
+            color: #965EE5;
             cursor: pointer;
           }
         }
@@ -1216,7 +1250,7 @@ export default {
         font-family: Microsoft YaHei;
         font-weight: bold;
         line-height: 21px;
-        color: #5583ff;
+        color: #965EE5;
       }
     }
     .content {
@@ -1239,7 +1273,7 @@ export default {
             font-family: Microsoft YaHei;
             font-weight: bold;
             line-height: 17px;
-            color: #5583ff;
+            color: #965EE5;
             cursor: pointer;
           }
           span:nth-child(3) {

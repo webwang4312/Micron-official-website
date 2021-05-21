@@ -2,16 +2,16 @@
   <div class="blockdetail">
     <div class="top">
       <img src="@assets/images/second/区块详情1.png" alt="" />
-      <span>区块详情</span>
+      <span>{{ $t("blockdetail")[0] }}</span>
     </div>
     <div class="detail_content">
       <ul>
         <li>
-          区块高度:
+         {{ $t("index")[0] }}:
         </li>
-        <li>区块个数:</li>
-        <li>区块奖励:</li>
-        <li>燃料费:</li>
+        <li>{{ $t("blockdetail")[1] }}:</li>
+        <li>{{ $t("block")[4] }}:</li>
+        <li>{{ $t("blockdetail")[2] }}:</li>
       </ul>
       <ul>
         <li>
@@ -24,24 +24,24 @@
     </div>
     <div class="top">
       <img src="@assets/images/second/区块详情2.png" alt="" />
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
         <li>
           <div>
-            交易哈希
+           {{ $t("blockdetail")[3] }}
           </div>
-          <div>时间</div>
-          <div>从</div>
+          <div>  {{ $t("block")[1] }}</div>
+          <div>{{ $t("index")[9] }}</div>
           <div>
-            至
+            {{ $t("index")[10] }}
           </div>
-          <div>交易额</div>
+          <div> {{ $t("block")[3] }}</div>
           <div>
-            燃料费
+          {{ $t("blockdetail")[2] }}
           </div>
-          <div>区块奖励</div>
+          <div>{{ $t("block")[4] }}</div>
         </li>
       </ul>
       <ul  class="info_content">
@@ -115,7 +115,7 @@ export default {
   },
   components: {},
   created() {
-    
+     this.nowLang = this.$i18n.locale;
     this.shiyan = this.$route.query.block;
     //console.log(this.$route.query.block);
     this.blockmedianum = 1;
@@ -457,7 +457,7 @@ export default {
         padding: 0 53px;
 
         div {
-          width: 100px;
+          width: 130px;
           font-size: 17px;
           font-family: Microsoft YaHei;
           font-weight: 400;
@@ -469,6 +469,12 @@ export default {
       }
     }
     .info_content {
+       li:nth-child(odd) {
+        background: #fcfcfc;
+      }
+      li:nth-child(even) {
+        background: #ffffff;
+      }
       li {
         display: flex;
         flex-direction: row;
@@ -488,13 +494,13 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
 
-          color: #5583ff;
+          color: #965EE5;
         }
         div:nth-child(3) {
           text-align: center;
         }
         div {
-          width: 100px;
+          width: 130px;
 
           font-size: 15px;
           font-family: Microsoft YaHei;
@@ -550,8 +556,8 @@ export default {
     //     background: #ffffff;
     //   }
     //   .active {
-    //     color: #5583ff;
-    //     border: 1px solid #5583ff;
+    //     color: #965EE5;
+    //     border: 1px solid #965EE5;
 
     //     border-radius: 6px;
     //     background-color: #ffffff !important;

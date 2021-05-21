@@ -60,7 +60,7 @@
           <i
             class="el-icon-minus"
             style="
-              color: rgba(85, 131, 255, 1);
+              color:  #E9ECED;
               transform: rotate(90deg);
               width: 0px;
               height: 33px;
@@ -137,7 +137,7 @@ export default {
   },
   created() {
     this.blues = this.$store.state.blues;
-    console.log(this.blues);
+    //console.log(this.blues);
     this.nowLang = this.$i18n.locale;
     this.language = this.nowLang;
     if (this.language == "cn") {
@@ -259,19 +259,18 @@ export default {
         }
       }
     },
-    errmsg(){
- if (this.$i18n.locale == "cn") {
-    this.$message({
-              message: "请输入正确查询信息",
-              type: "error",
-            });
- }
- else{
-    this.$message({
-              message: "Please enter the correct query information",
-              type: "error",
-            });
- }
+    errmsg() {
+      if (this.$i18n.locale == "cn") {
+        this.$message({
+          message: "请输入正确查询信息",
+          type: "error",
+        });
+      } else {
+        this.$message({
+          message: "Please enter the correct query information",
+          type: "error",
+        });
+      }
     },
     searchselect() {
       switch (this.value) {
@@ -284,7 +283,6 @@ export default {
         case "1":
           if (this.inputvalue !== "") {
             this.blocksearch();
-            
           }
           break;
         // 交易哈希
@@ -313,20 +311,21 @@ export default {
           },
         })
         .then((res) => {
-          // console.log(res);
           //   console.log(res.data[0].total_page[0].totalPageNum);
-          if (res.data[0].total_page[0].totalPageNum !== 0) {
+          if (res.data[0].search_wallet_balance_for_walletAddress.length == 0) {
             this.$router.push({
-              path: "/transactiondetail",
-              query: { addressvalue: this.inputvalue },
+              path: "/notfound",
+              query: { address: "address" },
             });
             this.reload();
+           
           } else {
-            this.errmsg()
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
+            this.$router.push({
+              path: "/addressdetail",
+              query: { address: this.inputvalue },
+            });
+              this.reload();
+               this.inputvalue=''
           }
         })
         .catch((err) => {});
@@ -354,7 +353,12 @@ export default {
             });
             this.reload();
           } else {
-             this.errmsg()
+             this.$router.push({
+              path: "/notfound",
+              query: { address: "height" },
+            });
+             this.reload();
+           this.inputvalue=''
             // this.$router.push({
             //   path: "/notfound",
             //   query: {},
@@ -384,8 +388,13 @@ export default {
               },
             });
             this.reload();
+             this.inputvalue=''
           } else {
-             this.errmsg()
+            this.$router.push({
+              path: "/notfound",
+              query: { address: "transaction" },
+            });
+             this.reload();
             // this.$router.push({
             //   path: "/notfound",
             //   query: {},
@@ -412,6 +421,7 @@ export default {
               query: { blockhaxi: this.inputvalue },
             });
             this.reload();
+             this.inputvalue=''
           } else {
             this.$router.push({
               path: "/notfound",
@@ -437,7 +447,7 @@ export default {
   justify-content: space-between;
   z-index: 100;
   .blue {
-    color: blue !important;
+    color: #915bde !important;
   }
   .el-dropdown-menu__item {
     width: 80px;
@@ -459,7 +469,7 @@ export default {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #4276ff;
+      color: #915bde;
     }
   }
   ul {
@@ -477,20 +487,22 @@ export default {
     margin-left: 30px;
     img {
       width: 38px;
-      height: 46px;
+      height: 38px;
       margin-right: 14px;
-      margin-top: 7px;
+     
     }
     span:nth-child(2) {
       font-size: 15px;
-      font-family: Arial;
+      font-family: Alibaba PuHuiTi 2;
       font-weight: bold;
       line-height: 12px;
-      color: #4276ff;
+      color: #915bde;
+      margin-right: 3px;
     }
     span:nth-child(3) {
       font-size: 15px;
-      font-family: Arial;
+      font-size: 15px;
+      font-family: Alibaba PuHuiTi 2;
       font-weight: bold;
       line-height: 12px;
       color: #000000;

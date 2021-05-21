@@ -590,7 +590,7 @@ export default {
     font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 18px;
-    color: #5583ff;
+    color: #965EE5;
     cursor: pointer;
     margin-top: 27px;
   }
@@ -602,7 +602,7 @@ export default {
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 18px;
-    color: #5583ff;
+    color: #965EE5;
     width: 200px;
     word-wrap: break-word;
     word-break: break-all;

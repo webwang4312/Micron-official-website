@@ -26,12 +26,14 @@ height: 33px;"
         @keyup="keyup"
       />
     </div>
-
-    <img
+ <div class="search_img" @click="searchselect">
+      <img src="@assets/images/second/搜索按钮@2x.png" alt="" />
+    </div>
+    <!-- <img
       src="../../assets/images/second/搜索按钮.png"
       class="search_img"
       @click="searchselect"
-    />
+    /> -->
   </div>
 </template>
 <script>
@@ -357,19 +359,25 @@ export default {
 .el-scrollbar__wrap {
   overflow: none;
 }
+.selected{
+  color:  #965EE5!important;
+}
+ .el-scrollbar__wrap{
+   margin-bottom: 0px!important;
+ }
 // 搜索栏
 .indexsecondsearch {
   width: 343px;
   height: 48px;
   background: #ffffff;
-  border: 2px solid #4e7dfc;
+  border: 2px solid #4B3EFF;
   opacity: 1;
   border-radius: 7px;
   margin: 21px auto 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-
+justify-content: space-between;
   .el-input__icon {
     width: 12px;
   }
@@ -445,7 +453,18 @@ export default {
   .search_img {
     cursor: pointer;
     width: 60px;
-    height:44px;
-  }
+    height: 48px;
+    background: #4B3EFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
+    opacity: 1;
+    border-radius:7px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    img{
+      width: 19px;
+      height: 19px;
+    } }
+ 
 }
 </style>

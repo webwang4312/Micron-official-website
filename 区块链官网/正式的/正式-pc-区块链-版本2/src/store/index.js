@@ -11,9 +11,10 @@ export default new Vuex.Store({
     },
     mutations: {
         bluesState(state, item) {
-            // console.log(state.blues);
+            
             // console.log(item);
             state.blues = item
+             //console.log(state.blues);
         }
     },
     actions: {},

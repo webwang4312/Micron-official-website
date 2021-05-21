@@ -2,24 +2,24 @@
   <div class="address">
     <div class="top">
       <img src="@assets/images/second/footer/组 33.png" alt="" />
-      <span>地址列表</span>
+      <span>  {{ $t("address")[0] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
         <li>
           <div>
-            排名
+          {{ $t("address")[1] }}
           </div>
-          <div>地址</div>
-          <div>交易笔数</div>
+          <div>  {{ $t("address")[2] }}</div>
+          <div>  {{ $t("block")[2] }}</div>
           <div>
-            金额
+            {{ $t("address")[3] }}
           </div>
-          <div>占百分比</div>
+          <div>{{ $t("address")[4] }}</div>
         </li>
       </ul>
-      <ul v-for="item in addressData" :key="item" class="info_content">
-        <li >
+      <ul  class="info_content">
+        <li v-for="item in addressData" :key="item">
           <div>
             {{ item.rank }}
           </div>
@@ -198,6 +198,12 @@ export default {
       }
     }
     .info_content {
+       li:nth-child(odd) {
+        background: #fcfcfc;
+      }
+      li:nth-child(even) {
+        background: #ffffff;
+      }
       li {
         display: flex;
         flex-direction: row;
@@ -211,7 +217,7 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
 
-          color: #5583ff;
+          color: #965EE5;
            cursor: pointer;
         }
         div:nth-child(3) {
@@ -250,8 +256,8 @@ export default {
         background: #ffffff;
       }
       .active {
-        color: #5583ff;
-        border: 1px solid #5583ff;
+        color: #965EE5;
+        border: 1px solid #965EE5;
 
         border-radius: 6px;
         background-color: #ffffff !important;

@@ -11,42 +11,41 @@
     </div>
     <ul>
       <li>
-        <router-link :to="{ path: '/' }">{{ $t('nav')[0]}}</router-link>
+        <router-link :to="{ path: '/' }">{{ $t("nav")[0] }}</router-link>
       </li>
       <li>
         <el-dropdown :hide-on-click="false">
-          <span :class="{'el-dropdown-link':true,'blue':blues}">
-           {{ $t('nav')[1]}}<i class="el-icon-arrow-down el-icon--right"></i>
+          <span :class="{ 'el-dropdown-link': true, blue: blues }">
+            {{ $t("nav")[1] }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <router-link :to="{ path: '/block' }"
-                >
+              <router-link :to="{ path: '/block' }">
                 <span @click="blueClass">
-{{ $t('nav')[2]}}
+                  {{ $t("nav")[2] }}
                 </span>
-               </router-link
-              ></el-dropdown-item
+              </router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/transaction' }"
-                >{{ $t('nav')[3]}}</router-link
-              ></el-dropdown-item
+              <router-link :to="{ path: '/transaction' }">{{
+                $t("nav")[3]
+              }}</router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/address' }"
-                >{{ $t('nav')[4]}}</router-link
-              >
-             </el-dropdown-item
-            >
+              <router-link :to="{ path: '/address' }">{{
+                $t("nav")[4]
+              }}</router-link>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </li>
-      <li><router-link :to="{ path: '/chart' }">
-      <span @click="blueClass2">
-{{ $t('nav')[5]}}
-      </span>
-     </router-link></li>
+      <li>
+        <router-link :to="{ path: '/chart' }">
+          <span @click="blueClass2">
+            {{ $t("nav")[5] }}
+          </span>
+        </router-link>
+      </li>
       <li>
         <el-dropdown :hide-on-click="false">
           <span class="el-dropdown-link">
@@ -94,7 +93,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
-       blues:false,
+      blues: false,
       activeIndex: "1",
       nowLang: "",
       language: "",
@@ -105,23 +104,24 @@ export default {
     this.nowLang = this.$i18n.locale;
     this.language = this.nowLang;
     if (this.language == "cn") {
-      this.language='中文'
+      this.language = "中文";
       this.language2 = "EN";
     } else {
-      this.language='EN'
+      this.language = "EN";
       this.language2 = "中文";
     }
     //console.log(this.$i18n.locale);
   },
   mounted() {},
   methods: {
-       blueClass(){  this.$store.commit("bluesState", true);
-      this.reload()
+    blueClass() {
+      this.$store.commit("bluesState", true);
+      this.reload();
     },
-     blueClass2(){
-this.$store.commit("bluesState", false);
- this.reload()
-     },
+    blueClass2() {
+      this.$store.commit("bluesState", false);
+      this.reload();
+    },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
@@ -134,18 +134,15 @@ this.$store.commit("bluesState", false);
         this.language = "2";
         this.language2 = "1";
       }
-     
     },
-    handleSelect(key, keyPath) {
-     
-    },
+    handleSelect(key, keyPath) {},
   },
   mounted() {},
   destroyed() {},
 };
 </script>
 
-<style lang="less" >
+<style lang="less">
 .header_top {
   width: 100%;
   height: 60px;
@@ -153,33 +150,36 @@ this.$store.commit("bluesState", false);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  z-index: 100;
-  .blue{
-  color:blue!important;
-}
-.el-dropdown-menu__item{
-  width: 80px;
-  padding: 10px;
-  text-align: center;
-}
-.el-menu.el-menu--horizontal {
-  border-bottom: none;
-}
-.el-menu--horizontal > .el-menu-item.is-active {
-  font-size: 15px !important;
-}
-.el-menu {
-  background-color: goldenrod !important;
-  justify-content: center;
-  align-items: center;
-  li {
-    font-size: 15px;
-    font-family: Arial;
-    font-weight: bold;
-    line-height: 12px;
-    color: #4276ff;
+  z-index: 101;
+  //  position: -webkit-sticky;
+  //   position: sticky;
+  //   top: 0px;
+  .blue {
+    color: #915BDE !important;
   }
-}
+  .el-dropdown-menu__item {
+    width: 80px;
+    padding: 10px;
+    text-align: center;
+  }
+  .el-menu.el-menu--horizontal {
+    border-bottom: none;
+  }
+  .el-menu--horizontal > .el-menu-item.is-active {
+    font-size: 15px !important;
+  }
+  .el-menu {
+    background-color: goldenrod !important;
+    justify-content: center;
+    align-items: center;
+    li {
+      font-size: 15px;
+      font-family: Arial;
+      font-weight: bold;
+      line-height: 12px;
+      color: #915BDE;
+    }
+  }
   ul {
     display: flex;
     flex-direction: row;
@@ -195,20 +195,23 @@ this.$store.commit("bluesState", false);
     margin-left: 20px;
     img {
       width: 38px;
-      height: 46px;
+      height:38px;
       margin-right: 14px;
-      margin-top: 7px;
+     
     }
     span:nth-child(2) {
       font-size: 15px;
-      font-family: Arial;
+      font-size: 15px;
+      font-family: Alibaba PuHuiTi 2;
       font-weight: bold;
       line-height: 12px;
-      color: #4276ff;
+      color: #915BDE;
+      margin-right: 3px;
     }
     span:nth-child(3) {
       font-size: 15px;
-      font-family: Arial;
+     font-size: 15px;
+      font-family: Alibaba PuHuiTi 2;
       font-weight: bold;
       line-height: 12px;
       color: #000000;

@@ -156,10 +156,14 @@ export default {
 <style lang="less">
 .headers {
   width: 100%;
+  height: auto;
   background-color: #fff !important;
   position: sticky;
   top: 0;
   margin-bottom: 21px;
+  .el-icon-close{
+  transform: scale(2.5);
+  }
   .menuslide {
     z-index: 100;
     position: absolute;
@@ -213,7 +217,7 @@ export default {
         display: inline-block;
         width: 33px;
         height: 25px;
-        color: #5583ff;
+        color: #965EE5;
       }
     }
   }
@@ -223,11 +227,11 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background: gray;
+    background: #fff;
   }
 
   .blue {
-    color: #4276ff !important;
+    color: #965EE5 !important;
   }
   .el-dropdown-menu__item {
     width: 80px;
@@ -249,7 +253,7 @@ export default {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #4276ff;
+      color: #965EE5;
     }
   }
 
@@ -270,7 +274,8 @@ export default {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #4276ff;
+      color: #965EE5;
+      margin-right: 4px;
     }
     span:nth-child(3) {
       font-size: 16px;

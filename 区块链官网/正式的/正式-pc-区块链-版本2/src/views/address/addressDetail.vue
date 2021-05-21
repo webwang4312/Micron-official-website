@@ -2,18 +2,18 @@
   <div class="addressdetail">
     <div class="top">
       <img src="@assets/images/second/地址概览@2x.png" alt="" />
-      <span>地址概览</span>
+      <span> {{ $t("addressdetail")[0] }}</span>
     </div>
     <div class="detail_content">
       <ul>
         <li>
-          地址:
+         {{ $t("address")[2] }}:
         </li>
-        <li>余额:</li>
-        <li>交易数:</li>
-        <li>收入合计:</li>
-        <li>支出合计:</li>
-        <li>排名:</li>
+        <li>{{ $t("addressdetail")[1] }}:</li>
+        <li>{{ $t("addressdetail")[2] }}:</li>
+        <li>{{ $t("addressdetail")[3] }}:</li>
+        <li>{{ $t("addressdetail")[4] }}:</li>
+        <li> {{ $t("address")[1] }}:</li>
       </ul>
       <ul>
         <li class="blue">
@@ -28,22 +28,22 @@
     </div>
     <div class="top">
       <img src="@assets/images/second/交易列表@2x.png" alt="" />
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
-    <div class="block_info">
+    <div class="block_info" v-show="have_list">
       <ul class="info_title">
         <li>
           <div>
-            交易哈希
+             {{ $t("blockdetail")[3] }}
           </div>
-          <div>时间</div>
-          <div>从</div>
+          <div>{{ $t("block")[1] }}</div>
+          <div>{{ $t("index")[9] }}</div>
           <div>
-            至
+            {{ $t("index")[10] }}
           </div>
-          <div>交易额</div>
+          <div>{{ $t("block")[3] }}</div>
           <div>
-            燃料费
+             {{ $t("blockdetail")[2] }}
           </div>
         </li>
       </ul>
@@ -69,6 +69,12 @@
           </div>
         </li>
       </ul>
+    </div>
+    <div class="no_info" v-show="!have_list">
+      <img src="@assets/images/second/插画@2x (1).png" alt="" />
+      <span>
+        {{ $t("addressdetail")[5] }}
+      </span>
     </div>
     <div class="block_pagination" v-if="totalNum > 1">
       <div @click="pagesMinus()">
@@ -106,6 +112,7 @@ export default {
       yue: "",
 
       transactionData: [],
+      have_list:Boolean,
     };
   },
   components: {},
@@ -130,7 +137,7 @@ export default {
       });
     },
     goToAddressDetail(item) {
-      console.log(item);
+      //console.log(item);
       this.shiyan = item;
 
       this.addresssearch();
@@ -166,13 +173,21 @@ export default {
         })
         .then((res) => {
           //console.log(res);
+           this.totalNum =  res.data[0].total_page[0].totalPageNum;
+            if (this.totalNum !== 0) {
+            this.have_list = true;
+          } else {
+            this.have_list = false;
+          }
           // 余额
           this.yue =
             res.data[0].search_wallet_balance_for_walletAddress[0]
               .account_balance + "\n\nUENC";
           // 总条数
-          this.totalNum = res.data[0].total_page[0].totalPageNum;
+         
           var translist = res.data[0].search_transaction_list_for_walletAddress;
+         
+          //console.log(this.have_list);
           if (this.nowLang == "cn") {
             for (let i = 0; i < translist.length + 1; i++) {
               var obj = {};
@@ -330,7 +345,7 @@ export default {
   font-family: Microsoft YaHei;
   font-weight: 400;
   line-height: 22px;
-  color: #5583ff;
+  color: #965ee5;
 }
 
 .addressdetail {
@@ -439,7 +454,7 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
 
-          color: #5583ff;
+          color: #965ee5;
         }
         div:nth-child(2) {
           width: 200px;
@@ -456,6 +471,28 @@ export default {
           width: 100px;
         }
       }
+    }
+  }
+  .no_info {
+    width: 1275px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto -300px;
+    img {
+      width: 454px;
+      height: 315px;
+    }
+    span {
+      font-size: 34px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      line-height: 45px;
+      color: #3f3d56;
+      margin-top: 50px;
     }
   }
   .block_pagination {
@@ -503,8 +540,8 @@ export default {
     //     background: #ffffff;
     //   }
     //   .active {
-    //     color: #5583ff;
-    //     border: 1px solid #5583ff;
+    //     color: #965EE5;
+    //     border: 1px solid #965EE5;
 
     //     border-radius: 6px;
     //     background-color: #ffffff !important;

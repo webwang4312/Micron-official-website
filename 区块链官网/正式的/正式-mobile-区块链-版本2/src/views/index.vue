@@ -396,7 +396,7 @@ export default {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "green", //折线的颜色
+                color: "#965EE5", //折线的颜色
               },
             },
           },
@@ -457,6 +457,7 @@ export default {
                 barBorderRadius: 7,
               },
               normal: {
+                 color:'#965EE5',
                 barBorderRadius: 7,
               },
             },
@@ -513,7 +514,7 @@ export default {
                   fontWeight: "bold",
                   lineHeight: 5,
                   fontSize: 15,
-                  color: "#5583FF",
+                  color: "#965EE5",
                   backgroundColor: "rgba(238, 240, 242, 1)",
                 },
                 formatter: "{c0}",
@@ -556,14 +557,14 @@ export default {
                   areaStyle: {
                     normal: {
                       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "#2860C2" },
-                        { offset: 0.4, color: "#2860C2" },
+                        { offset: 0, color: "#965EE5" },
+                        { offset: 0.4, color: "#965EE5" },
                         { offset: 1, color: "#fff" },
                       ]),
                     },
                   },
                   lineStyle: {
-                    color: "#2860C2", //改变折线颜色
+                    color: "#965EE5", //改变折线颜色
                   },
                 },
               ],
@@ -631,7 +632,7 @@ export default {
                 borderColor: "#EEF0F2",
                 borderWidth: "1",
                 textStyle: {
-                  color: "#5583FF",
+                  color: "#965EE5",
                   fontWeight: "bold",
                 },
               },
@@ -926,11 +927,11 @@ export default {
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 18px;
-  color: #5583ff !important;
+  color: #965EE5 !important;
   cursor: pointer;
 }
 canvas {
-  z-index: -1;
+  z-index: 2;
 }
 
 .el-icon-arrow-right {
@@ -942,16 +943,17 @@ canvas {
   width: 343px;
   height: 322px;
   background: #ffffff !important;
-  z-index: -1;
+  z-index: 2;
 }
 #bar {
   width: 343px;
   height: 322px;
   background: #ffffff;
-  z-index: -1;
+  z-index: 2;
 }
 .index {
   height: auto;
+  z-index: 1;
   .hezi {
     width: 100%;
     height: 10px;
@@ -1080,7 +1082,7 @@ canvas {
     width: 343px;
     height: auto;
     margin: 10px auto 10px;
-    z-index: -1;
+    z-index: 2;
   }
   .info_list {
     width: 343px;
@@ -1112,7 +1114,7 @@ canvas {
           font-family: PingFang SC;
           font-weight: 600;
           line-height: 20px;
-          color: #5583ff;
+          color: #965EE5;
         }
       }
       .content {
@@ -1177,7 +1179,7 @@ canvas {
           font-family: PingFang SC;
           font-weight: 600;
           line-height: 20px;
-          color: #5583ff;
+          color: #965EE5;
         }
       }
       .content {

@@ -401,7 +401,7 @@ export default {
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 18px;
-    color: #5583ff !important;
+    color: #965EE5 !important;
   }
   .top {
     width: 343px;
@@ -515,8 +515,8 @@ export default {
     //     background: #ffffff;
     //   }
     //   .active {
-    //     color: #5583ff;
-    //     border: 1px solid #5583ff;
+    //     color: #965EE5;
+    //     border: 1px solid #965EE5;
 
     //     border-radius: 6px;
     //     background-color: #ffffff !important;

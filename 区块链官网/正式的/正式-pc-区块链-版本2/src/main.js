@@ -19,7 +19,7 @@ import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 Vue.use(ViewUI);
 
-axios.defaults.baseURL = "http://47.116.69.138:80/";
+ axios.defaults.baseURL = "http://47.116.69.138:80/";
 // axios.defaults.retry = 4;
 // axios.defaults.retryDelay = 1000;
 // axios.defaults.timeout = 30000; // 请求超时
