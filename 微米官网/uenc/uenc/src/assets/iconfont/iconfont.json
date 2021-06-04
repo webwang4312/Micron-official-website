@@ -1,0 +1,121 @@
+{
+  "id": "2535730",
+  "name": "uenc",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "无",
+  "glyphs": [
+    {
+      "icon_id": "21623703",
+      "name": "medium",
+      "font_class": "medium",
+      "unicode": "e6b8",
+      "unicode_decimal": 59064
+    },
+    {
+      "icon_id": "21623704",
+      "name": "reddit",
+      "font_class": "reddit",
+      "unicode": "e6b9",
+      "unicode_decimal": 59065
+    },
+    {
+      "icon_id": "21507754",
+      "name": "蓝",
+      "font_class": "lan",
+      "unicode": "e6b6",
+      "unicode_decimal": 59062
+    },
+    {
+      "icon_id": "21507755",
+      "name": "红",
+      "font_class": "hong",
+      "unicode": "e6b7",
+      "unicode_decimal": 59063
+    },
+    {
+      "icon_id": "21478344",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e6a9",
+      "unicode_decimal": 59049
+    },
+    {
+      "icon_id": "21478345",
+      "name": "添加",
+      "font_class": "tianjia",
+      "unicode": "e6aa",
+      "unicode_decimal": 59050
+    },
+    {
+      "icon_id": "21478346",
+      "name": "飞书",
+      "font_class": "feishu",
+      "unicode": "e6ab",
+      "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "21478347",
+      "name": "关  闭",
+      "font_class": "guanbi",
+      "unicode": "e6ac",
+      "unicode_decimal": 59052
+    },
+    {
+      "icon_id": "21478348",
+      "name": "未点赞",
+      "font_class": "weidianzan",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
+      "icon_id": "21478349",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e6ae",
+      "unicode_decimal": 59054
+    },
+    {
+      "icon_id": "21478350",
+      "name": "facebook",
+      "font_class": "facebook",
+      "unicode": "e6af",
+      "unicode_decimal": 59055
+    },
+    {
+      "icon_id": "21478351",
+      "name": "推特",
+      "font_class": "tuite",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    },
+    {
+      "icon_id": "21478352",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
+      "icon_id": "21478353",
+      "name": "确定",
+      "font_class": "queding",
+      "unicode": "e6b2",
+      "unicode_decimal": 59058
+    },
+    {
+      "icon_id": "21478354",
+      "name": "赞成",
+      "font_class": "zancheng",
+      "unicode": "e6b3",
+      "unicode_decimal": 59059
+    },
+    {
+      "icon_id": "21478355",
+      "name": "微博",
+      "font_class": "weibo",
+      "unicode": "e6b4",
+      "unicode_decimal": 59060
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+#timeLine {
+  width: 1200px;
+  margin: 100px auto;
+  /*border:  solid 1px #434343;*/
+  /*background: rgba(500,500,500,0.9);*/
+  overflow: hidden;
+}
+#yearList {
+  width: 100%;
+  list-style: none;
+  position: relative;
+  left: 79px !important;
+  /*left: 457px;*/
+  top: 131px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+#yearList:after,
+.container-li:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#yearList li {
+  font-size: 30px;
+  font-family: PingFang SC;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 1);
+  line-height: 22px;
+  transform: rotate(-90deg);
+}
+.year-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  position: relative;
+  left: -138px;
+}
+.dotted-line {
+  border-bottom: dashed 2px #7b7d7b;
+  position: relative;
+  top: -26px;
+  z-index: -1;
+}
+#cList {
+  width: 100%;
+  position: relative;
+}
+#btnLeft {
+  position: absolute;
+  left: 7px;
+  top: 120px;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+#btnRight {
+  position: absolute;
+  right: 7px;
+  top: 120px;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+#cUl {
+  width: 1200px;
+  list-style: none;
+  height: 589px;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#cUl li {
+  width: 1000px;
+  position: absolute;
+  margin-left: 110px;
+}
+.li-tit {
+  display: inline-block;
+  color: #fff;
+  background-color: #002f21;
+  padding: 10px 20px;
+  margin: 30px auto 10px;
+}
+.container-li {
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.c-li-right {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.c-li-right p span:nth-child(1) {
+  font-size: 30px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 22px;
+  position: relative;
+  top: 97px;
+}
+.c-li-right p span:nth-child(3) {
+  font-size: 16px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 22px;
+  position: relative;
+  top: 136px;
+  display: block;
+  width: 184px;
+  text-align: left;
+}
+.year-active {
+  font-size: 80px !important;
+  font-family: PingFang SC !important;
+  font-weight: 600 !important;
+  color: rgba(255, 255, 255, 1) !important;
+  line-height: 22px !important;
+  position: relative;
+  top: -30px !important;
+}
+.year-active i {
+  position: relative;
+  left: -229px !important;
+  display: inline-block !important;
+  font-size: 60px !important;
+  top: -25px;
+}

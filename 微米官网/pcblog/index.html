@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    li {
+        list-style: none
+    }
+
+    img {
+        vertical-align: top;
+        border: none
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        /*这里可以不写，flex布局默认方向横向即row*/
+        justify-content: center;
+        align-items: center;
+
+
+    }
+
+    .container {
+        width: 824px;
+        height: 474px;
+
+        margin: 10% auto 0;
+        background: url("./bg.png") no-repeat center/100% 100%;
+
+    }
+
+    .top {
+        display: flex;
+        flex-direction: row;
+        /*这里可以不写，flex布局默认方向横向即row*/
+        justify-content: center;
+        align-items: center;
+        margin-top: 80px;
+    }
+
+    .top img {
+
+        width: 86px;
+        height: 87px;
+       
+
+    }
+
+    .top span {
+        font-size: 80px;
+        font-family: YouSheBiaoTiHei;
+        font-weight: 400;
+        line-height: 104px;
+        color: #293856;
+        opacity: 1;
+        margin-left: 30px;
+    }
+
+    p {
+        text-align: center;
+        font-size: 18px;
+        font-family: Arial;
+        font-weight: 400;
+        line-height: 21px;
+        color: #111111;
+        opacity: 1;
+    }
+    @media screen and (max-device-width:960px){
+    /* body{background:red;} */
+    .container {
+        /* width: 824px;
+        height: 474px;
+
+        margin: 10% auto 0;
+        background: url("./bg.png") no-repeat center/100% 100%; */
+
+    }
+}
+
+</style>
+
+<body>
+    <div class="container">
+        <div class="top">
+            <img src="./logo.png" alt=""> <span>uenc</span>
+        </div>
+        <p style="margin-top: 80px;">You've successfully been unsubscribed from uenc.io blog</p>
+        <p>
+            information
+        </p>
+    </div>
+</body>
+
+</html>
