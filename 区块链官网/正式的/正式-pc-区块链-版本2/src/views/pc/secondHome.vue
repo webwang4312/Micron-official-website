@@ -24,8 +24,8 @@ a {
 }
 </style>
 <script>
-import headertopsecond from "@components/common/HeaderTopSecond";
-import SecondFooter from "@components/common/SecondFooter.vue";
+import headertopsecond from "@components/pc/HeaderTopSecond";
+import SecondFooter from "@components/pc/SecondFooter.vue";
 export default {
   inject: ["reload"],
   components: { headertopsecond, SecondFooter },

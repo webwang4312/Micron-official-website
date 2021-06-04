@@ -7,25 +7,25 @@
     </div>
     <ul>
       <li>
-        <img src="@assets/images/second/git.png" @click="github" />
+        <img src="@assets/imagesen/second/git.png" @click="github" />
       </li>
       <li>
-        <img src="@assets/images/second/组 25.png" @click="telegram" />
+        <img src="@assets/imagesen/second/组 25.png" @click="telegram" />
       </li>
       <li>
-        <img src="@assets/images/second/facebook.png" @click="facebook" />
+        <img src="@assets/imagesen/second/facebook.png" @click="facebook" />
       </li>
       <li>
-        <img src="@assets/images/second/twitter.png" @click="twitter" />
+        <img src="@assets/imagesen/second/twitter.png" @click="twitter" />
       </li>
       <li>
-        <img src="@assets/images/second/微博.png" @click="weibo" />
+        <img src="@assets/imagesen/second/微博.png" @click="weibo" />
       </li>
       <li>
-        <img src="@assets/images/second/m.png" @click="medium" />
+        <img src="@assets/imagesen/second/m.png" @click="medium" />
       </li>
       <li>
-        <img src="@assets/images/second/reddit.png" @click="reddit" />
+        <img src="@assets/imagesen/second/reddit.png" @click="reddit" />
       </li>
     </ul>
     </div>

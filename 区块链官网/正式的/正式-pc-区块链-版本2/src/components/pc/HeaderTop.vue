@@ -20,19 +20,19 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <router-link :to="{ path: '/block' }">
+              <router-link :to="{ path: '/pc/block' }">
                 <span @click="blueClass">
                   {{ $t("nav")[2] }}
                 </span>
               </router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/transaction' }">{{
+              <router-link :to="{ path: '/pc/transaction' }">{{
                 $t("nav")[3]
               }}</router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/address' }">{{
+              <router-link :to="{ path: '/pc/address' }">{{
                 $t("nav")[4]
               }}</router-link>
             </el-dropdown-item>
@@ -40,7 +40,7 @@
         </el-dropdown>
       </li>
       <li>
-        <router-link :to="{ path: '/chart' }">
+        <router-link :to="{ path: '/pc/chart' }">
           <span @click="blueClass2">
             {{ $t("nav")[5] }}
           </span>

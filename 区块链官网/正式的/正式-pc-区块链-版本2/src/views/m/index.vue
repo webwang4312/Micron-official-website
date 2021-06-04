@@ -1,15 +1,8 @@
 <template>
   <div class="index">
-    <headertop></headertop>
-    <div class="index_top">
-      <div class="title">
-        UENC EXPLORER
-      </div>
-      <Search></Search>
-    </div>
     <div class="info">
-      <div class="info_top">
-        <ul>
+      <ul class="info_first">
+        <li>
           <div class="block_height"></div>
           <div>
             <div class="center_top">
@@ -19,9 +12,8 @@
               {{ $t("index")[0] }}
             </div>
           </div>
-          <!-- <div class="line_right"></div> -->
-        </ul>
-        <ul>
+        </li>
+        <li>
           <div class="transaction24"></div>
           <div>
             <div class="center_top">
@@ -31,9 +23,10 @@
               {{ $t("index")[1] }}
             </div>
           </div>
-          <!-- <div class="line_right"></div> -->
-        </ul>
-        <ul class="last">
+        </li>
+      </ul>
+      <ul>
+        <li>
           <div class="award"></div>
           <div>
             <div class="center_top">
@@ -43,12 +36,8 @@
               {{ $t("index")[2] }}
             </div>
           </div>
-          <!-- <div class="line_right2"></div> -->
-        </ul>
-      </div>
-      <div class="info_line"></div>
-      <div class="info_top info_bottom">
-        <ul>
+        </li>
+        <li>
           <div class="alljiedian"></div>
           <div>
             <div class="center_top">
@@ -58,9 +47,10 @@
               {{ $t("index")[3] }}
             </div>
           </div>
-          <!-- <div class="line_right"></div> -->
-        </ul>
-        <ul>
+        </li>
+      </ul>
+      <ul>
+        <li>
           <div class="alltransaction"></div>
           <div>
             <div class="center_top">
@@ -70,9 +60,8 @@
               {{ $t("index")[4] }}
             </div>
           </div>
-          <!-- <div class="line_right"></div> -->
-        </ul>
-        <ul class="last">
+        </li>
+        <li>
           <div class="last_award"></div>
           <div>
             <div class="center_top">
@@ -82,14 +71,20 @@
               {{ $t("index")[5] }}
             </div>
           </div>
-          <!-- <div class="line_right2"></div> -->
-        </ul>
-      </div>
+        </li>
+      </ul>
+
+      <!--     
+      <div class="info_top info_bottom">
+        
+      </div> -->
     </div>
+    <div class="hezi"></div>
     <div class="chart">
       <div id="bars"></div>
       <div id="bar"></div>
     </div>
+    <div class="hezi"></div>
     <div class="info_list">
       <div class="last_transaction">
         <div class="subject">
@@ -101,34 +96,63 @@
           </div>
         </div>
 
-        <ul class="content" v-for="item in tableData" :key="item">
-          <li>
-            <div class="content_left">
-              TX<span @click="goToTransactionDetail(item.transaction_hash2)">
-                {{ item.transaction_hash }}</span
-              >
-              <br />
-              <span>
-                {{ item.date.toString() }}
-              </span>
-            </div>
-            <div class="content_center">
-              {{ $t("index")[9] }}
-              <span @click="goToAddressDetail(item.from_address2)">
-                {{ item.from_address }}
-              </span>
-              <br />
-              {{ $t("index")[10] }}
-              <span @click="goToAddressDetail(item.to_address2)">
-                {{ item.to_address }}
-              </span>
-            </div>
-            <div class="content_right">
-              <span>
-                {{ item.amount }}
-              </span>
-              UENC
-            </div>
+        <ul class="content">
+          <li v-for="item in tableData" :key="item">
+            <ul>
+              <li>
+                <div>
+                  交易哈希TX
+                </div>
+                <div
+                  @click="goToTransactionDetail(item.transaction_hash2)"
+                  class="blue"
+                >
+                  {{ item.transaction_hash }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("index")[9] }}
+                </div>
+                <div
+                  @click="goToAddressDetail(item.from_address2)"
+                  class="blue"
+                >
+                  {{ item.from_address }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("index")[10] }}
+                </div>
+                <div @click="goToAddressDetail(item.to_address2)" class="blue">
+                  {{ item.to_address }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  交易额:
+                </div>
+                <div>
+                  {{ item.amount }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  时间
+                </div>
+                <div>
+                  {{ item.date.toString() }}
+                </div>
+              </li>
+              <li>
+                <div></div>
+                <div
+                  style="width: 248px;
+height: 0px;border-bottom:1px solid #B2B2B2"
+                ></div>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -142,39 +166,54 @@
           </div>
         </div>
 
-        <ul class="content" v-for="item in tableData2" :key="item">
-          <li>
-            <div class="content_left">
-              TX<span @click="goToBlockDetail(item.block_height)">
-                {{ item.block_height }}</span
-              >
-              <br />
-              <span>
-                {{ item.time.toString() }}
-              </span>
-            </div>
-            <div class="content_center">
-              <span>
-                {{ item.amount }}
-              </span>
-            </div>
-            <div class="content_right">
-              <span>
-                {{ item.award }}
-              </span>
-              UENC
-            </div>
+        <ul class="content">
+          <li v-for="item in tableData2" :key="item">
+            <ul>
+              <li>
+                <div>
+                  高度
+                </div>
+                <div @click="goToBlockDetail(item.block_height)" class="blue">
+                  {{ item.block_height }}
+                </div>
+              </li>
+              <li>
+                <div>区块奖励</div>
+                <div>
+                  {{ item.award }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  时间
+                </div>
+                <div>
+                  {{ item.time.toString() }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  交易笔数
+                </div>
+                <div>
+                  {{ item.tx_num }}
+                </div>
+              </li>
+               <li>
+                <div></div>
+                <div
+                  style="width: 248px;
+height: 0px;border-bottom:1px solid #B2B2B2"
+                ></div>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
     </div>
-    <v-footer></v-footer>
   </div>
 </template>
 <script>
-import headertop from "@components/common/HeaderTop";
-import VFooter from "@components/common/Footer.vue";
-import Search from "@components/common/Search.vue";
 export default {
   name: "index",
   inject: ["reload"],
@@ -234,7 +273,7 @@ export default {
     };
   },
   watch: {},
-  components: { headertop, Search, VFooter },
+
   created() {
     this.nowLang = this.$i18n.locale;
     if (this.nowLang == "cn") {
@@ -242,12 +281,6 @@ export default {
     } else {
       (this.test1 = "Block reward"), (this.test2 = "Total daily transactions");
     }
-    // window.setInterval(() => {
-    //   setTimeout(this.indexlist(), 0);
-    // }, 3000);
-    //  window.setInterval(() => {
-    //   setTimeout(this.jiedian(), 0);
-    // }, 3000);
     this.indexlist();
     this.jiedian();
   },
@@ -273,7 +306,7 @@ export default {
       this.$router.push({
         path: "/transactiondetail",
         query: {
-         transaction_hash: item,
+          transaction_hash: item,
         },
       });
     },
@@ -363,7 +396,7 @@ export default {
                 // 系列级个性化折线样式
                 width: 3,
                 type: "solid",
-                color: "green", //折线的颜色
+                color: "#965EE5", //折线的颜色
               },
             },
           },
@@ -424,6 +457,7 @@ export default {
                 barBorderRadius: 7,
               },
               normal: {
+                 color:'#965EE5',
                 barBorderRadius: 7,
               },
             },
@@ -494,23 +528,6 @@ export default {
                 },
               },
               series: [
-                // {
-                //   name: "军费支出",
-                //   type: "bar",
-                //   barWidth: "20%",
-
-                //   itemStyle: {
-                //     normal: {
-                //       color: "#4169E1", //柱子的颜色
-                //     },
-                //   },
-                //   backgroundStyle: {
-                //     borderRadius: 10, // 统一设置四个角的圆角大小
-                //     shadowColor: "rgba(0, 0, 0, 0.5)",
-                //     shadowBlur: 10,
-                //   },
-                //   data: transaction_num_for_7,
-                // },
                 {
                   data: transaction_num_for_7,
                   type: "line",
@@ -522,7 +539,7 @@ export default {
                   itemStyle: {
                     normal: {
                       color: "#fff",
-                      borderColor: "#965EE5",
+                      borderColor: "blue",
                       borderWidth: 3,
                       label: {
                         show: false,
@@ -532,7 +549,7 @@ export default {
                           color: "#fff",
                           // width: 54,
                           // height: 27,
-                          backgroundColor: "#965EE5",
+                          backgroundColor: "blue",
                         },
                       },
                     },
@@ -634,7 +651,6 @@ export default {
                       barBorderRadius: 7,
                     },
                     normal: {
-                        color:'#965EE5',
                       barBorderRadius: 7,
                     },
                   },
@@ -906,400 +922,304 @@ export default {
 };
 </script>
 <style lang="less">
-// canvas {
-//   width: 626px !important;
-//   height: 322px !important;
-// }
+.blue {
+  font-size: 13px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  line-height: 18px;
+  color: #965EE5 !important;
+  cursor: pointer;
+}
+canvas {
+  z-index: 2;
+}
+
 .el-icon-arrow-right {
 }
 .more {
   cursor: pointer;
 }
 #bars {
-  width: 626px;
+  width: 343px;
   height: 322px;
-  border: 1px solid #e9eced;
-  opacity: 1;
-  border-radius: 18px;
-  // div {
-  //   width: 626px !important;
-  //   height: 322px !important;
-  // }
+  background: #ffffff !important;
+  z-index: 2;
 }
 #bar {
-  width: 626px;
+  width: 343px;
   height: 322px;
-  border: 1px solid #e9eced;
-  opacity: 1;
-  border-radius: 18px;
-  margin-left: 23.25px;
+  background: #ffffff;
+  z-index: 2;
 }
 .index {
   height: auto;
-}
-.index_top {
-  width: 100%;
-  height: 352.5px;
-  background: url("../assets/images/second/背景.png") no-repeat center/100% 100%;
   z-index: 1;
-  .title {
+  .hezi {
     width: 100%;
-    text-align: center;
-    font-size: 53px;
-    font-family: Microsoft YaHei;
-    font-weight: bold;
-    line-height: 40px;
-    color: rgba(255, 255, 255, 0.9);
-    padding-top: 68.4px;
-    margin-bottom: 36.6px;
-    letter-spacing: 13px;
+    height: 10px;
+    background: #f8f8f8;
   }
-  .indexsecondsearch {
-    width: 600px;
-    height: 45px;
-    background: #ffffff;
-    opacity: 1;
-    border-radius: 11px;
-  }
-}
-.info {
-  width: 1274px;
-  height: 247px;
-  background: #ffffff;
-  border: 1px solid #e9eced;
-  opacity: 1;
-  border-radius: 18px;
-  margin: 0 auto;
-  z-index: 100;
-  position: relative;
-  top: -103px;
-  .center_bottom {
-    font-size: 15px;
-    font-family: Microsoft YaHei;
-    font-weight: 400;
-    line-height: 15px;
-    color: #666666;
-    opacity: 1;
-    margin-top: 2px;
-  }
-  .center_top {
-    font-size: 18px;
-    font-family: Microsoft YaHei;
-    font-weight: 400;
-    line-height: 18px;
-    color: #000000;
-    opacity: 1;
-  }
-  .info_top {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    height: 60px;
-    align-items: center;
-    // margin-left: 97.13px;
-    margin: 45.38px auto 0;
-    .last {
-      // width: 332px;
-      border: none;
-      // justify-content: space-between;
-    }
-    ul:nth-child(2) {
-      // margin-left: 95px;
-    }
-    ul:nth-child(3) {
-      // margin-left: 95px;
+  .info {
+    width: 343px;
+    height: auto;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    padding-top: 12px;
+    background: gray;
+    .info_first {
+      margin-top: 0px;
+
+      background: red;
     }
     ul {
-      width: 422px;
-      border-right: 2px solid #e9eced;
+      width: 100%;
       //background: chocolate;
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding-left: 97px;
-      div:nth-child(2) {
-        width: 100px;
-
-        overflow: hidden;
+      margin-top: 38px;
+      padding: 0 9px;
+      li:nth-child(1) {
+        width: 200px;
+        margin-right: 61px;
       }
-      div:nth-child(1) {
-        margin-right: 78px;
-      }
-      .block_height {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/区块高度.png") no-repeat
-          center/100% 100%;
-      }
-      .block_height:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/区块高度.gif") no-repeat
-          center/100% 100%;
-      }
-      .transaction24 {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/24H交易数.png") no-repeat
-          center/100% 100%;
-      }
-      .transaction24:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/24H交易数.gif") no-repeat
-          center/100% 100%;
-      }
-      .award {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/已发放奖励.png") no-repeat
-          center/100% 100%;
-      }
-      .award:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/已发放奖励.gif") no-repeat
-          center/100% 100%;
-      }
-      .alljiedian {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/节点总数.png") no-repeat
-          center/100% 100%;
-      }
-      .alljiedian:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/节点总数.gif") no-repeat
-          center/100% 100%;
-      }
-      .alltransaction {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/累计交易数.png") no-repeat
-          center/100% 100%;
-      }
-      .alltransaction:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/累计交易数.gif") no-repeat
-          center/100% 100%;
-      }
-      .last_award {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/剩余区块奖励.png") no-repeat
-          center/100% 100%;
-      }
-      .last_award:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
-          center/100% 100%;
-      }
-    }
-    // .top_left {
-    //   margin-left: 63.5px;
-    // }
-  }
-  .info_bottom {
-    margin-top: 18px !important;
-  }
-  .info_line {
-    width: 1080px;
-    height: 0px;
-    border: 1px solid #e9eced;
-
-    margin: 30px auto 0;
-  }
-  .line_right {
-    width: 0px;
-    height: 47px;
-    border: 1px solid #e9eced;
-    opacity: 1;
-  }
-  .line_right2 {
-    width: 0px;
-    height: 31px;
-    border: 1px solid #e9eced;
-    opacity: 0;
-  }
-}
-.chart {
-  width: 1274px;
-  height: 322px;
-  margin: -83px auto;
-  display: flex;
-  flex-direction: row;
-}
-.info_list {
-  width: 1274px;
-  height: 889px;
-  margin: 105.5px auto 115px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  .last_transaction {
-    width: 626px;
-    height: 847px;
-    border: 1px solid #e9eced;
-    opacity: 1;
-    border-radius: 18px;
-    .subject {
-      width: 551.74px;
-      margin: 33.48px auto 23.5px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      div:nth-child(1) {
-        font-size: 18px;
-        font-family: Microsoft YaHei;
-        font-weight: bold;
-        line-height: 21px;
-        color: #515151;
-      }
-      div:nth-child(2) {
-        font-size: 18px;
-        font-family: Microsoft YaHei;
-        font-weight: bold;
-        line-height: 21px;
-        color: #965EE5;
-      }
-    }
-    .content {
-      width: 551px;
-      margin: 0 auto;
       li {
-        width: 551px;
-        height: 75px;
-        border-top: 2px solid #ebeeef;
+        width: 200px;
         display: flex;
         flex-direction: row;
-        // justify-content: space-between;
-        padding-top: 19px;
-        padding-bottom: 18px;
-        align-items: center;
-        .content_left {
-          width: 140px;
-          margin-right: 85px;
-          span:nth-child(1) {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: bold;
-            line-height: 17px;
-            color: #965EE5;
-            cursor: pointer;
-          }
-          span:nth-child(3) {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            line-height: 17px;
-            color: #666666;
-          }
-        }
-        .content_center {
-          width: 140px;
-          margin-right: 75px;
-          span:nth-child(1),
-          span:nth-child(3) {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: bold;
-            line-height: 17px;
-            color: #965EE5;
-            cursor: pointer;
-          }
-        }
-        .content_right {
-          width: 118px;
-          text-align: right;
-          font-size: 15px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          line-height: 17px;
-          color: #666666;
-          span {
-            margin-right: 3px;
-          }
-        }
       }
+      .block_height {
+        width: 44px;
+        height: 44px;
+        background: url("../../assets/images/second/区块高度.png") no-repeat
+          center/100% 100%;
+      }
+      // .block_height:hover {
+      //   width: 44px;
+      //   height: 44px;
+      //   background: url("../assets/images/second/区块高度.gif") no-repeat
+      //     center/100% 100%;
+      // }
+      .transaction24 {
+        width: 44px;
+        height: 44px;
+        background: url("../../assets/images/second/24H交易数.png") no-repeat
+          center/100% 100%;
+      }
+      // .transaction24:hover {
+      //   width: 44px;
+      //   height: 44px;
+      //   background: url("../assets/images/second/24H交易数.gif") no-repeat
+      //     center/100% 100%;
+      // }
+      .award {
+        width: 44px;
+        height: 44px;
+        background: url("../../assets/images/second/已发放奖励.png") no-repeat
+          center/100% 100%;
+      }
+      // .award:hover {
+      //   width: 44px;
+      //   height: 44px;
+      //   background: url("../assets/images/second/已发放奖励.gif") no-repeat
+      //     center/100% 100%;
+      // }
+      .alljiedian {
+        width: 44px;
+        height: 44px;
+        background: url("../../assets/images/second/节点总数.png") no-repeat
+          center/100% 100%;
+      }
+      // .alljiedian:hover {
+      //   width: 44px;
+      //   height: 44px;
+      //   background: url("../assets/images/second/节点总数.gif") no-repeat
+      //     center/100% 100%;
+      // }
+      .alltransaction {
+        width: 44px;
+        height: 44px;
+        background: url("../../assets/images/second/累计交易数.png") no-repeat
+          center/100% 100%;
+      }
+      // .alltransaction:hover {
+      //   width: 44px;
+      //   height: 44px;
+      //   background: url("../assets/images/second/累计交易数.gif") no-repeat
+      //     center/100% 100%;
+      // }
+      .last_award {
+        width: 44px;
+        height: 44px;
+        background: url("../../assets/images/second/剩余区块奖励.png") no-repeat
+          center/100% 100%;
+      }
+      // .last_award:hover {
+      //   width: 44px;
+      //   height: 44px;
+      //   background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
+      //     center/100% 100%;
+      // }
+    }
+    .center_bottom {
+      font-size: 14px;
+      font-family: PingFang SC;
+      font-weight: 400;
+      line-height: 20px;
+      color: #9da5bb;
+      margin-top: 2px;
+    }
+    .center_top {
+      font-size: 15px;
+      font-family: PingFang SC;
+      font-weight: 600;
+      line-height: 21px;
+      color: #253551;
     }
   }
-  .last_block {
-    width: 626px;
-    height: 847px;
-    border: 1px solid #e9eced;
-    opacity: 1;
-    border-radius: 18px;
-    .subject {
-      width: 551.74px;
-      margin: 33.48px auto 23.5px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      div:nth-child(1) {
-        font-size: 18px;
-        font-family: Microsoft YaHei;
-        font-weight: bold;
-        line-height: 21px;
-        color: #515151;
-      }
-      div:nth-child(2) {
-        font-size: 18px;
-        font-family: Microsoft YaHei;
-        font-weight: bold;
-        line-height: 21px;
-        color: #965EE5;
-      }
-    }
-    .content {
-      width: 551px;
-      margin: 0 auto;
-      li {
-        width: 551px;
-        height: 75px;
-        border-top: 2px solid #ebeeef;
+  .chart {
+    position: relative;
+    width: 343px;
+    height: auto;
+    margin: 10px auto 10px;
+    z-index: 2;
+  }
+  .info_list {
+    width: 343px;
+    height: auto;
+    margin: 20px auto 37px;
+    display: flex;
+    flex-direction: column;
+
+    .last_transaction {
+      width: 100%;
+      height: auto;
+
+      margin-bottom: 20px;
+      .subject {
+        width: 100%;
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        padding-top: 19px;
-        padding-bottom: 18px;
+        div:nth-child(1) {
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
+          color: #253551;
+        }
+        div:nth-child(2) {
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
+          color: #965EE5;
+        }
+      }
+      .content {
+        width: 100%;
+        margin: 0 auto;
+      }
+      .content > li {
+        width: 100%;
+        height: 172px;
+
+        display: flex;
         align-items: center;
-        .content_left {
-          width: 140px;
-          span:nth-child(1) {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: bold;
-            line-height: 17px;
-            color: #965EE5;
-            cursor: pointer;
+        ul {
+          width: 100%;
+          height: 100%;
+          li:nth-child(1) {
+            margin-top: 20px;
           }
-          span:nth-child(3) {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            line-height: 17px;
-            color: #666666;
+          li {
+            display: flex;
+            flex-direction: row;
+
+            margin-top: 10px;
+            div:nth-child(1) {
+              width: 100px;
+              font-size: 13px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              line-height: 18px;
+              color: #9da5bb;
+            }
+            div:nth-child(2) {
+              font-size: 13px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              line-height: 18px;
+              color: #253551;
+            }
           }
         }
-        .content_center {
-          text-align: center;
-          span {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            line-height: 17px;
-            color: #666666;
-          }
+      }
+    }
+    .last_block {
+      width: 100%;
+      height: auto;
+
+      .subject {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        div:nth-child(1) {
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
+          color: #253551;
         }
-        .content_right {
-          font-size: 15px;
-          font-family: Microsoft YaHei;
-          font-weight: 400;
-          line-height: 17px;
-          color: #666666;
+        div:nth-child(2) {
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
+          color: #965EE5;
+        }
+      }
+      .content {
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+      .content > li {
+        width: 100%;
+        height: 143px;
+
+        display: flex;
+        align-items: center;
+        ul {
+          width: 100%;
+          height: 143px;
+          li:nth-child(1) {
+            margin-top: 20px;
+          }
+          li {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+
+            div:nth-child(1) {
+              width: 100px;
+              font-size: 13px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              line-height: 18px;
+              color: #9da5bb;
+            }
+            div:nth-child(2) {
+              font-size: 13px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              line-height: 18px;
+              color: #253551;
+            }
+          }
         }
       }
     }
