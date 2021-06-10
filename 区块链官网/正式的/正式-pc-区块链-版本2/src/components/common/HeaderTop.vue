@@ -158,6 +158,9 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   z-index: 101;
+  position: fixed;
+  top: 0;
+
   //  position: -webkit-sticky;
   //   position: sticky;
   //   top: 0px;

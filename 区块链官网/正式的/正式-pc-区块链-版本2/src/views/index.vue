@@ -164,20 +164,19 @@ export default {
   components: { headertop, Search, VFooter, Chart, indexList },
   created() {
     this.nowLang = this.$i18n.locale;
-
+    this.indexlists();
     window.setInterval(() => {
       setTimeout(this.indexlists(), 1000);
     }, 60000);
     //  window.setInterval(() => {
     //   setTimeout(this.jiedian(), 0);
     // }, 3000);
-    // this.indexlists();
+    //  this.indexlists();
     // this.jiedian();
   },
   beforeDestroy() {
-    clearInterval(this.indexlists());        
-   
-},
+    clearInterval(this.indexlists());
+  },
   mounted() {},
   methods: {
     indexlists() {
@@ -449,6 +448,7 @@ export default {
   height: 351px;
   background: url("../assets/images/second/背景.png") no-repeat center/100% 100%;
   z-index: 1;
+  padding-top: 75px;
   .title {
     width: 100%;
     text-align: center;

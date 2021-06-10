@@ -18,7 +18,7 @@
     font-size: 18px
   }
 .el-select .el-input.is-focus .el-input__inner{
-  border-color: beige!important;
+  border-color: #E9ECED!important;
 }
 
 a {

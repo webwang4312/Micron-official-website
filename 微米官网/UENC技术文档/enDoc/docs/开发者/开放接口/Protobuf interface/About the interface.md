@@ -186,7 +186,7 @@ def SetServiceFeeRequest():
         return json_output
 ```
 
-## 四、Get account balance interface (GetAmountReq)
+## 三、Get account balance interface (GetAmountReq)
 
 1. Request
    ```dict
@@ -276,7 +276,7 @@ def GetAmountRequest():
         return json_output
 ```
 
-## 五、Get the package fee interface of a specific node (GetPacketFeeReq)  deprecated
+<!-- ## 五、Get the package fee interface of a specific node (GetPacketFeeReq)  deprecated
 1. Request
 
    ```dict
@@ -366,9 +366,9 @@ def GetPacketFeeRequest():
         json_output = json.dumps(message_GetPacketFeeReq, indent=4, ensure_ascii=False)
         # Return json data
         return json_output
-```
+``` -->
 
-##  六、Get the node mining fee interface of the whole network (GetNodeServiceFeeReq)
+##  四、Get the node mining fee interface of the whole network (GetNodeServiceFeeReq)
 
 1. Request
 
@@ -416,7 +416,7 @@ def GetPacketFeeRequest():
 
 
 
-##  七、Get wallet address interface based on password (GetDevPasswordReq)
+##  五、Get wallet address interface based on password (GetDevPasswordReq)
 
 1. Request
 
@@ -506,7 +506,7 @@ def GetDevPasswordRequest():
         return json_output
 ```
 
-##  八、Get client-related information interface from the server (GetClientInfoReq)
+##  六、Get client-related information interface from the server (GetClientInfoReq)
 
 1. Request
 
@@ -571,7 +571,7 @@ def GetDevPasswordRequest():
 
 
 
-##  九. Get public network node information interface (GetNodeInfoReq)
+##  七. Get public network node information interface (GetNodeInfoReq)
 
 1. Request
 
@@ -628,7 +628,7 @@ def GetDevPasswordRequest():
 
 
 
-##  十、Get information interface such as average handling fee and synchronization status (GetServiceInfoReq)
+##  八、Get information interface such as average handling fee and synchronization status (GetServiceInfoReq)
 
 1. Request
 
@@ -758,7 +758,7 @@ def GetServiceInfoRequest():
         return json_output
 ```
 
-##  十一、 Initiate transaction interface
+##  九、 Initiate transaction interface
 
 ![Example banner](../../../assets/en_picture/send_tx.png)
 
@@ -1094,7 +1094,7 @@ The first step is to verify the password:
 
 
 
-##  十二、Query block information interface (GetBlockInfoReq)
+##  十、Query block information interface (GetBlockInfoReq)
 
 1. Request
 
@@ -1248,7 +1248,7 @@ def GetBlockInfoRequest():
 
 ```
 
-## 十三、The interface for querying transaction information according to the wallet address (GetAddrInfoReq)
+## 十一、The interface for querying transaction information according to the wallet address (GetAddrInfoReq)
 
 1. Request
 
@@ -1403,7 +1403,7 @@ def GetAddrInfoRequest():
 
 ```
 
-##  十四、Request for obtaining the recovery phrase phrase of the node's public and private key (GetDevPrivateKeyReq)
+##  十二、Request for obtaining the recovery phrase phrase of the node's public and private key (GetDevPrivateKeyReq)
 
 1. Request
 
@@ -1451,7 +1451,7 @@ def GetAddrInfoRequest():
    |     mnemonic      |    Recovery phrase    |
 
 
-##  十五、 (Solution) Pledge Interface
+##  十三、 (Solution) Pledge Interface
 ### 1.Initiate a pledge request (mainnet request) (CreatePledgeTxMsgReq)
 
 First step:
@@ -1787,7 +1787,7 @@ The second step:
 
 
 
-##  十六、Request for obtaining transaction information list (GetTxInfoListReq)
+##  十四、Request for obtaining transaction information list (GetTxInfoListReq)
 
 1. Request
 
@@ -1919,7 +1919,7 @@ def GetTxInfoListRequest():
         return json_output
 ```
 
-## 十七、Get transaction details interface (GetTxInfoDetailReq)
+## 十五、Get transaction details interface (GetTxInfoDetailReq)
 
 1. Request
 
@@ -2035,7 +2035,7 @@ def GetTxInfoDetailRequest():
         return json_output
 ```
 
-## 十八、Get the block list interface (GetBlockInfoListReq)
+## 十六、Get the block list interface (GetBlockInfoListReq)
 
 1. Request
 
@@ -2152,7 +2152,7 @@ def GetBlockInfoListRequest():
         return json_output
 ```
 
-## 十九、Get block details request (GetBlockInfoDetailReq)
+## 十七、Get block details request (GetBlockInfoDetailReq)
 
 1. Request
 
@@ -2269,7 +2269,7 @@ def GetBlockInfoDetailRequest():
 ```
 
 
-##  二十、Get the transaction failure list request (GetTxFailureListReq)
+##  十八、Get the transaction failure list request (GetTxFailureListReq)
 1. Request
 
    ```

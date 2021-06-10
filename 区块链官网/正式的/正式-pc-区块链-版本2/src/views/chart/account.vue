@@ -332,7 +332,7 @@ export default {
                   borderRadius: 10,
                   padding: 15,
                 },
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test+":{c0}",
                 rich: {
                   a: {
                     marginLeft: 25,
@@ -439,7 +439,7 @@ export default {
                   borderRadius: 10,
                   padding: 15,
                 },
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test2+":{c0}",
                 rich: {
                   a: {
                     marginLeft: 25,
@@ -546,7 +546,7 @@ export default {
                   borderRadius: 10,
                   padding: 15,
                 },
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test3+":{c0}",
                 rich: {
                   a: {
                     marginLeft: 25,

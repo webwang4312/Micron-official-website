@@ -1,9 +1,12 @@
 <template>
   <div id="home">
     <headertopsecond></headertopsecond>
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
-    </keep-alive>
+    <div class="pad">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </div>
+
     <router-view v-if="!$route.meta.keepAlive">
       <!--因为用的是v-if 所以下面还要创建一个未缓存的路由视图出口-->
     </router-view>
@@ -12,6 +15,9 @@
 </template>
 
 <style lang="less">
+.pad {
+  padding-top: 75px;
+}
 // .el-table__body tr td:nth-child(1){
 //   text-align: left!important;
 // }

@@ -77,6 +77,7 @@ export default {
   data() {
     return {
       nowLang: "",
+      nodenumber:'',
       credit_ratio: [
         { first: "10", second: "20", third: "30", fourth: "20", five: "20" },
         { node1: "10", node2: "20", node3: "30", node4: "20", node5: "20" },
@@ -93,9 +94,12 @@ export default {
     if (this.nowLang == "cn") {
       this.title[0].test = "节点统计";
       this.title[0].test2 = "燃料费分布图";
+      this.nodenumber='节点数'
     } else {
       this.title[0].test = "node statistics";
       this.title[0].test2 = "gas fee distribution";
+      this.nodenumber='Number of nodes'
+      
     }
   },
   mounted() {
@@ -227,7 +231,7 @@ export default {
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.nodenumber+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
               
                 borderWidth: "1",

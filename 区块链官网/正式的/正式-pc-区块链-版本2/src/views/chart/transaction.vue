@@ -227,7 +227,7 @@ export default {
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
                 borderColor: "#EEF0F2",
                 borderWidth: "1",
@@ -307,10 +307,22 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
+                 axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test2+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
                 borderColor: "#EEF0F2",
                 borderWidth: "1",

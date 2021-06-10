@@ -11,14 +11,9 @@ module.exports = {
   lintOnSave: false, // eslint-loader 是否在保存的时候检查
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   // webpack配置
-
+  
   chainWebpack: config => {
-    config.module
-      .rule('iview')
-      .test(/iview.src.*?js$/)
-      .use('babel')
-      .loader('babel-loader')
-      .end()
+   
 
     // 修复HMR
     config.resolve.symlinks(true);

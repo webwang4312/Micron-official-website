@@ -239,25 +239,13 @@ export default {
         }
       }
     },
-    timestampToTime(timestamp) {
-      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + "-";
-      var M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-      var D = date.getDate() + " ";
-      var h = date.getHours() + ":";
-      var m = date.getMinutes() + ":";
-      var s = date.getSeconds();
-      return Y + M + D + h + m + s;
-    },
+ 
   },
 };
 </script>
 <style lang="less">
 .block {
-  background: #F9FAFD;
+  background: #f9fafd;
   .top {
     width: 1275px;
     height: 38px;
@@ -280,7 +268,7 @@ export default {
   .block_info {
     width: 1275px;
     height: 975px;
-  background: #FCFCFC;
+    background: #fcfcfc;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
@@ -288,7 +276,6 @@ export default {
     .info_title {
       height: 75px;
       line-height: 75px;
-
       li {
         display: flex;
         flex-direction: row;
@@ -299,7 +286,14 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #000000;
-          width: 160px;
+          width: 20%;
+          text-align: center;
+        }
+        div:nth-last-of-type(1) {
+          text-align: right;
+        }
+        div:nth-child(1) {
+          text-align: left;
         }
         div:nth-child(3) {
           text-align: center;
@@ -320,16 +314,15 @@ export default {
         padding: 0 53px;
         height: 45px;
         cursor: pointer;
-
         div:nth-child(1) {
           font-size: 15px;
           font-family: Microsoft YaHei;
           font-weight: 400;
-
+          text-align: left;
           color: #965ee5;
         }
-        div:nth-child(3) {
-          text-align: center;
+        div:nth-last-of-type(1) {
+          text-align: right;
         }
         div {
           font-size: 15px;
@@ -337,7 +330,8 @@ export default {
           font-weight: 400;
           line-height: 45px;
           color: #333333;
-          width: 148px;
+          width: 20%;
+          text-align: center;
         }
       }
     }
@@ -347,7 +341,6 @@ export default {
     height: 37px;
     background: #ffffff;
     margin: 0 auto 128px;
-
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

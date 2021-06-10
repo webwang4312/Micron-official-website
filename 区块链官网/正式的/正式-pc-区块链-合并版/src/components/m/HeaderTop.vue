@@ -1,5 +1,5 @@
 <template>
-  <div class="headers">
+  <div :class="{'headers':true,'fixed':fixed}" >
     <div
       class="header-top
     "
@@ -46,7 +46,10 @@
         <li class="slide2" @click="menuSecond">
           <div class="el-dropdown-link">
             {{ $t("nav")[1] }}
-            <img src="@assets/imagesen/second/menuxia.png" v-show="!secondmenu" />
+            <img
+              src="@assets/imagesen/second/menuxia.png"
+              v-show="!secondmenu"
+            />
             <img src="@assets/imagesen/second/收回.png" v-show="secondmenu" />
             <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
           </div>
@@ -94,6 +97,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      fixed:false,
       blues: false,
       activeIndex: "1",
       nowLang: "",
@@ -116,8 +120,27 @@ export default {
     }
     //console.log(this.$i18n.locale);
   },
-  mounted() {},
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll, true);
+  },
+beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   methods: {
+    handleScroll() {
+      let scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      // console.log(scrollTop);
+      if(scrollTop>=20){
+        this.fixed=true
+      }
+      else{
+        this.fixed=false
+      }
+    },
+
     goHome() {
       this.$router.push({
         path: "/m/index",
@@ -173,16 +196,24 @@ export default {
     },
     handleSelect(key, keyPath) {},
   },
-  mounted() {},
-  destroyed() {},
 };
 </script>
 
 <style lang="less">
+.fixed{
+  position: sticky!important;
+  top: 0;
+  height: auto;
+  background-color: #fff !important;
+  margin-bottom: 21px;
+  z-index: 100;
+  
+}
 .van-overlay {
 }
 .van-popup {
   max-height: 60%;
+  overflow-x: hidden;
   .header-tops {
     width: 100%;
     height: 55px;
@@ -190,27 +221,25 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     background: #fff;
-    position: sticky;
-    top: 0;
+
     padding-right: 15px;
     .el-icon-close {
       margin-right: 15px;
     }
   }
-  .menuslide>li{
-height: 50px;
-      margin-top: 20px;
-      font-size: 16px;
-      font-family: PingFang SC;
-      font-weight: 400;
-      line-height: 50px;
-      color: #9da5bb;
-      padding-left: 15px;
+  .menuslide > li {
+    height: 50px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 50px;
+    color: #9da5bb;
+    padding-left: 15px;
   }
   .menuslide {
     width: 100%;
     li {
-      
     }
     .slide2 {
       height: auto;
@@ -223,13 +252,13 @@ height: 50px;
       ul {
         li {
           height: 50px;
-      margin-top: 20px;
-      font-size: 16px;
-      font-family: PingFang SC;
-      font-weight: 400;
-      line-height: 22px;
-      color: #9da5bb;
-      padding-left: 15px;
+          margin-top: 20px;
+          font-size: 16px;
+          font-family: PingFang SC;
+          font-weight: 400;
+          line-height: 22px;
+          color: #9da5bb;
+          padding-left: 15px;
           span {
             font-size: 16px;
             font-family: PingFang SC;
@@ -243,7 +272,7 @@ height: 50px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-height: 50px;
+        height: 50px;
         align-items: center;
         text-align: center;
         padding-right: 15px;
@@ -265,16 +294,12 @@ height: 50px;
   width: 100%;
   height: auto;
   background-color: #fff !important;
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
   margin-bottom: 21px;
   z-index: 100;
+  position: relative;
   .el-icon-close {
     transform: scale(2.5);
   }
-
   .header-top {
     width: 100%;
     height: 55px;

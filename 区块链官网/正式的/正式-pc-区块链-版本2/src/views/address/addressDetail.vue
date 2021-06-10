@@ -95,7 +95,7 @@
   </div>
 </template>
 <script>
-import { GetAddressListDetail, GetAddressListDetail2 } from "@server/api.js";
+import { GetAddressListDetail, GetAddressListDetail2,timestampToTime } from "@server/api.js";
 export default {
   name: "addressdetail",
   inject: ["reload"],
@@ -137,7 +137,7 @@ export default {
     goToAddressDetail(item) {
       //console.log(item);
       this.shiyan = item;
-
+this.addressList();
       this.addresssearch();
     },
     pagesMinus() {
@@ -205,7 +205,7 @@ export default {
             obj.time = date;
           }
           if (fenzhong > 1440) {
-            date.push(this.timestampToTime(strdate));
+            date.push(timestampToTime(strdate));
             // date.push(parseInt(fenzhong / 1440) + "天前");
             obj.time = date;
           }
@@ -225,21 +225,13 @@ export default {
             // 从
             obj.from_address =
               translist[i].from_address.substring(0, 10) + "...";
-            if (this.nowLang == "cn") {
-              obj.to_address = "质押";
-            } else {
-              obj.to_address = "Pledge";
-            }
+              obj.to_address=this.nowLang == "cn"?"质押":"Pledge"
+            
           } else if (
             translist[i].from_address == translist[i].to_address ||
             translist[i].redeem == "1"
           ) {
-            if (this.nowLang == "cn") {
-              // 从
-              obj.from_address = "质押";
-            } else {
-              obj.from_address = "Pledge";
-            }
+             obj.from_address=this.nowLang == "cn"?"质押":"Pledge"
             // 至
             obj.to_address = translist[i].to_address.substring(0, 10) + "...";
           } else {
@@ -278,7 +270,7 @@ export default {
             obj.time = date;
           }
           if (fenzhong > 1440) {
-            date.push(this.timestampToTime(strdate));
+            date.push(timestampToTime(strdate));
             // date.push(parseInt(fenzhong / 1440) + "days ago");
             obj.time = date;
           }
@@ -303,28 +295,7 @@ export default {
         }
       }
     },
-    timestampToTime(timestamp) {
-      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + "-";
-      if (Y == "2021-") {
-        Y = "";
-      } else {
-        Y = date.getFullYear() + "-";
-      }
-      var M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-      var D =
-        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "-";
-
-      var h =
-        (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":";
-      var m =
-        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-      var s = date.getSeconds();
-      return Y + M + D + h + m;
-    },
+  
   },
 };
 </script>
@@ -393,7 +364,7 @@ export default {
   .block_info {
     width: 1275px;
     height: auto;
-    background: gainsboro;
+   
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;

@@ -11,6 +11,7 @@ export default {
     return {
       test1: "",
       test2: "",
+      test22: "",
       index_chart: false,
     };
   },
@@ -18,19 +19,24 @@ export default {
   created() {
     this.nowLang = this.$i18n.locale;
     if (this.nowLang == "cn") {
-      (this.test1 = "区块奖励"), (this.test2 = "每日交易总额");
+      (this.test1 = "区块奖励"),(this.test22 = "交易额"), (this.test2 = "每日交易总额");
     } else {
-      (this.test1 = "Block reward"), (this.test2 = "Total daily transactions");
+      (this.test1 = "Block reward"),(this.test22 = "transactions"), (this.test2 = "Total daily transactions");
     }
+    
   },
   mounted() {
-    this.drawLine();
+     this.drawLine();
+    this.chartSecond()
      window.setInterval(() => {
       setTimeout(this.chartSecond(), 1000);
     }, 60000);
     
   },
-
+ beforeDestroy() {
+    clearInterval(this.chartSecond());        
+   
+},
   // 页码设置
   watch: {},
   methods: {
@@ -223,9 +229,6 @@ export default {
       // 基于准备好的dom，初始化echarts实例
 
       let myChart2 = echarts.init(document.getElementById("bar"));
-      var data = [];
-      // 绘制图表
-
       myChart2.setOption({
         title: {
           text: this.test2,
@@ -386,7 +389,7 @@ export default {
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.test22+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
 
                 textStyle: {
