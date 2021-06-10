@@ -10,6 +10,14 @@
 </template>
 
 <style lang="less">
+.actives{
+  font-size: 16px!important;
+font-family: PingFang SC!important;
+font-weight: 400!important;
+line-height: 22px!important;
+color: #6624FA!important;
+opacity: 1!important;
+}
 .el-loading-mask{
   z-index: 1!important;
   position: fixed!important;
@@ -19,11 +27,13 @@
 }
 
 a {
+  list-style: none;
   text-decoration: none;
 }
-.vue-particles {
-  // z-index: 1;
-}
+ a:hover {
+    list-style: none;
+    text-decoration: none;
+  }
 </style>
 <script>
 import '@assets/css/normalize.css';

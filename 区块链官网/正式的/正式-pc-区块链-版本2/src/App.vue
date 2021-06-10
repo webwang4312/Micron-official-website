@@ -10,7 +10,13 @@
 </template>
 
 <style lang="less">
-
+  a:hover {
+    list-style: none;
+    text-decoration: none;
+  }
+  a{
+    font-size: 18px
+  }
 .el-select .el-input.is-focus .el-input__inner{
   border-color: beige!important;
 }

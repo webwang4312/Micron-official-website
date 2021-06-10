@@ -10,7 +10,7 @@
     <div class="sub_title">{{ $t("navbar.Connect") }}</div>
     <div class="aboutUs">
       <a target="_blank" href="https://github.com/uenctech" class="iconfont icongithub"></a>
-      <a target="_blank" href="https://www.reddit.com/r/UENC/" class="iconfont iconfeishu"></a>
+      <a target="_blank" href="https://t.me/UENCOfficial" class="iconfont iconfeishu"></a>
       <a target="_blank" href="https://fb.me/uencclub" class="iconfont iconfacebook"></a>
       <a target="_blank" href="https://twitter.com/uencclub" class="iconfont icontuite"></a>
       <!-- <a target="_blank" href="https://weibo.com/u/5580784739" class="iconfont iconweibo"></a> -->

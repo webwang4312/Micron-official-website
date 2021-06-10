@@ -15,9 +15,11 @@ Vue.component('paginate', Paginate);
 // video引入
 Vue.config.productionTip = false;
 
-import ViewUI from 'view-design';
-import 'view-design/dist/styles/iview.css';
-Vue.use(ViewUI);
+// import ViewUI from 'view-design';
+// import 'view-design/dist/styles/iview.css';
+// import Button from 'vant/lib/button';
+
+
 
  axios.defaults.baseURL = "http://47.116.69.138:9090/";
 // axios.defaults.retry = 4;

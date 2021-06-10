@@ -2292,28 +2292,35 @@ def GetBlockInfoDetailRequest():
 2. Response
 
    ```
-    message GetTxFailureListAck
-    {
-        string version = 1;
-        int32 code = 2;
-        string description = 3;
-        uint32 total = 4;
-        repeated TxFailureItem list = 5;
-        string lasthash = 6;
-    }
-    message TxFailureItem
-    {
-        string txHash = 1;
-        repeated string vins = 2;
-        repeated string fromaddr = 3;
-        repeated string toaddr = 4;
-        string amount = 5;
-        uint64 time  = 6;
-        string detail = 7;
-        string gas = 8;
-        repeated string toAmount = 9;
-        TxType type = 10;
-    }
+ message GetTxFailureListAck
+ {
+     string version = 1;
+     int32 code = 2;
+     string description = 3;
+     uint32 total = 4;
+     repeated TxFailureItem list = 5;
+     string lasthash = 6;
+ }
+ message TxFailureItem
+ {
+     string txHash = 1;
+     repeated string vins = 2;
+     repeated string fromaddr = 3;
+     repeated string toaddr = 4;
+     string amount = 5;
+     uint64 time  = 6;
+     string detail = 7;
+     string gas = 8;
+     repeated string toAmount = 9;
+     TxType type = 10;
+ }
+enum TxType
+{
+    TxTypeUnknown = 0;
+    TxTypeNormal = 1;  
+    TxTypePledge = 2; 
+    TxTypeRedeem = 3; 
+}
    ```
 
    |    Field     |                             Description                           |
@@ -2333,4 +2340,4 @@ def GetBlockInfoDetailRequest():
    |   detail    |             Detailed description                         |
    |     gas     |            Signature fee                        |
    |   toAmount  |                     Amount per account                       |
-   |    type     |                    Transaction Type                   |
+   |    type     |   Transaction Type 1 Ordinary transaction；2 Pledge transaction 3 Debenture transaction                 |

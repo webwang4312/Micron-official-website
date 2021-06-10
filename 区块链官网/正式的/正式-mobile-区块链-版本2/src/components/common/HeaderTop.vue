@@ -5,69 +5,84 @@
     "
     >
       <div class="index_left">
-        <img src="@assets/images/second/logo.png" alt="" />
-        <span>
+        <img src="@assets/images/second/logo.png" alt="" @click="goHome" />
+        <!-- <span>
           UENC
         </span>
         <span>
           Explorer
-        </span>
+        </span> -->
       </div>
       <div class="index_right">
-        <img
-          src="@assets/images/second/菜单.png"
-          v-if="$store.state.menu"
-          @click="menuShow"
-        />
-        <i class="el-icon-close" v-else @click="menuHide"></i>
+        <img src="@assets/images/second/菜单.png" @click="menuShow" />
       </div>
     </div>
-    <ul v-if="!$store.state.menu" class="menuslide">
-      <li>
-        <router-link :to="{ path: '/' }">
-          <span @click="menuindex">
-            {{ $t("nav")[0] }}
-          </span>
-        </router-link>
-      </li>
-      <li class="slide2" @click="menuSecond">
-        <div :class="{ 'el-dropdown-link': true, blue: $store.state.blues }">
-          {{ $t("nav")[1] }}
-          <img src="@assets/images/second/menuxia.png" v-show="!secondmenu" />
-           <img src="@assets/images/second/收回.png" v-show="secondmenu" />
-          <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
+    <van-popup v-model="show" position="top">
+      <div
+        class="header-tops
+    "
+      >
+        <div class="index_left">
+          <img src="@assets/images/second/logo.png" alt="" />
+          <!-- <span>
+          UENC
+        </span>
+        <span>
+          Explorer
+        </span> -->
         </div>
-        <ul v-show="secondmenu">
-          <li @click="blueClass">
-            <router-link :to="{ path: '/block' }">
-              {{ $t("nav")[2] }}
-            </router-link>
-          </li>
-          <li @click="menu">
-            <router-link :to="{ path: '/transaction' }">
-              {{ $t("nav")[3] }}
-            </router-link>
-          </li>
-          <li @click="menu">
-            <router-link :to="{ path: '/address' }">
-              {{ $t("nav")[4] }}
-            </router-link>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <router-link :to="{ path: '/chart' }">
-          <span @click="blueClass2">
-            {{ $t("nav")[5] }}
-          </span>
-        </router-link>
-      </li>
-      <li>
-        <div @click="changeLanguage" style="width:100%;height:100%">
-          {{ language2 }}
+        <div class="index_right">
+          <i class="el-icon-close" @click="menuHide"></i>
         </div>
-      </li>
-    </ul>
+      </div>
+      <ul class="menuslide">
+        <li @click="menu">
+          <router-link :to="{ path: '/' }">
+            <span @click="menuindex">
+              {{ $t("nav")[0] }}
+            </span>
+          </router-link>
+        </li>
+        <li class="slide2" @click="menuSecond">
+          <div class="el-dropdown-link">
+            {{ $t("nav")[1] }}
+            <img src="@assets/images/second/menuxia.png" v-show="!secondmenu" />
+            <img src="@assets/images/second/收回.png" v-show="secondmenu" />
+            <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
+          </div>
+          <ul v-show="secondmenu">
+            <li @click="blueClass">
+              <router-link :to="{ path: '/block' }">
+                {{ $t("nav")[2] }}
+              </router-link>
+            </li>
+            <li @click="menu">
+              <router-link :to="{ path: '/transaction' }">
+                {{ $t("nav")[3] }}
+              </router-link>
+            </li>
+            <li @click="menu">
+              <router-link :to="{ path: '/address' }">
+                {{ $t("nav")[4] }}
+              </router-link>
+            </li>
+          </ul>
+        </li>
+        <li @click="menu">
+          <router-link :to="{ path: '/chart' }">
+            <span @click="blueClass2">
+              {{ $t("nav")[5] }}
+            </span>
+          </router-link>
+        </li>
+        <li @click="menu">
+          <div @click="changeLanguage" style="width:100%;height:100%">
+            {{ language2 }}
+          </div>
+        </li>
+      </ul></van-popup
+    >
+
     <Search></Search>
   </div>
 </template>
@@ -85,6 +100,7 @@ export default {
       language: "",
       language2: "",
       secondmenu: false,
+      show: false,
     };
   },
   components: { Search },
@@ -102,31 +118,40 @@ export default {
   },
   mounted() {},
   methods: {
+    goHome() {
+      this.$router.push({
+        path: "/",
+      });
+    },
     menuSecond() {
       this.secondmenu = !this.secondmenu;
     },
     menuindex() {
-      this.$store.commit("menuState", true);
-      this.$store.commit("bluesState", false);
+      // this.$store.commit("menuState", true);
+      // this.$store.commit("bluesState", false);
     },
     menu() {
-      this.$store.commit("menuState", true);
-      this.$store.commit("bluesState", true);
+      this.show = false;
+      // this.$store.commit("menuState", true);
+      // this.$store.commit("bluesState", true);
     },
     menuShow() {
-      this.$store.commit("menuState", false);
+      this.show = true;
+      // this.$store.commit("menuState", false);
     },
     menuHide() {
-      this.$store.commit("menuState", true);
+      this.show = false;
+      // this.$store.commit("menuState", true);
     },
     blueClass() {
-      this.$store.commit("menuState", true);
-      this.$store.commit("bluesState", true);
+      // this.$store.commit("menuState", true);
+      // this.$store.commit("bluesState", true);
       this.reload();
+      this.show = false;
     },
     blueClass2() {
-      this.$store.commit("bluesState", false);
-      this.$store.commit("menuState", true);
+      // this.$store.commit("bluesState", false);
+      // this.$store.commit("menuState", true);
       this.reload();
     },
     changeLanguage() {
@@ -154,37 +179,42 @@ export default {
 </script>
 
 <style lang="less">
-.headers {
-  width: 100%;
-  height: auto;
-  background-color: #fff !important;
-  position: sticky;
-  top: 0;
-  margin-bottom: 21px;
-  .el-icon-close{
-  transform: scale(2.5);
-  }
-  .menuslide {
-    z-index: 100;
-    position: absolute;
+.van-overlay {
+}
+.van-popup {
+  max-height: 60%;
+  .header-tops {
     width: 100%;
-    height: 100vh;
-    background: #ffffff;
-    li {
-      height: 50px;
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    padding-right: 15px;
+    .el-icon-close {
+      margin-right: 15px;
+    }
+  }
+  .menuslide>li{
+height: 50px;
       margin-top: 20px;
-      padding-left: 15px;
-      padding-right: 15px;
       font-size: 16px;
       font-family: PingFang SC;
       font-weight: 400;
-      line-height: 22px;
+      line-height: 50px;
       color: #9da5bb;
+      padding-left: 15px;
+  }
+  .menuslide {
+    width: 100%;
+    li {
+      
     }
     .slide2 {
       height: auto;
-
-      padding-left: 15px;
+      padding-right: 15px;
       font-size: 16px;
       font-family: PingFang SC;
       font-weight: 400;
@@ -192,6 +222,14 @@ export default {
       color: #9da5bb;
       ul {
         li {
+          height: 50px;
+      margin-top: 20px;
+      font-size: 16px;
+      font-family: PingFang SC;
+      font-weight: 400;
+      line-height: 22px;
+      color: #9da5bb;
+      padding-left: 15px;
           span {
             font-size: 16px;
             font-family: PingFang SC;
@@ -205,9 +243,10 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-
+height: 50px;
         align-items: center;
         text-align: center;
+        padding-right: 15px;
       }
       img {
         width: 30px;
@@ -217,10 +256,25 @@ export default {
         display: inline-block;
         width: 33px;
         height: 25px;
-        color: #965EE5;
+        color: #965ee5;
       }
     }
   }
+}
+.headers {
+  width: 100%;
+  height: auto;
+  background-color: #fff !important;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 21px;
+  z-index: 100;
+  .el-icon-close {
+    transform: scale(2.5);
+  }
+
   .header-top {
     width: 100%;
     height: 55px;
@@ -228,10 +282,13 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     background: #fff;
+    position: sticky;
+    top: 0;
   }
 
   .blue {
-    color: #965EE5 !important;
+    color: #965ee5 !important;
+    font-size: 16px;
   }
   .el-dropdown-menu__item {
     width: 80px;
@@ -253,7 +310,7 @@ export default {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #965EE5;
+      color: #965ee5;
     }
   }
 
@@ -264,8 +321,8 @@ export default {
     align-items: center;
     margin-left: 11px;
     img {
-      width: 38px;
-      height: 46px;
+      width: 142px;
+      height: 24px;
       margin-right: 14px;
       margin-top: 7px;
     }
@@ -274,7 +331,7 @@ export default {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #965EE5;
+      color: #965ee5;
       margin-right: 4px;
     }
     span:nth-child(3) {

@@ -69,9 +69,7 @@ font-weight: 400;
 line-height: 22px;
 color: #9DA5BB!important;
 }
-a:hover {
-  text-decoration: underline;
-}
+
 sup {
   vertical-align: text-top;
 }
@@ -94,8 +92,4 @@ textarea {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-}
-.active{
-  color: #965EE5!important;
-
 }

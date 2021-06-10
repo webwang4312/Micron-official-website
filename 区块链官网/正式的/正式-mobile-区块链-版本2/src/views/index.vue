@@ -80,10 +80,9 @@
       </div> -->
     </div>
     <div class="hezi"></div>
-    <div class="chart">
-      <div id="bars"></div>
-      <div id="bar"></div>
-    </div>
+   
+    <Chart></Chart>
+    
     <div class="hezi"></div>
     <div class="info_list">
       <div class="last_transaction">
@@ -199,7 +198,7 @@ height: 0px;border-bottom:1px solid #B2B2B2"
                   {{ item.tx_num }}
                 </div>
               </li>
-               <li>
+              <li>
                 <div></div>
                 <div
                   style="width: 248px;
@@ -214,6 +213,7 @@ height: 0px;border-bottom:1px solid #B2B2B2"
   </div>
 </template>
 <script>
+import Chart from './index/chart.vue'
 export default {
   name: "index",
   inject: ["reload"],
@@ -224,8 +224,6 @@ export default {
       tables: false,
       nowLang: "",
       language: "",
-      test1: "",
-      test2: "",
       // 语言图片显示与隐藏
       show: true,
       money: "",
@@ -243,6 +241,8 @@ export default {
       blockreward: "",
       // 剩余区块奖励
       blocklastreward: "",
+      // 节点数量
+        jiediancount: "",
       echartsed: [],
       // 本页面
       tableData: [
@@ -269,23 +269,17 @@ export default {
       ],
       tabledataall: "",
       pie: [],
-      jiediancount: "",
+    
     };
   },
   watch: {},
-
+components: {Chart },
   created() {
     this.nowLang = this.$i18n.locale;
-    if (this.nowLang == "cn") {
-      (this.test1 = "区块奖励"), (this.test2 = "每日交易总额");
-    } else {
-      (this.test1 = "Block reward"), (this.test2 = "Total daily transactions");
-    }
     this.indexlist();
-    this.jiedian();
   },
   mounted() {
-    this.drawLine();
+  
   },
   methods: {
     goToAddressDetail(item) {
@@ -323,352 +317,6 @@ export default {
         },
       });
     },
-    drawLine() {
-      // 基于准备好的dom，初始化echarts实例
-      let myChart = echarts.init(document.getElementById("bars"));
-      let myChart2 = echarts.init(document.getElementById("bar"));
-      var data = [];
-      // 绘制图表
-      myChart.setOption({
-        title: {
-          text: this.test1,
-          x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
-          y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
-          textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
-          },
-        },
-        xAxis: {
-          type: "category",
-          splitLine: { show: false }, //去除网格线
-          boundaryGap: false,
-          data: [],
-          axisLine: {
-            //y轴
-            show: false,
-          },
-          axisLabel: {
-            interval: 0,
-          },
-          axisTick: {
-            //y轴刻度线
-            show: false,
-          },
-        },
-        yAxis: {
-          max: function(value) {
-            return value.max + 100;
-          },
-          splitNumber: 4,
-          type: "value",
-          position: "left",
-          splitLine: { show: false }, //去除网格线
-          axisLine: {
-            //y轴
-            show: false,
-          },
-          axisTick: {
-            //y轴刻度线
-            show: false,
-          },
-        },
-        series: [
-          {
-            data: [],
-            type: "line",
-            areaStyle: {},
-            symbol: "circle", //拐点样式
-            smooth: true, //true 为平滑曲线，false为直线
-            itemStyle: {
-              normal: {
-                label: {
-                  show: false,
-                  position: "left",
-                  textStyle: {},
-                },
-              },
-              lineStyle: {
-                // 系列级个性化折线样式
-                width: 3,
-                type: "solid",
-                color: "#965EE5", //折线的颜色
-              },
-            },
-          },
-        ],
-      });
-      myChart2.setOption({
-        title: {
-          text: this.test2,
-          x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
-          y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
-          textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
-          },
-        },
-        xAxis: {
-          type: "category",
-          data: [],
-          splitLine: { show: false }, //去除网格线
-          axisLine: {
-            //y轴
-            show: false,
-          },
-          axisTick: {
-            //y轴刻度线
-            show: false,
-          },
-        },
-        yAxis: {
-          type: "value",
-          splitLine: { show: false }, //去除网格线
-          axisLine: {
-            //y轴
-            show: false,
-          },
-          axisTick: {
-            //y轴刻度线
-            show: false,
-          },
-        },
-        tooltip: { trigger: "item" },
-        series: [
-          {
-            data: [],
-            type: "bar",
-            showBackground: true,
-            backgroundStyle: {
-              color: "rgba(238, 242, 252, 1)",
-              borderRadius: 20, // 统一设置四个角的圆角大小
-            },
-            barWidth: 14,
-            itemStyle: {
-              emphasis: {
-                barBorderRadius: 7,
-              },
-              normal: {
-                 color:'#965EE5',
-                barBorderRadius: 7,
-              },
-            },
-          },
-        ],
-      });
-      // 异步加载数据
-      let that = this;
-      // 燃料费平均值
-      var ranliaoaverage = [];
-      // 时间
-      var shijianchuo = [];
-      // 每日交易笔数
-      var transaction_num_for_7 = [];
-      var transaction_num_for_77 = [];
-      // 时间
-      var transaction_num_for_7time = [];
-      var transaction_num_for_7time2 = [];
-      //  燃料费分布
-      that.$http
-        .get("")
-        .then((res) => {
-          // console.log(res);
-          for (
-            var i = 0;
-            i < res.data[0].transaction_num_for_7.length + 1;
-            i++
-          ) {
-            transaction_num_for_7.unshift(
-              res.data[0].transaction_num_for_7[i].transaction_num_for_7
-            );
-            transaction_num_for_7time.unshift(
-              this.timestampToTime2(
-                res.data[0].transaction_num_for_7[i].date
-              ).substring(5, 10)
-            );
-            //  console.log(ranliaoaverage);
-            //  console.log(shijianchuo);
-            // 填入数据
-            var size = [0, 0, 0, 0, 0, 0, 6];
-            myChart.setOption({
-              xAxis: {
-                data: transaction_num_for_7time,
-              },
-              tooltip: {
-                borderWidth: 1,
-
-                show: true,
-                position: "left",
-                backgroundColor: "rgba(238, 240, 242, 1)",
-
-                textStyle: {
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bold",
-                  lineHeight: 5,
-                  fontSize: 15,
-                  color: "#965EE5",
-                  backgroundColor: "rgba(238, 240, 242, 1)",
-                },
-                formatter: "{c0}",
-
-                trigger: "axis",
-                axisPointer: {
-                  type: "none",
-                  label: {
-                    backgroundColor: "#6a7985",
-                  },
-                },
-              },
-              series: [
-                {
-                  data: transaction_num_for_7,
-                  type: "line",
-                  showSymbol: false,
-                  symbolSize: 10,
-                  areaStyle: {},
-                  symbol: "circle", //拐点样式
-                  smooth: true, //true 为平滑曲线，false为直线
-                  itemStyle: {
-                    normal: {
-                      color: "#fff",
-                      borderColor: "blue",
-                      borderWidth: 3,
-                      label: {
-                        show: false,
-                        position: "left",
-                        textStyle: {
-                          fontSize: 16,
-                          color: "#fff",
-                          // width: 54,
-                          // height: 27,
-                          backgroundColor: "blue",
-                        },
-                      },
-                    },
-                  },
-                  areaStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "#965EE5" },
-                        { offset: 0.4, color: "#965EE5" },
-                        { offset: 1, color: "#fff" },
-                      ]),
-                    },
-                  },
-                  lineStyle: {
-                    color: "#965EE5", //改变折线颜色
-                  },
-                },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
-      that.$http
-        .get("")
-        .then((res) => {
-          // console.log(res);
-          for (
-            var i = 0;
-            i < res.data[0].transaction_num_for_7.length + 1;
-            i++
-          ) {
-            transaction_num_for_77.unshift(
-              res.data[0].transaction_num_for_7[i].transaction_num_for_7
-            );
-            transaction_num_for_7time2.unshift(
-              this.timestampToTime2(
-                res.data[0].transaction_num_for_7[i].date
-              ).substring(5, 10)
-            );
-            //console.log(transaction_num_for_77);
-            //console.log(transaction_num_for_7time2);
-            myChart2.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
-                },
-              },
-              xAxis: {
-                type: "category",
-                data: transaction_num_for_7time2,
-                splitLine: { show: false }, //去除网格线
-                axisLine: {
-                  //y轴
-                  show: false,
-                },
-                axisTick: {
-                  //y轴刻度线
-                  show: false,
-                },
-              },
-              yAxis: {
-                type: "value",
-                splitLine: { show: false }, //去除网格线
-                axisLine: {
-                  //y轴
-                  show: false,
-                },
-                axisTick: {
-                  //y轴刻度线
-                  show: false,
-                },
-              },
-              tooltip: {
-                trigger: "item",
-                formatter: "{c0}",
-                backgroundColor: "#EEF0F2",
-                borderColor: "#EEF0F2",
-                borderWidth: "1",
-                textStyle: {
-                  color: "#965EE5",
-                  fontWeight: "bold",
-                },
-              },
-              series: [
-                {
-                  data: transaction_num_for_77,
-                  type: "bar",
-                  showBackground: true,
-                  backgroundStyle: {
-                    color: "rgba(238, 242, 252, 1)",
-                    borderRadius: 20, // 统一设置四个角的圆角大小
-                  },
-                  barWidth: 18,
-                  itemStyle: {
-                    emphasis: {
-                      barBorderRadius: 7,
-                    },
-                    normal: {
-                      barBorderRadius: 7,
-                    },
-                  },
-                },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
-    },
-    jiedian() {
-      let that = this;
-      that.$http.get("/search_top_n").then((res) => {
-        this.jiediancount = res.data.count[0].count;
-        // console.log(res.data.count[0].count);
-      });
-    },
-
     indexlist() {
       let that = this;
       that.$http
@@ -857,6 +505,7 @@ export default {
             }
           }
           //console.log(this.tableData);
+          this.jiediancount=cardleftinformation.node_count[0].count
           //区块高度
           this.blockheigth =
             cardleftinformation.block_height_all[0].block_height;
@@ -927,11 +576,8 @@ export default {
   font-family: PingFang SC;
   font-weight: 400;
   line-height: 18px;
-  color: #965EE5 !important;
+  color: #965ee5 !important;
   cursor: pointer;
-}
-canvas {
-  z-index: 2;
 }
 
 .el-icon-arrow-right {
@@ -939,21 +585,8 @@ canvas {
 .more {
   cursor: pointer;
 }
-#bars {
-  width: 343px;
-  height: 322px;
-  background: #ffffff !important;
-  z-index: 2;
-}
-#bar {
-  width: 343px;
-  height: 322px;
-  background: #ffffff;
-  z-index: 2;
-}
 .index {
   height: auto;
-  z-index: 1;
   .hezi {
     width: 100%;
     height: 10px;
@@ -968,11 +601,8 @@ canvas {
     background: gray;
     .info_first {
       margin-top: 0px;
-
-      background: red;
     }
     ul {
-      width: 100%;
       //background: chocolate;
       display: flex;
       flex-direction: row;
@@ -1077,13 +707,7 @@ canvas {
       color: #253551;
     }
   }
-  .chart {
-    position: relative;
-    width: 343px;
-    height: auto;
-    margin: 10px auto 10px;
-    z-index: 2;
-  }
+
   .info_list {
     width: 343px;
     height: auto;
@@ -1114,7 +738,7 @@ canvas {
           font-family: PingFang SC;
           font-weight: 600;
           line-height: 20px;
-          color: #965EE5;
+          color: #965ee5;
         }
       }
       .content {
@@ -1179,7 +803,7 @@ canvas {
           font-family: PingFang SC;
           font-weight: 600;
           line-height: 20px;
-          color: #965EE5;
+          color: #965ee5;
         }
       }
       .content {

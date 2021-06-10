@@ -103,7 +103,7 @@
         </ul>
       </div>
     </div>
-    <van-tabs v-model="active">
+    <van-tabs v-model="active" >
       <van-tab :title="$t('home.contenttop[0]')">
         <van-list
           v-model="listloading"
@@ -192,7 +192,7 @@ import { Message } from "element-ui";
 // //   console.log("haha");
 // //   console.log($("path"));
 // // });
-axios.defaults.timeout = 10000; // 请求超时
+////axios.defaults.timeout = 10000; // 请求超时
 // axios.interceptors.request.use(
 //   function(config) {
 //     // Do something before request is sent
@@ -343,6 +343,15 @@ export default {
     }
   },
   methods: {
+    showList(index){
+console.log(index);
+if(index=='0'){
+this.transactionlist()
+}
+else{
+ this.blocklist();
+}
+    },
     // 解析地址
     //获取url中的参数方法
     getQueryString(name) {
@@ -472,7 +481,7 @@ export default {
               let times = [];
               let blocktime =
                 res.data[0].transaction_list_results[i].transaction_time;
-              let timestamp = Date.parse(new Date()) / 1000;
+              let timestamp = res.data[0].timeStamp;
               let s = timestamp - blocktime; //9.20
               let fenzhong = parseInt((s / 86400) * 24 * 60);
               if (fenzhong < 60) {
@@ -502,7 +511,7 @@ export default {
               let times = [];
               let blocktime =
                 res.data[0].transaction_list_results[i].transaction_time;
-              let timestamp = Date.parse(new Date()) / 1000;
+              let timestamp =res.data[0].timeStamp;
               let s = timestamp - blocktime; //9.20
               let fenzhong = parseInt((s / 86400) * 24 * 60);
               if (fenzhong < 60) {
@@ -526,29 +535,30 @@ export default {
           }
         })
         .catch((err) => {
-          if (err.config.timeout >= 10000) {
-            if (this.nowLang == "cn") {
-              // this.$message({
-              //   type: "error",
-              //   message: " 加载失败，请稍后再试",
-              // });
+          console.log(err);
+          // if (err.config.timeout >= 10000) {
+          //   if (this.nowLang == "cn") {
+          //     // this.$message({
+          //     //   type: "error",
+          //     //   message: " 加载失败，请稍后再试",
+          //     // });
 
-              this.$router.push({
-                path: "/not",
-              });
-            } else {
-              // this.$message({
-              //   type: "error",
-              //   message: "Loading failed, please try again later",
-              // });
+          //     this.$router.push({
+          //       path: "/not",
+          //     });
+          //   } else {
+          //     // this.$message({
+          //     //   type: "error",
+          //     //   message: "Loading failed, please try again later",
+          //     // });
 
-              this.$router.push({
-                path: "/not",
-              });
-            }
-          } else {
-            // console.log(err);
-          }
+          //     this.$router.push({
+          //       path: "/not",
+          //     });
+          //   }
+          // } else {
+          //   // console.log(err);
+          // }
         });
     },
     //获取MEDIA
@@ -569,7 +579,7 @@ export default {
           if (this.nowLang == "cn") {
             for (let j = 0; j < res.data[0].block_list.length + 1; j++) {
               let blocktime = res.data[0].block_list[j].block_time;
-              let timestamp = Date.parse(new Date()) / 1000;
+              let timestamp =res.data[0].timeStamp;
               let s = timestamp - blocktime; //9.20
               let fenzhong = parseInt((s / 86400) * 24 * 60);
               if (fenzhong < 60) {
@@ -591,7 +601,7 @@ export default {
           } else {
             for (let j = 0; j < res.data[0].block_list.length + 1; j++) {
               let blocktime = res.data[0].block_list[j].block_time;
-              let timestamp = Date.parse(new Date()) / 1000;
+              let timestamp = res.data[0].timeStamp;
               let s = timestamp - blocktime; //9.20
               let fenzhong = parseInt((s / 86400) * 24 * 60);
               if (fenzhong < 60) {

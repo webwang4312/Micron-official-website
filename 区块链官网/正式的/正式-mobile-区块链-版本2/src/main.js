@@ -12,16 +12,17 @@ import axios from "axios";
 import i18n from "./i18n";
 import Paginate from 'vuejs-paginate';
 Vue.component('paginate', Paginate);
-
 // video引入
 Vue.config.productionTip = false;
-
-import ViewUI from 'view-design';
-import 'view-design/dist/styles/iview.css';
-Vue.use(ViewUI);
-
-axios.defaults.baseURL = "http://47.116.69.138:80/";
-
+import Button from 'vant/lib/button';
+import { Popup } from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Button);
+Vue.use(Popup);
+// import ViewUI from 'view-design';
+// import 'view-design/dist/styles/iview.css';
+// Vue.use(ViewUI);
+axios.defaults.baseURL = "http://47.116.69.138:9090/";
 Vue.use(axios);
 Vue.prototype.$http = axios;
 import ElementUI from 'element-ui';

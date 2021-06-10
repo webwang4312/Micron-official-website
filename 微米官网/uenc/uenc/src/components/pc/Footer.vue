@@ -17,7 +17,7 @@
         ></a>
         <a
           target="_blank"
-          href="https://www.reddit.com/r/UENC/"
+          href="https://t.me/UENCOfficial"
           class="iconfont iconfeishu"
         ></a>
         <a

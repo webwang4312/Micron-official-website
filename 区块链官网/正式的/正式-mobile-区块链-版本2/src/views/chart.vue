@@ -1,25 +1,45 @@
 <template>
   <div id="chart">
-    chart
+    <node></node>
+  <award></award>
+  <transaction></transaction>
+  <account></account>
   </div>
 </template>
 <script>
+import node from "@views/chart/node";
+import award from "@views/chart/award";
+import transaction from "@views/chart/transaction";
+import account from "@views/chart/account";
 export default {
   name: "chart",
   data() {
-    return {};
+    return {
+      nowLang: "",
+    };
   },
-  components: {},
-  created() {},
+  components: {node,award,transaction,account},
+  created() {
+    this.nowLang = this.$i18n.locale;
+   
+  },
+  mounted() {
+   
+  },
   // 页码设置
   watch: {},
-  methods: {},
+  methods: {
+   
+   
+  },
 };
 </script>
 <style lang="less">
 #chart {
   width: 100%;
-  height: 800px;
-  background: burlywood;
+  height: auto;
+  padding-bottom: 74px;
+ padding: 0 20px;
+ 
 }
 </style>
