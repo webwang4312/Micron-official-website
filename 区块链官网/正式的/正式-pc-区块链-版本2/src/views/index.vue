@@ -165,9 +165,9 @@ export default {
   created() {
     this.nowLang = this.$i18n.locale;
     this.indexlists();
-    window.setInterval(() => {
-      setTimeout(this.indexlists(), 1000);
-    }, 60000);
+    // window.setInterval(() => {
+    //   setTimeout(this.indexlists(), 500);
+    // }, 60000);
     //  window.setInterval(() => {
     //   setTimeout(this.jiedian(), 0);
     // }, 3000);
@@ -511,9 +511,31 @@ export default {
       border: none;
       // justify-content: space-between;
     }
-    ul:nth-child(2) {
-      // margin-left: 95px;
+    ul:nth-child(1):hover {
+      .block_height {
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/区块高度.gif") no-repeat
+          center/100% 100%;
+      }
     }
+    ul:nth-child(2):hover {
+      .transaction24 {
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/24H交易数.gif") no-repeat
+          center/100% 100%;
+      }
+    }
+      ul:nth-child(3):hover {
+      .award {
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/已发放奖励.gif") no-repeat
+          center/100% 100%;
+      }
+    }
+    
     ul:nth-child(3) {
       // margin-left: 95px;
     }
@@ -527,7 +549,6 @@ export default {
       align-items: center;
       padding-left: 97px;
       padding-right: 101px;
-
       div:nth-child(2) {
         width: 100px;
         text-align: right;
@@ -546,72 +567,42 @@ export default {
         background: url("../assets/images/second/区块高度.png") no-repeat
           center/100% 100%;
       }
-      .block_height:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/区块高度.gif") no-repeat
-          center/100% 100%;
-      }
+     
       .transaction24 {
         width: 60px;
         height: 60px;
         background: url("../assets/images/second/24H交易数.png") no-repeat
           center/100% 100%;
       }
-      .transaction24:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/24H交易数.gif") no-repeat
-          center/100% 100%;
-      }
+     
       .award {
         width: 60px;
         height: 60px;
         background: url("../assets/images/second/已发放奖励.png") no-repeat
           center/100% 100%;
       }
-      .award:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/已发放奖励.gif") no-repeat
-          center/100% 100%;
-      }
+      
       .alljiedian {
         width: 60px;
         height: 60px;
         background: url("../assets/images/second/节点总数.png") no-repeat
           center/100% 100%;
       }
-      .alljiedian:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/节点总数.gif") no-repeat
-          center/100% 100%;
-      }
+     
       .alltransaction {
         width: 60px;
         height: 60px;
         background: url("../assets/images/second/累计交易数.png") no-repeat
           center/100% 100%;
       }
-      .alltransaction:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/累计交易数.gif") no-repeat
-          center/100% 100%;
-      }
+     
       .last_award {
         width: 60px;
         height: 60px;
         background: url("../assets/images/second/剩余区块奖励.png") no-repeat
           center/100% 100%;
       }
-      .last_award:hover {
-        width: 60px;
-        height: 60px;
-        background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
-          center/100% 100%;
-      }
+     
     }
     // .top_left {
     //   margin-left: 63.5px;
@@ -619,6 +610,32 @@ export default {
   }
   .info_bottom {
     margin-top: 18px !important;
+      ul:nth-child(1):hover {
+      .alljiedian{
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/节点总数.gif") no-repeat
+          center/100% 100%;
+      }
+    }
+      ul:nth-child(2):hover {
+      .alltransaction{
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/累计交易数.gif") no-repeat
+          center/100% 100%;
+      }
+      
+    }
+      ul:nth-child(3):hover {
+       .last_award{
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
+          center/100% 100%;
+      }
+      
+    }
   }
   .info_line {
     width: 1080px;

@@ -662,14 +662,18 @@ export default {
   .node {
     width: 1274px;
    
+    height: auto;
     border-radius: 18px;
-    margin:0px auto 53px;
+    padding-top: 45px;
+    margin:0px auto 53px; 
      .title{
       margin-bottom: 23px;
+     
     }
     .node_detail {
       width: 1274px;
-     
+    
+    height: auto;
       display: flex;
       flex-direction: row;
       align-items: center;

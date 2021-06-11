@@ -16,7 +16,8 @@
 
 <style lang="less">
 .pad {
-  padding-top: 75px;
+  padding-top: 106px;
+  background: #F9FAFD;
 }
 // .el-table__body tr td:nth-child(1){
 //   text-align: left!important;

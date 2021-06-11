@@ -15,7 +15,8 @@ Vue.config.productionTip = false;
 // import ViewUI from 'view-design';
 // import 'view-design/dist/styles/iview.css';
 // import Button from 'vant/lib/button';
- axios.defaults.baseURL = "http://47.116.69.138:9090/";
+axios.defaults.baseURL = "http://47.116.69.138:9090/";
+//  axios.defaults.baseURL = "http://221.130.94.21:9099/";
 // axios.defaults.retry = 4;
 // axios.defaults.retryDelay = 1000;
 // axios.defaults.timeout = 30000; // 请求超时

@@ -25,11 +25,11 @@
               >{{ $t("Technology.more") }} <i class="el-icon-right"></i
             ></a>
           </div>
-          <!-- <div class="item">
-            <a href="http://123.56.155.79/baipishu.pdf" target="_blank"
+          <div class="item">
+            <a href="https://pili-vod.uenc.net/uencWhitePaperCN.pdf" target="_blank"
               >{{ $t("navbar.whitepaper") }} <i class="el-icon-right"></i
             ></a>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>

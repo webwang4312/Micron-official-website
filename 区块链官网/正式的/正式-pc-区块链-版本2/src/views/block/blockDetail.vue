@@ -44,7 +44,7 @@
       </ul>
       <ul class="info_content">
         <li v-for="item in blockData" :key="item">
-          <div @click="goToTransactionDetail(item.block_hash2)">
+          <div @click="goToTransactionDetail(item.transaction_hash2)">
             {{ item.transaction_hash }}
           </div>
           <div>
@@ -123,7 +123,7 @@ export default {
         path: "/transactiondetail",
 
         query: {
-          transaction_hash: item,
+         transaction_hash: item,
         },
       });
     },
@@ -134,6 +134,7 @@ export default {
           address: item,
         },
       });
+     
     },
     pagesMinus() {
       if (this.blockmedianum == 1) {
@@ -224,7 +225,7 @@ export default {
 .blockdetail {
   height: auto;
   margin-bottom: 373px;
-  
+  background: #F9FAFD;
   .top {
     width: 1275px;
     height: 38px;

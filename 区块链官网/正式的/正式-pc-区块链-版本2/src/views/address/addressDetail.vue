@@ -1,5 +1,5 @@
 <template>
-  <div class="addressdetail">
+  <div class="addressdetail" v-loading.fullscreen.lock="fullscreenLoading">
     <div class="top">
       <img src="@assets/images/second/地址概览@2x.png" alt="" />
       <span> {{ $t("addressdetail")[0] }}</span>
@@ -101,6 +101,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+     fullscreenLoading:false,
       nowLang: "",
       // 分页
       transmedianum: 1,
@@ -135,7 +136,7 @@ export default {
       });
     },
     goToAddressDetail(item) {
-      //console.log(item);
+      console.log(item);
       this.shiyan = item;
 this.addressList();
       this.addresssearch();
@@ -152,9 +153,15 @@ this.addressList();
       }
     },
     pagesPlus() {
-      this.transmedianum += 1;
+      if(this.transmedianum < this.totalNum){
+this.transmedianum += 1;
       // //console.log(this.medianum);
       this.addresssearch();
+      }
+      else{
+        return false
+      }
+      
     },
     async addressList() {
       const res = await GetAddressListDetail2({
@@ -176,11 +183,13 @@ this.addressList();
       });
       //console.log(res);
       this.totalNum = res[0].total_page[0].totalPageNum;
+     console.log( this.totalNum);
       if (this.totalNum !== 0) {
         this.have_list = true;
       } else {
         this.have_list = false;
       }
+      
       var translist = res[0].search_transaction_list_for_walletAddress;
       //console.log(this.have_list);
       if (this.nowLang == "cn") {
@@ -294,6 +303,7 @@ this.addressList();
           // console.log(this.transactionData);
         }
       }
+      
     },
   
   },
@@ -309,7 +319,10 @@ this.addressList();
 }
 
 .addressdetail {
-  height: auto;
+ 
+ min-height: 900px;
+ height: auto;
+ 
   margin-bottom: 373px;
   .top {
     width: 1275px;

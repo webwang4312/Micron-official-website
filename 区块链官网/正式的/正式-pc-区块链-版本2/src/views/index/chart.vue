@@ -1,6 +1,6 @@
 <template>
   <div class="indexChart">
-    <div id="bars"></div>
+    <div id="bars" v-loading="loading"></div>
     <div id="bar"></div>
   </div>
 </template>
@@ -9,6 +9,7 @@ export default {
   name: "indexchart",
   data() {
     return {
+      loading: true,
       test1: "",
       test2: "",
       test22: "",
@@ -19,28 +20,38 @@ export default {
   created() {
     this.nowLang = this.$i18n.locale;
     if (this.nowLang == "cn") {
-      (this.test1 = "区块奖励"),(this.test22 = "交易额"), (this.test2 = "每日交易总额");
+      (this.test1 = "区块奖励"),
+        (this.test22 = "交易额"),
+        (this.test2 = "每日交易总额");
     } else {
-      (this.test1 = "Block reward"),(this.test22 = "transactions"), (this.test2 = "Total daily transactions");
+      (this.test1 = "Block reward"),
+        (this.test22 = "transactions"),
+        (this.test2 = "Total daily transactions");
     }
-    
   },
   mounted() {
-     this.drawLine();
+      this.drawLine();
+    // this.chartSecond()
+    // const timer = setInterval(() => {
+    //   this.chartSecond(); //你所加载数据的方法
+    // }, 60000);
+    // //销毁定时器
+    // this.$once("hook:beforeDestroy", () => {
+    //   clearInterval(timer);
+    // });
     this.chartSecond()
-     window.setInterval(() => {
-      setTimeout(this.chartSecond(), 1000);
-    }, 60000);
-    
+    //  window.setInterval(() => {
+    //   setTimeout(this.chartSecond(), 500);
+    // }, 60000);
   },
- beforeDestroy() {
-    clearInterval(this.chartSecond());        
-   
-},
+  beforeDestroy() {
+    clearInterval(this.chartSecond());
+  },
   // 页码设置
   watch: {},
   methods: {
     chartSecond() {
+      this.loading = true;
       var block_award = [];
       var block_award_time = [];
       let myChart = echarts.init(document.getElementById("bars"));
@@ -129,6 +140,7 @@ export default {
                 10
               )
             );
+            this.loading = false;
             //  console.log(ranliaoaverage);
             //  console.log(shijianchuo);
             // 填入数据
@@ -389,7 +401,7 @@ export default {
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{b0}<br />"+this.test22+":{c0}",
+                formatter: "{b0}<br />" + this.test22 + ":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
 
                 textStyle: {

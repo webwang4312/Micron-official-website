@@ -137,7 +137,7 @@ export default {
     };
   },
   created() {
-    this.blues = this.$store.state.blues;
+    this.blues = false;
     //console.log(this.blues);
     this.nowLang = this.$i18n.locale;
     this.language = this.nowLang;
@@ -227,12 +227,12 @@ export default {
       });
     },
     blueClass() {
-      this.$store.commit("bluesState", true);
-      this.reload();
+      // this.$store.commit("bluesState", true);
+      // this.reload();
     },
     blueClass2() {
-      this.$store.commit("bluesState", false);
-      this.reload();
+      // this.$store.commit("bluesState", false);
+      // this.reload();
     },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
