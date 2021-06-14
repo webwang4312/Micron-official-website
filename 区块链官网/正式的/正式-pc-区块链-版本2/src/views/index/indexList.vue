@@ -197,8 +197,8 @@ export default {
           display: flex;
           flex-direction: row;
           // justify-content: space-between;
-          padding-top: 19px;
-          padding-bottom: 18px;
+          // padding-top: 19px;
+          // padding-bottom: 18px;
           align-items: center;
           .content_left {
             width: 140px;
@@ -234,7 +234,7 @@ export default {
           }
           .content_right {
             width: 118px;
-            text-align: right;
+            text-align:left;
             font-size: 15px;
             font-family: Microsoft YaHei;
             font-weight: 400;
@@ -285,8 +285,8 @@ export default {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
-          padding-top: 19px;
-          padding-bottom: 18px;
+          // padding-top: 19px;
+          // padding-bottom: 18px;
           align-items: center;
           .content_left {
             width: 140px;
@@ -325,6 +325,8 @@ export default {
             font-weight: 400;
             line-height: 17px;
             color: #666666;
+            width: 190px;
+           
           }
         }
       }

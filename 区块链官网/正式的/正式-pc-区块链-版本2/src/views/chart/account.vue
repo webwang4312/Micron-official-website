@@ -672,7 +672,7 @@ export default {
     }
     .node_detail {
       width: 1274px;
-    
+     background: #ffffff;
     height: auto;
       display: flex;
       flex-direction: row;

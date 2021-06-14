@@ -39,7 +39,7 @@ export default {
   width: 100%;
   height: auto;
   padding-bottom: 74px;
- padding: 0 20px;
- 
+ background: #F8F8F8;
+ padding-top: 10px;
 }
 </style>

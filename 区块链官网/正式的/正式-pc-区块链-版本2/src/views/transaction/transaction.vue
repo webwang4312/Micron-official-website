@@ -328,7 +328,7 @@ export default {
 <style lang="less">
 .transaction {
   background: #f9fafd;
-  
+   padding-bottom: 195px;
   .zise {
     font-size: 15px;
     font-family: Microsoft YaHei;
@@ -345,7 +345,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -367,6 +369,7 @@ export default {
     .info_title {
       height: 75px;
       line-height: 75px;
+      background: #FFFFFF;
       li {
         text-align: center;
         display: flex;
@@ -431,8 +434,8 @@ export default {
   .block_pagination {
     width: 1275px;
     height: 37px;
-    background: #ffffff;
-    margin: 0 auto 128px;
+    background: #F9FAFD;
+    margin: 0 auto;
 
     display: flex;
     flex-direction: row;

@@ -183,6 +183,7 @@ export default {
 }
 .van-popup {
   max-height: 60%;
+  overflow-y: hidden;
   .header-tops {
     width: 100%;
     height: 55px;
@@ -282,8 +283,8 @@ height: 50px;
     flex-direction: row;
     justify-content: space-between;
     background: #fff;
-    position: sticky;
-    top: 0;
+    // position: sticky;
+    // top: 0;
   }
 
   .blue {

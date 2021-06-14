@@ -471,7 +471,7 @@ export default {
     }
   .node {
     width: 100%;
-   
+   background: #ffffff;
     border-radius: 18px;
     margin: 0px auto 47px;
     .title{

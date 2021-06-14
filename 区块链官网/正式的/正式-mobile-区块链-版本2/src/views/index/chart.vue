@@ -69,9 +69,9 @@ export default {
           },
         },
         yAxis: {
-          max: function(value) {
-            return parseInt(value.max + 20);
-          },
+          // max: function(value) {
+          //   return parseInt(value.max + 20);
+          // },
           splitNumber: 2,
           type: "value",
           position: "left",
@@ -139,9 +139,9 @@ export default {
         },
         yAxis: {
           splitNumber: 2,
-          max: function(value) {
-            return parseInt(value.max);
-          },
+          // max: function(value) {
+          //   return parseInt(value.max);
+          // },
           type: "value",
           splitLine: { show: false }, //去除网格线
           axisLine: {
@@ -343,6 +343,18 @@ export default {
                 axisTick: {
                   //y轴刻度线
                   show: false,
+                },
+                 axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
                 },
               },
               tooltip: {
