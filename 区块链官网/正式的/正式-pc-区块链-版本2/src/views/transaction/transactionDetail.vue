@@ -542,6 +542,8 @@ export default {
 }
 .transactiondetail {
   height: auto;
+ background: #F9FAFD;
+  padding-bottom: 407px;
   .blue {
     font-size: 14px;
     font-family: Microsoft YaHei;
@@ -565,7 +567,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -584,7 +588,7 @@ export default {
     flex-direction: row;
 
     padding-bottom: 54px;
-    margin-bottom: 407px;
+   
     .all_content {
       font-size: 17px;
       font-family: Microsoft YaHei;

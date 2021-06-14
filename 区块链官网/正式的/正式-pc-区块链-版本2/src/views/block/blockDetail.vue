@@ -224,7 +224,7 @@ export default {
 <style lang="less">
 .blockdetail {
   height: auto;
-  margin-bottom: 373px;
+  padding-bottom: 373px;
   background: #F9FAFD;
   .top {
     width: 1275px;
@@ -234,7 +234,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -294,7 +296,7 @@ export default {
       font-size: 17px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-
+background: #ffffff;
       color: #000000;
       li {
         display: flex;

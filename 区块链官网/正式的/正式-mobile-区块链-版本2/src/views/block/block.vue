@@ -271,7 +271,8 @@ export default {
 </script>
 <style lang="less">
 .block {
-  
+  width: 345px;
+  margin: 0 auto;
   .blue {
     font-size: 13px;
     font-family: PingFang SC;

@@ -229,6 +229,18 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
+                   axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
               },
               tooltip: {
                 trigger: "item",
@@ -380,21 +392,25 @@ export default {
 </script>
 <style lang="less">
 .chart_node {
-  width: 100%;
+  width:345px;
   height: auto;
+ margin: 0 auto 10px;
   #fuelcost{
      width: 335px;
     height: auto;
     opacity: 1;
+    margin: 0 auto;
   }
   #node{
     width: 335px;
     height: 300px;
     opacity: 1;
+
   }
   .node {
     width: 100%;
     height: auto;
+    background: #ffffff;
     .title {
      
       margin-bottom: 23px;
@@ -435,27 +451,28 @@ export default {
             margin-right: 23px;
           }
           div:nth-child(2) {
-            width: 76px;
+            width: 100px;
             font-size: 15px;
             font-family: Arial;
             font-weight: bold;
             color: #515151;
-            margin-right: 127px;
+        text-align: left;
+        margin-right: 20px;
           }
           div:nth-child(3) {
             width: 140px;
             font-size: 15px;
             font-family: Arial;
             font-weight: bold;
-
+text-align: left;
             color: #a8aabc;
-            margin-right: 30px;
+          
           }
           div:nth-child(4) {
             font-size: 15px;
             font-family: Arial;
             font-weight: bold;
-
+ width: 140px;
             color: #a8aabc;
           }
           .blue {

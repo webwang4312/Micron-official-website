@@ -95,13 +95,17 @@
   </div>
 </template>
 <script>
-import { GetAddressListDetail, GetAddressListDetail2,timestampToTime } from "@server/api.js";
+import {
+  GetAddressListDetail,
+  GetAddressListDetail2,
+  timestampToTime,
+} from "@server/api.js";
 export default {
   name: "addressdetail",
   inject: ["reload"],
   data() {
     return {
-     fullscreenLoading:false,
+      fullscreenLoading: false,
       nowLang: "",
       // 分页
       transmedianum: 1,
@@ -138,7 +142,7 @@ export default {
     goToAddressDetail(item) {
       console.log(item);
       this.shiyan = item;
-this.addressList();
+      this.addressList();
       this.addresssearch();
     },
     pagesMinus() {
@@ -153,15 +157,13 @@ this.addressList();
       }
     },
     pagesPlus() {
-      if(this.transmedianum < this.totalNum){
-this.transmedianum += 1;
-      // //console.log(this.medianum);
-      this.addresssearch();
+      if (this.transmedianum < this.totalNum) {
+        this.transmedianum += 1;
+        // //console.log(this.medianum);
+        this.addresssearch();
+      } else {
+        return false;
       }
-      else{
-        return false
-      }
-      
     },
     async addressList() {
       const res = await GetAddressListDetail2({
@@ -183,13 +185,13 @@ this.transmedianum += 1;
       });
       //console.log(res);
       this.totalNum = res[0].total_page[0].totalPageNum;
-     console.log( this.totalNum);
+      console.log(this.totalNum);
       if (this.totalNum !== 0) {
         this.have_list = true;
       } else {
         this.have_list = false;
       }
-      
+
       var translist = res[0].search_transaction_list_for_walletAddress;
       //console.log(this.have_list);
       if (this.nowLang == "cn") {
@@ -219,12 +221,12 @@ this.transmedianum += 1;
             obj.time = date;
           }
           // date.push(this.timestampToTime(Number(strdate)));
-           obj.transaction_hash =
+          obj.transaction_hash =
             translist[i].transaction_hash.substring(0, 10) + "...";
           obj.transaction_hash2 = translist[i].transaction_hash;
           obj.from_address2 = translist[i].from_address;
           obj.to_address2 = translist[i].to_address;
-         
+
           // obj.time = this.timestampToTime(Number(strdate));
           obj.amount = translist[i].amount;
           if (
@@ -234,13 +236,12 @@ this.transmedianum += 1;
             // 从
             obj.from_address =
               translist[i].from_address.substring(0, 10) + "...";
-              obj.to_address=this.nowLang == "cn"?"质押":"Pledge"
-            
+            obj.to_address = this.nowLang == "cn" ? "质押" : "Pledge";
           } else if (
             translist[i].from_address == translist[i].to_address ||
             translist[i].redeem == "1"
           ) {
-             obj.from_address=this.nowLang == "cn"?"质押":"Pledge"
+            obj.from_address = this.nowLang == "cn" ? "质押" : "Pledge";
             // 至
             obj.to_address = translist[i].to_address.substring(0, 10) + "...";
           } else {
@@ -303,9 +304,7 @@ this.transmedianum += 1;
           // console.log(this.transactionData);
         }
       }
-      
     },
-  
   },
 };
 </script>
@@ -319,11 +318,10 @@ this.transmedianum += 1;
 }
 
 .addressdetail {
- 
- min-height: 900px;
- height: auto;
- 
-  margin-bottom: 373px;
+  min-height: 900px;
+  height: auto;
+  background: #f9fafd;
+  padding-bottom: 275px;
   .top {
     width: 1275px;
     height: 38px;
@@ -332,7 +330,9 @@ this.transmedianum += 1;
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin: 0px auto;
     display: flex;
     align-items: center;
     span {
@@ -377,7 +377,7 @@ this.transmedianum += 1;
   .block_info {
     width: 1275px;
     height: auto;
-   
+
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
@@ -388,7 +388,7 @@ this.transmedianum += 1;
       font-size: 17px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-
+background: #ffffff;
       color: #000000;
       li {
         display: flex;
@@ -471,7 +471,7 @@ this.transmedianum += 1;
   .block_pagination {
     width: 1275px;
     height: 37px;
-    background: #ffffff;
+    background: #f9fafd;
     margin: 0 auto;
 
     display: flex;

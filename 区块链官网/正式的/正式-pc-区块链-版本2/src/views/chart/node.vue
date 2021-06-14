@@ -393,7 +393,9 @@ export default {
     width: 1274px;
     height: auto;
     border-radius: 18px;
-    margin: 60px auto 47px;
+    padding-top: 60px;
+    
+    margin:0px auto 47px;
     .title{
       margin-bottom: 23px;
     }
@@ -501,6 +503,7 @@ export default {
       justify-content: space-around;
       border: 1px solid #e9eced;
       border-radius: 18px;
+      background: #ffffff;
     }
     .title {
       display: flex;

@@ -598,7 +598,7 @@ components: {Chart },
     margin: 0 auto;
     padding-bottom: 30px;
     padding-top: 12px;
-    background: gray;
+    // background: gray;
     .info_first {
       margin-top: 0px;
     }

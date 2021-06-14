@@ -418,6 +418,7 @@ export default {
      justify-content: space-between;
       border: 1px solid #e9eced;
       border-radius: 18px;
+       background: #ffffff;
     }
     .title {
       display: flex;

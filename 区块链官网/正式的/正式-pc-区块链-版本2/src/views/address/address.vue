@@ -131,6 +131,7 @@ export default {
 <style lang="less">
 .address {
   background: #f9fafd;
+  padding-bottom: 195px;
   .top {
     width: 1275px;
     height: 38px;
@@ -139,7 +140,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -161,6 +164,7 @@ export default {
     .info_title {
       height: 75px;
       line-height: 75px;
+       background: #FFFFFF;
       li {
         display: flex;
         flex-direction: row;

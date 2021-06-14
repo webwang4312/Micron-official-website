@@ -318,6 +318,20 @@ export default {
               xAxis: {
                 data: avg_gas_for_7time,
               },
+              yAxis:{
+   axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
+              },
               tooltip: {
                 borderWidth: 1,
                 padding: 15,
@@ -674,7 +688,7 @@ export default {
   }
   .node {
     width: 100%;
-  
+  background: #ffffff;
     margin: 0px auto 53px;
     .title {
       margin-bottom: 23px;

@@ -224,6 +224,18 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
+                  axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
               },
               tooltip: {
                 trigger: "item",
@@ -306,6 +318,18 @@ export default {
                 axisTick: {
                   //y轴刻度线
                   show: false,
+                },
+                  axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
                 },
               },
               tooltip: {
@@ -393,7 +417,7 @@ export default {
   .node {
     width: 100%;
    
-   
+   background: #ffffff;
     margin:0px auto 47px;
      .title{
       margin-bottom: 23px;

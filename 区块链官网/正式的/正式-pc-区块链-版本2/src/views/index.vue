@@ -235,7 +235,7 @@ export default {
               this.tableData[i].transaction_hash =
                 this.tableData[i].transaction_hash.substring(0, 10) + "...";
               this.tableData[i].from_address =
-                this.tableData[i].from_address.substring(0, 10) + "...";
+                this.tableData[i].from_address.substring(0, 8) + "...";
 
               this.tableData[i].to_address2 = this.tableData[i].to_address;
               if (
@@ -250,7 +250,7 @@ export default {
                 }
               } else {
                 this.tableData[i].to_address =
-                  this.tableData[i].to_address.substring(0, 10) + "...";
+                  this.tableData[i].to_address.substring(0,8) + "...";
               }
             }
             //console.log(this.tableData2.length);
@@ -325,9 +325,9 @@ export default {
                 this.tableData[i].transaction_hash.substring(0, 10) + "...";
               this.tableData[i].from_address2 = this.tableData[i].from_address;
               this.tableData[i].from_address =
-                this.tableData[i].from_address.substring(0, 10) + "...";
+                this.tableData[i].from_address.substring(0,8) + "...";
               this.tableData[i].to_address =
-                this.tableData[i].to_address.substring(0, 10) + "...";
+                this.tableData[i].to_address.substring(0, 8) + "...";
 
               this.tableData[i].to_address2 = this.tableData[i].to_address;
             }
