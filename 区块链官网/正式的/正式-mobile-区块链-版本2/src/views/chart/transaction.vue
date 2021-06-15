@@ -2,7 +2,7 @@
   <div class="chart_transaction">
    <div class="node">
       <div class="title">
-        <!-- <img src="@assets/images/second/交易信息@2x.png" alt="" /> -->
+        <img src="@assets/images/second/交易信息.png" alt="" />
         <span> {{ $t("chart")[2] }}</span>
       </div>
       <div class="node_detail">
@@ -50,13 +50,13 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+           padding: [23,0,0,0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
-          textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
+         textStyle: {
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
           },
         },
         xAxis: {
@@ -111,13 +111,13 @@ export default {
           text: this.title[0].test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+           padding: [23,0,0,0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
           },
         },
         xAxis: {
@@ -192,14 +192,7 @@ export default {
             //console.log(node_for_7);
             //console.log(node_for_7time);
             myChart.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
-                },
-              },
+          
               xAxis: {
                 type: "category",
                 data: node_for_7time,
@@ -287,14 +280,7 @@ export default {
             //console.log(node_for_7);
             //console.log(node_for_7time);
             myChart2.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
-                },
-              },
+             
               xAxis: {
                 type: "category",
                 data: node_for_7time2,
@@ -420,7 +406,9 @@ export default {
    background: #ffffff;
     margin:0px auto 47px;
      .title{
+       margin-left: 15px;
       margin-bottom: 23px;
+      margin-top: 7px;
     }
     .node_detail {
       width:100%;
@@ -435,8 +423,8 @@ export default {
       display: flex;
       align-items: center;
       img {
-        width: 38px;
-        height: 38px;
+        width: 35px;
+        height: 35px;
       }
       span {
         font-size: 16px;

@@ -2,7 +2,7 @@
   <div class="chart_node">
     <div class="node">
       <div class="title">
-        <!-- <img src="@assets/images/second/全网节点信息@2x.png" alt="" /> -->
+        <img src="@assets/images/second/全网节点信息.png" alt="" />
         <span> {{ $t("chart")[0] }}</span>
       </div>
       <div class="node_detail">
@@ -120,13 +120,13 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          padding: [23, 0, 0, 0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
           },
         },
         xAxis: {
@@ -197,14 +197,7 @@ export default {
             //console.log(node_for_7);
             //console.log(node_for_7time);
             myChart.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
-                },
-              },
+              title: {},
               xAxis: {
                 type: "category",
                 data: node_for_7time,
@@ -229,7 +222,7 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
-                   axisLabel: {
+                axisLabel: {
                   formatter: function(value, index) {
                     // console.log(value);
                     if (value / 1000 >= 1 && value / 1000 < 1000) {
@@ -392,28 +385,34 @@ export default {
 </script>
 <style lang="less">
 .chart_node {
-  width:345px;
+  width: 100%;
   height: auto;
- margin: 0 auto 10px;
-  #fuelcost{
-     width: 335px;
+  margin-bottom: 10px;
+
+  #fuelcost {
+    width: 100%;
     height: auto;
     opacity: 1;
     margin: 0 auto;
+    ul {
+      margin-left: 15px;
+    }
   }
-  #node{
+  #node {
     width: 335px;
     height: 300px;
     opacity: 1;
-
+    margin-left: 15px;
   }
   .node {
     width: 100%;
     height: auto;
     background: #ffffff;
+
     .title {
-     
+      margin-left: 15px;
       margin-bottom: 23px;
+      margin-top: 7px;
     }
     .first {
       background: #965ee5;
@@ -435,6 +434,7 @@ export default {
       border-bottom-right-radius: 5px;
     }
     #fuelcost {
+      padding-bottom: 40px;
       ul {
         margin-top: 14px;
         li {
@@ -456,23 +456,22 @@ export default {
             font-family: Arial;
             font-weight: bold;
             color: #515151;
-        text-align: left;
-        margin-right: 20px;
+            text-align: left;
+            margin-right: 20px;
           }
           div:nth-child(3) {
             width: 140px;
             font-size: 15px;
             font-family: Arial;
             font-weight: bold;
-text-align: left;
+            text-align: left;
             color: #a8aabc;
-          
           }
           div:nth-child(4) {
             font-size: 15px;
             font-family: Arial;
             font-weight: bold;
- width: 140px;
+            width: 140px;
             color: #a8aabc;
           }
           .blue {
@@ -493,9 +492,12 @@ text-align: left;
         }
       }
       .title {
-        font-size: 18px;
-        font-family: Arial;
-        font-weight: bold;
+        font-size: 14px;
+        font-family: PingFang SC;
+        font-weight: 600;
+        line-height: 20px;
+        color: #253551;
+        opacity: 1;
         line-height: 21px;
         color: #000000;
         margin-bottom: 32px;
@@ -506,6 +508,7 @@ text-align: left;
         flex-direction: row;
 
         width: 335px;
+        margin-left: 15px;
         div {
           height: 18px;
         }
@@ -521,12 +524,13 @@ text-align: left;
     .title {
       display: flex;
       align-items: center;
+
       img {
-        width: 38px;
-        height: 38px;
+        width: 35px;
+        height: 35px;
       }
       span {
-        font-size:16px;
+        font-size: 16px;
         font-family: Arial;
         font-weight: bold;
         line-height: 26px;

@@ -179,6 +179,11 @@ export default {
   },
   mounted() {},
   methods: {
+     qianwei(str) {
+      str = str.toString();
+      var re = /(?=(?!(\b))(\d{3})+$)/g;
+      return (str = str.replace(re, ","));
+    },
     indexlists() {
       let that = this;
       that.$http
@@ -367,29 +372,29 @@ export default {
             }
           }
           // 节点数
-          this.jiediancount = res.data[0].node_count[0].count;
+          this.jiediancount = this.qianwei(res.data[0].node_count[0].count);
           //console.log(this.tableData);
           //区块高度
-          this.blockheigth = data.block_height_all[0].block_height;
+          this.blockheigth = this.qianwei(data.block_height_all[0].block_height);
           // 区块奖励
-          this.blockreward = Math.trunc(
+          this.blockreward = this.qianwei(Math.trunc(
             data.count_block_award_for_all[0].award_total
-          );
+          ));
           // 剩余区块奖励
-          this.blocklastreward = Math.trunc(
+          this.blocklastreward = this.qianwei(Math.trunc(
             data.count_block_award_for_all[0].award_balance
-          );
+          ));
           //  交易笔数
-          this.transnumber = data.transaction_num_for_all[0].transaction_num;
-          this.money = res.data[0].usdt[0].usdt.toString().substring(0, 6);
-          this.money2 = res.data[0].usdt[0].rmb.toString().substring(0, 4);
+          this.transnumber = this.qianwei(data.transaction_num_for_all[0].transaction_num);
+          this.money = this.qianwei(res.data[0].usdt[0].usdt.toString().substring(0, 6));
+          this.money2 = this.qianwei(res.data[0].usdt[0].rmb.toString().substring(0, 4));
           //24小时交易笔数?
-          this.transzoom = data.transaction_num_for_24h[0].transaction_num;
+          this.transzoom = this.qianwei(data.transaction_num_for_24h[0].transaction_num);
           // console.log(this.transzoom);
           // 24小时交易总额?
-          this.transmoney = Math.trunc(
+          this.transmoney = this.qianwei(Math.trunc(
             data.transaction_amount_for_24h[0].transaction_amount_24h
-          );
+          ));
         })
         .catch((e) => {});
     },
@@ -550,13 +555,13 @@ export default {
       padding-left: 97px;
       padding-right: 101px;
       div:nth-child(2) {
-        width: 100px;
+        width: 120px;
         text-align: right;
-        overflow: hidden;
+        
       }
       div {
         div:nth-child(1) {
-          width: 100px;
+          width: 125px;
           text-align: right;
           // margin-right: 78px;
         }

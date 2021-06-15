@@ -44,24 +44,24 @@
           </router-link>
         </li>
         <li class="slide2" @click="menuSecond">
-          <div class="el-dropdown-link">
+          <div :class="{ 'el-dropdown-link': true, blue: $store.state.blues }">
             {{ $t("nav")[1] }}
             <img src="@assets/images/second/menuxia.png" v-show="!secondmenu" />
             <img src="@assets/images/second/收回.png" v-show="secondmenu" />
             <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
           </div>
           <ul v-show="secondmenu">
-            <li @click="blueClass">
+            <li @click="menuBlue">
               <router-link :to="{ path: '/block' }">
                 {{ $t("nav")[2] }}
               </router-link>
             </li>
-            <li @click="menu">
+            <li @click="menuBlue">
               <router-link :to="{ path: '/transaction' }">
                 {{ $t("nav")[3] }}
               </router-link>
             </li>
-            <li @click="menu">
+            <li @click="menuBlue">
               <router-link :to="{ path: '/address' }">
                 {{ $t("nav")[4] }}
               </router-link>
@@ -75,15 +75,15 @@
             </span>
           </router-link>
         </li>
-        <li @click="menu">
-          <div @click="changeLanguage" style="width:100%;height:100%">
+        <li @click="changeLanguage">
+          <div style="width:100%;height:100%">
             {{ language2 }}
           </div>
         </li>
       </ul></van-popup
     >
 
-    <Search></Search>
+    <Search :select="select"></Search>
   </div>
 </template>
 
@@ -101,11 +101,57 @@ export default {
       language2: "",
       secondmenu: false,
       show: false,
+      searchlist: [],
     };
+  },
+  watch: {
+    nowLang(oldvalue, newvalue) {
+      console.log(oldvalue, newvalue);
+    },
   },
   components: { Search },
   created() {
     this.nowLang = this.$i18n.locale;
+    if (this.$i18n.locale == "cn") {
+      this.select = [
+        {
+          value: "0",
+          label: "UENC地址",
+        },
+        {
+          value: "1",
+          label: "区块高度",
+        },
+        {
+          value: "2",
+          label: "交易哈希",
+        },
+        // {
+        //   value: "3",
+        //   label: "区块哈希",
+        // },
+      ];
+    }
+    if (this.$i18n.locale == "en") {
+      this.select = [
+        {
+          value: "0",
+          label: "Address",
+        },
+        {
+          value: "1",
+          label: "Height",
+        },
+        {
+          value: "2",
+          label: "Transaction",
+        },
+        // {
+        //   value: "3",
+        //   label: "Block",
+        // },
+      ];
+    }
     this.language = this.nowLang;
     if (this.language == "cn") {
       this.language = "中文";
@@ -130,10 +176,14 @@ export default {
       // this.$store.commit("menuState", true);
       // this.$store.commit("bluesState", false);
     },
+    menuBlue() {
+      this.$store.commit("bluesState", true);
+      this.show = false;
+    },
     menu() {
       this.show = false;
       // this.$store.commit("menuState", true);
-      // this.$store.commit("bluesState", true);
+      this.$store.commit("bluesState", false);
     },
     menuShow() {
       this.show = true;
@@ -143,38 +193,68 @@ export default {
       this.show = false;
       // this.$store.commit("menuState", true);
     },
-    blueClass() {
-      // this.$store.commit("menuState", true);
-      // this.$store.commit("bluesState", true);
-      this.reload();
-      this.show = false;
-    },
+
     blueClass2() {
       // this.$store.commit("bluesState", false);
       // this.$store.commit("menuState", true);
       this.reload();
     },
     changeLanguage() {
+      console.log(this.$i18n.locale);
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
-
+ this.select = [
+        {
+          value: "0",
+          label: "Address",
+        },
+        {
+          value: "1",
+          label: "Height",
+        },
+        {
+          value: "2",
+          label: "Transaction",
+        },
+        // {
+        //   value: "3",
+        //   label: "Block",
+        // },
+      ];
         this.language = "1";
         this.language2 = "中文";
         this.$store.commit("menuState", true);
         this.reload();
       } else {
         this.$i18n.locale = "cn";
-
+ this.select = [
+        {
+          value: "0",
+          label: "UENC地址",
+        },
+        {
+          value: "1",
+          label: "区块高度",
+        },
+        {
+          value: "2",
+          label: "交易哈希",
+        },
+        // {
+        //   value: "3",
+        //   label: "区块哈希",
+        // },
+      ];
         this.language = "2";
         this.language2 = "En";
         this.$store.commit("menuState", true);
         this.reload();
       }
+       this.reload();
     },
     handleSelect(key, keyPath) {},
   },
-  mounted() {},
-  destroyed() {},
+
 };
 </script>
 
@@ -183,7 +263,6 @@ export default {
 }
 .van-popup {
   max-height: 60%;
-  overflow-y: hidden;
   .header-tops {
     width: 100%;
     height: 55px;
@@ -198,20 +277,19 @@ export default {
       margin-right: 15px;
     }
   }
-  .menuslide>li{
-height: 50px;
-      margin-top: 20px;
-      font-size: 16px;
-      font-family: PingFang SC;
-      font-weight: 400;
-      line-height: 50px;
-      color: #9da5bb;
-      padding-left: 15px;
+  .menuslide > li {
+    height: 50px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-family: PingFang SC;
+    font-weight: 400;
+    line-height: 50px;
+    color: #9da5bb;
+    padding-left: 15px;
   }
   .menuslide {
     width: 100%;
     li {
-      
     }
     .slide2 {
       height: auto;
@@ -224,13 +302,13 @@ height: 50px;
       ul {
         li {
           height: 50px;
-      margin-top: 20px;
-      font-size: 16px;
-      font-family: PingFang SC;
-      font-weight: 400;
-      line-height: 22px;
-      color: #9da5bb;
-      padding-left: 15px;
+          margin-top: 20px;
+          font-size: 16px;
+          font-family: PingFang SC;
+          font-weight: 400;
+          line-height: 22px;
+          color: #9da5bb;
+          padding-left: 15px;
           span {
             font-size: 16px;
             font-family: PingFang SC;
@@ -244,7 +322,7 @@ height: 50px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-height: 50px;
+        height: 50px;
         align-items: center;
         text-align: center;
         padding-right: 15px;

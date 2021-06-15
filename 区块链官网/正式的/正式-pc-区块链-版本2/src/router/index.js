@@ -11,7 +11,7 @@ const routes = [
         component: () =>
             import ("../views/index.vue"),
         meta: {
-            keepAlive: true // 需要被缓存
+            keepAlive: false // 需要被缓存
         },
 
     },

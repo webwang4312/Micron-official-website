@@ -6,7 +6,7 @@ height: 10px;
 background: #F8F8F8;"
     ></div>
     <div class="top">
-      <span>最新出块</span>
+      <span>{{ $t("block")[0] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -14,7 +14,7 @@ background: #F8F8F8;"
           <ul>
             <li>
               <div>
-                区块高度
+               {{ $t("index")[0] }}
               </div>
               <div @click="goToBlockDetail(item.block_height)">
                 K
@@ -25,7 +25,7 @@ background: #F8F8F8;"
             </li>
             <li>
               <div>
-                时间
+               {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.block_time.toString() }}
@@ -33,13 +33,13 @@ background: #F8F8F8;"
             </li>
             <li>
               <div>
-                交易笔数
+               {{ $t("block")[2] }}
               </div>
               <div>{{ item.transaction_num }}</div>
             </li>
             <li>
               <div>
-                交易额
+               {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.transaction_amount }}
@@ -47,7 +47,7 @@ background: #F8F8F8;"
             </li>
             <li>
               <div>
-                区块奖励
+              {{ $t("block")[4] }}
               </div>
               <div>
                 {{ item.transaction_award }}
@@ -292,7 +292,7 @@ export default {
     align-items: center;
     margin: 20px auto 0;
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
     img {
       width: 38px;
@@ -306,7 +306,7 @@ export default {
     background: #ffffff;
     margin: 0 auto;
     .info_title {
-      margin: 0 20px;
+      // margin: 0 20px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;
@@ -356,7 +356,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    // padding: 0 20px;
     div {
       font-size: 16px;
       font-family: PingFang SC;

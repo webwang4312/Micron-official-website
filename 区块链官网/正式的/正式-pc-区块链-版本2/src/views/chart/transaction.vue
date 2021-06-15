@@ -50,8 +50,8 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0 ,0, 20],  //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
@@ -111,8 +111,8 @@ export default {
           text: this.title[0].test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0 ,0, 20],  //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
@@ -215,7 +215,11 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -298,7 +302,11 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -397,7 +405,7 @@ export default {
 .chart_transaction {
    #number_of_transactions,#total_daily_transactions{
       width: 551px;
-    height: 100%;
+    height: 343px;
     opacity: 1;  
     // background: red;
     }
@@ -415,7 +423,7 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-     justify-content: space-between;
+     justify-content: space-around;
       border: 1px solid #e9eced;
       border-radius: 18px;
        background: #ffffff;

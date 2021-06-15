@@ -1,7 +1,7 @@
 <template>
   <div class="address">
     <div class="top">
-      <span>富豪榜</span>
+      <span>{{ $t("address")[0] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -9,7 +9,7 @@
           <ul>
             <li>
               <div>
-                地址
+                {{ $t("address")[2] }}
               </div>
               <div @click="goToAddressDetail(item.wallet_address)">
                 <span class="blue">
@@ -19,7 +19,7 @@
             </li>
             <li>
               <div>
-                交易数
+              {{ $t("block")[2] }}
               </div>
               <div>
                 {{ item.transaction_num }}
@@ -27,13 +27,13 @@
             </li>
             <li>
               <div>
-                金额
+               {{ $t("address")[3] }}
               </div>
               <div>{{ item.amount }}</div>
             </li>
             <li>
               <div>
-                占比
+              {{ $t("address")[4] }}
               </div>
               <div>
                 {{ item.percentage }}
@@ -41,7 +41,7 @@
             </li>
             <li>
               <div>
-                排名
+                {{ $t("address")[1] }}
               </div>
               <div>
                 {{item.rank}}
@@ -179,7 +179,7 @@ export default {
     align-items: center;
     margin: 20px auto 0;
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
     img {
       width: 38px;
@@ -192,7 +192,7 @@ export default {
     background: #ffffff;
     margin: 0 auto;
     .info_title {
-      margin: 0 20px;
+      margin: 0 0px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;

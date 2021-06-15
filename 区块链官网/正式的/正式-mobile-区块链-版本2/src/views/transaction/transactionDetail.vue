@@ -7,12 +7,12 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>交易明细</span>
+      <span>{{ $t("transactiondetail")[0] }}</span>
     </div>
     <div class="detail_content">
       <ul class="all_content">
         <li>
-          <div>所属区块:</div>
+          <div>{{ $t("transactiondetail")[1] }}:</div>
           <div
             class="blue"
             @click="goToBlockDetail(transactionlist[0].block_height)"
@@ -21,15 +21,15 @@ opacity: 1;"
           </div>
         </li>
         <li>
-          <div>交易哈希:</div>
+          <div>{{ $t("blockdetail")[3] }}:</div>
           <div>{{ transactionlist[0].transaction_hash2 }}</div>
         </li>
         <li>
-          <div>交易时间:</div>
+          <div>{{ $t("transactiondetail")[2] }}:</div>
           <div>{{ transactionlist[0].transaction_time }}</div>
         </li>
         <li>
-          <div>从:</div>
+          <div>{{ $t("index")[9] }}:</div>
           <div @click="goToAddressDetail(transactionlist[0].from_address)">
             <span class="blue">
               {{ transactionlist[0].from_address }}
@@ -37,7 +37,7 @@ opacity: 1;"
           </div>
         </li>
         <li>
-          <div>至:</div>
+          <div>{{ $t("index")[10] }}:</div>
           <ul v-if="zhiya" class="to-address">
             <li
               class="blue detail_info3"
@@ -81,19 +81,19 @@ opacity: 1;"
           </ul> -->
         </li>
         <li v-show="amount_detail">
-          <div>交易详情:</div>
+          <div>{{ $t("transaction")[0] }}:</div>
           <div>{{ transactionlist[0].amount_detail }}</div>
         </li>
         <li>
-          <div>交易额:</div>
+          <div>{{ $t("block")[3] }}:</div>
           <div>{{ transactionlist[0].transaction_amount }}</div>
         </li>
         <li>
-          <div>共识数:</div>
+          <div>{{ $t("transactiondetail")[3] }}:</div>
           <div>{{ transactionlist[0].extra }}</div>
         </li>
         <li>
-          <div>交易签名节点:</div>
+          <div>{{ $t("transactiondetail")[4] }}:</div>
           <ul class="blue detail_info3">
             <li
               v-for="item in arr"
@@ -105,11 +105,11 @@ opacity: 1;"
           </ul>
         </li>
         <li>
-          <div>燃料费:</div>
+          <div>{{ $t("blockdetail")[2] }}:</div>
           <div>{{ transactionlist[0].gas }}</div>
         </li>
         <li>
-          <div>区块奖励:</div>
+          <div>{{ $t("block")[4] }}:</div>
           <div>{{ transactionlist[0].award }}</div>
         </li>
       </ul>
@@ -120,11 +120,11 @@ background: #F8F8F8;
 opacity: 1;"
       ></div>
       <div class="top">
-        <span>更多信息</span>
+        <span>{{ $t("transaction")[2] }}</span>
       </div>
       <ul class="more-information">
         <li>
-          <div>燃料费信息:</div>
+          <div>{{ $t("transactiondetail")[6] }}:</div>
           <ul class="detail_info ">
             <li v-for="item in detail1Data" :key="item">
               {{ item.sign_node }}
@@ -137,7 +137,7 @@ opacity: 1;"
           </ul>
         </li>
         <li>
-          <div>区块奖励信息:</div>
+          <div>{{ $t("transactiondetail")[7] }}:</div>
           <ul class="detail_info ">
             <li v-for="item in detail2Data" :key="item">
               {{ item.sign_node }}
@@ -385,6 +385,7 @@ export default {
           res.data[0].search_main_transaction_detailInfo[0].to_address ||
         res.data[0].search_main_transaction_detailInfo[0].redeem == "1"
       ) {
+        this.zhiya=false;
         if (this.nowLang == "cn") {
           // 从
           this.transactionlist[0].from_address = "质押";
@@ -395,6 +396,7 @@ export default {
         this.transactionlist[0].to_address =
           res.data[0].search_main_transaction_detailInfo[0].to_address;
       } else {
+        this.zhiya=true;
         // 不是质押的情况
         this.transactionlist[0].from_address = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
           ","
@@ -539,6 +541,7 @@ export default {
           // this.amount_detail = false;
         }
       }
+      console.log(this.transactionlist[0].to_address);
     },
     timestampToTime(timestamp) {
       var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -590,7 +593,7 @@ export default {
     font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 18px;
-    color: #965EE5;
+    color: #965ee5;
     cursor: pointer;
     margin-top: 27px;
   }
@@ -602,7 +605,7 @@ export default {
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 18px;
-    color: #965EE5;
+    color: #965ee5;
     width: 200px;
     word-wrap: break-word;
     word-break: break-all;
@@ -620,7 +623,7 @@ export default {
     display: flex;
     align-items: center;
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
   }
   .detail_content {
@@ -641,7 +644,7 @@ export default {
     }
     .all_content {
       width: 100%;
-      padding: 0 20px 30px;
+      padding: 0 0 30px;
       .detail_info3 {
         li:nth-child(1) {
           margin-top: 0px !important;
@@ -691,7 +694,7 @@ export default {
     }
     .more-information {
       width: 345px;
-      padding: 0 20px;
+      padding: 0 0px;
 
       .detail_info2 {
         font-size: 13px;

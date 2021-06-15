@@ -7,13 +7,13 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>地址概览</span>
+      <span>{{ $t("addressdetail")[0] }}</span>
     </div>
     <div class="detail_content">
       <ul>
         <li>
           <div>
-            地址:
+            {{ $t("address")[2] }}:
           </div>
           <div class="blue">
             {{ shiyan }}
@@ -21,7 +21,7 @@ opacity: 1;"
         </li>
         <li>
           <div>
-            余额:
+          {{ $t("addressdetail")[1] }}:
           </div>
           <div>
            {{ info[0].search_wallect_balance[0].account_balance }}
@@ -29,7 +29,7 @@ opacity: 1;"
         </li>
         <li>
           <div>
-            交易数:
+          {{ $t("addressdetail")[2] }}:
           </div>
           <div>
            {{ info[0].ranking_and_transaction_num[0].transaction_num }}
@@ -37,13 +37,13 @@ opacity: 1;"
         </li>
         <li>
           <div>
-            收入合计:
+            {{ $t("addressdetail")[3] }}:
           </div>
           <div>{{ info[0].total_income[0].total_income }}UENC</div>
         </li>
         <li>
           <div>
-            支出合计:
+            {{ $t("addressdetail")[4] }}:
           </div>
           <div>
         {{ info[0].total_payout[0].total_payout }}UENC
@@ -51,7 +51,7 @@ opacity: 1;"
         </li>
         <li>
           <div>
-            排名:
+           {{ $t("address")[1] }}:
           </div>
           <div>
             
@@ -67,7 +67,7 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
       <ul
@@ -78,7 +78,7 @@ opacity: 1;"
           <ul>
             <li>
               <div>
-                交易哈希
+                {{ $t("blockdetail")[3] }}
               </div>
               <div @click="goToTransactionDetail(item.transaction_hash2)">
                 TX
@@ -89,7 +89,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                从
+               {{ $t("index")[9] }}
               </div>
               <div @click="goToAddressDetail(item.from_address2)" class="blue">
                 {{ item.from_address }}
@@ -97,7 +97,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                到
+               {{ $t("index")[10] }}
               </div>
               <div @click="goToAddressDetail(item.to_address2)" class="blue">
                 {{ item.to_address }}
@@ -105,7 +105,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                交易额
+               {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.amount }}
@@ -113,7 +113,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                时间
+              {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.time.toString() }}
@@ -121,7 +121,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                燃料费
+               {{ $t("blockdetail")[2] }}
               </div>
               <div>
                 {{ item.gas }}
@@ -458,7 +458,7 @@ export default {
     margin: 20px auto 0;
 
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
     img {
       width: 38px;
@@ -470,7 +470,7 @@ export default {
     height: auto;
     background: #ffffff;
     margin: 0 auto;
-    padding: 0 20px 20px;
+    padding: 0 0px 20px;
 
     ul {
       li {
@@ -504,7 +504,7 @@ export default {
     margin: 0 auto;
     z-index: 1;
     .info_title {
-      margin: 0 20px;
+      margin: 0 0px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;
@@ -554,7 +554,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    // padding: 0 20px;
     div {
       font-size: 16px;
       font-family: PingFang SC;

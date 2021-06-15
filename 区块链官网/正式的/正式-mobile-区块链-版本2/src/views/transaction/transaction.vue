@@ -1,7 +1,7 @@
 <template>
   <div class="transaction">
     <div class="top">
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -9,7 +9,7 @@
           <ul>
             <li>
               <div>
-                交易哈希
+                {{ $t("blockdetail")[3] }}
               </div>
               <div @click="goToTransactionDetail(item.transaction_hash2)">
                 TX
@@ -20,7 +20,7 @@
             </li>
             <li>
               <div>
-                从
+               {{ $t("index")[9] }}
               </div>
               <div class="blue" @click="goToAddressDetail(item.from_address2)">
                 {{ item.from_address }}
@@ -28,7 +28,7 @@
             </li>
             <li>
               <div>
-                到
+               {{ $t("index")[10] }}
               </div>
               <div
                 v-if="item.to_address == '质押' || item.to_address == 'Pledge'"
@@ -45,7 +45,7 @@
             </li>
             <li>
               <div>
-                交易额
+              {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.transaction_amount }}
@@ -53,7 +53,7 @@
             </li>
             <li>
               <div>
-                时间
+               {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.transaction_time.toString() }}
@@ -61,7 +61,7 @@
             </li>
             <li>
               <div>
-                燃料费
+              {{ $t("blockdetail")[2] }}
               </div>
               <div>
                 {{ item.gas }}
@@ -69,7 +69,7 @@
             </li>
             <li>
               <div>
-                区块奖励
+              {{ $t("block")[4] }}
               </div>
               <div>
                 {{ item.transaction_amount }}
@@ -117,7 +117,7 @@ export default {
     this.nowLang = this.$i18n.locale;
     this.transmedianum = 1;
     this.transactionlist();
-    console.log(this.timestampToTime(1403058804)); //2014-06-18 10:33:24
+    // console.log(this.timestampToTime(1403058804)); //2014-06-18 10:33:24
   },
 
   // 页码设置
@@ -197,7 +197,7 @@ export default {
                 // console.log(blocktime);
                 // 当前日期转时间戳
                 let timestamp = res.data[0].timeStamp;
-                console.log(timestamp);
+                // console.log(timestamp);
                 // console.log(timestamp + "xianzai");
                 let s = timestamp - blocktime; //9.20
                 // console.log(s+'相差');
@@ -415,7 +415,7 @@ export default {
     align-items: center;
     margin: 20px auto 0;
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
     img {
       width: 38px;
@@ -429,7 +429,7 @@ export default {
     background: #ffffff;
     margin: 0 auto;
     .info_title {
-      margin: 0 20px;
+      // margin: 0 20px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;
@@ -479,7 +479,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    // padding: 0 20px;
     div {
       font-size: 16px;
       font-family: PingFang SC;

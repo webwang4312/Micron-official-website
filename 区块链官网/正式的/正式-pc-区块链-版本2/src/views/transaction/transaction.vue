@@ -2,7 +2,7 @@
   <div class="transaction">
     <div class="top">
       <img src="@assets/images/second/交易列表@2x.png" alt="" />
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">

@@ -89,7 +89,7 @@ export default {
         },
         yAxis: {
           max: function(value) {
-            return parseInt(value.max);
+            return parseInt(value.max+5);
           },
           splitNumber: 2,
           type: "value",

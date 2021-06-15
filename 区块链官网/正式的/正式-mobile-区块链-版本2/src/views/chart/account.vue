@@ -2,7 +2,7 @@
   <div class="chart_account">
     <div class="node">
       <div class="title">
-        <!-- <img src="@assets/images/second/账户统计@2x.png" alt="" /> -->
+        <img src="@assets/images/second/账户统计.png" alt="" />
         <span> {{ $t("chart")[3] }}</span>
       </div>
       <div class="node_detail">
@@ -58,8 +58,14 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+           padding: [23,0,0,0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+           textStyle: {
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
+          },
         },
         xAxis: {
           type: "category",
@@ -136,8 +142,14 @@ export default {
           text: this.title[0].test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+           padding: [23,0,0,0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+           textStyle: {
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
+          },
         },
         xAxis: {
           type: "category",
@@ -216,6 +228,12 @@ export default {
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
           padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+           textStyle: {
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
+          },
         },
         xAxis: {
           type: "category",
@@ -691,7 +709,15 @@ export default {
   background: #ffffff;
     margin: 0px auto 53px;
     .title {
+      font-size: 16px;
+font-family: PingFang SC;
+font-weight: 600;
+line-height: 22px;
+color: #253551;
+opacity: 1;
+      margin-left: 15px;
       margin-bottom: 23px;
+      margin-top: 7px;
     }
     .node_detail {
       width: 100%;
@@ -706,8 +732,8 @@ export default {
       display: flex;
       align-items: center;
       img {
-        width: 38px;
-        height: 38px;
+        width: 35px;
+        height: 35px;
       }
       span {
         font-size: 16px;

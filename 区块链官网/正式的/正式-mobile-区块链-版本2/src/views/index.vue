@@ -80,9 +80,9 @@
       </div> -->
     </div>
     <div class="hezi"></div>
-   
+
     <Chart></Chart>
-    
+
     <div class="hezi"></div>
     <div class="info_list">
       <div class="last_transaction">
@@ -100,7 +100,8 @@
             <ul>
               <li>
                 <div>
-                  交易哈希TX
+                  {{ $t("blockdetail")[3] }}
+                  TX
                 </div>
                 <div
                   @click="goToTransactionDetail(item.transaction_hash2)"
@@ -129,16 +130,14 @@
                 </div>
               </li>
               <li>
-                <div>
-                  交易额:
-                </div>
+                <div>{{ $t("block")[3] }}:</div>
                 <div>
                   {{ item.amount }}
                 </div>
               </li>
               <li>
                 <div>
-                  时间
+                  {{ $t("block")[1] }}
                 </div>
                 <div>
                   {{ item.date.toString() }}
@@ -170,21 +169,21 @@ height: 0px;border-bottom:1px solid #B2B2B2"
             <ul>
               <li>
                 <div>
-                  高度
+                  {{ $t("index")[0] }}
                 </div>
                 <div @click="goToBlockDetail(item.block_height)" class="blue">
                   {{ item.block_height }}
                 </div>
               </li>
               <li>
-                <div>区块奖励</div>
+                <div>{{ $t("block")[4] }}</div>
                 <div>
                   {{ item.award }}
                 </div>
               </li>
               <li>
                 <div>
-                  时间
+                  {{ $t("block")[1] }}
                 </div>
                 <div>
                   {{ item.time.toString() }}
@@ -192,7 +191,7 @@ height: 0px;border-bottom:1px solid #B2B2B2"
               </li>
               <li>
                 <div>
-                  交易笔数
+                  {{ $t("block")[2] }}
                 </div>
                 <div>
                   {{ item.tx_num }}
@@ -213,7 +212,7 @@ height: 0px;border-bottom:1px solid #B2B2B2"
   </div>
 </template>
 <script>
-import Chart from './index/chart.vue'
+import Chart from "./index/chart.vue";
 export default {
   name: "index",
   inject: ["reload"],
@@ -242,7 +241,7 @@ export default {
       // 剩余区块奖励
       blocklastreward: "",
       // 节点数量
-        jiediancount: "",
+      jiediancount: "",
       echartsed: [],
       // 本页面
       tableData: [
@@ -269,19 +268,21 @@ export default {
       ],
       tabledataall: "",
       pie: [],
-    
     };
   },
   watch: {},
-components: {Chart },
+  components: { Chart },
   created() {
     this.nowLang = this.$i18n.locale;
     this.indexlist();
   },
-  mounted() {
-  
-  },
+  mounted() {},
   methods: {
+    qianwei(str) {
+      str = str.toString();
+      var re = /(?=(?!(\b))(\d{3})+$)/g;
+      return (str = str.replace(re, ","));
+    },
     goToAddressDetail(item) {
       //console.log(item);
       this.$router.push({
@@ -504,33 +505,37 @@ components: {Chart },
               // console.log(times);
             }
           }
+
           //console.log(this.tableData);
-          this.jiediancount=cardleftinformation.node_count[0].count
-          //区块高度
-          this.blockheigth =
-            cardleftinformation.block_height_all[0].block_height;
+          this.jiediancount = cardleftinformation.node_count[0].count;
+         
+         
+
+          this.blockheigth = this.qianwei(
+            cardleftinformation.block_height_all[0].block_height
+          );
           // 区块奖励
-          this.blockreward = Math.trunc(
+          this.blockreward =this.qianwei (Math.trunc(
             cardleftinformation.count_block_award_for_all[0].award_total
-          );
+          ));
           // 剩余区块奖励
-          this.blocklastreward = Math.trunc(
+          this.blocklastreward =this.qianwei (Math.trunc(
             cardleftinformation.count_block_award_for_all[0].award_balance
-          );
+          ));
           //  交易笔数
-          this.transnumber =
-            cardleftinformation.transaction_num_for_all[0].transaction_num;
-          this.money = res.data[0].usdt[0].usdt.toString().substring(0, 6);
-          this.money2 = res.data[0].usdt[0].rmb.toString().substring(0, 4);
+          this.transnumber =this.qianwei
+           ( cardleftinformation.transaction_num_for_all[0].transaction_num);
+          this.money =this.qianwei (res.data[0].usdt[0].usdt.toString().substring(0, 6));
+          this.money2 =this.qianwei( res.data[0].usdt[0].rmb.toString().substring(0, 4));
           //24小时交易笔数?
-          this.transzoom =
-            cardleftinformation.transaction_num_for_24h[0].transaction_num;
+          this.transzoom =this.qianwei
+           ( cardleftinformation.transaction_num_for_24h[0].transaction_num);
           // console.log(this.transzoom);
           // 24小时交易总额?
-          this.transmoney = Math.trunc(
+          this.transmoney =this.qianwei (Math.trunc(
             cardleftinformation.transaction_amount_for_24h[0]
               .transaction_amount_24h
-          );
+          ));
         })
         .catch((e) => {});
     },
@@ -607,8 +612,9 @@ components: {Chart },
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: space-between;
       margin-top: 38px;
-      padding: 0 9px;
+      padding: 0 0px;
       li:nth-child(1) {
         width: 200px;
         margin-right: 61px;
@@ -617,6 +623,12 @@ components: {Chart },
         width: 200px;
         display: flex;
         flex-direction: row;
+      }
+      li > div:nth-child(2) {
+        width: 80px;
+        color: red !important;
+        margin-left: 15px;
+        text-align: right;
       }
       .block_height {
         width: 44px;

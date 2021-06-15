@@ -90,7 +90,11 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -168,7 +172,11 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -246,7 +254,11 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+           splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -655,7 +667,7 @@ export default {
 .chart_account {
     #total_number_accounts,#add_account,#active_addresses{
       width: 551px;
-    height: 500px;
+    height: auto;
     opacity: 1;  
     // background: red;
     }

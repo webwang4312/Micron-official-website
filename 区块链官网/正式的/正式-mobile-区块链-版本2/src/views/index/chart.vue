@@ -41,8 +41,8 @@ export default {
           text: this.test1,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 34, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [20,0,0,20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
@@ -115,8 +115,8 @@ export default {
           text: this.test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 34, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [20,0,0,20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap:0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "#000000",
             fontSize: "18px",
@@ -444,9 +444,9 @@ export default {
   #bars {
     width: 343px;
     height: 322px;
-    border: 1px solid #e9eced;
+    // border: 1px solid #e9eced;
     opacity: 1;
-    border-radius: 18px;
+    // border-radius: 18px;
     // div {
     //   width: 626px !important;
     //   height: 322px !important;
@@ -456,9 +456,9 @@ export default {
   #bar {
     width: 343px;
     height: 322px;
-    border: 1px solid #e9eced;
+    // border: 1px solid #e9eced;
     opacity: 1;
-    border-radius: 18px;
+    // border-radius: 18px;
   }
 }
 </style>

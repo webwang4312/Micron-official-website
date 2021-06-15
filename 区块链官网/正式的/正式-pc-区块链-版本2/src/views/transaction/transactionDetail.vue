@@ -48,7 +48,7 @@
                 <li v-for="item in transactionlist[0].to_address2" :key="item">
                   <div v-html="item"></div>
                 </li>
-                <el-button slot="reference">显示更多</el-button>
+                <el-button slot="reference">  {{ $t("transaction")[1] }}</el-button>
               </el-popover>
             </li>
           </ul>
@@ -69,14 +69,14 @@
         </li>
         <li v-show="amount_detail">
           <div>
-            交易详情
+           {{ $t("transaction")[0] }}
           </div>
           <div>
             <el-popover width="900" trigger="click">
               <li v-for="item in transactionlist[0].amount_detail2" :key="item">
                 <div v-html="item"></div>
               </li>
-              <el-button slot="reference">显示更多</el-button>
+              <el-button slot="reference">  {{ $t("transaction")[1] }}</el-button>
             </el-popover>
           </div>
         </li>

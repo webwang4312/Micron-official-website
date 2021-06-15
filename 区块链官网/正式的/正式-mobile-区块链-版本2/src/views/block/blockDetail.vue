@@ -7,40 +7,31 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>区块详情</span>
+      <span>{{ $t("blockdetail")[0] }}</span>
     </div>
     <ul class="detail_content">
       <li>
-        <div>
-          区块高度:
-        </div>
+        <div>{{ $t("index")[0] }}:</div>
         <div>
           {{ datalist.block_height }}
         </div>
       </li>
       <li>
-        <div>
-          区块个数:
-        </div>
+        <div>{{ $t("blockdetail")[1] }}:</div>
         <div>
           {{ datalist.tx_num }}
         </div>
       </li>
       <li>
-        <div>
-          区块奖励:
-        </div>
+        <div>{{ $t("block")[4] }}:</div>
         <div>
           {{ datalist.block_award }}
         </div>
       </li>
       <li>
+        <div>{{ $t("blockdetail")[2] }}:</div>
         <div>
-          燃料费:
-        </div>
-        <div>
-          {{ datalist.block_gas}}
-         
+          {{ datalist.block_gas }}
         </div>
       </li>
     </ul>
@@ -51,7 +42,7 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -59,37 +50,34 @@ opacity: 1;"
           <ul>
             <li>
               <div>
-               
-                交易哈希
+                {{ $t("blockdetail")[3] }}
               </div>
               <div>
-                 TX
-               <span class="blue">
-  {{ item.transaction_hash }}
-               </span>
-              
+                TX
+                <span class="blue" @click="goToTransactionDetail(item.transaction_hash2)">
+                  {{ item.transaction_hash }}
+                </span>
               </div>
             </li>
             <li>
               <div>
-                从
+                {{ $t("index")[9] }}
               </div>
-              <div class="blue">
+              <div class="blue" @click="goToAddressDetail(item.from_address2)">
                 {{ item.from_address }}
               </div>
             </li>
             <li>
-              <div >
-                到
+              <div>
+                {{ $t("index")[10] }}
               </div>
-              <div class="blue">
+              <div class="blue" @click="goToAddressDetail(item.to_address2)">
                 {{ item.to_address }}
               </div>
-              
             </li>
             <li>
               <div>
-                交易额
+                {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.transaction_amount }}
@@ -97,7 +85,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                时间
+                {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.time.toString() }}
@@ -105,18 +93,17 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                燃料费
+                {{ $t("blockdetail")[2] }}
               </div>
               <div>
-                {{ item.gas}}
+                {{ item.gas }}
               </div>
             </li>
             <li>
               <div>
-                区块奖励
+                {{ $t("block")[4] }}
               </div>
-              <div> {{ item.award }}</div>
-             
+              <div>{{ item.award }}</div>
             </li>
           </ul>
         </li>
@@ -155,14 +142,12 @@ export default {
       totalNum: "",
       blockData: [],
       shiyan: "",
-      datalist: [
-       
-      ],
+      datalist: [],
     };
   },
   components: {},
   created() {
-   this.nowLang = this.$i18n.locale;
+    this.nowLang = this.$i18n.locale;
     this.shiyan = this.$route.query.block;
     //console.log(this.$route.query.block);
     this.blockmedianum = 1;
@@ -173,12 +158,21 @@ export default {
   // 页码设置
   watch: {},
   methods: {
-    goToTransactionDetail(item) {
+
+     goToTransactionDetail(item) {
       this.$router.push({
         path: "/transactiondetail",
 
         query: {
           transaction_hash: item,
+        },
+      });
+    },
+    goToAddressDetail(item) {
+      this.$router.push({
+        path: "/addressdetail",
+        query: {
+          address: item,
         },
       });
     },
@@ -214,8 +208,8 @@ export default {
           console.log(res);
           this.totalNum = res.data[0].total_page[0].totalPageNum;
           // 高度
-          this.datalist=res.data[0].block_height[0];
-        // 燃料费
+          this.datalist = res.data[0].block_height[0];
+          // 燃料费
           // table赋值
           //console.log(res.data[0].block_list.length);
           for (let i = 0; i < res.data[0].block_list.length + 1; i++) {
@@ -224,13 +218,15 @@ export default {
             //console.log(res.data[0].from_address);
             obj.transaction_hash2 = res.data[0].block_list[i].transaction_hash;
             obj.transaction_hash =
-              res.data[0].block_list[i].transaction_hash.substring(0, 10) + "...";
+              res.data[0].block_list[i].transaction_hash.substring(0, 10) +
+              "...";
             obj.time = this.timestampToTime(
               Number(res.data[0].block_list[i].time)
             );
- obj.transaction_amount = res.data[0].block_list[i].transaction_amount;
+            obj.transaction_amount =
+              res.data[0].block_list[i].transaction_amount;
             obj.gas = res.data[0].block_list[i].gas;
-             obj.award = res.data[0].block_list[i].award;
+            obj.award = res.data[0].block_list[i].award;
             obj.transaction_amount =
               res.data[0].block_list[i].transaction_amount;
             if (
@@ -239,6 +235,8 @@ export default {
               res.data[0].block_list[i].pledge == "1"
             ) {
               // 从
+               obj.from_address2 =
+                res.data[0].block_list[i].from_address;
               obj.from_address =
                 res.data[0].block_list[i].from_address.substring(0, 10) + "...";
               if (this.nowLang == "cn") {
@@ -260,13 +258,19 @@ export default {
               // 至
               obj.to_address =
                 res.data[0].block_list[i].to_address.substring(0, 10) + "...";
+                 obj.to_address2 =
+                res.data[0].block_list[i].to_address;
             } else {
+              obj.from_address2 =
+                res.data[0].block_list[i].from_address;
+              obj.to_address2 =
+                res.data[0].block_list[i].to_address;
               obj.from_address =
                 res.data[0].block_list[i].from_address.substring(0, 10) + "...";
               obj.to_address =
                 res.data[0].block_list[i].to_address.substring(0, 10) + "...";
             }
-           
+
             // console.log(obj);
             blockData[i] = obj;
             //console.log(blockData);
@@ -402,7 +406,7 @@ export default {
     //     .catch((e) => {});
     // },
     timestampToTime(timestamp) {
-      var date = new Date(timestamp*1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + "-";
       var M =
         (date.getMonth() + 1 < 10
@@ -426,10 +430,10 @@ export default {
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 18px;
-    color: #965EE5 !important;
+    color: #965ee5 !important;
   }
   .top {
-    width: 343px;
+    width: 335px;
     height: 38px;
     font-size: 14px;
     font-family: PingFang SC;
@@ -438,7 +442,8 @@ export default {
     color: #253551;
     display: flex;
     align-items: center;
-    margin: 20px auto 0;
+    margin-top: 20px;
+    // margin: 20px auto 0;
     span {
       margin-left: 20px;
     }
@@ -448,12 +453,12 @@ export default {
     }
   }
   .detail_content {
-    width: 343px;
+    width: 335px;
     height: 123px;
     background: #ffffff;
 
-    margin: 0 auto;
-    padding: 0 20px;
+    margin: 0 20px;
+    // padding: 0 30px;
 
     li {
       display: flex;
@@ -477,13 +482,12 @@ export default {
     }
   }
   .block_info {
-    width: 343px;
+    width: 335px;
     height: auto;
-   
 
     margin: 0 auto 31px;
     .info_title {
-      margin: 0 20px;
+      // margin: 0 20px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;
@@ -523,8 +527,8 @@ export default {
       }
     }
   }
- .block_pagination {
-     width: 343px;
+  .block_pagination {
+    width: 343px;
     height: 37px;
     background: #ffffff;
     margin: 10px auto 55px;
@@ -533,7 +537,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    // padding: 0 20px;
     div {
       font-size: 16px;
       font-family: PingFang SC;
