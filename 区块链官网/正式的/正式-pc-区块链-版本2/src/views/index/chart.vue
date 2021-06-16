@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import {base} from "@server/api.js";
 export default {
   name: "indexchart",
   data() {
@@ -130,7 +131,7 @@ export default {
         ],
       });
       this.$http
-        .get("")
+        .get(base)
         .then((res) => {
           // console.log(res);
           for (var i = 0; i < res.data[0].hourly_award.length + 1; i++) {
@@ -317,7 +318,7 @@ export default {
 
       var part = [];
       that.$http
-        .get("")
+        .get(base)
         .then((res) => {
           // console.log(res);
           for (

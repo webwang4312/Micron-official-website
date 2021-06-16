@@ -152,6 +152,11 @@ opacity: 1;"
   </div>
 </template>
 <script>
+import {
+  GetAddressListDetail,
+  GetAddressListDetail2,
+  
+} from "@server/api.js";
 var qs = require("qs");
 export default {
   name: "addressdetail",
@@ -248,7 +253,7 @@ export default {
     },
      async addressList() {
       await this.$http
-        .get("/wallet_address_overview",{
+        .get(GetAddressListDetail2,{
           params: {
             wallet_address: this.shiyan,
            
@@ -268,7 +273,7 @@ export default {
       let that = this;
       var blockData = [];
       await that.$http
-        .get("/search_transactionInfo_walletAddress", {
+        .get(GetAddressListDetail, {
           params: {
             wallet_address: this.shiyan,
             pageNum: this.transmedianum,

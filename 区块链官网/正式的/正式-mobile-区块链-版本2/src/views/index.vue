@@ -212,6 +212,7 @@ height: 0px;border-bottom:1px solid #B2B2B2"
   </div>
 </template>
 <script>
+import {base} from "@server/api.js";
 import Chart from "./index/chart.vue";
 export default {
   name: "index",
@@ -321,7 +322,7 @@ export default {
     indexlist() {
       let that = this;
       that.$http
-        .get("")
+        .get(base)
         .then((res) => {
           //console.log(res);
           // 获取首页数据集合

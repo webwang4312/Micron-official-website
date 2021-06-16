@@ -9,19 +9,19 @@ import { get, gets, post, posts } from './server.js'
 // 获取首页数据
 export const base='http://47.116.69.138:9090'
 //  区块列表
-export const GetBlockList = p => get(base+'/get_block_list_for_all', p);
+export const GetBlockList =base+'/get_block_list_for_all';
 //  交易列表
-export const GetTransactionList = p => get(base+'/search_transaction_list_all', p);
+export const GetTransactionList =base+'/search_transaction_list_all';
 //  富豪榜
-export const GetAddressList = p => get(base+'/get_address_list_for_all', p);
+export const GetAddressList =base+'/get_address_list_for_all';
 //  区块详情
-export const GetBlockListDetail = p => get(base+'/search_blockHeight_for_height', p);
+export const GetBlockListDetail =base+'/search_blockHeight_for_height';
 //  交易详情
-export const GetTransactionListDetail = base+'/search_transactionHash_detailInfo';
+export const GetTransactionListDetail =base+'/search_transactionHash_detailInfo';
 // 地址详情
-export const GetAddressListDetail = p => get(base+'/search_transactionInfo_walletAddress', p);
+export const GetAddressListDetail =base+'/search_transactionInfo_walletAddress';
 // 地址详情2
-export const GetAddressListDetail2 = p => get(base+'/wallet_address_overview', p);
+export const GetAddressListDetail2 =base+'/wallet_address_overview';
 // 图表页面
 export const GetChartAll =base+'/show_graph_data';
 // 图表节点

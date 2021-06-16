@@ -33,6 +33,7 @@ height: 33px;"
   </div>
 </template>
 <script>
+import {AddressSearch,TransactionSearch,BlockSearch} from  "@server/api.js";
 export default {
   name: "foot",
   data() {
@@ -231,7 +232,7 @@ export default {
     async addresssearch() {
       let that = this;
       await that.$http
-        .get("/search_transactionInfo_walletAddress", {
+        .get(AddressSearch, {
           params: {
             wallet_address: this.inputvalue,
             pageNum: 1,
@@ -261,7 +262,7 @@ export default {
     async blocksearch() {
       let that = this;
       await that.$http
-        .get("/search_blockHeight_for_height", {
+        .get(BlockSearch, {
           params: {
             block_height: this.inputvalue,
             pageNum: 1,
@@ -298,7 +299,7 @@ export default {
     async transactiondetaillist() {
       let that = this;
       await that.$http
-        .get("/search_transactionHash_detailInfo", {
+        .get(TransactionSearch, {
           params: {
             transaction_hash: this.inputvalue,
           },

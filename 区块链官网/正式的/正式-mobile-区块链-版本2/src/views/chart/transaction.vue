@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll } from "@server/api.js";
 export default {
   name: "chart_transaction",
   data() {
@@ -179,7 +180,7 @@ export default {
       // 时间
       var node_for_7time2 = [];
       that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].transaction_num_for_7.length + 1; i++) {
@@ -231,6 +232,7 @@ export default {
                 },
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 trigger: "item",
                 formatter: "{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
@@ -267,7 +269,7 @@ export default {
         })
         .catch((e) => {});
         that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].transaction_amount_for_7.length + 1; i++) {
@@ -319,6 +321,7 @@ export default {
                 },
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 trigger: "item",
                 formatter: "{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",

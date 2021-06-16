@@ -14,6 +14,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll } from "@server/api.js";
 export default {
   name: "chart_account",
   data() {
@@ -315,7 +316,7 @@ export default {
       // // 前100快时间
       var avg_gas_for_7time22 = [];
       this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           for (
             var i = 0;
@@ -351,9 +352,10 @@ export default {
                 },
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 borderWidth: 1,
                 padding: 15,
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+              
                 show: true,
                 position: "left",
                 backgroundColor: "rgba(74, 74, 74, 1)",
@@ -437,7 +439,7 @@ export default {
         })
         .catch((e) => {});
       this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           for (
             var s = 0;
@@ -461,9 +463,10 @@ export default {
                 data: avg_gas_for_7time2,
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 borderWidth: 1,
                 padding: 15,
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+               
                 show: true,
                 position: "left",
                 backgroundColor: "rgba(74, 74, 74, 1)",
@@ -547,7 +550,7 @@ export default {
         })
         .catch((e) => {});
       this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           for (
             var m = 0;
@@ -571,9 +574,10 @@ export default {
                 data: avg_gas_for_7time22,
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 borderWidth: 1,
                 padding: 15,
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+             
                 show: true,
                 position: "left",
                 backgroundColor: "rgba(74, 74, 74, 1)",

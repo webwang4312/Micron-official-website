@@ -146,6 +146,7 @@ color: #965EE5;cursor:pointer"
   </div>
 </template>
 <script>
+import {GetTransactionListDetail} from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -217,10 +218,11 @@ export default {
       var blockData = [];
       var blockData2 = [];
       await that.$http
-        .get("/search_transactionHash_detailInfo", {
+        .get(GetTransactionListDetail, {
           params: {
             transaction_hash: this.shiyan,
           },
+          
         })
         .then((res) => {
           console.log(res);

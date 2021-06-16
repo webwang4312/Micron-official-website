@@ -1,11 +1,5 @@
 <template>
   <div class="transactiondetail">
-    <div
-      style="width: 100%;
-height: 10px;
-background: #F8F8F8;
-opacity: 1;"
-    ></div>
     <div class="top">
       <span>{{ $t("transactiondetail")[0] }}</span>
     </div>
@@ -154,6 +148,7 @@ opacity: 1;"
   </div>
 </template>
 <script>
+import { GetTransactionListDetail } from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -227,7 +222,7 @@ export default {
       var blockData = [];
       var blockData2 = [];
       await that.$http
-        .get("search_transactionHash_detailInfo", {
+        .get(GetTransactionListDetail, {
           params: {
             transaction_hash: this.shiyan,
           },
@@ -361,7 +356,18 @@ export default {
             i++
           ) {}
         })
-        .catch((e) => {});
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     },
     zhiYaDetail() {
       let res = this.res;
@@ -385,7 +391,7 @@ export default {
           res.data[0].search_main_transaction_detailInfo[0].to_address ||
         res.data[0].search_main_transaction_detailInfo[0].redeem == "1"
       ) {
-        this.zhiya=false;
+        this.zhiya = false;
         if (this.nowLang == "cn") {
           // 从
           this.transactionlist[0].from_address = "质押";
@@ -396,7 +402,7 @@ export default {
         this.transactionlist[0].to_address =
           res.data[0].search_main_transaction_detailInfo[0].to_address;
       } else {
-        this.zhiya=true;
+        this.zhiya = true;
         // 不是质押的情况
         this.transactionlist[0].from_address = res.data[0].search_main_transaction_detailInfo[0].from_address.split(
           ","

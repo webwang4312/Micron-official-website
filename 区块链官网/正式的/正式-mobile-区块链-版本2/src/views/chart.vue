@@ -40,6 +40,6 @@ export default {
   height: auto;
   padding-bottom: 74px;
  background: #F8F8F8;
- padding-top: 10px;
+ 
 }
 </style>

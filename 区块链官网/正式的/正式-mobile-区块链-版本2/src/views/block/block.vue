@@ -1,10 +1,6 @@
 <template>
   <div class="block">
-    <div
-      style="width: 100%;
-height: 10px;
-background: #F8F8F8;"
-    ></div>
+    
     <div class="top">
       <span>{{ $t("block")[0] }}</span>
     </div>
@@ -78,6 +74,7 @@ background: #F8F8F8;"
   </div>
 </template>
 <script>
+ import {GetBlockList} from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -118,11 +115,13 @@ export default {
         });
       } else {
         this.blockmedianum -= 1;
+         window.scrollTo(0,0);
         this.blocklist();
       }
     },
     pagesPlus() {
       this.blockmedianum += 1;
+       window.scrollTo(0,0);
       // //console.log(this.medianum);
       this.blocklist();
     },
@@ -132,10 +131,10 @@ export default {
       var blockData = [];
       // var data = Qs.stringify({ pageNum: this.blockmedianum, pageSize: 20 });
       await that.$http
-        .get("/get_block_list_for_all", {
+        .get(GetBlockList, {
           params: {
             pageNum: this.blockmedianum,
-            pageSize: 20,
+            pageSize: 5,
           },
         })
         .then((res) => {

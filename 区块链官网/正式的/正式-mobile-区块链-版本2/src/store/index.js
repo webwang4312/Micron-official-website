@@ -8,7 +8,8 @@ export default new Vuex.Store({
         count: '',
         loading: true,
         blues: false,
-        menu:true
+        menu:true,
+        cancelTokenArr: [] // 取消请求token数组
     },
     mutations: {
         bluesState(state, item) {
@@ -18,6 +19,16 @@ export default new Vuex.Store({
         },
         menuState(state, item){
             state.menu = item
+        },
+        pushToken(state, payload) {
+            state.cancelTokenArr.push(payload.cancelToken)
+            // console.log(state.cancelTokenArr);
+        },
+        clearToken({ cancelTokenArr }) {
+            cancelTokenArr.forEach(item => {
+                item('路由跳转取消请求')
+            })
+            cancelTokenArr = []
         }
     },
     actions: {},

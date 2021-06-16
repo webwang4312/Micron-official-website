@@ -71,6 +71,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll,GetChart } from "@server/api.js";
 export default {
   name: "chart_node",
   data() {
@@ -184,7 +185,7 @@ export default {
       // 时间
       var node_for_7time = [];
       that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].gas_node_statistics.length + 1; i++) {
@@ -239,7 +240,7 @@ export default {
                 trigger: "item",
                 formatter: "{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
-
+                extraCssText: "z-index:2",
                 borderWidth: "1",
                 textStyle: {
                   color: "rgba(255, 255, 255, 1)",
@@ -271,7 +272,7 @@ export default {
           }
         })
         .catch((e) => {});
-      that.$http.get("/search_top_n").then((res) => {
+      that.$http.get(GetChart).then((res) => {
         // console.log(res);
         this.allgas = res.data.count[0].count;
         // console.log(this.allgas);

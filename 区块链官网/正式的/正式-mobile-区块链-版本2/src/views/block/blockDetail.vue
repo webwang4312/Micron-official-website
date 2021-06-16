@@ -1,11 +1,6 @@
 <template>
   <div class="blockdetail">
-    <div
-      style="width: 375px;
-height: 10px;
-background: #F8F8F8;
-opacity: 1;"
-    ></div>
+    
     <div class="top">
       <span>{{ $t("blockdetail")[0] }}</span>
     </div>
@@ -130,6 +125,8 @@ opacity: 1;"
   </div>
 </template>
 <script>
+ import {GetBlockListDetail} from "@server/api.js";
+
 export default {
   name: "block",
   data() {
@@ -197,7 +194,7 @@ export default {
       let that = this;
       var blockData = [];
       await that.$http
-        .get("/search_blockHeight_for_height", {
+        .get(GetBlockListDetail, {
           params: {
             block_height: this.shiyan,
             pageNum: this.blockmedianum,

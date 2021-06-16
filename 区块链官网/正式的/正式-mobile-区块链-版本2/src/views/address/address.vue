@@ -1,7 +1,8 @@
 <template>
   <div class="address">
+  
     <div class="top">
-      <span>{{ $t("address")[0] }}</span>
+      <span>{{ $t("nav")[4] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -11,7 +12,7 @@
               <div>
                 {{ $t("address")[2] }}
               </div>
-              <div @click="goToAddressDetail(item.wallet_address)">
+              <div @click="goToAddressDetail(item.wallet_address2)">
                 <span class="blue">
                   {{ item.wallet_address }}
                 </span>
@@ -63,6 +64,7 @@
   </div>
 </template>
 <script>
+ import {GetAddressList} from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -102,7 +104,7 @@ export default {
       let that = this;
       var blockData = [];
       await that.$http
-        .get("/get_address_list_for_all", {
+        .get(GetAddressList, {
           params: {
             pageNum: this.addressmedianum,
             pageSize: 100,
@@ -125,7 +127,7 @@ export default {
             var obj = {};
             let times = [];
             obj.rank = addresslist[i].row_num;
-            obj.wallet_address = addresslist[i].wallet_address;
+            obj.wallet_address = addresslist[i].wallet_address.substring(0,14)+'...';
             obj.wallet_address2 = addresslist[i].wallet_address;
             // console.log(obj);
             obj.transaction_num = addresslist[i].transaction_num;
@@ -158,7 +160,7 @@ export default {
 </script>
 <style lang="less">
 .address {
-  background: #f9fafd;
+  background: #ffffff;
   min-height: 100vh;
   .blue {
     font-size: 13px;
@@ -168,7 +170,7 @@ export default {
     color: #965EE5 !important;
   }
   .top {
-    width: 343px;
+   width: 343px;
     height: 38px;
     font-size: 14px;
     font-family: PingFang SC;
@@ -177,7 +179,8 @@ export default {
     color: #253551;
     display: flex;
     align-items: center;
-    margin: 20px auto 0;
+    margin: 0px auto 0;
+    background: #ffffff;
     span {
       // margin-left: 20px;
     }
@@ -195,7 +198,7 @@ export default {
       margin: 0 0px;
       .info_content:nth-last-child(1) {
         ul {
-          border-bottom: 1px solid #ffffff !important;
+          border-bottom: 1px solid #B2B2B2 !important;
         }
       }
       .info_content {
@@ -206,8 +209,9 @@ export default {
         ul {
           width: 343px;
           height: auto;
-          padding: 10px 0;
-          border-bottom: 1px solid #b2b2b2;
+          padding: 20px 0;
+          border-bottom: 1px solid #B2B2B2;
+
           li {
             display: flex;
             flex-direction: row;

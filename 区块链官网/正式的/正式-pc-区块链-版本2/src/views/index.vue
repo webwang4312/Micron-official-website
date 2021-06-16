@@ -96,6 +96,7 @@
   </div>
 </template>
 <script>
+import {base} from "@server/api.js";
 import headertop from "@components/common/HeaderTop";
 import VFooter from "@components/common/Footer.vue";
 import Search from "@components/common/Search.vue";
@@ -187,7 +188,7 @@ export default {
     indexlists() {
       let that = this;
       that.$http
-        .get("")
+        .get(base)
         .then((res) => {
           //console.log(res);
           // 获取首页数据集合

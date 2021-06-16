@@ -1,6 +1,12 @@
 <template>
   <div id="home">
     <headertop></headertop>
+    <div style="width: 100%;
+height: 10px;
+background: #F8F8F8;
+opacity: 1;">
+
+    </div>
    <keep-alive>
       <router-view v-if="$route.meta.keepAlive&&isRouterAlive"></router-view>
     </keep-alive>

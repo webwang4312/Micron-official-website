@@ -106,7 +106,7 @@ export default {
   },
   watch: {
     nowLang(oldvalue, newvalue) {
-      console.log(oldvalue, newvalue);
+      // console.log(oldvalue, newvalue);
     },
   },
   components: { Search },
@@ -343,12 +343,12 @@ export default {
 .headers {
   width: 100%;
   height: auto;
-  background-color: #fff !important;
+ background: #FFFFFF;
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
-  margin-bottom: 21px;
+  padding-bottom: 21px;
   z-index: 100;
   .el-icon-close {
     transform: scale(2.5);

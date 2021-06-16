@@ -1,7 +1,7 @@
 <template>
   <div class="transaction">
     <div class="top">
-      <span>{{ $t("blockdetail")[4] }}</span>
+      <span>{{ $t("index")[6] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -48,7 +48,7 @@
               {{ $t("block")[3] }}
               </div>
               <div>
-                {{ item.transaction_amount }}
+                {{ item.transaction_amount }}UENC
               </div>
             </li>
             <li>
@@ -64,7 +64,7 @@
               {{ $t("blockdetail")[2] }}
               </div>
               <div>
-                {{ item.gas }}
+                {{ item.gas }}UENC
               </div>
             </li>
             <li>
@@ -72,7 +72,7 @@
               {{ $t("block")[4] }}
               </div>
               <div>
-                {{ item.transaction_amount }}
+                {{ item.transaction_amount }}UENC
               </div>
             </li>
           </ul>
@@ -100,8 +100,10 @@
   </div>
 </template>
 <script>
+ import {GetTransactionList} from "@server/api.js";
 export default {
   name: "block",
+  
   data() {
     return {
       nowLang: "",
@@ -148,12 +150,14 @@ export default {
         });
       } else {
         this.transmedianum -= 1;
+         window.scrollTo(0,0);
         this.transactionlist();
       }
     },
     pagesPlus() {
       this.transmedianum += 1;
       // //console.log(this.medianum);
+         window.scrollTo(0,0);
       this.transactionlist();
     },
     //获取MEDIA
@@ -162,10 +166,10 @@ export default {
       var blockData = [];
       // var data = Qs.stringify({ pageNum: this.transmedianum, pageSize: 20 });
       await that.$http
-        .get("/search_transaction_list_all", {
+        .get(GetTransactionList, {
           params: {
             pageNum: this.transmedianum,
-            pageSize: 20,
+            pageSize: 5,
           },
         })
         .then((res) => {
@@ -229,7 +233,7 @@ export default {
                 obj.from_address =
                   res.data[0].transaction_list_results[
                     i
-                  ].from_address.substring(0, 10) + "...";
+                  ].from_address.substring(0, 16) + "...";
                 obj.from_address2 =
                   res.data[0].transaction_list_results[i].from_address;
                 // toaddress质押处理
@@ -242,7 +246,7 @@ export default {
                   obj.from_address =
                     res.data[0].transaction_list_results[
                       i
-                    ].from_address.substring(0, 10) + "...";
+                    ].from_address.substring(0, 16) + "...";
                   obj.from_address2 =
                     res.data[0].transaction_list_results[i].from_address;
                   if (this.nowLang == "cn") {
@@ -265,20 +269,20 @@ export default {
                   obj.to_address =
                     res.data[0].transaction_list_results[
                       i
-                    ].to_address.substring(0, 10) + "...";
+                    ].to_address.substring(0, 16) + "...";
                   obj.to_address2 =
                     res.data[0].transaction_list_results[i].to_address;
                 } else {
                   obj.from_address =
                     res.data[0].transaction_list_results[
                       i
-                    ].from_address.substring(0, 10) + "...";
+                    ].from_address.substring(0, 16) + "...";
                   obj.from_address2 =
                     res.data[0].transaction_list_results[i].from_address;
                   obj.to_address =
                     res.data[0].transaction_list_results[
                       i
-                    ].to_address.substring(0, 10) + "...";
+                    ].to_address.substring(0, 16) + "...";
                   obj.to_address2 =
                     res.data[0].transaction_list_results[i].to_address;
                 }
@@ -349,13 +353,13 @@ export default {
                 obj.from_address =
                   res.data[0].transaction_list_results[
                     i
-                  ].from_address.substring(0, 10) + "...";
+                  ].from_address.substring(0, 16) + "...";
                 obj.from_address2 =
                   res.data[0].transaction_list_results[i].from_address;
                 obj.to_address =
                   res.data[0].transaction_list_results[i].to_address.substring(
                     0,
-                    10
+                    16
                   ) + "...";
                 obj.to_address2 =
                   res.data[0].transaction_list_results[i].to_address;
@@ -394,7 +398,7 @@ export default {
 </script>
 <style lang="less">
 .transaction {
-  background: #f9fafd;
+  background: #ffffff;
   min-height: 100vh;
   .blue {
     font-size: 13px;
@@ -442,8 +446,8 @@ export default {
 
         ul {
           width: 343px;
-          height: 228px;
-          padding: 10px 0;
+          height: auto;
+           padding-bottom: 20px ;
           border-bottom: 1px solid #b2b2b2;
           li {
             display: flex;

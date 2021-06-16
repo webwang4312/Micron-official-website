@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll } from "@server/api.js";
 export default {
   name: "chart_award",
   data() {
@@ -220,7 +221,7 @@ export default {
       // // 前100快时间
       var avg_gas_for_7time2 = [];
      this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
         for (var i = 0; i < res.data[0].avg_gas_for_7.length + 1; i++) {
             avg_gas_for_7.unshift(
@@ -325,7 +326,7 @@ export default {
         })
         .catch((e) => {});
          this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
         for (var s = 0; s < res.data[0].hourly_award_statistics.length + 1; s++) {
             avg_gas_for_72.unshift(

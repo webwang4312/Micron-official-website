@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import {base} from "@server/api.js";
 export default {
   name: "indexchart",
   data() {
@@ -186,7 +187,7 @@ export default {
       var transaction_num_time = [];
       //  燃料费分布
       that.$http
-        .get("")
+        .get(base)
         .then((res) => {
           // console.log(res);
           for (var i = 0; i < res.data[0].hourly_award.length + 1; i++) {
@@ -207,7 +208,7 @@ export default {
               },
               tooltip: {
                 borderWidth: 1,
-
+extraCssText: 'z-index:2',
                 show: true,
                 position: "left",
                 backgroundColor: "rgba(74, 74, 74, 1)",
@@ -293,7 +294,7 @@ export default {
         })
         .catch((e) => {});
       that.$http
-        .get("")
+        .get(base)
         .then((res) => {
           // console.log(res);
           for (
@@ -358,6 +359,7 @@ export default {
                 },
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 trigger: "item",
                 formatter: "{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",

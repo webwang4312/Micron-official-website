@@ -30,6 +30,7 @@ module.exports = {
       .set("@components", path.resolve(__dirname, "./src/components"))
       .set("@views", path.resolve(__dirname, "./src/views"))
       .set("@store", path.resolve(__dirname, "./src/store"))
+      .set("@server", path.resolve(__dirname, "./src/server"))
 
   },
   configureWebpack: {
