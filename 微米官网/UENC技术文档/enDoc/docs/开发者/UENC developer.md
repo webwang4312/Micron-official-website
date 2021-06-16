@@ -8,7 +8,7 @@ sidebar_position: 1
 This chapter mainly introduces the hardware requirements, development environment, and how to get the source code to compile and run as a blockchain developer.  
 
 ### Hardware requirements:
-* CPU: Four cores
+* CPU: Four cores (Minimum one cores)
 * Memory: 4G
 * Disk: At least 50G
 

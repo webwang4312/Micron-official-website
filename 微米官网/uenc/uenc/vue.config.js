@@ -9,12 +9,13 @@ module.exports = {
 	outputDir:'dist/',
 	// assetsDir:"../",
 	publicPath: "/",
-	
+	// 正式地址
+	// http://47.75.93.221:9100
 	// 测试地址http://47.98.110.210:9100
 	devServer: {
 		proxy: {  //配置跨域
 		  '/system': {
-			target: 'http://47.75.93.221:9100',  //这里后台的地址模拟的;应该填写你们真实的后台接口
+			target: 'http://47.98.110.210:9100',  //这里后台的地址模拟的;应该填写你们真实的后台接口
 			changOrigin: true,  //允许跨域
 			pathRewrite: {
 			  /* 重写路径，当我们在浏览器中看到请求的地址为：http://localhost:8080/api/core/getData/userInfo 时

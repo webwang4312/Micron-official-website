@@ -50,7 +50,7 @@ Here we introduce some basic Linux commands commonly used in this program. For o
 
 ##### Hardware requirements:
 The UENC program needs to allocate a little memory when running.
-* CPU: Four cores
+* CPU: Four cores (Minimum one cores)
 * Memory: 4G
 * Disk: at least 50G
 

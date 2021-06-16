@@ -144,7 +144,7 @@ export default {
         },
         {
           value: "2",
-          label: "Transaction",
+          label: "Trans",
         },
         // {
         //   value: "3",
@@ -214,7 +214,7 @@ export default {
         },
         {
           value: "2",
-          label: "Transaction",
+          label: "Trans",
         },
         // {
         //   value: "3",
@@ -273,6 +273,7 @@ export default {
     position: sticky;
     top: 0;
     padding-right: 15px;
+     border-bottom: 1px solid #E6E6E6;
     .el-icon-close {
       margin-right: 15px;
     }
@@ -361,6 +362,8 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     background: #fff;
+    // border-top:1px solid #E6E6E6 ;
+    border-bottom: 1px solid #E6E6E6;
     // position: sticky;
     // top: 0;
   }

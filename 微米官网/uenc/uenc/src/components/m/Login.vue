@@ -44,7 +44,8 @@
             v-model="loginForm.code"
             :placeholder="$t('dialog.code')"
           ></el-input>
-          <img :src="imgSrc" alt="" @click="getCaptchaImage" />
+            <validate-code ref="ref_validateCode" @change="changeCode" />
+          <!-- <img :src="imgSrc" alt="" @click="getCaptchaImage" /> -->
         </div>
       </el-form-item>
       <el-form-item>
@@ -75,10 +76,10 @@
           :placeholder="$t('dialog.enteru')"
         ></el-input>
       </el-form-item>
-      <el-form-item label="" prop="phonenumber" key="register2">
+      <el-form-item label="" prop="email" key="register2">
         <el-input
-          v-model="registeredForm.phonenumber"
-          :placeholder="$t('dialog.enterp')"
+          v-model="registeredForm.email"
+          :placeholder="$t('dialog.entere')"
         ></el-input>
       </el-form-item>
       <el-form-item label="" prop="code" key="register3">
@@ -96,12 +97,12 @@
           </el-button>
         </div>
       </el-form-item>
-      <el-form-item label="" prop="email" key="register4">
+      <!-- <el-form-item label="" prop="email" key="register4">
         <el-input
           v-model="registeredForm.email"
           :placeholder="$t('dialog.entere')"
         ></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="" prop="password" key="register5">
         <el-input
           v-model="registeredForm.password"
@@ -144,10 +145,10 @@
       class="demo-form-inline"
       :rules="updatePwdRule"
     >
-      <el-form-item label="" prop="phonenumber" key="updatePwd1">
+      <el-form-item label="" prop="email" key="updatePwd1">
         <el-input
-          v-model="updatePwdForm.phonenumber"
-          :placeholder="$t('dialog.enterp')"
+          v-model="updatePwdForm.email"
+          :placeholder="$t('dialog.entere')"
         ></el-input>
       </el-form-item>
       <el-form-item label="" prop="code" key="updatePwd2">
@@ -196,6 +197,7 @@
 </template>
 
 <script>
+import  qs from 'qs';
 class LoginForm {
   constructor() {
     this.loginName = "";
@@ -208,7 +210,7 @@ class RegisteredForm {
   constructor() {
     this.loginName = "";
     this.email = "";
-    this.phonenumber = "";
+    // this.phonenumber = "";
     this.password = "";
     this.arginPassword = "";
     this.code = "";
@@ -217,23 +219,24 @@ class RegisteredForm {
 }
 class UpdatePwdForm {
   constructor() {
-    this.phonenumber = "";
+    this.email = "";
     this.password = "";
     this.code = "";
     this.arginPassword = "";
   }
 }
-
+import validateCode from "./ValidateCode";
 import {
   Registered,
   GetCaptchaImage,
   Login,
   UpdatePwd,
-  GetCode,
+   GetEmail,
 } from "@/assets/server/api.js";
 export default {
   data() {
     return {
+        codevalue: "",
       activeName: "",
       loginForm: new LoginForm(),
       registeredForm: new RegisteredForm(),
@@ -284,28 +287,28 @@ export default {
             trigger: "blur",
           },
         ],
-        email: [
-          {
-            required: true,
-            message:
-              this.$t("index.switch") === "cn"
-                ? "请输入正确的邮箱格式"
-                : "enter the correct email format",
-            trigger: "blur",
-            pattern: /\w+@[a-z0-9]+\.[a-z]{2,4}/,
-          },
-        ],
-        phonenumber: [
-          {
-            required: true,
-            message:
-              this.$t("index.switch") === "cn"
-                ? "请输入正确的手机号"
-                : "input the correct mobile phone",
-            trigger: "blur",
-            pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-          },
-        ],
+        // email: [
+        //   {
+        //     required: true,
+        //     message:
+        //       this.$t("index.switch") === "cn"
+        //         ? "请输入正确的邮箱格式"
+        //         : "enter the correct email format",
+        //     trigger: "blur",
+        //     pattern: /\w+@[a-z0-9]+\.[a-z]{2,4}/,
+        //   },
+        // ],
+        // phonenumber: [
+        //   {
+        //     required: true,
+        //     message:
+        //       this.$t("index.switch") === "cn"
+        //         ? "请输入正确的手机号"
+        //         : "input the correct mobile phone",
+        //     trigger: "blur",
+        //     pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+        //   },
+        // ],
         password: [
           {
             required: true,
@@ -340,17 +343,17 @@ export default {
         ],
       },
       updatePwdRule: {
-        phonenumber: [
-          {
-            required: true,
-            message:
-              this.$t("index.switch") === "cn"
-                ? "请输入登录名"
-                : "enter your login name",
-            trigger: "blur",
-            pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-          },
-        ],
+        // phonenumber: [
+        //   {
+        //     required: true,
+        //     message:
+        //       this.$t("index.switch") === "cn"
+        //         ? "请输入登录名"
+        //         : "enter your login name",
+        //     trigger: "blur",
+        //     pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+        //   },
+        // ],
         password: [
           {
             required: true,
@@ -394,6 +397,9 @@ export default {
       default: "",
     },
   },
+  components: {
+    validateCode,
+  },
   watch: {
     dialogType(newValue, oldValue) {
       this.activeName = newValue;
@@ -409,25 +415,36 @@ export default {
     this.activeName = this.dialogType;
   },
   methods: {
+     changeCode(value) {
+      this.codevalue = value;
+      // console.log(value);
+    },
     async onSubmit(type) {
-      let reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
-      if (!reg.test(this[type].phonenumber) || this[type].phonenumber === "") {
-        return this.$notify({
-          type: "warning",
-          message:
-            this.$t("index.switch") === "cn"
-              ? "请输入正确手机号"
-              : "enter the correct phone number",
-        });
-      }
-      let str = ''
-      if(type === 'registeredForm') {
-        str = this[type].phonenumber + '/reg'
+       var tp='';
+      if (type === "registeredForm") {
+        tp="reg";
       } else {
-        str = this[type].phonenumber + '/pwd'
+        tp= "pwd";
       }
-      const data = await GetCode(str)
-      // console.log(data);
+       let s ={tp:tp,email:this[type].email};
+      // let reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+      // if (!reg.test(this[type].phonenumber) || this[type].phonenumber === "") {
+      //   return this.$notify({
+      //     type: "warning",
+      //     message:
+      //       this.$t("index.switch") === "cn"
+      //         ? "请输入正确手机号"
+      //         : "enter the correct phone number",
+      //   });
+      // }
+      // let str = ''
+      // if(type === 'registeredForm') {
+      //   str = this[type].phonenumber + '/reg'
+      // } else {
+      //   str = this[type].phonenumber + '/pwd'
+      // }
+      const data = await GetEmail(qs.stringify(s));
+       console.log(data);
       if(data.code=='500'){
          return this.$notify({
               type: "error",
@@ -484,6 +501,9 @@ export default {
       this.imgSrc = window.URL.createObjectURL(data.data);
     },
     onLogin() {
+      if (this.loginForm.code.toUpperCase() !== this.codevalue) {
+         console.log("比对失败");
+      } else {
       this.$refs["login"].validate(async (valid) => {
         if (valid) {
           const data = await Login({ ...this.loginForm });
@@ -504,7 +524,7 @@ export default {
         } else {
           return false;
         }
-      });
+      })};
     },
     async onUpdatePwd() {
       this.$refs["updatePwd"].validate(async (valid) => {
@@ -520,7 +540,9 @@ export default {
                   : "passwords do not match",
             });
           }
+          
           const data = await UpdatePwd({ ...this.updatePwdForm });
+          console.log(data);
           if (data.code === 0) {
             this.$notify({
               type: "success",

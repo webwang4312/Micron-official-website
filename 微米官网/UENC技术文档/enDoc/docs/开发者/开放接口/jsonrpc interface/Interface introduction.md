@@ -613,6 +613,10 @@ python example
      
  Interface： def send_tx(tx_data, tx_signature, public_key, tx_encode_hash)
  ```   
+ from ctypes import cdll
+  
+  cur = cdll.LoadLibrary('./jcAPI.so')
+  tx_signature = cur.GenSign(pri_key,tx_encode_hash,tx_encode_hash.length)
    data = {
 	    "jsonrpc": "2.0",
 	    "id": "1",

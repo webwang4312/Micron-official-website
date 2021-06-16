@@ -47,7 +47,8 @@
             key="login3"
             :placeholder="$t('dialog.code')"
           ></el-input>
-          <img :src="imgSrc" alt="" @click="getCaptchaImage" />
+          <validate-code ref="ref_validateCode" @change="changeCode" />
+          <!-- <img :src="imgSrc" alt="" @click="getCaptchaImage" /> -->
         </div>
       </el-form-item>
       <el-form-item>
@@ -83,10 +84,10 @@
           :placeholder="$t('dialog.enteru')"
         ></el-input>
       </el-form-item>
-      <el-form-item label="" prop="phonenumber">
+      <el-form-item label="" prop="email">
         <el-input
-          v-model="registeredForm.phonenumber"
-          :placeholder="$t('dialog.enterp')"
+          v-model="registeredForm.email"
+          :placeholder="$t('dialog.entere')"
           key="register2"
         ></el-input>
       </el-form-item>
@@ -102,13 +103,13 @@
           </div>
         </div>
       </el-form-item>
-      <el-form-item label="" prop="email">
+      <!-- <el-form-item label="" prop="email">
         <el-input
           v-model="registeredForm.email"
           key="register4"
           :placeholder="$t('dialog.entere')"
         ></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="" prop="password">
         <el-input
           v-model="registeredForm.password"
@@ -152,10 +153,10 @@
         :model="updatePwdForm"
         class="demo-form-inline"
       >
-        <el-form-item label="" prop="phonenumber">
+        <el-form-item label="" prop="email">
           <el-input
-            v-model="updatePwdForm.phonenumber"
-            :placeholder="$t('dialog.enterp')"
+            v-model="updatePwdForm.email"
+            :placeholder="$t('dialog.entere')"
             key="updatePwd1"
           ></el-input>
         </el-form-item>
@@ -204,11 +205,12 @@
 </template>
 
 <script>
+import qs from "qs";
 class RegisteredForm {
   constructor() {
     this.loginName = "";
     this.email = "";
-    this.phonenumber = "";
+    // this.phonenumber = "";
     this.password = "";
     this.arginPassword = "";
     this.code = "";
@@ -225,15 +227,16 @@ class LoginForm {
 }
 class UpdatePwdForm {
   constructor() {
-    this.phonenumber = "";
+    this.email = "";
     this.password = "";
     this.code = "";
     this.arginPassword = "";
   }
 }
 
+import validateCode from "./ValidateCode";
 import {
-  GetCode,
+  GetEmail,
   Registered,
   GetCaptchaImage,
   Login,
@@ -247,8 +250,12 @@ export default {
       this.$refs["login"].resetFields();
     },
   },
+  components: {
+    validateCode,
+  },
   data() {
     return {
+      codevalue: "",
       type: "login",
       loginForm: new LoginForm(),
       registeredForm: new RegisteredForm(),
@@ -320,17 +327,17 @@ export default {
             trigger: "blur",
           },
         ],
-        email: [
-          {
-            required: true,
-            message:
-              this.$t("index.switch") === "cn"
-                ? "请输入正确的邮箱格式"
-                : "Please enter the correct email format",
-            trigger: "blur",
-            pattern: /\w+@[a-z0-9]+\.[a-z]{2,4}/,
-          },
-        ],
+        // email: [
+        //   {
+        //     required: true,
+        //     message:
+        //       this.$t("index.switch") === "cn"
+        //         ? "请输入正确的邮箱格式"
+        //         : "Please enter the correct email format",
+        //     trigger: "blur",
+        //     pattern: /\w+@[a-z0-9]+\.[a-z]{2,4}/,
+        //   },
+        // ],
 
         password: [
           {
@@ -356,17 +363,17 @@ export default {
         ],
       },
       UpdatePwdRule: {
-        phonenumber: [
-          {
-            required: true,
-            message:
-              this.$t("index.switch") === "cn"
-                ? "请输入登录名"
-                : "Please enter your login name",
-            trigger: "blur",
-            pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-          },
-        ],
+        // phonenumber: [
+        //   {
+        //     required: true,
+        //     message:
+        //       this.$t("index.switch") === "cn"
+        //         ? "请输入登录名"
+        //         : "Please enter your login name",
+        //     trigger: "blur",
+        //     pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
+        //   },
+        // ],
         password: [
           {
             required: true,
@@ -413,23 +420,34 @@ export default {
     },
   },
   methods: {
+    changeCode(value) {
+      this.codevalue = value;
+      // console.log(value);
+    },
     async onSubmit(type) {
-      let reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
-      if (!reg.test(this[type].phonenumber) || this[type].phonenumber === "") {
-        return this.$message.warning(
-          this.$t("index.switch") === "cn"
-            ? "请输入正确手机号"
-            : "enter the correct phone number"
-        );
-      }
-      let str = "";
+      var tp = "";
       if (type === "registeredForm") {
-        str = this[type].phonenumber + "/reg";
+        tp = "reg";
       } else {
-        str = this[type].phonenumber + "/pwd";
+        tp = "pwd";
       }
-      const data = await GetCode(str);
-
+      let s = { tp: tp, email: this[type].email };
+      // console.log(s);
+      // let reg = /^1[3|4|5|7|8][0-9]\d{8}$/;
+      // if (!reg.test(this[type].phonenumber) || this[type].phonenumber === "") {
+      //   return this.$message.warning(
+      //     this.$t("index.switch") === "cn"
+      //       ? "请输入正确手机号"
+      //       : "enter the correct phone number"
+      //   );
+      // }
+      // let str = "";
+      // if (type === "registeredForm") {
+      //   str = this[type].phonenumber + "/reg";
+      // } else {
+      //   str = this[type].phonenumber + "/pwd";
+      // }
+      const data = await GetEmail(qs.stringify(s));
       this.timer = setInterval(() => {
         this.count--;
         if (this.count <= 0) {
@@ -480,27 +498,33 @@ export default {
       //       if(this.loginForm.code!==1){
       // return false
       //       }
-      this.$refs["login"].validate(async (valid) => {
-        if (valid) {
-          const data = await Login({ ...this.loginForm });
-          //  console.log(data);
-          if (data.code === 0) {
-            this.$message.success(
-              this.$t("index.switch") === "cn" ? "登录成功！" : "success"
-            );
-            localStorage.setItem("username", data.data);
+      // console.log(this.codevalue);
+      // console.log(this.loginForm.code);
+      if (this.loginForm.code.toUpperCase() !== this.codevalue) {
+        // console.log("比对失败");
+      } else {
+        this.$refs["login"].validate(async (valid) => {
+          if (valid) {
+            const data = await Login({ ...this.loginForm });
+            //  console.log(data);
+            if (data.code === 0) {
+              this.$message.success(
+                this.$t("index.switch") === "cn" ? "登录成功！" : "success"
+              );
+              localStorage.setItem("username", data.data);
 
-            this.$emit("close");
-            this.$emit("showUserInfo", data.data);
-            this.$emit("checkUsersStatus");
-            this.loginForm = new LoginForm();
+              this.$emit("close");
+              this.$emit("showUserInfo", data.data);
+              this.$emit("checkUsersStatus");
+              this.loginForm = new LoginForm();
+            } else {
+              this.$message.error(data.msg);
+            }
           } else {
-            this.$message.error(data.msg);
+            return false;
           }
-        } else {
-          return false;
-        }
-      });
+        });
+      }
     },
     async onUpdatePwd() {
       this.$refs["updatePwd"].validate(async (valid) => {

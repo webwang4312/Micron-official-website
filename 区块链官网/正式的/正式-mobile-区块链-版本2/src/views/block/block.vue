@@ -320,7 +320,7 @@ export default {
           width: 343px;
           height: 172px;
           padding: 10px 0;
-          border-bottom: 1px solid #b2b2b2;
+          border-bottom: 1px solid rgba(178, 178, 178, 0.5);
           li {
             display: flex;
             flex-direction: row;

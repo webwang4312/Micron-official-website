@@ -63,6 +63,8 @@ export const GetUserRoleByLoginName = p => post(`/system/role/getUserRoleByLogin
 export const GetWalletAddress =p => post(`/system/user/getWalletAddress`,p);
 // 手机验证码
 export const GetCode = phone => get(`/system/send/sms/reg/${phone}`);
+// 邮箱验证码
+export const GetEmail = p => post(`/system/user/emailVerification`,p);
 // 全部完成
 export const AddImplPlanOver = p => post('/system/proposal/addImplPlanOver', p);
 // 判断是否为执行理事

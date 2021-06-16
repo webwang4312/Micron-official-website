@@ -38,31 +38,31 @@
               <div class="blue"></div>
               <div>0~0.001</div>
               <div>{{ this.credit_ratio[1].node1 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].first }}% {{ $t("chart")[6] }}</div>
+              <div>{{ this.credit_ratio[0].first }}% </div>
             </li>
             <li>
               <div class="yellow"></div>
               <div>0.001~0.005</div>
               <div>{{ this.credit_ratio[1].node2 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].second }} %{{ $t("chart")[6] }}</div>
+              <div>{{ this.credit_ratio[0].second }} %</div>
             </li>
             <li>
               <div class="green"></div>
               <div>0.005~0.01</div>
               <div>{{ this.credit_ratio[1].node3 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].third }} %{{ $t("chart")[6] }}</div>
+              <div>{{ this.credit_ratio[0].third }} %</div>
             </li>
             <li>
               <div class="red"></div>
               <div>0.01~0.05</div>
               <div>{{ this.credit_ratio[1].node4 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].fourth }} %{{ $t("chart")[6] }}</div>
+              <div>{{ this.credit_ratio[0].fourth }} %</div>
             </li>
             <li>
               <div class="gray"></div>
               <div>0.05-0.1</div>
               <div>{{ this.credit_ratio[1].node5 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].five }} %{{ $t("chart")[6] }}</div>
+              <div>{{ this.credit_ratio[0].five }} %</div>
             </li>
           </ul>
         </div>
@@ -439,9 +439,11 @@ export default {
       ul {
         margin-top: 14px;
         li {
+          width: 334px;
           display: flex;
           flex-direction: row;
           margin-top: 24px;
+          justify-content: space-around;
           align-items: center;
 
           div:nth-child(1) {
@@ -449,7 +451,7 @@ export default {
             height: 18px;
             opacity: 1;
             border-radius: 5px;
-            margin-right: 23px;
+            // margin-right: 23px;
           }
           div:nth-child(2) {
             width: 100px;
@@ -458,7 +460,7 @@ export default {
             font-weight: bold;
             color: #515151;
             text-align: left;
-            margin-right: 20px;
+            // margin-right: 20px;
           }
           div:nth-child(3) {
             width: 140px;
@@ -472,7 +474,7 @@ export default {
             font-size: 15px;
             font-family: Arial;
             font-weight: bold;
-            width: 140px;
+          
             color: #a8aabc;
           }
           .blue {

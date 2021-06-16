@@ -12,50 +12,35 @@ opacity: 1;"
     <div class="detail_content">
       <ul>
         <li>
-          <div>
-            {{ $t("address")[2] }}:
-          </div>
+          <div>{{ $t("address")[2] }}:</div>
           <div class="blue">
             {{ shiyan }}
           </div>
         </li>
         <li>
+          <div>{{ $t("addressdetail")[1] }}:</div>
           <div>
-          {{ $t("addressdetail")[1] }}:
-          </div>
-          <div>
-           {{ info[0].search_wallect_balance[0].account_balance }}
+            {{ info[0].search_wallect_balance[0].account_balance }}
           </div>
         </li>
         <li>
+          <div>{{ $t("addressdetail")[2] }}:</div>
           <div>
-          {{ $t("addressdetail")[2] }}:
-          </div>
-          <div>
-           {{ info[0].ranking_and_transaction_num[0].transaction_num }}
+            {{ info[0].ranking_and_transaction_num[0].transaction_num }}
           </div>
         </li>
         <li>
-          <div>
-            {{ $t("addressdetail")[3] }}:
-          </div>
+          <div>{{ $t("addressdetail")[3] }}:</div>
           <div>{{ info[0].total_income[0].total_income }}UENC</div>
         </li>
         <li>
-          <div>
-            {{ $t("addressdetail")[4] }}:
-          </div>
-          <div>
-        {{ info[0].total_payout[0].total_payout }}UENC
-          </div>
+          <div>{{ $t("addressdetail")[4] }}:</div>
+          <div>{{ info[0].total_payout[0].total_payout }}UENC</div>
         </li>
         <li>
+          <div>{{ $t("address")[1] }}:</div>
           <div>
-           {{ $t("address")[1] }}:
-          </div>
-          <div>
-            
-     {{ info[0].ranking_and_transaction_num[0].ranking }}
+            {{ info[0].ranking_and_transaction_num[0].ranking }}
           </div>
         </li>
       </ul>
@@ -70,10 +55,7 @@ opacity: 1;"
       <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
-      <ul
-        class="info_title"
-       
-      >
+      <ul class="info_title">
         <li v-for="item in transactionData" :key="item" class="info_content">
           <ul>
             <li>
@@ -89,7 +71,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-               {{ $t("index")[9] }}
+                {{ $t("index")[9] }}
               </div>
               <div @click="goToAddressDetail(item.from_address2)" class="blue">
                 {{ item.from_address }}
@@ -97,7 +79,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-               {{ $t("index")[10] }}
+                {{ $t("index")[10] }}
               </div>
               <div @click="goToAddressDetail(item.to_address2)" class="blue">
                 {{ item.to_address }}
@@ -105,7 +87,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-               {{ $t("block")[3] }}
+                {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.amount }}
@@ -113,7 +95,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-              {{ $t("block")[1] }}
+                {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.time.toString() }}
@@ -121,7 +103,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-               {{ $t("blockdetail")[2] }}
+                {{ $t("blockdetail")[2] }}
               </div>
               <div>
                 {{ item.gas }}
@@ -152,11 +134,7 @@ opacity: 1;"
   </div>
 </template>
 <script>
-import {
-  GetAddressListDetail,
-  GetAddressListDetail2,
-  
-} from "@server/api.js";
+import { GetAddressListDetail, GetAddressListDetail2 } from "@server/api.js";
 var qs = require("qs");
 export default {
   name: "addressdetail",
@@ -201,32 +179,46 @@ export default {
       this.shiyan = item;
 
       this.addresssearch();
-      this.addressList()
+      this.addressList();
     },
     pagesMinus() {
       if (this.transmedianum == 1) {
-        this.$message({
-          message: "已到底",
-          type: "error",
-        });
+       if (this.nowLang == "cn") {
+          this.$message({
+            message: "已到底",
+            type: "error",
+          });
+        } else {
+          this.$message({
+            message: "Last",
+            type: "error",
+          });
+        }
       } else {
-       
+         window.scrollTo(0,0);
         this.transmedianum -= 1;
         this.addresssearch();
-         this.addressList()
+        this.addressList();
       }
     },
     pagesPlus() {
       if (this.transmedianum == this.totalNum) {
-        this.$message({
-          message: "已到顶",
-          type: "error",
-        });
+        if (this.nowLang == "cn") {
+          this.$message({
+            message: "已到顶",
+            type: "error",
+          });
+        } else {
+          this.$message({
+            message: "Last",
+            type: "error",
+          });
+        }
       } else {
-        
+        window.scrollTo(0,0);
         this.transmedianum += 1;
         this.addresssearch();
-         this.addressList()
+        this.addressList();
       }
     },
     search() {
@@ -251,25 +243,24 @@ export default {
           console.log(res);
         });
     },
-     async addressList() {
+    async addressList() {
       await this.$http
-        .get(GetAddressListDetail2,{
+        .get(GetAddressListDetail2, {
           params: {
             wallet_address: this.shiyan,
-           
           },
-        }).then((res) => {
-          // console.log(res);
-            this.info = res.data;
-            console.log(this.info);
         })
+        .then((res) => {
+          // console.log(res);
+          this.info = res.data;
+          console.log(this.info);
+        });
       // console.log(res);
-    
+
       // console.log(this.info);
     },
     //地址搜索
     async addresssearch() {
-     
       let that = this;
       var blockData = [];
       await that.$http
@@ -277,7 +268,7 @@ export default {
           params: {
             wallet_address: this.shiyan,
             pageNum: this.transmedianum,
-            pageSize: 20,
+            pageSize: 5,
           },
         })
         .then((res) => {

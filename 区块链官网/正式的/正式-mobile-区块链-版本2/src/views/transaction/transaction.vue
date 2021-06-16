@@ -448,7 +448,7 @@ export default {
           width: 343px;
           height: auto;
            padding-bottom: 20px ;
-          border-bottom: 1px solid #b2b2b2;
+          border-bottom: 1px solid rgba(178, 178, 178, 0.5);
           li {
             display: flex;
             flex-direction: row;
