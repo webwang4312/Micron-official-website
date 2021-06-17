@@ -94,7 +94,7 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -178,7 +178,7 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           position: "left",
           axisLine: {
             //y轴

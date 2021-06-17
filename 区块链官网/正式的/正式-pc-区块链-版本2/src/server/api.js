@@ -6,19 +6,22 @@
  * @Descripttion: 
  */
 import { get, gets, post, posts } from './server.js'
+
+// http://47.116.69.138:9090
+export const base='http://47.98.110.210:9002'
 // 获取首页数据
-export const base='http://47.116.69.138:9090'
+export const GETINDEX = p => post(base+'/ethbrowser/home/getHomeData', p);
 //  区块列表
 export const GetBlockList = p => get(base+'/get_block_list_for_all', p);
 //  交易列表
 export const GetTransactionList = p => get(base+'/search_transaction_list_all', p);
 //  富豪榜
 export const GetAddressList = p => get(base+'/get_address_list_for_all', p);
-//  区块详情
+//  搜索区块详情
 export const GetBlockListDetail = p => get(base+'/search_blockHeight_for_height', p);
-//  交易详情
+//  搜索交易详情
 export const GetTransactionListDetail = base+'/search_transactionHash_detailInfo';
-// 地址详情
+// 搜索地址详情
 export const GetAddressListDetail = p => get(base+'/search_transactionInfo_walletAddress', p);
 // 地址详情2
 export const GetAddressListDetail2 = p => get(base+'/wallet_address_overview', p);

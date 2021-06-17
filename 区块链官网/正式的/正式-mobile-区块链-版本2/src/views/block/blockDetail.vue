@@ -20,13 +20,13 @@
       <li>
         <div>{{ $t("block")[4] }}:</div>
         <div>
-          {{ datalist.block_award }}
+          {{ datalist.block_award }}UENC
         </div>
       </li>
       <li>
         <div>{{ $t("blockdetail")[2] }}:</div>
         <div>
-          {{ datalist.block_gas }}
+          {{ datalist.block_gas }}UENC
         </div>
       </li>
     </ul>
@@ -75,7 +75,7 @@ opacity: 1;"
                 {{ $t("block")[3] }}
               </div>
               <div>
-                {{ item.transaction_amount }}
+                {{ item.transaction_amount }}UENC
               </div>
             </li>
             <li>
@@ -91,14 +91,14 @@ opacity: 1;"
                 {{ $t("blockdetail")[2] }}
               </div>
               <div>
-                {{ item.gas }}
+                {{ item.gas }}UENC
               </div>
             </li>
             <li>
               <div>
                 {{ $t("block")[4] }}
               </div>
-              <div>{{ item.award }}</div>
+              <div>{{ item.award }}UENC</div>
             </li>
           </ul>
         </li>

@@ -450,7 +450,8 @@ export default {
     background: rgba(102, 36, 250, 1);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
     opacity: 1;
-    border-radius: 11px;
+    border-top-right-radius: 11px;
+     border-bottom-right-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;

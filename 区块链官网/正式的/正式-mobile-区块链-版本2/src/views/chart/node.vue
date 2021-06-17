@@ -145,7 +145,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           axisLine: {
             //y轴
             show: false,
@@ -214,7 +214,7 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show:true }, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,

@@ -14,8 +14,8 @@
         <ul class="content" v-for="item in tableData" :key="item">
           <li>
             <div class="content_left">
-              TX<span @click="goToTransactionDetail(item.transaction_hash2)">
-                {{ item.transaction_hash }}</span
+              TX<span @click="goToTransactionDetail(item.txhash2)">
+                {{ item.txhash }}</span
               >
               <br />
               <span>
@@ -24,13 +24,13 @@
             </div>
             <div class="content_center">
               {{ $t("index")[9] }}
-              <span @click="goToAddressDetail(item.from_address2)">
-                {{ item.from_address }}
+              <span @click="goToAddressDetail(item.fromAddress2)">
+                {{ item.fromAddress }}
               </span>
               <br />
               {{ $t("index")[10] }}
-              <span @click="goToAddressDetail(item.to_address2)">
-                {{ item.to_address }}
+              <span @click="goToAddressDetail(item.toAddress2)">
+                {{ item.toAddress }}
               </span>
             </div>
             <div class="content_right">
@@ -56,8 +56,8 @@
         <ul class="content" v-for="item in tableData2" :key="item">
           <li>
             <div class="content_left">
-              K<span @click="goToBlockDetail(item.block_height)">
-                {{ item.block_height }}</span
+              K<span @click="goToBlockDetail(item.height)">
+                {{ item.height }}</span
               >
               <br />
               <span>
@@ -69,7 +69,7 @@
                 {{ $t("addressdetail")[2] }}
               </span>
               <span class="font_bold">
-                {{ item.tx_num }}
+                {{ item.total }}
               </span>
             </div>
             <div class="content_right">
@@ -77,7 +77,7 @@
                 {{ $t("block")[4] }}
               </span>
               <span class="font_bold">
-                {{ item.award }}
+                {{ item.blockAward}}
               </span>
             </div>
           </li>
@@ -125,7 +125,7 @@ export default {
       this.$router.push({
         path: "/transactiondetail",
         query: {
-          transaction_hash: item,
+          txhash: item,
         },
       });
     },
@@ -165,6 +165,7 @@ export default {
       border: 1px solid #e9eced;
       opacity: 1;
       border-radius: 18px;
+     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
       .subject {
         width: 551.74px;
         margin: 33.48px auto 23.5px;
@@ -240,6 +241,7 @@ export default {
             font-weight: 400;
             line-height: 17px;
             color: #666666;
+            text-align: right;
             span {
               margin-right: 3px;
             }
@@ -253,6 +255,7 @@ export default {
       border: 1px solid #e9eced;
       opacity: 1;
       border-radius: 18px;
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
       .subject {
         width: 551.74px;
         margin: 33.48px auto 23.5px;
@@ -326,7 +329,7 @@ export default {
             line-height: 17px;
             color: #666666;
             width: 190px;
-           
+            text-align: right;
           }
         }
       }

@@ -36,7 +36,7 @@
         </div>
       </div>
       <ul class="menuslide">
-        <li @click="menu">
+        <li @click="menu" >
           <router-link :to="{ path: '/' }">
             <span @click="menuindex">
               {{ $t("nav")[0] }}
@@ -51,32 +51,32 @@
             <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
           </div>
           <ul v-show="secondmenu">
-            <li @click="menuBlue">
+            <li @click="menuBlue" >
               <router-link :to="{ path: '/block' }">
                 {{ $t("nav")[2] }}
               </router-link>
             </li>
-            <li @click="menuBlue">
+            <li @click="menuBlue" >
               <router-link :to="{ path: '/transaction' }">
                 {{ $t("nav")[3] }}
               </router-link>
             </li>
-            <li @click="menuBlue">
+            <li @click="menuBlue" >
               <router-link :to="{ path: '/address' }">
                 {{ $t("nav")[4] }}
               </router-link>
             </li>
           </ul>
         </li>
-        <li @click="menu">
+        <li @click="menu" >
           <router-link :to="{ path: '/chart' }">
             <span @click="blueClass2">
               {{ $t("nav")[5] }}
             </span>
           </router-link>
         </li>
-        <li @click="changeLanguage">
-          <div style="width:100%;height:100%">
+        <li @click="changeLanguage" style="padding-left:15px">
+          <div style="width:100%;height:100%;">
             {{ language2 }}
           </div>
         </li>
@@ -111,7 +111,14 @@ export default {
   },
   components: { Search },
   created() {
-    this.nowLang = this.$i18n.locale;
+    // console.log(localStorage.getItem("lang"));
+
+    if (localStorage.getItem("lang") == null) {
+      this.$i18n.locale = "cn";
+    } else {
+      this.$i18n.locale = localStorage.getItem("lang");
+    }
+    this.nowLang = localStorage.getItem("lang");
     if (this.$i18n.locale == "cn") {
       this.select = [
         {
@@ -200,61 +207,64 @@ export default {
       this.reload();
     },
     changeLanguage() {
+      // console.log(localStorage.lang);
       console.log(this.$i18n.locale);
+      console.log(localStorage.getItem("lang"));
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
- this.select = [
-        {
-          value: "0",
-          label: "Address",
-        },
-        {
-          value: "1",
-          label: "Height",
-        },
-        {
-          value: "2",
-          label: "Trans",
-        },
-        // {
-        //   value: "3",
-        //   label: "Block",
-        // },
-      ];
+        localStorage.setItem("lang", this.$i18n.locale);
+        this.select = [
+          {
+            value: "0",
+            label: "Address",
+          },
+          {
+            value: "1",
+            label: "Height",
+          },
+          {
+            value: "2",
+            label: "Trans",
+          },
+          // {
+          //   value: "3",
+          //   label: "Block",
+          // },
+        ];
         this.language = "1";
         this.language2 = "中文";
         this.$store.commit("menuState", true);
         this.reload();
       } else {
         this.$i18n.locale = "cn";
- this.select = [
-        {
-          value: "0",
-          label: "UENC地址",
-        },
-        {
-          value: "1",
-          label: "区块高度",
-        },
-        {
-          value: "2",
-          label: "交易哈希",
-        },
-        // {
-        //   value: "3",
-        //   label: "区块哈希",
-        // },
-      ];
+        localStorage.setItem("lang", this.$i18n.locale);
+        this.select = [
+          {
+            value: "0",
+            label: "UENC地址",
+          },
+          {
+            value: "1",
+            label: "区块高度",
+          },
+          {
+            value: "2",
+            label: "交易哈希",
+          },
+          // {
+          //   value: "3",
+          //   label: "区块哈希",
+          // },
+        ];
         this.language = "2";
         this.language2 = "En";
         this.$store.commit("menuState", true);
         this.reload();
       }
-       this.reload();
+      this.reload();
     },
     handleSelect(key, keyPath) {},
   },
-
 };
 </script>
 
@@ -272,8 +282,8 @@ export default {
     background: #fff;
     position: sticky;
     top: 0;
-    padding-right: 15px;
-     border-bottom: 1px solid #E6E6E6;
+
+    border-bottom: 1px solid #e6e6e6;
     .el-icon-close {
       margin-right: 15px;
     }
@@ -286,20 +296,25 @@ export default {
     font-weight: 400;
     line-height: 50px;
     color: #9da5bb;
-    padding-left: 15px;
   }
   .menuslide {
     width: 100%;
     li {
+      a {
+        margin-left: 15px;
+      }
     }
     .slide2 {
       height: auto;
-      padding-right: 15px;
+
       font-size: 16px;
       font-family: PingFang SC;
       font-weight: 400;
       line-height: 22px;
       color: #9da5bb;
+      .el-dropdown-link {
+        margin-left: 15px;
+      }
       ul {
         li {
           height: 50px;
@@ -309,7 +324,9 @@ export default {
           font-weight: 400;
           line-height: 22px;
           color: #9da5bb;
-          padding-left: 15px;
+          a {
+            margin-left: 30px;
+          }
           span {
             font-size: 16px;
             font-family: PingFang SC;
@@ -344,7 +361,7 @@ export default {
 .headers {
   width: 100%;
   height: auto;
- background: #FFFFFF;
+  background: #ffffff;
   position: sticky;
   top: 0;
   left: 0;
@@ -363,7 +380,7 @@ export default {
     justify-content: space-between;
     background: #fff;
     // border-top:1px solid #E6E6E6 ;
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid #e6e6e6;
     // position: sticky;
     // top: 0;
   }

@@ -98,7 +98,7 @@ export default {
           // },
           splitNumber: 2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show:true }, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -182,7 +182,7 @@ export default {
           // },
           splitNumber: 2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -227,7 +227,7 @@ export default {
           text: this.title[0].test3,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+         padding: [23,0,0,0],  //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
            textStyle: {
             color: "rgba(37, 53, 81, 1)",
@@ -266,7 +266,7 @@ export default {
           // },
           splitNumber: 2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -423,9 +423,9 @@ export default {
                   areaStyle: {
                     normal: {
                       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 1, color: "#fff" },
+                        { offset: 0, color: "RGBA(240, 244, 255, 1)" },
+                        { offset: 0.5, color: "RGBA(240, 244, 255, 1)" },
+                        { offset: 1, color: "rgba(255, 255, 255, 1)" },
                       ]),
                     },
                   },
@@ -534,9 +534,9 @@ export default {
                   areaStyle: {
                     normal: {
                       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 1, color: "#fff" },
+                        { offset: 0, color: "RGBA(240, 244, 255, 1)" },
+                        { offset: 0.5, color: "RGBA(240, 244, 255, 1)" },
+                        { offset: 1, color: "rgba(255, 255, 255, 1)" },
                       ]),
                     },
                   },
@@ -645,9 +645,9 @@ export default {
                   areaStyle: {
                     normal: {
                       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 1, color: "#fff" },
+                       { offset: 0, color: "RGBA(240, 244, 255, 1)" },
+                        { offset: 0.5, color: "RGBA(240, 244, 255, 1)" },
+                        { offset: 1, color: "rgba(255, 255, 255, 1)" },
                       ]),
                     },
                   },
@@ -700,6 +700,7 @@ export default {
 <style lang="less">
 .chart_account {
    width: 100%;
+  
   #total_number_accounts,
   #add_account,
   #active_addresses {
@@ -711,7 +712,7 @@ export default {
   .node {
     width: 100%;
   background: #ffffff;
-    margin: 0px auto 53px;
+    margin: 0px auto 0px;
     .title {
       font-size: 16px;
 font-family: PingFang SC;

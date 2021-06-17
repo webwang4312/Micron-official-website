@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import {base} from "@server/api.js";
+import { GETINDEX } from "@server/api.js";
 export default {
   name: "indexchart",
   data() {
@@ -31,7 +31,7 @@ export default {
     }
   },
   mounted() {
-      this.drawLine();
+    this.getChart();
     // this.chartSecond()
     // const timer = setInterval(() => {
     //   this.chartSecond(); //你所加载数据的方法
@@ -40,18 +40,16 @@ export default {
     // this.$once("hook:beforeDestroy", () => {
     //   clearInterval(timer);
     // });
-    this.chartSecond()
-    //  window.setInterval(() => {
-    //   setTimeout(this.chartSecond(), 500);
-    // }, 60000);
+    this.chartSecond();
+     setInterval(this.chartSecond, 60000);
   },
   beforeDestroy() {
-    clearInterval(this.chartSecond());
+    clearInterval(this.chartSecond);
   },
   // 页码设置
   watch: {},
   methods: {
-    chartSecond() {
+    async chartSecond() {
       this.loading = true;
       var block_award = [];
       var block_award_time = [];
@@ -90,12 +88,12 @@ export default {
         },
         yAxis: {
           max: function(value) {
-            return parseInt(value.max+5);
+            return parseInt(value.max + 5);
           },
           splitNumber: 2,
           type: "value",
           position: "left",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           axisLine: {
             //y轴
             show: false,
@@ -130,117 +128,109 @@ export default {
           },
         ],
       });
-      this.$http
-        .get(base)
-        .then((res) => {
-          // console.log(res);
-          for (var i = 0; i < res.data[0].hourly_award.length + 1; i++) {
-            block_award.unshift(res.data[0].hourly_award[i].award);
-            block_award_time.unshift(
-              this.timestampToTime2(res.data[0].hourly_award[i].date).substring(
-                10
-              )
-            );
-            this.loading = false;
-            //  console.log(ranliaoaverage);
-            //  console.log(shijianchuo);
-            // 填入数据
-            // var size = [0, 0, 0, 0, 0, 0, 6];
-            myChart.setOption({
-              xAxis: {
-                data: block_award_time,
+      const res = await GETINDEX();
+      for (var i = 0; i < res.result.lineChart.length + 1; i++) {
+        block_award.unshift(res.result.lineChart[i].blockAward);
+        block_award_time.unshift(
+          this.timestampToTime2(res.result.lineChart[i].tradeTime).substring(10)
+        );
+        this.loading = false;
+        //  console.log(ranliaoaverage);
+        //  console.log(shijianchuo);
+        // 填入数据
+        // var size = [0, 0, 0, 0, 0, 0, 6];
+        myChart.setOption({
+          xAxis: {
+            data: block_award_time,
+          },
+          tooltip: {
+            borderWidth: 1,
+
+            show: true,
+            position: "left",
+            backgroundColor: "rgba(74, 74, 74, 1)",
+
+            textStyle: {
+              fontFamily: "Microsoft YaHei",
+              fontWeight: "bold",
+              lineHeight: 5,
+              fontSize: 15,
+              color: "white",
+              backgroundColor: "rgba(238, 240, 242, 1)",
+            },
+            formatter: "{c0}",
+
+            trigger: "axis",
+            axisPointer: {
+              type: "none",
+              label: {
+                backgroundColor: "#6a7985",
               },
-              tooltip: {
-                borderWidth: 1,
+            },
+          },
+          series: [
+            // {
+            //   name: "军费支出",
+            //   type: "bar",
+            //   barWidth: "20%",
 
-                show: true,
-                position: "left",
-                backgroundColor: "rgba(74, 74, 74, 1)",
-
-                textStyle: {
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bold",
-                  lineHeight: 5,
-                  fontSize: 15,
-                  color: "white",
-                  backgroundColor: "rgba(238, 240, 242, 1)",
-                },
-                formatter: "{c0}",
-
-                trigger: "axis",
-                axisPointer: {
-                  type: "none",
+            //   itemStyle: {
+            //     normal: {
+            //       color: "#4169E1", //柱子的颜色
+            //     },
+            //   },
+            //   backgroundStyle: {
+            //     borderRadius: 10, // 统一设置四个角的圆角大小
+            //     shadowColor: "rgba(0, 0, 0, 0.5)",
+            //     shadowBlur: 10,
+            //   },
+            //   data: block_award,
+            // },
+            {
+              data: block_award,
+              type: "line",
+              showSymbol: false,
+              symbolSize: 10,
+              areaStyle: {},
+              symbol: "circle", //拐点样式
+              smooth: true, //true 为平滑曲线，false为直线
+              itemStyle: {
+                normal: {
+                  color: "#fff",
+                  borderColor: "#965EE5",
+                  borderWidth: 3,
                   label: {
-                    backgroundColor: "#6a7985",
+                    show: false,
+                    position: "left",
+                    textStyle: {
+                      fontSize: 16,
+                      color: "#fff",
+                      // width: 54,
+                      // height: 27,
+                      backgroundColor: "#965EE5",
+                    },
                   },
                 },
               },
-              series: [
-                // {
-                //   name: "军费支出",
-                //   type: "bar",
-                //   barWidth: "20%",
-
-                //   itemStyle: {
-                //     normal: {
-                //       color: "#4169E1", //柱子的颜色
-                //     },
-                //   },
-                //   backgroundStyle: {
-                //     borderRadius: 10, // 统一设置四个角的圆角大小
-                //     shadowColor: "rgba(0, 0, 0, 0.5)",
-                //     shadowBlur: 10,
-                //   },
-                //   data: block_award,
-                // },
-                {
-                  data: block_award,
-                  type: "line",
-                  showSymbol: false,
-                  symbolSize: 10,
-                  areaStyle: {},
-                  symbol: "circle", //拐点样式
-                  smooth: true, //true 为平滑曲线，false为直线
-                  itemStyle: {
-                    normal: {
-                      color: "#fff",
-                      borderColor: "#965EE5",
-                      borderWidth: 3,
-                      label: {
-                        show: false,
-                        position: "left",
-                        textStyle: {
-                          fontSize: 16,
-                          color: "#fff",
-                          // width: 54,
-                          // height: 27,
-                          backgroundColor: "#965EE5",
-                        },
-                      },
-                    },
-                  },
-                  areaStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "#965EE5" },
-                        { offset: 0.4, color: "#965EE5" },
-                        { offset: 1, color: "#fff" },
-                      ]),
-                    },
-                  },
-                  lineStyle: {
-                    color: "#965EE5", //改变折线颜色
-                  },
+              areaStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: "#965EE5" },
+                    { offset: 0.4, color: "#965EE5" },
+                    { offset: 1, color: "#fff" },
+                  ]),
                 },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
+              },
+              lineStyle: {
+                color: "#965EE5", //改变折线颜色
+              },
+            },
+          ],
+        });
+      }
     },
-    drawLine() {
+    async getChart() {
       // 基于准备好的dom，初始化echarts实例
-
       let myChart2 = echarts.init(document.getElementById("bar"));
       myChart2.setOption({
         title: {
@@ -259,7 +249,7 @@ export default {
         xAxis: {
           type: "category",
           data: [],
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           axisLine: {
             //y轴
             show: false,
@@ -305,139 +295,120 @@ export default {
           },
         ],
       });
-      // 异步加载数据
-      let that = this;
-      //  区块奖励
 
+      //  区块奖励
       // 交易总额
       var transaction_num = [];
       var transaction_num_time = [];
       var transaction_num2 = [];
-      // 时间
-      //  燃料费分布
+      const res = await GETINDEX();
+      for (var i = 0; i < res.result.barChart.length + 1; i++) {
+        // part.unshif(res.result.barChart[i].transaction_amount_for_24H)
+        // console.log(res.result.barChart[i].transaction_amount_for_24H);
+        // console.log(part);
+        transaction_num.unshift(res.result.barChart[i].amount);
+        transaction_num.forEach(function(val, index, arr) {
+          // console.log(val);
+          // if (Number(val / 1000000) >= 1) {
+          //   val = Number(val / 100000) + "M";
+          // }
+          // val = Number(val / 1000) + "K";
+          // console.log(val);
+          // val = 10000;
+          // console.log(arr);
+          transaction_num2.unshift(val);
+        });
+        transaction_num_time.unshift(
+         res.result.barChart[i].dayTime.substring(5, 10)
+        );
+        //console.log(block_award_time);
+        //console.log(transaction_num_time);
+        myChart2.setOption({
+          title: {
+            textStyle: {
+              color: "rgba(81, 81, 81, 1)",
+              fontSize: "18px",
+              fontFamily: "Microsoft YaHei",
+              fontWeight: "bolder",
+            },
+          },
+          xAxis: {
+            type: "category",
+            data: transaction_num_time,
+            splitLine: { show: false }, //去除网格线
+            axisLine: {
+              //y轴
+              show: false,
+            },
+            axisTick: {
+              //y轴刻度线
+              show: false,
+            },
+            // axisLabel: {
+            //     formatter: function (value) {
+            //       console.log(value);
+            // }},
+          },
+          yAxis: {
+            type: "value",
+            splitLine: { show: false }, //去除网格线
+            axisLine: {
+              //y轴
+              show: false,
+            },
+            axisTick: {
+              //y轴刻度线
+              show: false,
+            },
+            axisLabel: {
+              formatter: function(value, index) {
+                // console.log(value);
+                if (value / 1000 >= 1 && value / 1000 < 1000) {
+                  return (value = Number(value) / 1000 + "K");
+                } else if (value / 1000 >= 1000) {
+                  return (value = Number(value) / 1000000 + "M");
+                } else {
+                  return (value = value);
+                }
+              },
+            },
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{b0}<br />" + this.test22 + ":{c0}",
+            backgroundColor: "rgba(74, 74, 74, 1)",
 
-      var part = [];
-      that.$http
-        .get(base)
-        .then((res) => {
-          // console.log(res);
-          for (
-            var i = 0;
-            i < res.data[0].transaction_amount_for_7.length + 1;
-            i++
-          ) {
-            // part.unshif(res.data[0].transaction_amount_for_7[i].transaction_amount_for_24H)
-            // console.log(res.data[0].transaction_amount_for_7[i].transaction_amount_for_24H);
-            // console.log(part);
-            transaction_num.unshift(
-              res.data[0].transaction_amount_for_7[i].transaction_amount_for_24H
-            );
-            transaction_num.forEach(function(val, index, arr) {
-              // console.log(val);
-              // if (Number(val / 1000000) >= 1) {
-              //   val = Number(val / 100000) + "M";
-              // }
-              // val = Number(val / 1000) + "K";
-              // console.log(val);
-              // val = 10000;
-              // console.log(arr);
-              transaction_num2.unshift(val);
-            });
-            transaction_num_time.unshift(
-              this.timestampToTime2(
-                res.data[0].transaction_amount_for_7[i].date
-              ).substring(5, 10)
-            );
-            //console.log(block_award_time);
-            //console.log(transaction_num_time);
-            myChart2.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
+            textStyle: {
+              color: "rgba(255, 255, 255, 1)",
+              fontWeight: "bold",
+            },
+          },
+          series: [
+            {
+              data: transaction_num,
+              type: "bar",
+              showBackground: true,
+              backgroundStyle: {
+                color: "rgba(238, 242, 252, 1)",
+                borderRadius: 20, // 统一设置四个角的圆角大小
+              },
+              barWidth: 18,
+              itemStyle: {
+                emphasis: {
+                  barBorderRadius: 7,
+                },
+                normal: {
+                  color: "#965EE5",
+                  barBorderRadius: 7,
                 },
               },
-              xAxis: {
-                type: "category",
-                data: transaction_num_time,
-                splitLine: { show: false }, //去除网格线
-                axisLine: {
-                  //y轴
-                  show: false,
-                },
-                axisTick: {
-                  //y轴刻度线
-                  show: false,
-                },
-                // axisLabel: {
-                //     formatter: function (value) {
-                //       console.log(value);
-                // }},
-              },
-              yAxis: {
-                type: "value",
-                splitLine: { show: false }, //去除网格线
-                axisLine: {
-                  //y轴
-                  show: false,
-                },
-                axisTick: {
-                  //y轴刻度线
-                  show: false,
-                },
-                axisLabel: {
-                  formatter: function(value, index) {
-                    // console.log(value);
-                    if (value / 1000 >= 1 && value / 1000 < 1000) {
-                      return (value = Number(value) / 1000 + "K");
-                    } else if (value / 1000 >= 1000) {
-                      return (value = Number(value) / 1000000 + "M");
-                    } else {
-                      return (value = value);
-                    }
-                  },
-                },
-              },
-              tooltip: {
-                trigger: "item",
-                formatter: "{b0}<br />" + this.test22 + ":{c0}",
-                backgroundColor: "rgba(74, 74, 74, 1)",
-
-                textStyle: {
-                  color: "rgba(255, 255, 255, 1)",
-                  fontWeight: "bold",
-                },
-              },
-              series: [
-                {
-                  data: transaction_num,
-                  type: "bar",
-                  showBackground: true,
-                  backgroundStyle: {
-                    color: "rgba(238, 242, 252, 1)",
-                    borderRadius: 20, // 统一设置四个角的圆角大小
-                  },
-                  barWidth: 18,
-                  itemStyle: {
-                    emphasis: {
-                      barBorderRadius: 7,
-                    },
-                    normal: {
-                      color: "#965EE5",
-                      barBorderRadius: 7,
-                    },
-                  },
-                },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
+            },
+          ],
+        });
+      }
     },
     timestampToTime2(timestamp) {
-      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + "-";
       var M =
         (date.getMonth() + 1 < 10
@@ -485,6 +456,7 @@ export default {
     border: 1px solid #e9eced;
     opacity: 1;
     border-radius: 18px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     // div {
     //   width: 626px !important;
     //   height: 322px !important;
@@ -497,6 +469,7 @@ export default {
     opacity: 1;
     border-radius: 18px;
     margin-left: 23.25px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
   }
 }
 </style>

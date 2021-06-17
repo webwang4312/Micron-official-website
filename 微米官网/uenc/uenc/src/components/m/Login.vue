@@ -502,7 +502,8 @@ export default {
     },
     onLogin() {
       if (this.loginForm.code.toUpperCase() !== this.codevalue) {
-         console.log("比对失败");
+        //  console.log("比对失败");
+         this.$t("index.switch") === "cn" ? this.$message.error('输入正确验证码') : this.$message.error('Enter the correct verification code')
       } else {
       this.$refs["login"].validate(async (valid) => {
         if (valid) {

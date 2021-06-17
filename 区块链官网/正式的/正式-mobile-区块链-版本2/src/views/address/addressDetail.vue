@@ -253,7 +253,7 @@ export default {
         .then((res) => {
           // console.log(res);
           this.info = res.data;
-          console.log(this.info);
+          // console.log(this.info);
         });
       // console.log(res);
 
@@ -268,7 +268,7 @@ export default {
           params: {
             wallet_address: this.shiyan,
             pageNum: this.transmedianum,
-            pageSize: 5,
+            pageSize: 3,
           },
         })
         .then((res) => {
@@ -430,7 +430,7 @@ export default {
 </script>
 <style lang="less">
 .blue {
-  font-size: 17px;
+  font-size: 13px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   line-height: 22px;
@@ -443,7 +443,7 @@ export default {
   z-index: 1;
   .top {
     width: 343px;
-    height: 38px;
+  
     font-size: 14px;
     font-family: PingFang SC;
     font-weight: 600;
@@ -513,13 +513,13 @@ export default {
 
         ul {
           width: 343px;
-          height: 200px;
-          padding: 10px 0;
+          height: auto;
+           padding-bottom: 20px;
           border-bottom: 1px solid #b2b2b2;
           li {
             display: flex;
             flex-direction: row;
-            margin-top: 10px;
+          margin-top: 10px;
             div:nth-child(1) {
               width: 92px;
               font-size: 13px;
