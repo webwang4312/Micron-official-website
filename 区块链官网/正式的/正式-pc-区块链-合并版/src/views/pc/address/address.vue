@@ -50,7 +50,7 @@
   </div>
 </template>
 <script>
-import { GetAddressList } from "@server/api.js";
+import { GETADDRESS } from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -89,7 +89,7 @@ export default {
     async addresssearch() {
       let that = this;
       var blockData = [];
-       const res = await GetAddressList({
+       const res = await GETADDRESS({
         pageNum: this.addressmedianum,
         pageSize: 100,
       });
@@ -124,25 +124,14 @@ export default {
           }
         
     },
-    timestampToTime(timestamp) {
-      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + "-";
-      var M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-      var D = date.getDate() + " ";
-      var h = date.getHours() + ":";
-      var m = date.getMinutes() + ":";
-      var s = date.getSeconds();
-      return Y + M + D + h + m + s;
-    },
+  
   },
 };
 </script>
 <style lang="less">
 .address {
   background: #f9fafd;
+  padding-bottom: 195px;
   .top {
     width: 1275px;
     height: 38px;
@@ -151,7 +140,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -165,7 +156,7 @@ export default {
   .block_info {
     width: 1275px;
     height: auto;
-    background: gainsboro;
+   
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
@@ -173,6 +164,7 @@ export default {
     .info_title {
       height: 75px;
       line-height: 75px;
+       background: #FFFFFF;
       li {
         display: flex;
         flex-direction: row;
@@ -191,6 +183,9 @@ export default {
         }
         div:nth-child(3) {
           text-align: center;
+        }
+         div:nth-child(5) {
+          text-align: right;
         }
       }
     }
@@ -213,16 +208,17 @@ export default {
           font-size: 15px;
           font-family: Microsoft YaHei;
           font-weight: 400;
-
+ width: 300px;
           color: #965EE5;
            cursor: pointer;
         }
         div:nth-child(3) {
           text-align: center;
         }
-        div:nth-child(2) {
-          width: 300px;
+         div:nth-child(5) {
+          text-align: right;
         }
+        
         div {
           font-size: 15px;
           font-family: Microsoft YaHei;
@@ -230,6 +226,7 @@ export default {
           line-height: 45px;
           color: #333333;
           width: 148px;
+         
         }
       }
     }

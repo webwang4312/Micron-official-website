@@ -1,11 +1,6 @@
-/*
- * @Author: yaoyuting
- * @Date: 2021-04-23 17:17:02
- * @LastEditors: yaoyuting
- * @LastEditTime: 2021-04-28 16:55:22
- * @Descripttion: 
- */
-import axios from 'axios'
+
+import axios from 'axios';
+import qs from 'qs';
 // 创建axios实例
 const service = axios.create({
     // api 的 base_url
@@ -94,7 +89,7 @@ export function gets(url, params) {
 
 export function post(url, data = {}) {
     return new Promise((resolve, reject) => {
-        axios.post(url, data, {
+        axios.post(url, qs.stringify(data), {
             // headers: {
             //     Accept: "application/x-www-form-urlencoded; charset=utf-8",
             //     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8;",

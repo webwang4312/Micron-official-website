@@ -121,16 +121,17 @@ export default {
       tableData: [],
       tableData2: [],
       tabledataall: "",
-    
     };
   },
   watch: {},
-  components: { Chart,indexList },
+  components: { Chart, indexList },
   created() {
     this.nowLang = this.$i18n.locale;
     this.indexlists();
   },
-  mounted() {},
+  mounted() {
+     setInterval(this.indexlists, 20000);
+  },
   methods: {
     qianwei(str) {
       str = str.toString();
@@ -220,29 +221,32 @@ export default {
           }
           // console.log(this.tableData[i].date);
 
-          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
-
           this.tableData[i].fromAddress =
             this.tableData[i].fromAddress.substring(0, 8) + "...";
+          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
 
+          this.tableData[i].toAddress =
+            this.tableData[i].toAddress.substring(0, 8) + "...";
           this.tableData[i].toAddress2 = this.tableData[i].toAddress;
-          if (
-            this.tableData[i].toAddress == "0000000000000000000000000000000000"
-          ) {
-            if (this.nowLang == "cn") {
-              this.tableData[i].toAddress = "质押";
-            }
-            if (this.nowLang == "en") {
-              this.tableData[i].toAddress = "Pledge";
-            }
-          } else {
-            this.tableData[i].toAddress =
-              this.tableData[i].toAddress.substring(0, 8) + "...";
-          }
+          // if (
+          //   this.tableData[i].toAddress == "0000000000000000000000000000000000"
+          // ) {
+          //   if (this.nowLang == "cn") {
+          //     this.tableData[i].toAddress = "质押";
+          //   }
+          //   if (this.nowLang == "en") {
+          //     this.tableData[i].toAddress = "Pledge";
+          //   }
+          // } else {
+          //   this.tableData[i].toAddress =
+          //     this.tableData[i].toAddress.substring(0, 8) + "...";
+          // }
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward=Number(this.tableData2[j].blockAward).toFixed(2)
+          this.tableData2[j].blockAward = Number(
+            this.tableData2[j].blockAward
+          ).toFixed(2);
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -319,7 +323,9 @@ export default {
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward=Number(this.tableData2[j].blockAward).toFixed(2)
+          this.tableData2[j].blockAward = Number(
+            this.tableData2[j].blockAward
+          ).toFixed(2);
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -548,7 +554,5 @@ export default {
       color: #253551;
     }
   }
-
- 
 }
 </style>

@@ -12,11 +12,15 @@
         </el-option>
       </el-select>
     </div>
-    <i
+    <!-- <i
       class="el-icon-minus"
       style="color:rgba(85, 131, 255, 1);transform:rotate(90deg);width: 0px;
 height: 33px;"
-    ></i>
+    ></i> -->
+    <div style="width: 2px;background:#6624FA;
+height: 23px;">
+
+    </div>
     <div class="searchcenter">
       <input
         type="text"
@@ -33,6 +37,7 @@ height: 33px;"
   </div>
 </template>
 <script>
+import {AddressSearch,TransactionSearch,BlockSearch} from  "@server/api.js";
 export default {
   name: "foot",
   data() {
@@ -231,7 +236,7 @@ export default {
     async addresssearch() {
       let that = this;
       await that.$http
-        .get("/search_transactionInfo_walletAddress", {
+        .get(AddressSearch, {
           params: {
             wallet_address: this.inputvalue,
             pageNum: 1,
@@ -242,13 +247,13 @@ export default {
           //   console.log(res.data[0].total_page[0].totalPageNum);
           if (res.data[0].search_wallet_balance_for_walletAddress.length == 0) {
             this.$router.push({
-              path: "/notfound",
+              path: "/pc/notfound",
               query: { address: "address" },
             });
             this.reload();
           } else {
             this.$router.push({
-              path: "/addressdetail",
+              path: "/pc/addressdetail",
               query: { address: this.inputvalue },
             });
              this.reload();
@@ -261,7 +266,7 @@ export default {
     async blocksearch() {
       let that = this;
       await that.$http
-        .get("/search_blockHeight_for_height", {
+        .get(BlockSearch, {
           params: {
             block_height: this.inputvalue,
             pageNum: 1,
@@ -272,7 +277,7 @@ export default {
           //  console.log(res);
           if (res.data[0].total_record[0].total_record !== 0) {
             this.$router.push({
-              path: "/blockdetail",
+              path: "/pc/blockdetail",
               query: {
                 block: this.inputvalue,
                 // transaction_award:this.transaction_award
@@ -282,7 +287,7 @@ export default {
              this.inputvalue=''
           } else {
              this.$router.push({
-              path: "/notfound",
+              path: "/pc/notfound",
               query: { address: "height" },
             });
             this.reload();
@@ -298,7 +303,7 @@ export default {
     async transactiondetaillist() {
       let that = this;
       await that.$http
-        .get("/search_transactionHash_detailInfo", {
+        .get(TransactionSearch, {
           params: {
             transaction_hash: this.inputvalue,
           },
@@ -307,7 +312,7 @@ export default {
           //  console.log(res);
           if (res.data[0].select_status === 1) {
             this.$router.push({
-              path: "/transactiondetail",
+              path: "/pc/transactiondetail",
               query: {
                 transaction_hash: this.inputvalue,
                 // transaction_award:this.transaction_award
@@ -317,7 +322,7 @@ export default {
              this.inputvalue=''
           } else {
             this.$router.push({
-              path: "/notfound",
+              path: "/pc/notfound",
               query: { address: "transaction" },
             });
             this.reload();
@@ -376,6 +381,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  align-items: center;
   background: #ffffff;
   opacity: 1;
   border-radius: 11px;
@@ -449,7 +455,8 @@ export default {
     background: rgba(102, 36, 250, 1);
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
     opacity: 1;
-    border-radius: 11px;
+    border-top-right-radius: 11px;
+     border-bottom-right-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;

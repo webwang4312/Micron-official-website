@@ -43,12 +43,8 @@
         </li>
       </ul>
       <ul class="info_content">
-        <li
-          v-for="item in blockData"
-          :key="item"
-        
-        >
-          <div @click="goToTransactionDetail(item.block_hash2)">
+        <li v-for="item in blockData" :key="item">
+          <div @click="goToTransactionDetail(item.transaction_hash2)">
             {{ item.transaction_hash }}
           </div>
           <div>
@@ -93,7 +89,7 @@
   </div>
 </template>
 <script>
-import { GetBlockListDetail } from "@server/api.js";
+import { GETBLOCKDETAIL } from "@server/api.js";
 
 export default {
   name: "block",
@@ -106,8 +102,7 @@ export default {
       totalNum: "",
       blockData: [],
       shiyan: "",
-      datalist: [   
-      ],
+      datalist: [],
     };
   },
   components: {},
@@ -128,17 +123,18 @@ export default {
         path: "/pc/transactiondetail",
 
         query: {
-          transaction_hash: item,
+         transaction_hash: item,
         },
       });
     },
-     goToAddressDetail(item) {
+    goToAddressDetail(item) {
       this.$router.push({
         path: "/pc/addressdetail",
         query: {
           address: item,
         },
       });
+     
     },
     pagesMinus() {
       if (this.blockmedianum == 1) {
@@ -160,7 +156,7 @@ export default {
       this.icon = true;
       let that = this;
       var blockData = [];
-      const res = await GetBlockListDetail({
+      const res = await GETBLOCKDETAIL({
         block_height: this.shiyan,
         pageNum: this.blockmedianum,
         pageSize: 20,
@@ -168,42 +164,49 @@ export default {
       // console.log(res);
       this.totalNum = res[0].total_page[0].totalPageNum;
       // 高度
-      this.datalist= res[0].block_height[0];
-    // console.log(this.datalist);
-       if (this.nowLang == "cn") {
-            for (var i = 0; i < res[0].block_list.length + 1; i++) {
-              var obj = {};
-              let times = [];
-              // 交易哈希
-              obj.transaction_hash = res[0].block_list[i].transaction_hash.substring(0, 10) + "...";
-               obj.transaction_hash2 = res[0].block_list[i].transaction_hash;
-              // 从
-               obj.from_address = res[0].block_list[i].from_address.substring(0, 10) + "...";
-                obj.from_address2 = res[0].block_list[i].from_address;
-              // 至
-               obj.to_address = res[0].block_list[i].to_address.substring(0, 10) + "...";
-               obj.to_address2 = res[0].block_list[i].to_address;
-              //  交易额
-               obj.transaction_amount = res[0].block_list[i].transaction_amount;
-              //  燃料费
-               obj.gas = res[0].block_list[i].gas;
-              //  区块奖励
-              obj.award =
-                res[0].block_list[i].award;
-              // let blocktime = res[0].block_list[i].time;
-              obj.time=this.timestampToTime( res[0].block_list[i].time)
-              blockData[i] = obj;
-              //console.log(blockData);
-              this.blockData = blockData;
-              console.log(this.blockData);
-             
-            }
-          }
-    
+      this.datalist = res[0].block_height[0];
+      // console.log(this.datalist);
+
+      for (var i = 0; i < res[0].block_list.length + 1; i++) {
+        var obj = {};
+        let times = [];
+        // 交易哈希
+        obj.transaction_hash =
+          res[0].block_list[i].transaction_hash.substring(0, 10) + "...";
+        obj.transaction_hash2 = res[0].block_list[i].transaction_hash;
+        // 从
+        obj.from_address =
+          res[0].block_list[i].from_address.substring(0, 10) + "...";
+        obj.from_address2 = res[0].block_list[i].from_address;
+        // 至
+        if (
+          res[0].block_list[i].to_address ==
+          "0000000000000000000000000000000000"
+        ) {
+          obj.to_address = this.nowLang === "cn" ? "质押" : "pledge";
+        } else {
+          obj.to_address =
+            res[0].block_list[i].to_address.substring(0, 10) + "...";
+        }
+
+        obj.to_address2 = res[0].block_list[i].to_address;
+        //  交易额
+        obj.transaction_amount = res[0].block_list[i].transaction_amount;
+        //  燃料费
+        obj.gas = res[0].block_list[i].gas;
+        //  区块奖励
+        obj.award = res[0].block_list[i].award;
+        // let blocktime = res[0].block_list[i].time;
+        obj.time = this.timestampToTime(res[0].block_list[i].time);
+        blockData[i] = obj;
+        //console.log(blockData);
+        this.blockData = blockData;
+        // console.log(this.blockData);
+      }
     },
-    
+
     timestampToTime(timestamp) {
-      var date = new Date(timestamp*1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + "-";
       var M =
         (date.getMonth() + 1 < 10
@@ -221,7 +224,8 @@ export default {
 <style lang="less">
 .blockdetail {
   height: auto;
-  margin-bottom: 373px;
+  padding-bottom: 373px;
+  background: #F9FAFD;
   .top {
     width: 1275px;
     height: 38px;
@@ -230,7 +234,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -279,7 +285,7 @@ export default {
   .block_info {
     width: 1275px;
     height: auto;
-    background: gainsboro;
+
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
@@ -290,23 +296,26 @@ export default {
       font-size: 17px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-
+background: #ffffff;
       color: #000000;
       li {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         padding: 0 53px;
-
+        div:nth-child(1) {
+          width: 150px;
+          text-align: left;
+        }
         div {
-          width: 130px;
+          width: 140px;
           font-size: 17px;
           font-family: Microsoft YaHei;
           font-weight: 400;
           color: #000000;
+          text-align: center;
         }
         div:nth-child(3) {
-          text-align: center;
         }
       }
     }
@@ -327,7 +336,8 @@ export default {
         background: #fcfcfc;
 
         div:nth-child(1) {
-          padding-left: 9px;
+          // padding-left: 9px;
+          text-align: left;
         }
         div:nth-child(2) {
           width: 150px;
@@ -346,7 +356,7 @@ export default {
         }
         div {
           width: 130px;
-
+          text-align: center;
           font-size: 15px;
           font-family: Microsoft YaHei;
           font-weight: 400;

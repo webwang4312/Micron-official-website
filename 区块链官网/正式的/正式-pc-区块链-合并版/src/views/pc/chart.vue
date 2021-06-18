@@ -39,7 +39,7 @@ export default {
   width: 100%;
   height: auto;
   margin-bottom: 53px;
- 
- 
+background: #F9FAFD;
+
 }
 </style>

@@ -17,7 +17,7 @@ Vue.config.productionTip = false;
 // import ViewUI from 'view-design';
 // import 'view-design/dist/styles/iview.css';
 // Vue.use(ViewUI);
-axios.defaults.baseURL = "http://47.116.69.138:9090/";
+// axios.defaults.baseURL = "http://47.116.69.138:9090/";
 // axios.defaults.retry = 4;
 // axios.defaults.retryDelay = 1000;
 // axios.defaults.timeout = 30000; // 请求超时
@@ -58,7 +58,18 @@ Vue.use(Popup);
 //     });
 // });
 
-
+axios.interceptors.request.use(
+    config => {
+      config.cancelToken = new axios.CancelToken(function (cancel) {
+        store.commit('pushToken', {cancelToken: cancel})
+      })
+      return config
+    }
+  )
+  router.beforeEach(function (to, from, next) {
+    store.commit('clearToken') // 取消请求
+    next()
+  })
 // 页面跳转到顶部
 router.afterEach((to, from, next) => {
     window.scrollTo(0, 0);

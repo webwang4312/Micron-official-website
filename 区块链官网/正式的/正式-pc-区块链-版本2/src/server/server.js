@@ -5,7 +5,8 @@
  * @LastEditTime: 2021-04-28 16:55:22
  * @Descripttion: 
  */
-import axios from 'axios'
+import axios from 'axios';
+import qs from 'qs';
 // 创建axios实例
 const service = axios.create({
     // api 的 base_url
@@ -23,7 +24,7 @@ service.interceptors.request.use(
     },
     error => {
         // Do something with request error
-        console.log(error) // for debug
+        //console.log(error) // for debug
         return Promise.reject(error)
     }
 )
@@ -42,7 +43,7 @@ service.interceptors.response.use(
         }
     },
     error => {
-        console.log('err' + error) // for debug
+        //console.log('err' + error) // for debug
         return Promise.reject(error)
     }
 )
@@ -94,13 +95,14 @@ export function gets(url, params) {
 
 export function post(url, data = {}) {
     return new Promise((resolve, reject) => {
-        axios.post(url, data, {
+        axios.post(url, qs.stringify(data), {
             // headers: {
             //     Accept: "application/x-www-form-urlencoded; charset=utf-8",
             //     "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8;",
             // }
         }).then(response => {
             resolve(response.data);
+           
         }, err => {
             reject(err)
         })

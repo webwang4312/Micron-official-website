@@ -1,5 +1,5 @@
 <template>
-  <div class="addressdetail">
+  <div class="addressdetail" v-loading.fullscreen.lock="fullscreenLoading">
     <div class="top">
       <img src="@assets/images/second/地址概览@2x.png" alt="" />
       <span> {{ $t("addressdetail")[0] }}</span>
@@ -95,12 +95,17 @@
   </div>
 </template>
 <script>
-import { GetAddressListDetail, GetAddressListDetail2 } from "@server/api.js";
+import {
+  GETADDRESSDETAIL,
+  GetAddressListDetail2,
+  timestampToTime,
+} from "@server/api.js";
 export default {
   name: "addressdetail",
   inject: ["reload"],
   data() {
     return {
+      fullscreenLoading: false,
       nowLang: "",
       // 分页
       transmedianum: 1,
@@ -135,9 +140,9 @@ export default {
       });
     },
     goToAddressDetail(item) {
-      //console.log(item);
+      console.log(item);
       this.shiyan = item;
-
+      this.addressList();
       this.addresssearch();
     },
     pagesMinus() {
@@ -152,9 +157,13 @@ export default {
       }
     },
     pagesPlus() {
-      this.transmedianum += 1;
-      // //console.log(this.medianum);
-      this.addresssearch();
+      if (this.transmedianum < this.totalNum) {
+        this.transmedianum += 1;
+        // //console.log(this.medianum);
+        this.addresssearch();
+      } else {
+        return false;
+      }
     },
     async addressList() {
       const res = await GetAddressListDetail2({
@@ -169,18 +178,20 @@ export default {
       this.icon = true;
       let that = this;
       var blockData = [];
-      const res = await GetAddressListDetail({
+      const res = await GETADDRESSDETAIL({
         wallet_address: this.shiyan,
         pageNum: this.transmedianum,
         pageSize: 20,
       });
       //console.log(res);
       this.totalNum = res[0].total_page[0].totalPageNum;
+      console.log(this.totalNum);
       if (this.totalNum !== 0) {
         this.have_list = true;
       } else {
         this.have_list = false;
       }
+
       var translist = res[0].search_transaction_list_for_walletAddress;
       //console.log(this.have_list);
       if (this.nowLang == "cn") {
@@ -205,17 +216,17 @@ export default {
             obj.time = date;
           }
           if (fenzhong > 1440) {
-            date.push(this.timestampToTime(strdate));
+            date.push(timestampToTime(strdate));
             // date.push(parseInt(fenzhong / 1440) + "天前");
             obj.time = date;
           }
           // date.push(this.timestampToTime(Number(strdate)));
-           obj.transaction_hash =
+          obj.transaction_hash =
             translist[i].transaction_hash.substring(0, 10) + "...";
           obj.transaction_hash2 = translist[i].transaction_hash;
           obj.from_address2 = translist[i].from_address;
           obj.to_address2 = translist[i].to_address;
-         
+
           // obj.time = this.timestampToTime(Number(strdate));
           obj.amount = translist[i].amount;
           if (
@@ -225,21 +236,12 @@ export default {
             // 从
             obj.from_address =
               translist[i].from_address.substring(0, 10) + "...";
-            if (this.nowLang == "cn") {
-              obj.to_address = "质押";
-            } else {
-              obj.to_address = "Pledge";
-            }
+            obj.to_address = this.nowLang == "cn" ? "质押" : "Pledge";
           } else if (
             translist[i].from_address == translist[i].to_address ||
             translist[i].redeem == "1"
           ) {
-            if (this.nowLang == "cn") {
-              // 从
-              obj.from_address = "质押";
-            } else {
-              obj.from_address = "Pledge";
-            }
+            obj.from_address = this.nowLang == "cn" ? "质押" : "Pledge";
             // 至
             obj.to_address = translist[i].to_address.substring(0, 10) + "...";
           } else {
@@ -278,7 +280,7 @@ export default {
             obj.time = date;
           }
           if (fenzhong > 1440) {
-            date.push(this.timestampToTime(strdate));
+            date.push(timestampToTime(strdate));
             // date.push(parseInt(fenzhong / 1440) + "days ago");
             obj.time = date;
           }
@@ -303,28 +305,6 @@ export default {
         }
       }
     },
-    timestampToTime(timestamp) {
-      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + "-";
-      if (Y == "2021-") {
-        Y = "";
-      } else {
-        Y = date.getFullYear() + "-";
-      }
-      var M =
-        (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1) + "-";
-      var D =
-        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "-";
-
-      var h =
-        (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":";
-      var m =
-        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-      var s = date.getSeconds();
-      return Y + M + D + h + m;
-    },
   },
 };
 </script>
@@ -338,8 +318,10 @@ export default {
 }
 
 .addressdetail {
+  min-height: 900px;
   height: auto;
-  margin-bottom: 373px;
+  background: #f9fafd;
+  padding-bottom: 275px;
   .top {
     width: 1275px;
     height: 38px;
@@ -348,7 +330,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin: 0px auto;
     display: flex;
     align-items: center;
     span {
@@ -393,7 +377,7 @@ export default {
   .block_info {
     width: 1275px;
     height: auto;
-    background: gainsboro;
+
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.05);
     opacity: 1;
     border-radius: 11px;
@@ -404,7 +388,7 @@ export default {
       font-size: 17px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-
+background: #ffffff;
       color: #000000;
       li {
         display: flex;
@@ -487,7 +471,7 @@ export default {
   .block_pagination {
     width: 1275px;
     height: 37px;
-    background: #ffffff;
+    background: #f9fafd;
     margin: 0 auto;
 
     display: flex;

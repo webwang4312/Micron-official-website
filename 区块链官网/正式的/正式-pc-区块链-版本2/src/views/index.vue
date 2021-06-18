@@ -133,7 +133,7 @@ export default {
   components: { headertop, Search, VFooter, Chart, indexList },
   created() {
     this.nowLang = this.$i18n.locale;
-    
+
     // window.setInterval(() => {
     //   setTimeout(this.indexlists(), 1000);
     // }, 60000);
@@ -148,7 +148,7 @@ export default {
   },
   mounted() {
     this.indexlists();
-    setInterval(this.indexlists, 60000);
+    setInterval(this.indexlists, 20000);
   },
   methods: {
     qianwei(str) {
@@ -169,7 +169,9 @@ export default {
       this.nowTime = parseInt(data.linuxTime / 1000);
       if (this.nowLang == "cn") {
         for (var i = 0; i < this.tableData.length; i++) {
-           this.tableData[i].amount=Number(this.tableData[i].amount).toFixed(2)
+          this.tableData[i].amount = Number(this.tableData[i].amount).toFixed(
+            2
+          );
           this.tableData[i].txhash2 = this.tableData[i].txhash;
           this.tableData[i].txhash =
             this.tableData[i].txhash.substring(0, 10) + "...";
@@ -204,31 +206,32 @@ export default {
             this.tableData[i].date = date;
           }
           // console.log(this.tableData[i].date);
-
-          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
-
           this.tableData[i].fromAddress =
             this.tableData[i].fromAddress.substring(0, 8) + "...";
-
+          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
+          this.tableData[i].toAddress =
+            this.tableData[i].toAddress.substring(0, 8) + "...";
           this.tableData[i].toAddress2 = this.tableData[i].toAddress;
-          if (
-            this.tableData[i].toAddress == "0000000000000000000000000000000000"
-          ) {
-            if (this.nowLang == "cn") {
-              this.tableData[i].toAddress = "质押";
-            }
-            if (this.nowLang == "en") {
-              this.tableData[i].toAddress = "Pledge";
-            }
-          } else {
-            this.tableData[i].toAddress =
-              this.tableData[i].toAddress.substring(0, 8) + "...";
-          }
+
+          // if (
+          //   this.tableData[i].toAddress == "0000000000000000000000000000000000"
+          // ) {
+          //   if (this.nowLang == "cn") {
+          //     this.tableData[i].toAddress = "质押";
+          //   }
+          //   if (this.nowLang == "en") {
+          //     this.tableData[i].toAddress = "Pledge";
+          //   }
+          // } else {
+          //   this.tableData[i].toAddress =
+          //     this.tableData[i].toAddress.substring(0, 8) + "...";
+          // }
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-         
-          this.tableData2[j].blockAward=Number(this.tableData2[j].blockAward).toFixed(2)
+          this.tableData2[j].blockAward = Number(
+            this.tableData2[j].blockAward
+          ).toFixed(2);
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -263,8 +266,10 @@ export default {
         }
       } else {
         for (var i = 0; i < this.tableData.length; i++) {
-            this.tableData[i].amount=Number(this.tableData[i].amount).toFixed(2)
-          
+          this.tableData[i].amount = Number(this.tableData[i].amount).toFixed(
+            2
+          );
+
           let date = [];
           let strdate = parseInt(this.tableData[i].tradeTime / 1000);
           // console.log(strdate + "shuju");
@@ -307,7 +312,9 @@ export default {
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward=Number(this.tableData2[j].blockAward).toFixed(2)
+          this.tableData2[j].blockAward = Number(
+            this.tableData2[j].blockAward
+          ).toFixed(2);
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -397,6 +404,90 @@ export default {
 //   width: 626px !important;
 //   height: 322px !important;
 // }
+@keyframes d-pro1 {
+  0% {
+    background: url("../assets/images/second/区块高度.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/区块高度.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/区块高度.gif") no-repeat
+      center/100% 100%;
+  }
+}
+@keyframes d-pro2 {
+  0% {
+    background: url("../assets/images/second/24H交易数.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/24H交易数.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/24H交易数.gif") no-repeat
+      center/100% 100%;
+  }
+}
+@keyframes d-pro3 {
+  0% {
+    background: url("../assets/images/second/已发放奖励.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/已发放奖励.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/已发放奖励.gif") no-repeat
+      center/100% 100%;
+  }
+}
+@keyframes d-pro4 {
+  0% {
+    background: url("../assets/images/second/节点总数.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/节点总数.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/节点总数.gif") no-repeat
+      center/100% 100%;
+  }
+}
+@keyframes d-pro5 {
+  0% {
+    background: url("../assets/images/second/累计交易数.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/累计交易数.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/累计交易数.gif") no-repeat
+      center/100% 100%;
+  }
+}
+@keyframes d-pro6 {
+  0% {
+    background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
+      center/100% 100%;
+  }
+}
 .el-icon-arrow-right {
 }
 .more {
@@ -479,24 +570,24 @@ export default {
       .block_height {
         width: 60px;
         height: 60px;
-        background: url("../assets/images/second/区块高度.gif") no-repeat
-          center/100% 100%;
+        animation-iteration-count: 1;
+        animation: d-pro1 0.5s;
       }
     }
     ul:nth-child(2):hover {
       .transaction24 {
         width: 60px;
         height: 60px;
-        background: url("../assets/images/second/24H交易数.gif") no-repeat
-          center/100% 100%;
+        animation-iteration-count: 1;
+        animation: d-pro2 0.5s;
       }
     }
     ul:nth-child(3):hover {
       .award {
         width: 60px;
         height: 60px;
-        background: url("../assets/images/second/已发放奖励.gif") no-repeat
-          center/100% 100%;
+        animation-iteration-count: 1;
+        animation: d-pro3 0.5s;
       }
     }
 
@@ -576,24 +667,24 @@ export default {
       .alljiedian {
         width: 60px;
         height: 60px;
-        background: url("../assets/images/second/节点总数.gif") no-repeat
-          center/100% 100%;
+        animation-iteration-count: 1;
+        animation: d-pro4 0.5s;
       }
     }
     ul:nth-child(2):hover {
       .alltransaction {
         width: 60px;
         height: 60px;
-        background: url("../assets/images/second/累计交易数.gif") no-repeat
-          center/100% 100%;
+        animation-iteration-count: 1;
+        animation: d-pro5 0.5s;
       }
     }
     ul:nth-child(3):hover {
       .last_award {
         width: 60px;
         height: 60px;
-        background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
-          center/100% 100%;
+        animation-iteration-count: 1;
+        animation: d-pro6 0.5s;
       }
     }
   }

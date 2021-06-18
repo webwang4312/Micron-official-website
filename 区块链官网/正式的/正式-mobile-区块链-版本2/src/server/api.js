@@ -7,8 +7,8 @@
  */
 import { get, gets, post, posts } from './server.js'
 // 获取首页数据
- export const base='http://47.116.69.138:9090'
-// export const base='http://47.98.110.210:9002'
+//  export const base='http://47.116.69.138:9090'
+ export const base='http://47.98.110.210:9002'
 // 获取首页数据
 export const GETINDEX = p => post(base+'/ethbrowser/home/getHomeData', p);
 //  区块列表

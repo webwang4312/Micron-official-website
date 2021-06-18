@@ -26,7 +26,7 @@ height: 33px;"
         @keyup="keyup"
       />
     </div>
- <div class="search_img" @click="searchselect">
+    <div class="search_img" @click="searchselect">
       <img src="@assets/images/second/搜索按钮@2x.png" alt="" />
     </div>
     <!-- <img
@@ -37,6 +37,7 @@ height: 33px;"
   </div>
 </template>
 <script>
+import {AddressSearch,TransactionSearch,BlockSearch} from  "@server/api.js";
 export default {
   name: "search",
   inject: ["reload"],
@@ -44,12 +45,12 @@ export default {
     return {
       iconvalue: "UENC地址",
       fullscreenLoading: false,
-      nowLang: "en",
+      nowLang: "",
       show: false,
       sticky2: false,
       inputvalue: "",
       // 搜索下拉列表
-      select: "",
+      select: [],
       value: "",
       righticon: true,
       // 请求返回的数值
@@ -64,60 +65,20 @@ export default {
       // 区块哈希
     };
   },
-  watch: {
-    inputvalue: {
-      handler(newName, oldName) {
-        // console.log(newName);
-      },
-    },
+  props: {
+    select: Array,
   },
+  watch: {},
   created() {
+    this.nowLang = this.$i18n.locale;
+    //  this.select=select;
     if (this.$i18n.locale == "cn") {
       this.iconvalue = "UENC地址";
     } else {
       this.iconvalue = "Address";
     }
     //console.log(this.$i18n.locale);
-    if (this.$i18n.locale == "cn") {
-      this.select = [
-        {
-          value: "0",
-          label: "UENC地址",
-        },
-        {
-          value: "1",
-          label: "区块高度",
-        },
-        {
-          value: "2",
-          label: "交易哈希",
-        },
-        // {
-        //   value: "3",
-        //   label: "区块哈希",
-        // },
-      ];
-    }
-    if (this.$i18n.locale == "en") {
-      this.select = [
-        {
-          value: "0",
-          label: "Address",
-        },
-        {
-          value: "1",
-          label: "Height",
-        },
-        {
-          value: "2",
-          label: "Transaction",
-        },
-        // {
-        //   value: "3",
-        //   label: "Block",
-        // },
-      ];
-    }
+
     if (this.value == "") {
       this.value = "0";
     }
@@ -233,7 +194,7 @@ export default {
     async addresssearch() {
       let that = this;
       await that.$http
-        .get("/search_transactionInfo_walletAddress", {
+        .get(AddressSearch, {
           params: {
             wallet_address: this.inputvalue,
             pageNum: 1,
@@ -265,7 +226,7 @@ export default {
     async blocksearch() {
       let that = this;
       await that.$http
-        .get("/search_blockHeight_for_height", {
+        .get(BlockSearch, {
           params: {
             block_height: this.inputvalue,
             pageNum: 1,
@@ -299,7 +260,7 @@ export default {
     async transactiondetaillist() {
       let that = this;
       await that.$http
-        .get("/search_transactionHash_detailInfo", {
+        .get(TransactionSearch, {
           params: {
             transaction_hash: this.inputvalue,
           },
@@ -359,25 +320,25 @@ export default {
 .el-scrollbar__wrap {
   overflow: none;
 }
-.selected{
-  color:  #965EE5!important;
+.selected {
+  color: #965ee5 !important;
 }
- .el-scrollbar__wrap{
-   margin-bottom: 0px!important;
- }
+.el-scrollbar__wrap {
+  margin-bottom: 0px !important;
+}
 // 搜索栏
 .indexsecondsearch {
   width: 343px;
   height: 48px;
   background: #ffffff;
-  border: 2px solid #4B3EFF;
+  border: 2px solid #4b3eff;
   opacity: 1;
   border-radius: 7px;
   margin: 21px auto 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-justify-content: space-between;
+  justify-content: space-between;
   .el-input__icon {
     width: 12px;
   }
@@ -451,20 +412,22 @@ justify-content: space-between;
     }
   }
   .search_img {
-    cursor: pointer;
     width: 60px;
-    height: 50px;
-    background: #4B3EFF;
+    height: 52px;
+    background: #4b3eff;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
     opacity: 1;
-    border-radius:7px;
+    // border-radius:7px;
     display: flex;
     align-items: center;
-    justify-content: center; 
-    img{
+    justify-content: center;
+    position: relative;
+    left: 1px;
+    border-radius: 7px;
+    img {
       width: 19px;
       height: 19px;
-    } }
- 
+    }
+  }
 }
 </style>

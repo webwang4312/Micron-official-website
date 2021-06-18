@@ -41,7 +41,7 @@ export default {
     //   clearInterval(timer);
     // });
     this.chartSecond();
-     setInterval(this.chartSecond, 60000);
+     setInterval(this.chartSecond, 20000);
   },
   beforeDestroy() {
     clearInterval(this.chartSecond);
@@ -130,6 +130,7 @@ export default {
       });
       const res = await GETINDEX();
       for (var i = 0; i < res.result.lineChart.length + 1; i++) {
+      
         block_award.unshift(res.result.lineChart[i].blockAward);
         block_award_time.unshift(
           this.timestampToTime2(res.result.lineChart[i].tradeTime).substring(10)

@@ -1,17 +1,19 @@
 <template>
-  <div class="headersecond_top">
+  <div :class="{ headersecond_top: true, fixedcss: fixed }">
     <div class="index_left">
-      <img src="@assets/images/second/logo.png" alt="" @click="goHome"/>
+      <img src="@assets/images/second/logo.png" alt="" @click="goHome" />
       <!-- <span> UENC </span>
       <span> Explorer </span> -->
     </div>
     <ul class="second_center">
       <li>
-        <router-link :to="{ path: '/pc/index' }">{{ $t("nav")[0] }}</router-link>
+        <router-link :to="{ path: '/pc/index' }">
+          <span @click="blueClass2">{{ $t("nav")[0] }}</span>
+        </router-link>
       </li>
       <li>
         <el-dropdown :hide-on-click="false">
-          <span :class="{ 'el-dropdown-link': true, blue: blues }">
+          <span :class="{ 'el-dropdown-link': true, blue: $store.state.pcblues }">
             {{ $t("nav")[1] }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -21,14 +23,18 @@
               </router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/pc/transaction' }">{{
-                $t("nav")[3]
-              }}</router-link></el-dropdown-item
+              <router-link :to="{ path: '/pc/transaction' }">
+                <span @click="blueClass">
+                  {{ $t("nav")[3] }}
+                </span>
+              </router-link></el-dropdown-item
             >
             <el-dropdown-item
-              ><router-link :to="{ path: '/pc/address' }">{{
-                $t("nav")[4]
-              }}</router-link></el-dropdown-item
+              ><router-link :to="{ path: '/pc/address' }">
+                <span @click="blueClass">
+                  {{ $t("nav")[4] }}
+                </span>
+              </router-link></el-dropdown-item
             >
           </el-dropdown-menu>
         </el-dropdown>
@@ -78,7 +84,7 @@
 
           <img
             src="@assets/images/second/搜索按钮.png"
-            style="cursor: pointer"
+            style="cursor: pointer;height:47px"
             @click="searchselect"
           />
         </div>
@@ -102,6 +108,7 @@
 </template>
 
 <script>
+import { AddressSearch, TransactionSearch, BlockSearch } from "@server/api.js";
 import cn from "../../i18n/cn";
 import en from "../../i18n/en";
 export default {
@@ -109,6 +116,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
+      fixed: false,
       blues: Boolean,
       activeIndex: "1",
       nowLang: "",
@@ -136,7 +144,7 @@ export default {
     };
   },
   created() {
-    this.blues = this.$store.state.blues;
+    this.blues = false;
     //console.log(this.blues);
     this.nowLang = this.$i18n.locale;
     this.language = this.nowLang;
@@ -198,21 +206,40 @@ export default {
     }
     //console.log(this.$i18n.locale);
   },
-  mounted() {},
+
+  mounted() {
+    // 监听滚动事件，然后用handleScroll这个方法进行相应的处理
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  // 离开这个页面销毁滚动条事件，不然会给每一个页面都触发
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
   methods: {
-    goHome(){
- this.$router.push({
-              path: "/",
-             
-            });
+    handleScroll() {
+      var scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      if (scrollTop >= 50) {
+        this.fixed = true;
+      } else {
+        this.fixed = false;
+      }
+    },
+    goHome() {
+      this.$router.push({
+        path: "/pc/index",
+      });
     },
     blueClass() {
-      this.$store.commit("bluesState", true);
-      this.reload();
+      // this.blues=true;
+      this.$store.commit("pcBluesState", true);
+      // this.reload();
     },
     blueClass2() {
-      this.$store.commit("bluesState", false);
-      this.reload();
+      this.$store.commit("pcBluesState", false);
+      // this.reload();
     },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
@@ -283,27 +310,27 @@ export default {
         // 地址搜索
         case "0":
           if (this.inputvalue !== "") {
-            this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             this.addresssearch();
           }
           break;
         case "1":
           if (this.inputvalue !== "") {
-            this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             this.blocksearch();
           }
           break;
         // 交易哈希
         case "2":
           if (this.inputvalue !== "") {
-            this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             this.transactiondetaillist();
           }
           break;
         // 区块哈希
         case "3":
           if (this.inputvalue !== "") {
-            this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             this.blockhaxisearch();
           }
           break;
@@ -313,7 +340,7 @@ export default {
     async addresssearch() {
       let that = this;
       await that.$http
-        .get("/search_transactionInfo_walletAddress", {
+        .get(AddressSearch, {
           params: {
             wallet_address: this.inputvalue,
             pageNum: 1,
@@ -324,18 +351,17 @@ export default {
           //   console.log(res.data[0].total_page[0].totalPageNum);
           if (res.data[0].search_wallet_balance_for_walletAddress.length == 0) {
             this.$router.push({
-              path: "/notfound",
+              path: "/pc/notfound",
               query: { address: "address" },
             });
             this.reload();
-           
           } else {
             this.$router.push({
-              path: "/addressdetail",
+              path: "/pc/addressdetail",
               query: { address: this.inputvalue },
             });
-              this.reload();
-               this.inputvalue=''
+            this.reload();
+            this.inputvalue = "";
           }
         })
         .catch((err) => {});
@@ -344,7 +370,7 @@ export default {
     async blocksearch() {
       let that = this;
       await that.$http
-        .get("/search_blockHeight_for_height", {
+        .get(BlockSearch, {
           params: {
             block_height: this.inputvalue,
             pageNum: 1,
@@ -355,7 +381,7 @@ export default {
           //  console.log(res);
           if (res.data[0].total_record[0].total_record !== 0) {
             this.$router.push({
-              path: "/blockdetail",
+              path: "/pc/blockdetail",
               query: {
                 block: this.inputvalue,
                 // transaction_award:this.transaction_award
@@ -363,12 +389,12 @@ export default {
             });
             this.reload();
           } else {
-             this.$router.push({
-              path: "/notfound",
+            this.$router.push({
+              path: "/pc/notfound",
               query: { address: "height" },
             });
-             this.reload();
-           this.inputvalue=''
+            this.reload();
+            this.inputvalue = "";
             // this.$router.push({
             //   path: "/notfound",
             //   query: {},
@@ -382,7 +408,7 @@ export default {
       //console.log(this.inputvalue);
       let that = this;
       await that.$http
-        .get("/search_transactionHash_detailInfo", {
+        .get(TransactionSearch, {
           params: {
             transaction_hash: this.inputvalue,
           },
@@ -391,20 +417,20 @@ export default {
           //console.log(res);
           if (res.data[0].select_status === 1) {
             this.$router.push({
-              path: "/transactiondetail",
+              path: "/pc/transactiondetail",
               query: {
                 transaction_hash: this.inputvalue,
                 // transaction_award:this.transaction_award
               },
             });
             this.reload();
-             this.inputvalue=''
+            this.inputvalue = "";
           } else {
             this.$router.push({
-              path: "/notfound",
+              path: "/pc/notfound",
               query: { address: "transaction" },
             });
-             this.reload();
+            this.reload();
             // this.$router.push({
             //   path: "/notfound",
             //   query: {},
@@ -427,14 +453,14 @@ export default {
           // console.log(res);
           if (res.data[0].search_main_transactionInfo.length !== 0) {
             this.$router.push({
-              path: "/blockdetails",
+              path: "/pc/blockdetails",
               query: { blockhaxi: this.inputvalue },
             });
             this.reload();
-             this.inputvalue=''
+            this.inputvalue = "";
           } else {
             this.$router.push({
-              path: "/notfound",
+              path: "/pc/notfound",
               query: {},
             });
           }
@@ -442,28 +468,41 @@ export default {
         .catch((err) => {});
     },
   },
-  mounted() {},
-  destroyed() {},
 };
 </script>
 
 <style lang="less">
+.router-link-active {
+  color: #6624fa !important;
+}
+.fixedcss {
+  position: fixed;
+  top: 0;
+}
 .headersecond_top {
   width: 100%;
   height: 60px;
-  background-color: #fff !important;
+  background: #fff;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   z-index: 100;
+  position: fixed;
+  top: 0;
+
+  // position: sticky;
+  // top: 0;
   .blue {
     color: #915bde !important;
   }
- 
+
   .el-dropdown-menu__item {
     width: 80px;
     padding: 10px;
     text-align: center;
+    a {
+      color: #000000;
+    }
   }
   .el-menu.el-menu--horizontal {
     border-bottom: none;
@@ -498,10 +537,9 @@ export default {
     align-items: center;
     margin-left: 30px;
     img {
-     width: 167px;
+      width: 167px;
       height: 28px;
       // margin-right: 14px;
-     
     }
     span:nth-child(2) {
       font-size: 15px;
@@ -546,6 +584,9 @@ export default {
       display: inline-block;
       position: relative;
       cursor: pointer;
+      a {
+        color: #000000;
+      }
       // transition: all 0.5s;
     }
     // li::before {
@@ -568,7 +609,7 @@ export default {
   }
   // 搜索栏
   .indexsecondsearch {
-    width: 599px;
+    // width: 599px;
     height: 44px;
     // position: sticky;
     // top: 100px;
@@ -579,16 +620,16 @@ export default {
     background: #ffffff;
     opacity: 1;
     border-radius: 11px;
-    // margin-right: 53px;
+    margin-right: 60px;
     // margin-left: 61px;
     .searchleft {
     }
     .el-input__inner {
-      height: 45px;
+      height: 48px;
       font-size: 15px;
       font-family: Arial;
       font-weight: 400;
-      line-height: 18px;
+
       color: #515151;
       border: none;
       border-color: none;
@@ -616,7 +657,7 @@ export default {
         border-top: 2px solid #e9eced;
         border-bottom: 2px solid #e9eced;
         width: 346.5px;
-        height: 100%;
+        height: 44px;
         border-right: none;
         border-left: none;
         outline: none;

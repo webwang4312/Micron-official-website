@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll } from "@server/api.js";
 export default {
   name: "chart_transaction",
   data() {
@@ -50,8 +51,8 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0 ,0, 20],  //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
@@ -111,8 +112,8 @@ export default {
           text: this.title[0].test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0 ,0, 20],  //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
@@ -179,7 +180,7 @@ export default {
       // 时间
       var node_for_7time2 = [];
       that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].transaction_num_for_7.length + 1; i++) {
@@ -215,7 +216,11 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -227,7 +232,7 @@ export default {
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
                 borderColor: "#EEF0F2",
                 borderWidth: "1",
@@ -262,7 +267,7 @@ export default {
         })
         .catch((e) => {});
         that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].transaction_amount_for_7.length + 1; i++) {
@@ -298,7 +303,11 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -307,10 +316,22 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
+                 axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test2+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
                 borderColor: "#EEF0F2",
                 borderWidth: "1",
@@ -385,7 +406,7 @@ export default {
 .chart_transaction {
    #number_of_transactions,#total_daily_transactions{
       width: 551px;
-    height: 100%;
+    height: 343px;
     opacity: 1;  
     // background: red;
     }
@@ -403,9 +424,10 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-     justify-content: space-between;
+     justify-content: space-around;
       border: 1px solid #e9eced;
       border-radius: 18px;
+       background: #ffffff;
     }
     .title {
       display: flex;

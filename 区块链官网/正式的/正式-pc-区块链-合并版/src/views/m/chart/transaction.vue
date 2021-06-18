@@ -2,7 +2,7 @@
   <div class="chart_transaction">
    <div class="node">
       <div class="title">
-        <!-- <img src="@assets/images/second/交易信息@2x.png" alt="" /> -->
+        <img src="@assets/imagesen/second/交易信息.png" alt="" />
         <span> {{ $t("chart")[2] }}</span>
       </div>
       <div class="node_detail">
@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll } from "@server/api.js";
 export default {
   name: "chart_transaction",
   data() {
@@ -50,13 +51,13 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+           padding: [23,0,0,0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
-          textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
+         textStyle: {
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
           },
         },
         xAxis: {
@@ -74,7 +75,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show:true }, //去除网格线
           axisLine: {
             //y轴
             show: false,
@@ -111,13 +112,13 @@ export default {
           text: this.title[0].test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+           padding: [23,0,0,0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
-            fontWeight: "bolder",
+            color: "rgba(37, 53, 81, 1)",
+            fontSize: "14px",
+            fontFamily: " PingFang SC",
+            fontWeight: "600",
           },
         },
         xAxis: {
@@ -135,7 +136,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true }, //去除网格线
           axisLine: {
             //y轴
             show: false,
@@ -179,7 +180,7 @@ export default {
       // 时间
       var node_for_7time2 = [];
       that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].transaction_num_for_7.length + 1; i++) {
@@ -192,14 +193,7 @@ export default {
             //console.log(node_for_7);
             //console.log(node_for_7time);
             myChart.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
-                },
-              },
+          
               xAxis: {
                 type: "category",
                 data: node_for_7time,
@@ -215,7 +209,7 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true }, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -224,8 +218,21 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
+                  axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 trigger: "item",
                 formatter: "{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
@@ -262,7 +269,7 @@ export default {
         })
         .catch((e) => {});
         that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].transaction_amount_for_7.length + 1; i++) {
@@ -275,14 +282,7 @@ export default {
             //console.log(node_for_7);
             //console.log(node_for_7time);
             myChart2.setOption({
-              title: {
-                textStyle: {
-                  color: "rgba(81, 81, 81, 1)",
-                  fontSize: "18px",
-                  fontFamily: "Microsoft YaHei",
-                  fontWeight: "bolder",
-                },
-              },
+             
               xAxis: {
                 type: "category",
                 data: node_for_7time2,
@@ -298,7 +298,7 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true }, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -307,8 +307,21 @@ export default {
                   //y轴刻度线
                   show: false,
                 },
+                  axisLabel: {
+                  formatter: function(value, index) {
+                    // console.log(value);
+                    if (value / 1000 >= 1 && value / 1000 < 1000) {
+                      return (value = Number(value) / 1000 + "K");
+                    } else if (value / 1000 >= 1000) {
+                      return (value = Number(value) / 1000000 + "M");
+                    } else {
+                      return (value = value);
+                    }
+                  },
+                },
               },
               tooltip: {
+                extraCssText: 'z-index:2',
                 trigger: "item",
                 formatter: "{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
@@ -393,10 +406,12 @@ export default {
   .node {
     width: 100%;
    
-   
+   background: #ffffff;
     margin:0px auto 47px;
      .title{
+       margin-left: 15px;
       margin-bottom: 23px;
+      margin-top: 7px;
     }
     .node_detail {
       width:100%;
@@ -411,8 +426,8 @@ export default {
       display: flex;
       align-items: center;
       img {
-        width: 38px;
-        height: 38px;
+        width: 35px;
+        height: 35px;
       }
       span {
         font-size: 16px;

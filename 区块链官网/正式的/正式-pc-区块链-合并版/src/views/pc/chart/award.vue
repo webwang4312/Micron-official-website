@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import { GetChartAll } from "@server/api.js";
 export default {
   name: "chart_award",
   data() {
@@ -54,8 +55,8 @@ export default {
             text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0 ,0, 20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
         },
         xAxis: {
           type: "category",
@@ -87,7 +88,11 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -132,7 +137,7 @@ export default {
             text: this.title[0].test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 30, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          padding: [0, 0 ,0, 20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 30, //主副标题纵向间隔，单位px，默认为10
         },
         xAxis: {
@@ -165,7 +170,11 @@ export default {
           // },
           splitNumber:2,
           type: "value",
-          splitLine: { show: false }, //去除网格线
+          splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
           position: "left",
           axisLine: {
             //y轴
@@ -212,7 +221,7 @@ export default {
       // // 前100快时间
       var avg_gas_for_7time2 = [];
      this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
         for (var i = 0; i < res.data[0].avg_gas_for_7.length + 1; i++) {
             avg_gas_for_7.unshift(
@@ -248,7 +257,7 @@ export default {
                   borderRadius: 10,
                   padding: 15,
                 },
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test+":{c0}",
                 rich: {
                   a: {
                     marginLeft: 25,
@@ -317,7 +326,7 @@ export default {
         })
         .catch((e) => {});
          this.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
         for (var s = 0; s < res.data[0].hourly_award_statistics.length + 1; s++) {
             avg_gas_for_72.unshift(
@@ -355,7 +364,7 @@ export default {
                   borderRadius: 10,
                   padding: 15,
                 },
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.title[0].test2+":{c0}",
                 rich: {
                   a: {
                     marginLeft: 25,
@@ -464,7 +473,7 @@ export default {
 .chart_award {
     #average_fuelcost,#average_blockreward{
       width: 551px;
-    height: 100%;
+    height: 343px;
     opacity: 1;  
     // background: red;
     }
@@ -482,10 +491,10 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-around;
       border: 1px solid #e9eced;
       border-radius: 18px;
-
+ background: #ffffff;
     }
     .title {
       display: flex;

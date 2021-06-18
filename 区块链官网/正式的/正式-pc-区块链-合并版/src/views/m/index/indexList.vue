@@ -11,35 +11,55 @@
           </div>
         </div>
 
-        <ul class="content" v-for="item in tableData" :key="item">
-          <li>
-            <div class="content_left">
-              TX<span @click="goToTransactionDetail(item.transaction_hash2)">
-                {{ item.transaction_hash }}</span
-              >
-              <br />
-              <span>
-                {{ item.date.toString() }}
-              </span>
-            </div>
-            <div class="content_center">
-              {{ $t("index")[9] }}
-              <span @click="goToAddressDetail(item.from_address2)">
-                {{ item.from_address }}
-              </span>
-              <br />
-              {{ $t("index")[10] }}
-              <span @click="goToAddressDetail(item.to_address2)">
-                {{ item.to_address }}
-              </span>
-            </div>
-            <div class="content_right">
-              <span> {{ $t("block")[3] }}</span>
-
-              <span class="font_bold">
-                {{ item.amount }}
-              </span>
-            </div>
+        <ul class="content">
+          <li v-for="item in tableData" :key="item">
+            <ul>
+              <li>
+                <div>
+                  {{ $t("blockdetail")[3] }}
+                </div>
+                <div @click="goToTransactionDetail(item.txhash2)" class="blue">
+                  TX {{ item.txhash }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("index")[9] }}
+                </div>
+                <div @click="goToAddressDetail(item.fromAddress2)" class="blue">
+                  {{ item.fromAddress }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("index")[10] }}
+                </div>
+                <div @click="goToAddressDetail(item.toAddress2)" class="blue">
+                  {{ item.toAddress }}
+                </div>
+              </li>
+              <li>
+                <div>{{ $t("block")[3] }}:</div>
+                <div>
+                  {{ item.amount }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("block")[1] }}
+                </div>
+                <div>
+                  {{ item.date.toString() }}
+                </div>
+              </li>
+              <li>
+                <div></div>
+                <div
+                  style="width: 248px;
+height: 0px;border-bottom:1px solid #B2B2B2"
+                ></div>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -53,33 +73,47 @@
           </div>
         </div>
 
-        <ul class="content" v-for="item in tableData2" :key="item">
-          <li>
-            <div class="content_left">
-              K<span @click="goToBlockDetail(item.block_height)">
-                {{ item.block_height }}</span
-              >
-              <br />
-              <span>
-                {{ item.time.toString() }}
-              </span>
-            </div>
-            <div class="content_center">
-              <span>
-                {{ $t("addressdetail")[2] }}
-              </span>
-              <span class="font_bold">
-                {{ item.amount }}
-              </span>
-            </div>
-            <div class="content_right">
-              <span>
-                {{ $t("block")[4] }}
-              </span>
-              <span class="font_bold">
-                {{ item.award }}
-              </span>
-            </div>
+        <ul class="content">
+          <li v-for="item in tableData2" :key="item">
+            <ul>
+              <li>
+                <div>
+                  {{ $t("index")[0] }}
+                </div>
+                <div @click="goToBlockDetail(item.height)" class="blue">
+                  {{ item.height }}
+                </div>
+              </li>
+              <li>
+                <div>{{ $t("block")[4] }}</div>
+                <div>
+                  {{ item.blockAward }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("block")[1] }}
+                </div>
+                <div>
+                  {{ item.time.toString() }}
+                </div>
+              </li>
+              <li>
+                <div>
+                  {{ $t("block")[2] }}
+                </div>
+                <div>
+                  {{ item.total }}
+                </div>
+              </li>
+              <li>
+                <div></div>
+                <div
+                  style="width: 248px;
+height: 0px;border-bottom:1px solid #B2B2B2"
+                ></div>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -110,7 +144,7 @@ export default {
     goToAddressDetail(item) {
       //console.log(item);
       this.$router.push({
-        path: "/addressdetail",
+        path: "/m/addressdetail",
         query: {
           address: item,
         },
@@ -118,12 +152,12 @@ export default {
     },
     goToTransaction() {
       this.$router.push({
-        path: "/transaction",
+        path: "/m/transaction",
       });
     },
     goToTransactionDetail(item) {
       this.$router.push({
-        path: "/transactiondetail",
+        path: "/m/transactiondetail",
         query: {
           transaction_hash: item,
         },
@@ -131,12 +165,12 @@ export default {
     },
     goToBlock() {
       this.$router.push({
-        path: "/block",
+        path: "/m/block",
       });
     },
     goToBlockDetail(item) {
       this.$router.push({
-        path: "/blockdetail",
+        path: "/m/blockdetail",
         query: {
           block: item,
         },
@@ -149,182 +183,140 @@ export default {
 .indexList {
   width:100%;
   .info_list {
-    width: 1274px;
-    // height: 889px;
-    margin: 105.5px auto 115px;
+    width: 343px;
+    height: auto;
+    margin: 20px auto 37px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    .font_bold {
-      color: #000000!important;
-      // font-weight: bold!important;
-    }
+    flex-direction: column;
+
     .last_transaction {
-      width: 626px;
-      // height: 847px;
-      border: 1px solid #e9eced;
-      opacity: 1;
-      border-radius: 18px;
+      width: 100%;
+      height: auto;
+
+      margin-bottom: 20px;
       .subject {
-        width: 551.74px;
-        margin: 33.48px auto 23.5px;
+        width: 100%;
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         div:nth-child(1) {
-          font-size: 18px;
-          font-family: Microsoft YaHei;
-          font-weight: bold;
-          line-height: 23px;
-          color: #000000;
-          opacity: 1;
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
+          color: #253551;
         }
         div:nth-child(2) {
-          font-size: 18px;
-          font-family: Microsoft YaHei;
-          font-weight: bold;
-          line-height: 21px;
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
           color: #965ee5;
         }
       }
       .content {
-        width: 551px;
+        width: 100%;
         margin: 0 auto;
-        li {
-          width: 551px;
-          height: 75px;
-          border-top: 2px solid #ebeeef;
-          display: flex;
-          flex-direction: row;
-          // justify-content: space-between;
-          padding-top: 19px;
-          padding-bottom: 18px;
-          align-items: center;
-          .content_left {
-            width: 140px;
-            margin-right: 85px;
-            span:nth-child(1) {
-              font-size: 15px;
-              font-family: Microsoft YaHei;
-              font-weight: bold;
-              line-height: 17px;
-              color: #965ee5;
-              cursor: pointer;
-            }
-            span:nth-child(3) {
-              font-size: 15px;
-              font-family: Microsoft YaHei;
+      }
+      .content > li {
+        width: 100%;
+        height: 172px;
+
+        display: flex;
+        align-items: center;
+        ul {
+          width: 100%;
+          height: 100%;
+          li:nth-child(1) {
+            margin-top: 20px;
+          }
+          li {
+            display: flex;
+            flex-direction: row;
+
+            margin-top: 10px;
+            div:nth-child(1) {
+              width: 100px;
+              font-size: 13px;
+              font-family: PingFang SC;
               font-weight: 400;
-              line-height: 17px;
-              color: #666666;
+              line-height: 18px;
+              color: #9da5bb;
             }
-          }
-          .content_center {
-            width: 140px;
-            margin-right: 75px;
-            span:nth-child(1),
-            span:nth-child(3) {
-              font-size: 15px;
-              font-family: Microsoft YaHei;
-              font-weight: bold;
-              line-height: 17px;
-              color: #965ee5;
-              cursor: pointer;
-            }
-          }
-          .content_right {
-            width: 118px;
-            text-align: right;
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            line-height: 17px;
-            color: #666666;
-            span {
-              margin-right: 3px;
+            div:nth-child(2) {
+              font-size: 13px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              line-height: 18px;
+              color: #253551;
             }
           }
         }
       }
     }
     .last_block {
-      width: 626px;
-      // height: 847px;
-      border: 1px solid #e9eced;
-      opacity: 1;
-      border-radius: 18px;
+      width: 100%;
+      height: auto;
+
       .subject {
-        width: 551.74px;
-        margin: 33.48px auto 23.5px;
+        width: 100%;
+
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         div:nth-child(1) {
-          font-size: 18px;
-          font-family: Microsoft YaHei;
-          font-weight: bold;
-          line-height: 23px;
-          color: #000000;
-          opacity: 1;
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
+          color: #253551;
         }
         div:nth-child(2) {
-          font-size: 18px;
-          font-family: Microsoft YaHei;
-          font-weight: bold;
-          line-height: 21px;
+          font-size: 14px;
+          font-family: PingFang SC;
+          font-weight: 600;
+          line-height: 20px;
           color: #965ee5;
         }
       }
       .content {
-        width: 551px;
+        width: 100%;
+        height: auto;
         margin: 0 auto;
-        li {
-          width: 551px;
-          height: 75px;
-          border-top: 2px solid #ebeeef;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          padding-top: 19px;
-          padding-bottom: 18px;
-          align-items: center;
-          .content_left {
-            width: 140px;
-            span:nth-child(1) {
-              font-size: 15px;
-              font-family: Microsoft YaHei;
-              font-weight: bold;
-              line-height: 17px;
-              color: #965ee5;
-              cursor: pointer;
-            }
-            span:nth-child(3) {
-              font-size: 15px;
-              font-family: Microsoft YaHei;
-              font-weight: 400;
-              line-height: 17px;
-              color: #666666;
-            }
+      }
+      .content > li {
+        width: 100%;
+        height: 143px;
+
+        display: flex;
+        align-items: center;
+        ul {
+          width: 100%;
+          height: 143px;
+          li:nth-child(1) {
+            margin-top: 20px;
           }
-          .content_center {
-            width: 140px;
-            text-align: center;
-            word-wrap: break-word;
-            word-break: normal;
-            span {
-              font-size: 15px;
-              font-family: Microsoft YaHei;
+          li {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: row;
+
+            div:nth-child(1) {
+              width: 100px;
+              font-size: 13px;
+              font-family: PingFang SC;
               font-weight: 400;
-              line-height: 17px;
-              color: #666666;
+              line-height: 18px;
+              color: #9da5bb;
             }
-          }
-          .content_right {
-            font-size: 15px;
-            font-family: Microsoft YaHei;
-            font-weight: 400;
-            line-height: 17px;
-            color: #666666;
+            div:nth-child(2) {
+              font-size: 13px;
+              font-family: PingFang SC;
+              font-weight: 400;
+              line-height: 18px;
+              color: #253551;
+            }
           }
         }
       }

@@ -72,11 +72,13 @@
   </div>
 </template>
 <script>
+import { GetChartAll,GetChart } from "@server/api.js";
 export default {
   name: "chart_node",
   data() {
     return {
       nowLang: "",
+      nodenumber:'',
       credit_ratio: [
         { first: "10", second: "20", third: "30", fourth: "20", five: "20" },
         { node1: "10", node2: "20", node3: "30", node4: "20", node5: "20" },
@@ -93,9 +95,12 @@ export default {
     if (this.nowLang == "cn") {
       this.title[0].test = "节点统计";
       this.title[0].test2 = "燃料费分布图";
+      this.nodenumber='节点数'
     } else {
       this.title[0].test = "node statistics";
       this.title[0].test2 = "gas fee distribution";
+      this.nodenumber='Number of nodes'
+      
     }
   },
   mounted() {
@@ -115,8 +120,8 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: 25, //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0 ,0, 0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
             color: "rgba(81, 81, 81, 1)",
             fontSize: "18px",
@@ -179,7 +184,7 @@ export default {
       // 时间
       var node_for_7time = [];
       that.$http
-        .get("/show_graph_data")
+        .get(GetChartAll)
         .then((res) => {
           //    console.log(res);
           for (var i = 0; i < res.data[0].gas_node_statistics.length + 1; i++) {
@@ -215,7 +220,11 @@ export default {
               },
               yAxis: {
                 type: "value",
-                splitLine: { show: false }, //去除网格线
+                splitLine: { show: true, lineStyle: {
+        // 使用深浅的间隔色
+        color: '#EBEEEF',
+         width :1
+    }}, //去除网格线
                 axisLine: {
                   //y轴
                   show: false,
@@ -227,7 +236,7 @@ export default {
               },
               tooltip: {
                 trigger: "item",
-                formatter: "{c0}",
+                formatter: "{b0}<br />"+this.nodenumber+":{c0}",
                 backgroundColor: "rgba(74, 74, 74, 1)",
               
                 borderWidth: "1",
@@ -261,7 +270,7 @@ export default {
           }
         })
         .catch((e) => {});
-      that.$http.get("/search_top_n").then((res) => {
+      that.$http.get(GetChart).then((res) => {
         // console.log(res);
         this.allgas = res.data.count[0].count;
         // console.log(this.allgas);
@@ -381,7 +390,7 @@ export default {
    #node,
   #fuelcost {
     width: 551px;
-    height: 100%;
+    height: 343px;
     opacity: 1;
    
   }
@@ -389,7 +398,9 @@ export default {
     width: 1274px;
     height: auto;
     border-radius: 18px;
-    margin: 60px auto 47px;
+    padding-top: 60px;
+    
+    margin:0px auto 47px;
     .title{
       margin-bottom: 23px;
     }
@@ -497,6 +508,7 @@ export default {
       justify-content: space-around;
       border: 1px solid #e9eced;
       border-radius: 18px;
+      background: #ffffff;
     }
     .title {
       display: flex;

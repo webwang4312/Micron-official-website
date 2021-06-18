@@ -1,12 +1,4 @@
-/*
- * @Author: yaoyuting
- * @Date: 2021-04-23 17:17:07
- * @LastEditors: yaoyuting
- * @LastEditTime: 2021-05-16 15:37:16
- * @Descripttion: 
- */
 import { get, gets, post, posts } from './server.js'
-
 // http://47.116.69.138:9090
 export const base='http://47.98.110.210:9002'
 // 获取首页数据

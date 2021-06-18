@@ -48,7 +48,7 @@
                 <li v-for="item in transactionlist[0].to_address2" :key="item">
                   <div v-html="item"></div>
                 </li>
-                <el-button slot="reference">显示更多</el-button>
+                <el-button slot="reference">  {{ $t("transaction")[1] }}</el-button>
               </el-popover>
             </li>
           </ul>
@@ -69,14 +69,14 @@
         </li>
         <li v-show="amount_detail">
           <div>
-            交易详情
+           {{ $t("transaction")[0] }}
           </div>
           <div>
             <el-popover width="900" trigger="click">
               <li v-for="item in transactionlist[0].amount_detail2" :key="item">
                 <div v-html="item"></div>
               </li>
-              <el-button slot="reference">显示更多</el-button>
+              <el-button slot="reference">  {{ $t("transaction")[1] }}</el-button>
             </el-popover>
           </div>
         </li>
@@ -146,6 +146,7 @@ color: #965EE5;cursor:pointer"
   </div>
 </template>
 <script>
+import {GetTransactionListDetail} from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -217,13 +218,14 @@ export default {
       var blockData = [];
       var blockData2 = [];
       await that.$http
-        .get("/search_transactionHash_detailInfo", {
+        .get(GetTransactionListDetail, {
           params: {
             transaction_hash: this.shiyan,
           },
+          
         })
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           // 区块高度
           this.transactionlist[0].block_height =
             res.data[0].search_main_transaction_detailInfo[0].block_height;
@@ -542,6 +544,8 @@ export default {
 }
 .transactiondetail {
   height: auto;
+ background: #F9FAFD;
+  padding-bottom: 407px;
   .blue {
     font-size: 14px;
     font-family: Microsoft YaHei;
@@ -565,7 +569,9 @@ export default {
     font-weight: 400;
     line-height: 38px;
     color: #000000;
-    margin: 31px auto 22px;
+    padding-top: 31px;
+    padding-bottom: 21px;
+    margin:0px auto ;
     display: flex;
     align-items: center;
     span {
@@ -584,7 +590,7 @@ export default {
     flex-direction: row;
 
     padding-bottom: 54px;
-    margin-bottom: 407px;
+   
     .all_content {
       font-size: 17px;
       font-family: Microsoft YaHei;

@@ -63,7 +63,7 @@ ol {
 }
 a {
   text-decoration: none;
-  color: #000!important;
+ 
 }
 a:hover {
   text-decoration: underline;
@@ -92,7 +92,7 @@ table {
   border-spacing: 0;
 }
 .active{
-  color: #915BDE!important;
+  /* color: #915BDE!important; */
  padding-bottom: 6px;
   /* border-bottom: 2px solid #4276FF; */
 }

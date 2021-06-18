@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'headers':true,'fixed':fixed}" >
+  <div class="headers">
     <div
       class="header-top
     "
@@ -23,7 +23,7 @@
     "
       >
         <div class="index_left">
-          <img src="@assets/imagesen/second/logo.png" alt="" />
+          <img src="@assets/imagesen/second/logo.png" @click="goHome" />
           <!-- <span>
           UENC
         </span>
@@ -44,7 +44,7 @@
           </router-link>
         </li>
         <li class="slide2" @click="menuSecond">
-          <div class="el-dropdown-link">
+          <div :class="{ 'el-dropdown-link': true, blue: $store.state.mblues }">
             {{ $t("nav")[1] }}
             <img
               src="@assets/imagesen/second/menuxia.png"
@@ -54,17 +54,17 @@
             <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
           </div>
           <ul v-show="secondmenu">
-            <li @click="blueClass">
+            <li @click="menuBlue">
               <router-link :to="{ path: '/m/block' }">
                 {{ $t("nav")[2] }}
               </router-link>
             </li>
-            <li @click="menu">
+            <li @click="menuBlue">
               <router-link :to="{ path: '/m/transaction' }">
                 {{ $t("nav")[3] }}
               </router-link>
             </li>
-            <li @click="menu">
+            <li @click="menuBlue">
               <router-link :to="{ path: '/m/address' }">
                 {{ $t("nav")[4] }}
               </router-link>
@@ -78,15 +78,15 @@
             </span>
           </router-link>
         </li>
-        <li @click="menu">
-          <div @click="changeLanguage" style="width:100%;height:100%">
+        <li @click="changeLanguage" style="padding-left:15px">
+          <div style="width:100%;height:100%; color: #9da5bb;">
             {{ language2 }}
           </div>
         </li>
       </ul></van-popup
     >
 
-    <Search></Search>
+    <Search :select="select"></Search>
   </div>
 </template>
 
@@ -97,7 +97,6 @@ export default {
   inject: ["reload"],
   data() {
     return {
-      fixed:false,
       blues: false,
       activeIndex: "1",
       nowLang: "",
@@ -105,11 +104,62 @@ export default {
       language2: "",
       secondmenu: false,
       show: false,
+      searchlist: [],
     };
+  },
+  watch: {
+   
   },
   components: { Search },
   created() {
-    this.nowLang = this.$i18n.locale;
+     
+
+    if (localStorage.getItem("lang") == null) {
+      this.$i18n.locale = "cn";
+    } else {
+      this.$i18n.locale = localStorage.getItem("lang");
+    }
+    this.nowLang = localStorage.getItem("lang");
+    if (this.$i18n.locale == "cn") {
+      this.select = [
+        {
+          value: "0",
+          label: "UENC地址",
+        },
+        {
+          value: "1",
+          label: "区块高度",
+        },
+        {
+          value: "2",
+          label: "交易哈希",
+        },
+        // {
+        //   value: "3",
+        //   label: "区块哈希",
+        // },
+      ];
+    }
+    if (this.$i18n.locale == "en") {
+      this.select = [
+        {
+          value: "0",
+          label: "Address",
+        },
+        {
+          value: "1",
+          label: "Height",
+        },
+        {
+          value: "2",
+          label: "Trans",
+        },
+        // {
+        //   value: "3",
+        //   label: "Block",
+        // },
+      ];
+    }
     this.language = this.nowLang;
     if (this.language == "cn") {
       this.language = "中文";
@@ -120,43 +170,29 @@ export default {
     }
     //console.log(this.$i18n.locale);
   },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll, true);
-  },
-beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll)
-  },
+  mounted() {},
   methods: {
-    handleScroll() {
-      let scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop;
-      // console.log(scrollTop);
-      if(scrollTop>=20){
-        this.fixed=true
-      }
-      else{
-        this.fixed=false
-      }
-    },
-
     goHome() {
       this.$router.push({
         path: "/m/index",
       });
+      this.show=false
     },
     menuSecond() {
       this.secondmenu = !this.secondmenu;
     },
     menuindex() {
       // this.$store.commit("menuState", true);
-      // this.$store.commit("bluesState", false);
+      // this.$store.commit("mBluesState", false);
+    },
+    menuBlue() {
+      this.$store.commit("mBluesState", true);
+      this.show = false;
     },
     menu() {
       this.show = false;
       // this.$store.commit("menuState", true);
-      // this.$store.commit("bluesState", true);
+      this.$store.commit("mBluesState", false);
     },
     menuShow() {
       this.show = true;
@@ -166,54 +202,85 @@ beforeDestroy() {
       this.show = false;
       // this.$store.commit("menuState", true);
     },
-    blueClass() {
-      // this.$store.commit("menuState", true);
-      // this.$store.commit("bluesState", true);
-      this.reload();
-      this.show = false;
-    },
+
     blueClass2() {
-      // this.$store.commit("bluesState", false);
+      // this.$store.commit("mBluesState", false);
       // this.$store.commit("menuState", true);
       this.reload();
     },
     changeLanguage() {
+      // console.log(localStorage.lang);
+       console.log(this.$i18n.locale);
+      // console.log(localStorage.getItem("lang"));
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
-
+        localStorage.setItem("lang", this.$i18n.locale);
+       
+        this.select = [
+          {
+            value: "0",
+            label: "Address",
+          },
+          {
+            value: "1",
+            label: "Height",
+          },
+          {
+            value: "2",
+            label: "Trans",
+          },
+          // {
+          //   value: "3",
+          //   label: "Block",
+          // },
+        ];
         this.language = "1";
         this.language2 = "中文";
         this.$store.commit("menuState", true);
-        this.reload();
+       this.reload()
+        
       } else {
         this.$i18n.locale = "cn";
-
+        localStorage.setItem("lang", this.$i18n.locale);
+       
+        this.select = [
+          {
+            value: "0",
+            label: "UENC地址",
+          },
+          {
+            value: "1",
+            label: "区块高度",
+          },
+          {
+            value: "2",
+            label: "交易哈希",
+          },
+          // {
+          //   value: "3",
+          //   label: "区块哈希",
+          // },
+        ];
         this.language = "2";
         this.language2 = "En";
         this.$store.commit("menuState", true);
-        this.reload();
+          this.reload()
       }
+       this.reload()
     },
-    handleSelect(key, keyPath) {},
+    
   },
 };
 </script>
 
 <style lang="less">
-.fixed{
-  position: sticky!important;
-  top: 0;
-  height: auto;
-  background-color: #fff !important;
-  margin-bottom: 21px;
-  z-index: 100;
-  
+.router-link-exact-active {
+  color: #965ee5 !important;
 }
 .van-overlay {
 }
 .van-popup {
   max-height: 60%;
-  overflow-x: hidden;
   .header-tops {
     width: 100%;
     height: 55px;
@@ -221,8 +288,10 @@ beforeDestroy() {
     flex-direction: row;
     justify-content: space-between;
     background: #fff;
+    position: sticky;
+    top: 0;
 
-    padding-right: 15px;
+    border-bottom: 1px solid #e6e6e6;
     .el-icon-close {
       margin-right: 15px;
     }
@@ -234,21 +303,26 @@ beforeDestroy() {
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 50px;
-    color: #9da5bb;
-    padding-left: 15px;
   }
   .menuslide {
     width: 100%;
     li {
+      a {
+        color: #9da5bb;
+        margin-left: 15px;
+      }
     }
     .slide2 {
       height: auto;
-      padding-right: 15px;
+
       font-size: 16px;
       font-family: PingFang SC;
       font-weight: 400;
       line-height: 22px;
-      color: #9da5bb;
+      color: #9da5bb !important;
+      .el-dropdown-link {
+        margin-left: 15px;
+      }
       ul {
         li {
           height: 50px;
@@ -258,7 +332,9 @@ beforeDestroy() {
           font-weight: 400;
           line-height: 22px;
           color: #9da5bb;
-          padding-left: 15px;
+          a {
+            margin-left: 30px;
+          }
           span {
             font-size: 16px;
             font-family: PingFang SC;
@@ -293,13 +369,17 @@ beforeDestroy() {
 .headers {
   width: 100%;
   height: auto;
-  background-color: #fff !important;
-  margin-bottom: 21px;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 21px;
   z-index: 100;
-  position: relative;
   .el-icon-close {
     transform: scale(2.5);
   }
+
   .header-top {
     width: 100%;
     height: 55px;
@@ -307,8 +387,10 @@ beforeDestroy() {
     flex-direction: row;
     justify-content: space-between;
     background: #fff;
-    position: sticky;
-    top: 0;
+    // border-top:1px solid #E6E6E6 ;
+    border-bottom: 1px solid #e6e6e6;
+    // position: sticky;
+    // top: 0;
   }
 
   .blue {
@@ -335,7 +417,7 @@ beforeDestroy() {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #965ee5;
+      // color: #965ee5;
     }
   }
 

@@ -7,55 +7,40 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>地址概览</span>
+      <span>{{ $t("addressdetail")[0] }}</span>
     </div>
     <div class="detail_content">
       <ul>
         <li>
-          <div>
-            地址:
-          </div>
+          <div>{{ $t("address")[2] }}:</div>
           <div class="blue">
             {{ shiyan }}
           </div>
         </li>
         <li>
+          <div>{{ $t("addressdetail")[1] }}:</div>
           <div>
-            余额:
-          </div>
-          <div>
-           {{ info[0].search_wallect_balance[0].account_balance }}
+            {{ info[0].search_wallect_balance[0].account_balance }}
           </div>
         </li>
         <li>
+          <div>{{ $t("addressdetail")[2] }}:</div>
           <div>
-            交易数:
-          </div>
-          <div>
-           {{ info[0].ranking_and_transaction_num[0].transaction_num }}
+            {{ info[0].ranking_and_transaction_num[0].transaction_num }}
           </div>
         </li>
         <li>
-          <div>
-            收入合计:
-          </div>
+          <div>{{ $t("addressdetail")[3] }}:</div>
           <div>{{ info[0].total_income[0].total_income }}UENC</div>
         </li>
         <li>
-          <div>
-            支出合计:
-          </div>
-          <div>
-        {{ info[0].total_payout[0].total_payout }}UENC
-          </div>
+          <div>{{ $t("addressdetail")[4] }}:</div>
+          <div>{{ info[0].total_payout[0].total_payout }}UENC</div>
         </li>
         <li>
+          <div>{{ $t("address")[1] }}:</div>
           <div>
-            排名:
-          </div>
-          <div>
-            
-     {{ info[0].ranking_and_transaction_num[0].ranking }}
+            {{ info[0].ranking_and_transaction_num[0].ranking }}
           </div>
         </li>
       </ul>
@@ -67,18 +52,15 @@ background: #F8F8F8;
 opacity: 1;"
     ></div>
     <div class="top">
-      <span>交易列表</span>
+      <span>{{ $t("blockdetail")[4] }}</span>
     </div>
     <div class="block_info">
-      <ul
-        class="info_title"
-       
-      >
+      <ul class="info_title">
         <li v-for="item in transactionData" :key="item" class="info_content">
           <ul>
             <li>
               <div>
-                交易哈希
+                {{ $t("blockdetail")[3] }}
               </div>
               <div @click="goToTransactionDetail(item.transaction_hash2)">
                 TX
@@ -89,7 +71,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                从
+                {{ $t("index")[9] }}
               </div>
               <div @click="goToAddressDetail(item.from_address2)" class="blue">
                 {{ item.from_address }}
@@ -97,7 +79,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                到
+                {{ $t("index")[10] }}
               </div>
               <div @click="goToAddressDetail(item.to_address2)" class="blue">
                 {{ item.to_address }}
@@ -105,7 +87,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                交易额
+                {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.amount }}
@@ -113,7 +95,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                时间
+                {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.time.toString() }}
@@ -121,7 +103,7 @@ opacity: 1;"
             </li>
             <li>
               <div>
-                燃料费
+                {{ $t("blockdetail")[2] }}
               </div>
               <div>
                 {{ item.gas }}
@@ -152,6 +134,7 @@ opacity: 1;"
   </div>
 </template>
 <script>
+import { GETADDRESSDETAIL, GetAddressListDetail2 } from "@server/api.js";
 var qs = require("qs");
 export default {
   name: "addressdetail",
@@ -185,7 +168,7 @@ export default {
   methods: {
     goToTransactionDetail(item) {
       this.$router.push({
-        path: "/transactiondetail",
+        path: "/m/transactiondetail",
 
         query: {
           transaction_hash: item,
@@ -196,32 +179,46 @@ export default {
       this.shiyan = item;
 
       this.addresssearch();
-      this.addressList()
+      this.addressList();
     },
     pagesMinus() {
       if (this.transmedianum == 1) {
-        this.$message({
-          message: "已到底",
-          type: "error",
-        });
+       if (this.nowLang == "cn") {
+          this.$message({
+            message: "已到底",
+            type: "error",
+          });
+        } else {
+          this.$message({
+            message: "Last",
+            type: "error",
+          });
+        }
       } else {
-       
+         window.scrollTo(0,0);
         this.transmedianum -= 1;
         this.addresssearch();
-         this.addressList()
+        this.addressList();
       }
     },
     pagesPlus() {
       if (this.transmedianum == this.totalNum) {
-        this.$message({
-          message: "已到顶",
-          type: "error",
-        });
+        if (this.nowLang == "cn") {
+          this.$message({
+            message: "已到顶",
+            type: "error",
+          });
+        } else {
+          this.$message({
+            message: "Last",
+            type: "error",
+          });
+        }
       } else {
-        
+        window.scrollTo(0,0);
         this.transmedianum += 1;
         this.addresssearch();
-         this.addressList()
+        this.addressList();
       }
     },
     search() {
@@ -246,47 +243,34 @@ export default {
           console.log(res);
         });
     },
-     async addressList() {
-      await this.$http
-        .get("/wallet_address_overview",{
-          params: {
-            wallet_address: this.shiyan,
-           
-          },
-        }).then((res) => {
-          // console.log(res);
-            this.info = res.data;
-            console.log(this.info);
-        })
+    async addressList() {
+      const res = await GetAddressListDetail2({
+        wallet_address: this.shiyan,
+      });
       // console.log(res);
-    
+      this.info = res;
       // console.log(this.info);
     },
     //地址搜索
     async addresssearch() {
-     
       let that = this;
       var blockData = [];
-      await that.$http
-        .get("/search_transactionInfo_walletAddress", {
-          params: {
-            wallet_address: this.shiyan,
-            pageNum: this.transmedianum,
-            pageSize: 20,
-          },
-        })
-        .then((res) => {
-          // console.log(res);
+      const res = await GETADDRESSDETAIL({
+        wallet_address: this.shiyan,
+        pageNum: this.transmedianum,
+        pageSize: 5,
+      });
+           console.log(res);
           // this.loading = false;
           //console.log(res);
           // 余额
           this.yue =
-            res.data[0].search_wallet_balance_for_walletAddress[0]
+            res[0].search_wallet_balance_for_walletAddress[0]
               .account_balance + "\n\nUENC";
           // 总条数
-          this.totalNum = res.data[0].total_page[0].totalPageNum;
+          this.totalNum = res[0].total_page[0].totalPageNum;
           //交易列表信息
-          var translist = res.data[0].search_transaction_list_for_walletAddress;
+          var translist = res[0].search_transaction_list_for_walletAddress;
           switch (this.$i18n.locale) {
             case "en":
               for (let i = 0; i < translist.length + 1; i++) {
@@ -413,8 +397,7 @@ export default {
               break;
             default:
           }
-        })
-        .catch((e) => {});
+       
     },
     timestampToTime(timestamp) {
       var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -434,7 +417,7 @@ export default {
 </script>
 <style lang="less">
 .blue {
-  font-size: 17px;
+  font-size: 13px;
   font-family: Microsoft YaHei;
   font-weight: 400;
   line-height: 22px;
@@ -447,7 +430,7 @@ export default {
   z-index: 1;
   .top {
     width: 343px;
-    height: 38px;
+  
     font-size: 14px;
     font-family: PingFang SC;
     font-weight: 600;
@@ -458,7 +441,7 @@ export default {
     margin: 20px auto 0;
 
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
     img {
       width: 38px;
@@ -470,7 +453,7 @@ export default {
     height: auto;
     background: #ffffff;
     margin: 0 auto;
-    padding: 0 20px 20px;
+    padding: 0 0px 20px;
 
     ul {
       li {
@@ -504,7 +487,7 @@ export default {
     margin: 0 auto;
     z-index: 1;
     .info_title {
-      margin: 0 20px;
+      margin: 0 0px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;
@@ -517,13 +500,13 @@ export default {
 
         ul {
           width: 343px;
-          height: 200px;
-          padding: 10px 0;
+          height: auto;
+           padding-bottom: 20px;
           border-bottom: 1px solid #b2b2b2;
           li {
             display: flex;
             flex-direction: row;
-            margin-top: 10px;
+          margin-top: 10px;
             div:nth-child(1) {
               width: 92px;
               font-size: 13px;
@@ -554,7 +537,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    // padding: 0 20px;
     div {
       font-size: 16px;
       font-family: PingFang SC;

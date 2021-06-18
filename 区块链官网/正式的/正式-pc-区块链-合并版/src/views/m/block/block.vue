@@ -1,12 +1,7 @@
 <template>
   <div class="block">
-    <div
-      style="width: 100%;
-height: 10px;
-background: #F8F8F8;"
-    ></div>
     <div class="top">
-      <span>最新出块</span>
+      <span>{{ $t("block")[0] }}</span>
     </div>
     <div class="block_info">
       <ul class="info_title">
@@ -14,7 +9,7 @@ background: #F8F8F8;"
           <ul>
             <li>
               <div>
-                区块高度
+                {{ $t("index")[0] }}
               </div>
               <div @click="goToBlockDetail(item.block_height)">
                 K
@@ -25,7 +20,7 @@ background: #F8F8F8;"
             </li>
             <li>
               <div>
-                时间
+                {{ $t("block")[1] }}
               </div>
               <div>
                 {{ item.block_time.toString() }}
@@ -33,13 +28,13 @@ background: #F8F8F8;"
             </li>
             <li>
               <div>
-                交易笔数
+                {{ $t("block")[2] }}
               </div>
               <div>{{ item.transaction_num }}</div>
             </li>
             <li>
               <div>
-                交易额
+                {{ $t("block")[3] }}
               </div>
               <div>
                 {{ item.transaction_amount }}
@@ -47,7 +42,7 @@ background: #F8F8F8;"
             </li>
             <li>
               <div>
-                区块奖励
+                {{ $t("block")[4] }}
               </div>
               <div>
                 {{ item.transaction_award }}
@@ -78,6 +73,7 @@ background: #F8F8F8;"
   </div>
 </template>
 <script>
+import { GETBLOCK } from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -103,7 +99,7 @@ export default {
   methods: {
     goToBlockDetail(item) {
       this.$router.push({
-        path: "/blockdetail",
+        path: "/m/blockdetail",
 
         query: {
           block: item,
@@ -118,140 +114,131 @@ export default {
         });
       } else {
         this.blockmedianum -= 1;
+        window.scrollTo(0, 0);
         this.blocklist();
       }
     },
     pagesPlus() {
       this.blockmedianum += 1;
+      window.scrollTo(0, 0);
       // //console.log(this.medianum);
       this.blocklist();
     },
     //获取MEDIA
     async blocklist() {
-      let that = this;
+      const res = await GETBLOCK({
+        pageNum: this.blockmedianum,
+        pageSize: 5,
+      });
       var blockData = [];
       // var data = Qs.stringify({ pageNum: this.blockmedianum, pageSize: 20 });
-      await that.$http
-        .get("/get_block_list_for_all", {
-          params: {
-            pageNum: this.blockmedianum,
-            pageSize: 20,
-          },
-        })
-        .then((res) => {
-          //console.log(res);
-          //总页数
-          this.totalNum = res.data[0].total_page[0].totalPageNum;
-          //console.log(this.totalNum);
-          switch (this.nowLang) {
-            case "cn":
-              for (var i = 0; i < res.data[0].block_list.length + 1; i++) {
-                var obj = {};
-                let times = [];
-                obj.block_height = res.data[0].block_list[i].block_height;
-                let blocktime = res.data[0].block_list[i].block_time;
-                // .substring(0, 13)
-                // .valueOf();
-                // console.log(blocktime);
-                // 当前日期转时间戳
-                let timestamp = res.data[0].timeStamp;
-                // console.log(timestamp);
-                // console.log(timestamp + "xianzai");
-                let s = timestamp - blocktime; //9.20
-                //  console.log(s+'相差');
-                // console.log(s/86400000 + "天数");
-                // console.log(parseInt(s/86400000*24*60) + "fenzhong");
-                let fenzhong = parseInt((s / 86400) * 24 * 60);
-                // console.log(fenzhong);
-                if (fenzhong < 60) {
-                  if (fenzhong == 0) {
-                    times.push("刚刚");
-                  } else {
-                    times.push(parseInt(fenzhong) + "分钟前");
-                  }
-                  obj.block_time = times;
-                }
-                if (fenzhong >= 60 && fenzhong <= 1440) {
-                  times.push(parseInt(fenzhong / 60) + "小时前");
-                  obj.block_time = times;
-                }
-                if (fenzhong > 1440) {
-                  times.push(parseInt(fenzhong / 1440) + "天前");
-                  obj.block_time = times;
-                }
-                // obj.block_time = this.timestampToTime(
-                //   Number(
-                //     res.data[0].block_list[i].block_time.substring(0, 13).valueOf()
-                //   )
-                // );
-                obj.transaction_num = res.data[0].block_list[i].transaction_num;
-                obj.transaction_amount =
-                  res.data[0].block_list[i].transaction_amount;
-                obj.transaction_award =
-                  res.data[0].block_list[i].transaction_award;
-                //console.log(obj);
-                blockData[i] = obj;
-                //console.log(blockData);
-                this.blockData = blockData;
-                //console.log(obj);
+      //console.log(res);
+      //总页数
+      this.totalNum = res[0].total_page[0].totalPageNum;
+      //console.log(this.totalNum);
+      switch (this.nowLang) {
+        case "cn":
+          for (var i = 0; i < res[0].block_list.length + 1; i++) {
+            var obj = {};
+            let times = [];
+            obj.block_height = res[0].block_list[i].block_height;
+            let blocktime = res[0].block_list[i].block_time;
+            // .substring(0, 13)
+            // .valueOf();
+            // console.log(blocktime);
+            // 当前日期转时间戳
+            let timestamp = res[0].timeStamp;
+            // console.log(timestamp);
+            // console.log(timestamp + "xianzai");
+            let s = timestamp - blocktime; //9.20
+            //  console.log(s+'相差');
+            // console.log(s/86400000 + "天数");
+            // console.log(parseInt(s/86400000*24*60) + "fenzhong");
+            let fenzhong = parseInt((s / 86400) * 24 * 60);
+            // console.log(fenzhong);
+            if (fenzhong < 60) {
+              if (fenzhong == 0) {
+                times.push("刚刚");
+              } else {
+                times.push(parseInt(fenzhong) + "分钟前");
               }
-              break;
-            case "en":
-              for (var i = 0; i < res.data[0].block_list.length + 1; i++) {
-                var obj = {};
-                let times = [];
-                obj.block_height = res.data[0].block_list[i].block_height;
-                let blocktime = res.data[0].block_list[i].block_time;
-                // .substring(0, 13)
-                // .valueOf();
-                // console.log(blocktime);
-                // 当前日期转时间戳
-                let timestamp = res.data[0].timeStamp;
-                // console.log(timestamp);
-                // console.log(timestamp + "xianzai");
-                let s = timestamp - blocktime; //9.20
-                //  console.log(s+'相差');
-                // console.log(s/86400000 + "天数");
-                // console.log(parseInt(s/86400000*24*60) + "fenzhong");
-                let fenzhong = parseInt((s / 86400) * 24 * 60);
-                //  console.log(fenzhong);
-                if (fenzhong < 60) {
-                  if (fenzhong == 0) {
-                    times.push("just");
-                  } else {
-                    times.push(parseInt(fenzhong) + "minutes ago");
-                  }
-                  obj.block_time = times;
-                }
-                if (fenzhong >= 60 && fenzhong <= 1440) {
-                  times.push(parseInt(fenzhong / 60) + "hour ago");
-                  obj.block_time = times;
-                }
-                if (fenzhong > 1440) {
-                  times.push(parseInt(fenzhong / 1440) + "days ago");
-                  obj.block_time = times;
-                }
-                // obj.block_time = this.timestampToTime(
-                //   Number(
-                //     res.data[0].block_list[i].block_time.substring(0, 13).valueOf()
-                //   )
-                // );
-                obj.transaction_num = res.data[0].block_list[i].transaction_num;
-                obj.transaction_amount =
-                  res.data[0].block_list[i].transaction_amount;
-                obj.transaction_award =
-                  res.data[0].block_list[i].transaction_award;
-                //console.log(obj);
-                blockData[i] = obj;
-                //console.log(blockData);
-                this.blockData = blockData;
-                //console.log(obj);
-              }
-              break;
-            default:
+              obj.block_time = times;
+            }
+            if (fenzhong >= 60 && fenzhong <= 1440) {
+              times.push(parseInt(fenzhong / 60) + "小时前");
+              obj.block_time = times;
+            }
+            if (fenzhong > 1440) {
+              times.push(parseInt(fenzhong / 1440) + "天前");
+              obj.block_time = times;
+            }
+            // obj.block_time = this.timestampToTime(
+            //   Number(
+            //     res[0].block_list[i].block_time.substring(0, 13).valueOf()
+            //   )
+            // );
+            obj.transaction_num = res[0].block_list[i].transaction_num;
+            obj.transaction_amount = res[0].block_list[i].transaction_amount;
+            obj.transaction_award = res[0].block_list[i].transaction_award;
+            //console.log(obj);
+            blockData[i] = obj;
+            //console.log(blockData);
+            this.blockData = blockData;
+            //console.log(obj);
           }
-        })
-        .catch((e) => {});
+          break;
+        case "en":
+          for (var i = 0; i < res[0].block_list.length + 1; i++) {
+            var obj = {};
+            let times = [];
+            obj.block_height = res[0].block_list[i].block_height;
+            let blocktime = res[0].block_list[i].block_time;
+            // .substring(0, 13)
+            // .valueOf();
+            // console.log(blocktime);
+            // 当前日期转时间戳
+            let timestamp = res[0].timeStamp;
+            // console.log(timestamp);
+            // console.log(timestamp + "xianzai");
+            let s = timestamp - blocktime; //9.20
+            //  console.log(s+'相差');
+            // console.log(s/86400000 + "天数");
+            // console.log(parseInt(s/86400000*24*60) + "fenzhong");
+            let fenzhong = parseInt((s / 86400) * 24 * 60);
+            //  console.log(fenzhong);
+            if (fenzhong < 60) {
+              if (fenzhong == 0) {
+                times.push("just");
+              } else {
+                times.push(parseInt(fenzhong) + "minutes ago");
+              }
+              obj.block_time = times;
+            }
+            if (fenzhong >= 60 && fenzhong <= 1440) {
+              times.push(parseInt(fenzhong / 60) + "hour ago");
+              obj.block_time = times;
+            }
+            if (fenzhong > 1440) {
+              times.push(parseInt(fenzhong / 1440) + "days ago");
+              obj.block_time = times;
+            }
+            // obj.block_time = this.timestampToTime(
+            //   Number(
+            //     res[0].block_list[i].block_time.substring(0, 13).valueOf()
+            //   )
+            // );
+            obj.transaction_num = res[0].block_list[i].transaction_num;
+            obj.transaction_amount = res[0].block_list[i].transaction_amount;
+            obj.transaction_award = res[0].block_list[i].transaction_award;
+            //console.log(obj);
+            blockData[i] = obj;
+            //console.log(blockData);
+            this.blockData = blockData;
+            //console.log(obj);
+          }
+          break;
+        default:
+      }
     },
     timestampToTime(timestamp) {
       var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -271,13 +258,14 @@ export default {
 </script>
 <style lang="less">
 .block {
-  
+  width: 345px;
+  margin: 0 auto;
   .blue {
     font-size: 13px;
     font-family: PingFang SC;
     font-weight: 400;
     line-height: 18px;
-    color: #965EE5 !important;
+    color: #965ee5 !important;
   }
   .top {
     width: 345px;
@@ -291,7 +279,7 @@ export default {
     align-items: center;
     margin: 20px auto 0;
     span {
-      margin-left: 20px;
+      // margin-left: 20px;
     }
     img {
       width: 38px;
@@ -305,7 +293,7 @@ export default {
     background: #ffffff;
     margin: 0 auto;
     .info_title {
-      margin: 0 20px;
+      // margin: 0 20px;
       .info_content:nth-last-child(1) {
         ul {
           border-bottom: 1px solid #ffffff !important;
@@ -320,7 +308,7 @@ export default {
           width: 343px;
           height: 172px;
           padding: 10px 0;
-          border-bottom: 1px solid #b2b2b2;
+          border-bottom: 1px solid rgba(178, 178, 178, 0.5);
           li {
             display: flex;
             flex-direction: row;
@@ -355,7 +343,7 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    // padding: 0 20px;
     div {
       font-size: 16px;
       font-family: PingFang SC;

@@ -12,11 +12,15 @@
         </el-option>
       </el-select>
     </div>
-    <i
+    <!-- <i
       class="el-icon-minus"
       style="color:rgba(85, 131, 255, 1);transform:rotate(90deg);width: 0px;
 height: 33px;"
-    ></i>
+    ></i> -->
+    <div style="width: 2px;background:#6624FA;
+height: 23px;">
+
+    </div>
     <div class="searchcenter">
       <input
         type="text"
@@ -377,6 +381,7 @@ export default {
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  align-items: center;
   background: #ffffff;
   opacity: 1;
   border-radius: 11px;

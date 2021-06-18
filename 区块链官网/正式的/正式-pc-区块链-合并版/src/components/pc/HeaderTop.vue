@@ -15,26 +15,35 @@
       </li>
       <li>
         <el-dropdown :hide-on-click="false">
-          <span :class="{ 'el-dropdown-link': true, blue: blues }">
+          <span :class="{ 'el-dropdown-link': true, blue:$store.state.pcblues }">
             {{ $t("nav")[1] }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
               <router-link :to="{ path: '/pc/block' }">
                 <span @click="blueClass">
+                  
                   {{ $t("nav")[2] }}
                 </span>
               </router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/pc/transaction' }">{{
+              <router-link :to="{ path: '/pc/transaction' }">
+              <span @click="blueClass">
+ {{
                 $t("nav")[3]
-              }}</router-link></el-dropdown-item
+              }}
+              </span>
+             </router-link></el-dropdown-item
             >
             <el-dropdown-item>
-              <router-link :to="{ path: '/pc/address' }">{{
+              <router-link :to="{ path: '/pc/address' }">
+              <span @click="blueClass">
+ {{
                 $t("nav")[4]
-              }}</router-link>
+              }}
+              </span>
+             </router-link>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -115,12 +124,12 @@ export default {
   mounted() {},
   methods: {
     blueClass() {
-      this.$store.commit("bluesState", true);
-      this.reload();
+      this.$store.commit("pcBluesState", true);
+      // this.reload();
     },
     blueClass2() {
-      this.$store.commit("bluesState", false);
-      this.reload();
+       this.$store.commit("pcBluesState", false);
+      // this.reload();
     },
     changeLanguage() {
       if (this.$i18n.locale == "cn") {
@@ -143,8 +152,14 @@ export default {
 </script>
 
 <style lang="less">
+.router-link-active{
+  color: #6624FA!important;
+}
 .el-dropdown-menu__item {
   font-size: 18px !important;
+  a{
+    color: #000000;
+  }
    a:hover {
     list-style: none;
     text-decoration: none;
@@ -158,6 +173,9 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   z-index: 101;
+  position: fixed;
+  top: 0;
+
   //  position: -webkit-sticky;
   //   position: sticky;
   //   top: 0px;
@@ -176,7 +194,9 @@ export default {
   
     padding: 10px;
     text-align: center;
-  }
+
+    }
+   
 
   .el-menu.el-menu--horizontal {
     border-bottom: none;
@@ -193,7 +213,10 @@ export default {
       font-family: Arial;
       font-weight: bold;
       line-height: 12px;
-      color: #915bde;
+      color: #000000;
+      a,span{
+         color: #000000;
+      }
       a:hover {
         list-style: none;
         text-decoration: none;
@@ -258,6 +281,9 @@ export default {
       display: inline-block;
       position: relative;
       cursor: pointer;
+      span,a{
+         color: #000000;
+      }
       // transition: all 0.5s;
     }
     // li::before {
