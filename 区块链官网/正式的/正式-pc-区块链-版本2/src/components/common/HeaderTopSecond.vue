@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'headersecond_top': true,'fixedcss':fixed }">
+  <div :class="{ headersecond_top: true, fixedcss: fixed }">
     <div class="index_left">
       <img src="@assets/images/second/logo.png" alt="" @click="goHome" />
       <!-- <span> UENC </span>
@@ -102,7 +102,11 @@
 </template>
 
 <script>
-import {AddressSearch,TransactionSearch,BlockSearch} from  "@server/api.js";
+import {
+  GETADDRESSDETAIL,
+  TransactionSearch,
+  BlockSearch,
+} from "@server/api.js";
 import cn from "../../i18n/cn";
 import en from "../../i18n/en";
 export default {
@@ -110,7 +114,7 @@ export default {
   inject: ["reload"],
   data() {
     return {
-      fixed:false,
+      fixed: false,
       blues: Boolean,
       activeIndex: "1",
       nowLang: "",
@@ -215,12 +219,11 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-     if(scrollTop>=50){
-       this.fixed=true
-     }
-     else{
-       this.fixed=false
-     }
+      if (scrollTop >= 50) {
+        this.fixed = true;
+      } else {
+        this.fixed = false;
+      }
     },
     goHome() {
       this.$router.push({
@@ -321,155 +324,82 @@ export default {
             this.transactiondetaillist();
           }
           break;
-        // 区块哈希
-        case "3":
-          if (this.inputvalue !== "") {
-            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
-            this.blockhaxisearch();
-          }
-          break;
       }
     },
     //地址搜索
     async addresssearch() {
-      let that = this;
-      await that.$http
-        .get(AddressSearch, {
-          params: {
-            wallet_address: this.inputvalue,
-            pageNum: 1,
-            pageSize: 20,
-          },
-        })
-        .then((res) => {
-          //   console.log(res.data[0].total_page[0].totalPageNum);
-          if (res.data[0].search_wallet_balance_for_walletAddress.length == 0) {
-            this.$router.push({
-              path: "/notfound",
-              query: { address: "address" },
-            });
-            this.reload();
-          } else {
-            this.$router.push({
-              path: "/addressdetail",
-              query: { address: this.inputvalue },
-            });
-            this.reload();
-            this.inputvalue = "";
-          }
-        })
-        .catch((err) => {});
+      const res = await GETADDRESSDETAIL({ type: "1", key: this.inputvalue ,pageNum:'1',pageSize:'5' });
+      // console.log(res);
+      //   console.log(res.data[0].total_page[0].totalPageNum);
+      if (res.result.detailList.length == 0) {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "address" },
+        });
+        this.reload();
+      } else {
+        this.$router.push({
+          path: "/addressdetail",
+          query: { address: this.inputvalue },
+        });
+        this.reload();
+        this.inputvalue = "";
+      }
     },
     // 区块高度搜索
     async blocksearch() {
-      let that = this;
-      await that.$http
-        .get(BlockSearch, {
-          params: {
-            block_height: this.inputvalue,
-            pageNum: 1,
-            pageSize: 20,
+       const res = await GETADDRESSDETAIL({ type: "3", key: this.inputvalue,pageNum:'1',pageSize:'5'  });
+      if (res.code == 200) {
+        this.$router.push({
+          path: "/blockdetail",
+          query: {
+            block: this.inputvalue,
+            // transaction_award:this.transaction_award
           },
-        })
-        .then((res) => {
-          //  console.log(res);
-          if (res.data[0].total_record[0].total_record !== 0) {
-            this.$router.push({
-              path: "/blockdetail",
-              query: {
-                block: this.inputvalue,
-                // transaction_award:this.transaction_award
-              },
-            });
-            this.reload();
-          } else {
-            this.$router.push({
-              path: "/notfound",
-              query: { address: "height" },
-            });
-            this.reload();
-            this.inputvalue = "";
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
+        });
+        this.reload();
+        this.inputvalue = "";
+      } else {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "height" },
+        });
+        this.reload();
+        // this.$router.push({
+        //   path: "/notfound",
+        //   query: {},
+        // });
+      }
     },
     // 根据交易易哈希查询相关交易易信息
     async transactiondetaillist() {
-      //console.log(this.inputvalue);
-      let that = this;
-      await that.$http
-        .get(TransactionSearch, {
-          params: {
-            transaction_hash: this.inputvalue,
+      const res = await GETADDRESSDETAIL({ type: "2", key: this.inputvalue,pageNum:'1',pageSize:'5'  });
+      if (res.code == 200) {
+        this.$router.push({
+          path: "/transactiondetail",
+          query: {
+            txhash: this.inputvalue,
+            // transaction_award:this.transaction_award
           },
-        })
-        .then((res) => {
-          //console.log(res);
-          if (res.data[0].select_status === 1) {
-            this.$router.push({
-              path: "/transactiondetail",
-              query: {
-                transaction_hash: this.inputvalue,
-                // transaction_award:this.transaction_award
-              },
-            });
-            this.reload();
-            this.inputvalue = "";
-          } else {
-            this.$router.push({
-              path: "/notfound",
-              query: { address: "transaction" },
-            });
-            this.reload();
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
-    },
-    // 区块哈希搜索
-    async blockhaxisearch() {
-      let that = this;
-      var blockData = [];
-      await that.$http
-        .get("/search_blockInfo_blockHash", {
-          params: {
-            block_hash: this.inputvalue,
-          },
-        })
-        .then((res) => {
-          // console.log(res);
-          if (res.data[0].search_main_transactionInfo.length !== 0) {
-            this.$router.push({
-              path: "/blockdetails",
-              query: { blockhaxi: this.inputvalue },
-            });
-            this.reload();
-            this.inputvalue = "";
-          } else {
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
-          }
-        })
-        .catch((err) => {});
+        });
+        this.reload();
+        this.inputvalue = "";
+      } else {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "transaction" },
+        });
+        this.reload();
+      }
     },
   },
 };
 </script>
 
 <style lang="less">
-.fixedcss{
+.fixedcss {
   position: fixed;
   top: 0;
-  
 }
 .headersecond_top {
   width: 100%;
@@ -481,7 +411,7 @@ export default {
   z-index: 100;
   position: fixed;
   top: 0;
- 
+
   // position: sticky;
   // top: 0;
   .blue {
@@ -607,7 +537,7 @@ export default {
     background: #ffffff;
     opacity: 1;
     border-radius: 11px;
-     margin-right: 60px;
+    margin-right: 60px;
     // margin-left: 61px;
     .searchleft {
     }

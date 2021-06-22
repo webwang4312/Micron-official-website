@@ -19,21 +19,21 @@
         </li>
       </ul>
       <ul class="info_content">
-        <li v-for="item in blockData" :key="item">
-          <div @click="goToBlockDetail(item.block_height)">
-            {{ item.block_height }}
+        <li v-for="item in tradeList" :key="item">
+          <div @click="goToBlockDetail(item.height)">
+            {{ item.height }}
           </div>
           <div>
-            {{ item.block_time.toString() }}
+            {{ item.tradeTime.toString() }}
           </div>
           <div>
-            {{ item.transaction_num }}
+            {{ item.tradeNums }}
           </div>
           <div>
-            {{ item.transaction_amount }}
+            {{ item.amount }}
           </div>
           <div>
-            {{ item.transaction_award }}
+            {{ item.blockAward}}
           </div>
         </li>
       </ul>
@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-import { GetBlockList } from "@server/api.js";
+import { GETBLOCK } from "@server/api.js";
 var qs = require("qs");
 export default {
   name: "block",
@@ -71,7 +71,7 @@ export default {
       blockmedianum: 1,
       internalCurrentPage: "",
       totalNum: "",
-      blockData: [],
+      tradeList: [],
     };
   },
   components: {},
@@ -128,116 +128,115 @@ export default {
     },
     //获取MEDIA
     async blocklist() {
-      let that = this;
-      var blockData = [];
-      const res = await GetBlockList({
+        const res = await GETBLOCK({
         pageNum: this.blockmedianum,
         pageSize: 20,
       });
-      // console.log(res);
-      // var data = Qs.stringify({ pageNum: this.blockmedianum, pageSize: 20 });
-      //console.log(res);
-      this.totalNum = res[0].total_page[0].totalPageNum;
-      // console.log(this.totalNum);
+      this.tradeList = res.result.tradeList;
+      // 取得页数总数
+      this.totalNum = Math.ceil(res.result.total / 20);
       if (this.nowLang == "cn") {
-        for (var i = 0; i < res[0].block_list.length + 1; i++) {
-          var obj = {};
-          let times = [];
-          obj.block_height = res[0].block_list[i].block_height;
-          let blocktime = res[0].block_list[i].block_time;
-          // .substring(0, 13)
-          // .valueOf();
-          // console.log(blocktime);
+        for (var i = 0; i < this.tradeList.length; i++) {
+          this.tradeList[i].txhash2 = this.tradeList[i].txhash;
+          this.tradeList[i].txhash =
+            this.tradeList[i].txhash.substring(0, 10) + "...";
+          // console.log(this.tradeList[i].txhash);
+          this.tradeList[i].fromAddress2 = this.tradeList[i].fromAddress;
+          this.tradeList[i].fromAddress =
+            this.tradeList[i].fromAddress.substring(0, 8) + "...";
+          this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
+          this.tradeList[i].type == "tx"||this.tradeList[i].type == "redeem"
+            ? (this.tradeList[i].toAddress =
+                this.tradeList[i].toAddress.substring(0, 8) + "...")
+            : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);
+          let date = [];
+          let strdate = parseInt(this.tradeList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
           // 当前日期转时间戳
-          let timestamp = res[0].timeStamp;
-          // console.log(timestamp);
-          // console.log(timestamp + "xianzai");
-          let s = timestamp - blocktime; //9.20
-          //  console.log(s+'相差');
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+          let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
           // console.log(s/86400000 + "天数");
           // console.log(parseInt(s/86400000*24*60) + "fenzhong");
           let fenzhong = parseInt((s / 86400) * 24 * 60);
           // console.log(fenzhong);
           if (fenzhong < 60) {
             if (fenzhong == 0) {
-              times.push("刚刚");
+              date.push("刚刚");
             } else {
-              times.push(parseInt(fenzhong) + "分钟前");
+              date.push(parseInt(fenzhong) + "分钟前");
             }
-            obj.block_time = times;
+            this.tradeList[i].tradeTime = date;
           }
           if (fenzhong >= 60 && fenzhong <= 1440) {
-            times.push(parseInt(fenzhong / 60) + "小时前");
-            obj.block_time = times;
+            date.push(parseInt(fenzhong / 60) + "小时前");
+            this.tradeList[i].tradeTime = date;
           }
           if (fenzhong > 1440) {
-            times.push(parseInt(fenzhong / 1440) + "天前");
-            obj.block_time = times;
+            date.push(this.timestampToTime(strdate));
+            this.tradeList[i].tradeTime = date;
           }
-          // obj.block_time = this.timestampToTime(
-          //   Number(
-          //     res[0].block_list[i].block_time.substring(0, 13).valueOf()
-          //   )
-          // );
-          obj.transaction_num = res[0].block_list[i].transaction_num;
-          obj.transaction_amount = res[0].block_list[i].transaction_amount;
-          obj.transaction_award = res[0].block_list[i].transaction_award;
-          //console.log(obj);
-          blockData[i] = obj;
-          //console.log(blockData);
-          this.blockData = blockData;
-          // console.log(this.blockData);
+          // console.log(this.tradeList[i].date);
         }
       } else {
-        for (var i = 0; i < res[0].block_list.length + 1; i++) {
-          var obj = {};
-          let times = [];
-          obj.block_height = res[0].block_list[i].block_height;
-          let blocktime = res[0].block_list[i].block_time;
-          // .substring(0, 13)
-          // .valueOf();
-          // console.log(blocktime);
+        for (var i = 0; i < this.tradeList.length; i++) {
+          this.tradeList[i].txhash2 = this.tradeList[i].txhash;
+          this.tradeList[i].txhash =
+            this.tradeList[i].txhash.substring(0, 10) + "...";
+          this.tradeList[i].fromAddress2 = this.tradeList[i].fromAddress;
+          this.tradeList[i].fromAddress =
+            this.tradeList[i].fromAddress.substring(0, 8) + "...";
+          this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
+          this.tradeList[i].type == "from" || this.tradeList[i].type == "to"
+            ? (this.tradeList[i].toAddress =
+                this.tradeList[i].toAddress.substring(0, 8) + "...")
+            : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);
+          let date = [];
+          let strdate = parseInt(this.tradeList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
           // 当前日期转时间戳
-          let timestamp = res[0].timeStamp;
-          // console.log(timestamp);
-          // console.log(timestamp + "xianzai");
-          let s = timestamp - blocktime; //9.20
-          //  console.log(s+'相差');
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+
+          let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
           // console.log(s/86400000 + "天数");
           // console.log(parseInt(s/86400000*24*60) + "fenzhong");
           let fenzhong = parseInt((s / 86400) * 24 * 60);
-          //  console.log(fenzhong);
+          // console.log(fenzhong);
           if (fenzhong < 60) {
             if (fenzhong == 0) {
-              times.push("just");
+              date.push("Just");
             } else {
-              times.push(parseInt(fenzhong) + "minutes ago");
+              date.push(parseInt(fenzhong) + "minutes ago");
             }
-            obj.block_time = times;
+            this.tradeList[i].tradeTime = date;
           }
           if (fenzhong >= 60 && fenzhong <= 1440) {
-            times.push(parseInt(fenzhong / 60) + "hour ago");
-            obj.block_time = times;
+            date.push(parseInt(fenzhong / 60) + "hour ago");
+            this.tradeList[i].tradeTime = date;
           }
           if (fenzhong > 1440) {
-            times.push(parseInt(fenzhong / 1440) + "days ago");
-            obj.block_time = times;
+            date.push(this.timestampToTime(strdate));
+            this.tradeList[i].tradeTime = date;
           }
-          // obj.block_time = this.timestampToTime(
-          //   Number(
-          //     res[0].block_list[i].block_time.substring(0, 13).valueOf()
-          //   )
-          // );
-          obj.transaction_num = res[0].block_list[i].transaction_num;
-          obj.transaction_amount = res[0].block_list[i].transaction_amount;
-          obj.transaction_award = res[0].block_list[i].transaction_award;
-          //console.log(obj);
-          blockData[i] = obj;
-          //console.log(blockData);
-          this.blockData = blockData;
-          //console.log(obj);
+          // console.log(this.tradeList[i].date);
         }
       }
+    },
+    timestampToTime(timestamp) {
+     var date = new Date(timestamp*1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + "-";
+    var M =
+        (date.getMonth() + 1 < 10
+            ? "0" + (date.getMonth() + 1)
+            : date.getMonth() + 1) + "-";
+    var D = date.getDate() + " ";
+    var h = date.getHours() + ":";
+    var m = date.getMinutes() + ":";
+    var s = date.getSeconds();
+    return Y + M + D + h + m + s;
     },
  
   },

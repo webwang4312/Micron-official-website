@@ -159,7 +159,7 @@ export default {
       this.$router.push({
         path: "/transactiondetail",
         query: {
-          transaction_hash: item,
+          txhash: item,
         },
       });
     },

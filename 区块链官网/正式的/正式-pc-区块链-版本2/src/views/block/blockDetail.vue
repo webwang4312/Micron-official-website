@@ -13,11 +13,11 @@
       </ul>
       <ul>
         <li>
-          {{ datalist.block_height }}
+          {{ height }}
         </li>
-        <li>{{ datalist.tx_num }}</li>
-        <li>{{ datalist.block_award }}UENC</li>
-        <li>{{ datalist.block_gas }}UENC</li>
+        <li>{{ blockNums }}</li>
+        <li>{{ blockAward }}UENC</li>
+        <li>{{ gasFees }}UENC</li>
       </ul>
     </div>
     <div class="top">
@@ -43,27 +43,27 @@
         </li>
       </ul>
       <ul class="info_content">
-        <li v-for="item in blockData" :key="item">
-          <div @click="goToTransactionDetail(item.transaction_hash2)">
-            {{ item.transaction_hash }}
+        <li v-for="item in tradeList" :key="item">
+          <div @click="goToTransactionDetail(item.txhash2)">
+            {{ item.txhash }}
           </div>
           <div>
-            {{ item.time }}
+            {{ item.tradeTime }}
           </div>
-          <div @click="goToAddressDetail(item.from_address2)">
-            {{ item.from_address }}
+          <div @click="goToAddressDetail(item.fromAddress2)">
+            {{ item.fromAddress }}
           </div>
-          <div @click="goToAddressDetail(item.to_address2)">
-            {{ item.to_address }}
-          </div>
-          <div>
-            {{ item.transaction_amount }}
+          <div @click="goToAddressDetail(item.toAddress2)">
+            {{ item.toAddress }}
           </div>
           <div>
-            {{ item.gas }}
+            {{ item.amount }}
           </div>
           <div>
-            {{ item.award }}
+            {{ item.gasFees }}
+          </div>
+          <div>
+            {{ item.blockAward }}
           </div>
         </li>
       </ul>
@@ -89,7 +89,7 @@
   </div>
 </template>
 <script>
-import { GetBlockListDetail } from "@server/api.js";
+import { GETADDRESSDETAIL } from "@server/api.js";
 
 export default {
   name: "block",
@@ -100,9 +100,16 @@ export default {
       blockmedianum: 1,
       internalCurrentPage: "",
       totalNum: "",
-      blockData: [],
+
       shiyan: "",
-      datalist: [],
+      height: "",
+      // 区块个数
+      blockNums: "",
+      // 区块奖励
+      blockAward: "",
+      // 燃料费
+      gasFees: "",
+      tradeList: [],
     };
   },
   components: {},
@@ -123,7 +130,7 @@ export default {
         path: "/transactiondetail",
 
         query: {
-         transaction_hash: item,
+          txhash: item,
         },
       });
     },
@@ -134,7 +141,6 @@ export default {
           address: item,
         },
       });
-     
     },
     pagesMinus() {
       if (this.blockmedianum == 1) {
@@ -153,60 +159,41 @@ export default {
       this.blocksearch();
     },
     async blocksearch() {
-      this.icon = true;
-      let that = this;
-      var blockData = [];
-      const res = await GetBlockListDetail({
-        block_height: this.shiyan,
-        pageNum: this.blockmedianum,
-        pageSize: 20,
+      const res = await GETADDRESSDETAIL({
+        type: "3",
+        key: this.shiyan,
+        pageNum:'1',pageSize:'20'
       });
-      // console.log(res);
-      this.totalNum = res[0].total_page[0].totalPageNum;
-      // 高度
-      this.datalist = res[0].block_height[0];
-      // console.log(this.datalist);
-
-      for (var i = 0; i < res[0].block_list.length + 1; i++) {
-        var obj = {};
-        let times = [];
-        // 交易哈希
-        obj.transaction_hash =
-          res[0].block_list[i].transaction_hash.substring(0, 10) + "...";
-        obj.transaction_hash2 = res[0].block_list[i].transaction_hash;
-        // 从
-        obj.from_address =
-          res[0].block_list[i].from_address.substring(0, 10) + "...";
-        obj.from_address2 = res[0].block_list[i].from_address;
-        // 至
-        if (
-          res[0].block_list[i].to_address ==
-          "0000000000000000000000000000000000"
-        ) {
-          obj.to_address = this.nowLang === "cn" ? "质押" : "pledge";
-        } else {
-          obj.to_address =
-            res[0].block_list[i].to_address.substring(0, 10) + "...";
+      console.log(res);
+      //  高度
+      this.height = res.result.height;
+      // 区块个数
+      this.blockNums = res.result.blockNums;
+      // 区块奖励
+      this.blockAward = res.result.blockAward;
+      // 燃料费
+      this.gasFees = res.result.gasFees;
+      this.tradeList = res.result.tradeList;
+     
+        for (var i = 0; i < res.result.tradeList.length; i++) {
+          this.tradeList[i].txhash2 = this.tradeList[i].txhash;
+          this.tradeList[i].txhash =
+            this.tradeList[i].txhash.substring(0, 10) + "...";
+          this.tradeList[i].fromAddress2 = this.tradeList[i].fromAddress;
+          this.tradeList[i].fromAddress =
+            this.tradeList[i].fromAddress.substring(0, 8) + "...";
+          this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
+          this.tradeList[i].toAddress =
+            this.tradeList[i].toAddress.substring(0, 8) + "...";
+          this.tradeList[i].tradeTime = this.timestampToTime(
+            res.result.tradeList[i].tradeTime
+          );
         }
-
-        obj.to_address2 = res[0].block_list[i].to_address;
-        //  交易额
-        obj.transaction_amount = res[0].block_list[i].transaction_amount;
-        //  燃料费
-        obj.gas = res[0].block_list[i].gas;
-        //  区块奖励
-        obj.award = res[0].block_list[i].award;
-        // let blocktime = res[0].block_list[i].time;
-        obj.time = this.timestampToTime(res[0].block_list[i].time);
-        blockData[i] = obj;
-        //console.log(blockData);
-        this.blockData = blockData;
-        // console.log(this.blockData);
-      }
+     
     },
 
     timestampToTime(timestamp) {
-      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + "-";
       var M =
         (date.getMonth() + 1 < 10
@@ -225,7 +212,7 @@ export default {
 .blockdetail {
   height: auto;
   padding-bottom: 373px;
-  background: #F9FAFD;
+  background: #f9fafd;
   .top {
     width: 1275px;
     height: 38px;
@@ -236,7 +223,7 @@ export default {
     color: #000000;
     padding-top: 31px;
     padding-bottom: 21px;
-    margin:0px auto ;
+    margin: 0px auto;
     display: flex;
     align-items: center;
     span {
@@ -296,7 +283,7 @@ export default {
       font-size: 17px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-background: #ffffff;
+      background: #ffffff;
       color: #000000;
       li {
         display: flex;

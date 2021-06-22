@@ -97,6 +97,16 @@ const routes = [
                 }
 
             },
+            {
+                path: "/notfound",
+                name: "notfound",
+                component: () =>
+                    import ("../views/notFound.vue"),
+                meta: {
+                    keepAlive: false // 需要被缓存
+                }
+
+            },
            
 
         ]

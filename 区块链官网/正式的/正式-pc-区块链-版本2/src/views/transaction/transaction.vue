@@ -21,27 +21,27 @@
         </li>
       </ul>
       <ul class="info_content">
-        <li v-for="item in transactionData" :key="item">
-          <div @click="goToTransactionDetail(item.transaction_hash2)">
-            {{ item.transaction_hash }}
+        <li v-for="item in tradeList" :key="item">
+          <div @click="goToTransactionDetail(item.txhash2)">
+            {{ item.txhash }}
           </div>
           <div>
-            {{ item.transaction_time.toString() }}
+            {{ item.tradeTime.toString() }}
           </div>
-          <div class="zise" @click="goToAddressDetail(item.from_address2)">
-            {{ item.from_address }}
+          <div class="zise" @click="goToAddressDetail(item.fromAddress2)">
+            {{ item.fromAddress }}
           </div>
-          <div class="zise" @click="goToAddressDetail(item.to_address2)">
-            {{ item.to_address }}
-          </div>
-          <div>
-            {{ item.transaction_amount }}
+          <div class="zise" @click="goToAddressDetail(item.toAddress2)">
+            {{ item.toAddress }}
           </div>
           <div>
-            {{ item.gas }}
+            {{ item.amount }}
           </div>
           <div>
-            {{ item.transaction_amount }}
+            {{ item.gasFees }}
+          </div>
+          <div>
+            {{ item.blockAward }}
           </div>
         </li>
       </ul>
@@ -67,17 +67,16 @@
   </div>
 </template>
 <script>
-import { GetTransactionList } from "@server/api.js";
+import { GETTRANSACTION } from "@server/api.js";
 export default {
   name: "block",
   data() {
     return {
       nowLang: "",
-
       // 分页
       transmedianum: 1,
       totalNum: "",
-      transactionData: [],
+      tradeList: [],
     };
   },
   components: {},
@@ -95,7 +94,7 @@ export default {
         path: "/transactiondetail",
 
         query: {
-          transaction_hash: item,
+          txhash: item,
         },
       });
     },
@@ -125,142 +124,34 @@ export default {
     },
     //获取MEDIA
     async transactionlist() {
-      let that = this;
-      var blockData = [];
-      const res = await GetTransactionList({
+      const res = await GETTRANSACTION({
         pageNum: this.transmedianum,
         pageSize: 20,
       });
-      // var data = Qs.stringify({ pageNum: this.transmedianum, pageSize: 20 });
-      // console.log(res)
-      // console.log(res);
+      this.tradeList = res.result.tradeList;
       // 取得页数总数
-      this.totalNum = res[0].total_page[0].totalPageNum;
-      // console.log(this.totalNum);
-      // table赋值
+      this.totalNum = Math.ceil(res.result.total / 20);
       if (this.nowLang == "cn") {
-        for (let i = 0; i < res[0].transaction_list_results.length + 1; i++) {
-          var obj = {};
-          let times = [];
-          //console.log(res[0].transaction_hash);
-          // console.log(res[0].from_address);
-          obj.transaction_hash2 =
-            res[0].transaction_list_results[i].transaction_hash;
-          obj.transaction_hash =
-            res[0].transaction_list_results[i].transaction_hash.substring(
-              0,
-              10
-            ) + "...";
-          let blocktime = res[0].transaction_list_results[i].transaction_time;
-          // console.log(blocktime);
+        for (var i = 0; i < this.tradeList.length; i++) {
+          this.tradeList[i].txhash2 = this.tradeList[i].txhash;
+          this.tradeList[i].txhash =
+            this.tradeList[i].txhash.substring(0, 10) + "...";
+          // console.log(this.tradeList[i].txhash);
+          this.tradeList[i].fromAddress2 = this.tradeList[i].fromAddress;
+          this.tradeList[i].fromAddress =
+            this.tradeList[i].fromAddress.substring(0, 8) + "...";
+          this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
+          this.tradeList[i].type == "tx"||this.tradeList[i].type == "redeem"
+            ? (this.tradeList[i].toAddress =
+                this.tradeList[i].toAddress.substring(0, 8) + "...")
+            : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);
+          let date = [];
+          let strdate = parseInt(this.tradeList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
           // 当前日期转时间戳
-          let timestamp = res[0].timeStamp;
-          // console.log(timestamp + "xianzai");
-          let s = timestamp - blocktime; //9.20
-          // console.log(s+'相差');
-          // console.log(s/86400000 + "天数");
-          // console.log(parseInt(s/86400000*24*60) + "fenzhong");
-          let fenzhong = parseInt((s / 86400) * 24 * 60);
-          //  console.log(fenzhong);
-          if (fenzhong < 60) {
-            if (fenzhong == 0) {
-              times.push("刚刚");
-            } else {
-              times.push(parseInt(fenzhong) + "分钟前");
-            }
-            obj.transaction_time = times;
-          }
-          if (fenzhong >= 60 && fenzhong <= 1440) {
-            times.push(parseInt(fenzhong / 60) + "小时前");
-            obj.transaction_time = times;
-          }
-          if (fenzhong > 1440) {
-            times.push(parseInt(fenzhong / 1440) + "天前");
-            obj.transaction_time = times;
-          }
-          // obj.transaction_time = this.timestampToTime(
-          //   Number(
-          //     res[0].transaction_list_results[i].transaction_time
-          //       .substring(0, 13)
-          //       .valueOf()
-          //   )
-          // );
-          obj.transaction_amount =
-            res[0].transaction_list_results[i].transaction_amount;
-          obj.from_address2 = res[0].transaction_list_results[i].from_address;
-          obj.from_address =
-            res[0].transaction_list_results[i].from_address.substring(0, 10) +
-            "...";
-          // toaddress质押处理
-          if (
-            res[0].transaction_list_results[i].to_address ==
-              "0000000000000000000000000000000000" ||
-            res[0].transaction_list_results[i].pledge == "1"
-          ) {
-            // 从
-            obj.from_address =
-              res[0].transaction_list_results[i].from_address.substring(0, 10) +
-              "...";
-            obj.from_address2 = res[0].transaction_list_results[i].from_address;
-            if (this.nowLang == "cn") {
-              obj.to_address = "质押";
-            } else {
-              obj.to_address = "Pledge";
-            }
-          } else if (
-            res[0].transaction_list_results[i].from_address ==
-              res[0].transaction_list_results[i].to_address ||
-            res[0].transaction_list_results[i].redeem == "1"
-          ) {
-            if (this.nowLang == "cn") {
-              // 从
-              obj.from_address = "质押";
-            } else {
-              obj.from_address = "Pledge";
-            }
-            // 至
-            obj.to_address =
-              res[0].transaction_list_results[i].to_address.substring(0, 10) +
-              "...";
-            obj.to_address2 = res[0].transaction_list_results[i].to_address;
-          } else {
-            obj.from_address =
-              res[0].transaction_list_results[i].from_address.substring(0, 10) +
-              "...";
-            obj.from_address2 = res[0].transaction_list_results[i].from_address;
-            obj.to_address =
-              res[0].transaction_list_results[i].to_address.substring(0, 10) +
-              "...";
-            obj.to_address2 = res[0].transaction_list_results[i].to_address;
-          }
-
-          obj.gas = res[0].transaction_list_results[i].gas;
-          // console.log(obj);
-          blockData[i] = obj;
-          //console.log(blockData);
-          this.transactionData = blockData;
-          //console.log(obj);
-          //console.log(this.transactionData);
-        }
-      } else {
-        for (let i = 0; i < res[0].transaction_list_results.length + 1; i++) {
-          var obj = {};
-          let times = [];
-          //console.log(res[0].transaction_hash);
-          // console.log(res[0].from_address);
-          obj.transaction_hash2 =
-            res[0].transaction_list_results[i].transaction_hash;
-          obj.transaction_hash =
-            res[0].transaction_list_results[i].transaction_hash.substring(
-              0,
-              10
-            ) + "...";
-          let blocktime = res[0].transaction_list_results[i].transaction_time;
-          // console.log(blocktime);
-          // 当前日期转时间戳
-          let timestamp = res[0].timeStamp;
-          // console.log(timestamp + "xianzai");
-          let s = timestamp - blocktime; //9.20
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+          let s = timestamp - strdate; //9.20
           // console.log(s+'相差');
           // console.log(s/86400000 + "天数");
           // console.log(parseInt(s/86400000*24*60) + "fenzhong");
@@ -268,67 +159,88 @@ export default {
           // console.log(fenzhong);
           if (fenzhong < 60) {
             if (fenzhong == 0) {
-              times.push("just");
+              date.push("刚刚");
             } else {
-              times.push(parseInt(fenzhong) + "minutes ago");
+              date.push(parseInt(fenzhong) + "分钟前");
             }
-            obj.transaction_time = times;
+            this.tradeList[i].tradeTime = date;
           }
           if (fenzhong >= 60 && fenzhong <= 1440) {
-            times.push(parseInt(fenzhong / 60) + "hour ago");
-            obj.transaction_time = times;
+            date.push(parseInt(fenzhong / 60) + "小时前");
+            this.tradeList[i].tradeTime = date;
           }
           if (fenzhong > 1440) {
-            times.push(parseInt(fenzhong / 1440) + "days ago");
-            obj.transaction_time = times;
+            date.push(this.timestampToTime(strdate));
+            this.tradeList[i].tradeTime = date;
           }
-          // obj.transaction_time = this.timestampToTime(
-          //   Number(
-          //     res[0].transaction_list_results[i].transaction_time
-          //       .substring(0, 13)
-          //       .valueOf()
-          //   )
-          // );
-          obj.transaction_amount =
-            res[0].transaction_list_results[i].transaction_amount;
-          obj.from_address =
-            res[0].transaction_list_results[i].from_address.substring(0, 10) +
-            "...";
-          obj.from_address2 = res[0].transaction_list_results[i].from_address;
-          obj.to_address =
-            res[0].transaction_list_results[i].to_address.substring(0, 10) +
-            "...";
-          obj.to_address2 = res[0].transaction_list_results[i].to_address;
-          obj.gas = res[0].transaction_list_results[i].gas;
-          // console.log(obj);
-          blockData[i] = obj;
-          //console.log(blockData);
-          this.transactionData = blockData;
-          //console.log(obj);
-          //console.log(this.transactionData);
+          // console.log(this.tradeList[i].date);
+        }
+      } else {
+        for (var i = 0; i < this.tradeList.length; i++) {
+          this.tradeList[i].txhash2 = this.tradeList[i].txhash;
+          this.tradeList[i].txhash =
+            this.tradeList[i].txhash.substring(0, 10) + "...";
+          this.tradeList[i].fromAddress2 = this.tradeList[i].fromAddress;
+          this.tradeList[i].fromAddress =
+            this.tradeList[i].fromAddress.substring(0, 8) + "...";
+          this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
+          this.tradeList[i].type == "from" || this.tradeList[i].type == "to"
+            ? (this.tradeList[i].toAddress =
+                this.tradeList[i].toAddress.substring(0, 8) + "...")
+            : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);
+          let date = [];
+          let strdate = parseInt(this.tradeList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
+          // 当前日期转时间戳
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+
+          let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
+          // console.log(s/86400000 + "天数");
+          // console.log(parseInt(s/86400000*24*60) + "fenzhong");
+          let fenzhong = parseInt((s / 86400) * 24 * 60);
+          // console.log(fenzhong);
+          if (fenzhong < 60) {
+            if (fenzhong == 0) {
+              date.push("Just");
+            } else {
+              date.push(parseInt(fenzhong) + "minutes ago");
+            }
+            this.tradeList[i].tradeTime = date;
+          }
+          if (fenzhong >= 60 && fenzhong <= 1440) {
+            date.push(parseInt(fenzhong / 60) + "hour ago");
+            this.tradeList[i].tradeTime = date;
+          }
+          if (fenzhong > 1440) {
+            date.push(this.timestampToTime(strdate));
+            this.tradeList[i].tradeTime = date;
+          }
+          // console.log(this.tradeList[i].date);
         }
       }
-
-      // 取得列表信息
-      this.medialist = res.data.result.list;
-      //console.log(this.medialist);
-      // 截取字符串长度16字符
-      // for (let i = 0; i < this.medialist.length; i++) {
-      //   if (this.medialist[i].title.length > 16) {
-      //     this.medialist[i].title =
-      //       this.medialist[i].title.substring(0, 16) + "...";
-      //   } else {
-      //   }
-      // }
     },
- 
+    timestampToTime(timestamp) {
+      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + "-";
+      var M =
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) + "-";
+      var D = date.getDate() + " ";
+      var h = date.getHours() + ":";
+      var m = date.getMinutes() + ":";
+      var s = date.getSeconds();
+      return Y + M + D + h + m + s;
+    },
   },
 };
 </script>
 <style lang="less">
 .transaction {
   background: #f9fafd;
-   padding-bottom: 195px;
+  padding-bottom: 195px;
   .zise {
     font-size: 15px;
     font-family: Microsoft YaHei;
@@ -347,7 +259,7 @@ export default {
     color: #000000;
     padding-top: 31px;
     padding-bottom: 21px;
-    margin:0px auto ;
+    margin: 0px auto;
     display: flex;
     align-items: center;
     span {
@@ -369,7 +281,7 @@ export default {
     .info_title {
       height: 75px;
       line-height: 75px;
-      background: #FFFFFF;
+      background: #ffffff;
       li {
         text-align: center;
         display: flex;
@@ -434,7 +346,7 @@ export default {
   .block_pagination {
     width: 1275px;
     height: 37px;
-    background: #F9FAFD;
+    background: #f9fafd;
     margin: 0 auto;
 
     display: flex;

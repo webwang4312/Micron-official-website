@@ -12,9 +12,9 @@
               <div>
                 {{ $t("address")[2] }}
               </div>
-              <div @click="goToAddressDetail(item.wallet_address2)">
+              <div @click="goToAddressDetail(item.address)">
                 <span class="blue">
-                  {{ item.wallet_address }}
+                  {{ item.address }}
                 </span>
               </div>
             </li>
@@ -23,21 +23,21 @@
               {{ $t("block")[2] }}
               </div>
               <div>
-                {{ item.transaction_num }}
+                {{ item.tradeNums }}
               </div>
             </li>
             <li>
               <div>
                {{ $t("address")[3] }}
               </div>
-              <div>{{ item.amount }}</div>
+              <div>{{ item.balance }}</div>
             </li>
             <li>
               <div>
               {{ $t("address")[4] }}
               </div>
               <div>
-                {{ item.percentage }}
+                {{ item.accountFor }}
               </div>
             </li>
             <li>
@@ -45,7 +45,7 @@
                 {{ $t("address")[1] }}
               </div>
               <div>
-                {{item.rank}}
+                {{item.rankNum}}
               </div>
             </li>
           </ul>
@@ -64,7 +64,7 @@
   </div>
 </template>
 <script>
- import {GetAddressList} from "@server/api.js";
+ import {GETADDRESS} from "@server/api.js";
 export default {
   name: "block",
   data() {
@@ -101,46 +101,9 @@ export default {
       this.addresssearch();
     },
     async addresssearch() {
-      let that = this;
-      var blockData = [];
-      await that.$http
-        .get(GetAddressList, {
-          params: {
-            pageNum: this.addressmedianum,
-            pageSize: 100,
-          },
-        })
-        .then((res) => {
-          if (res.status == 200) {
-            this.icon = false;
-            this.loading = false;
-          }
-
-          // console.log(res);
-          this.totalNum = res.data[0].total_page[0].totalPageNum;
-          this.alltotal = res.data[0].total_record[0].total_record;
-          //console.log(this.totalNum);
-          // table赋值
-          var addresslist = res.data[0].wallet_address_list;
-          // console.log(addresslist);
-          for (var i = 0; i < addresslist.length + 1; i++) {
-            var obj = {};
-            let times = [];
-            obj.rank = addresslist[i].row_num;
-            obj.wallet_address = addresslist[i].wallet_address.substring(0,14)+'...';
-            obj.wallet_address2 = addresslist[i].wallet_address;
-            // console.log(obj);
-            obj.transaction_num = addresslist[i].transaction_num;
-            obj.amount = addresslist[i].amount;
-            obj.percentage = addresslist[i].percentage + "%";
-            //console.log(obj);
-            blockData[i] = obj;
-            //console.log(blockData);
-            this.addressData = blockData;
-            //console.log(obj);
-          }
-        })
-        .catch((e) => {});
+       const res = await GETADDRESS({});
+    
+      this.addressData=res.result
     },
     timestampToTime(timestamp) {
       var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000

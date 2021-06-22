@@ -8,25 +8,25 @@
       <li>
         <div>{{ $t("index")[0] }}:</div>
         <div>
-          {{ datalist.block_height }}
+          {{ height }}
         </div>
       </li>
       <li>
         <div>{{ $t("blockdetail")[1] }}:</div>
         <div>
-          {{ datalist.tx_num }}
+          {{ blockNums }}
         </div>
       </li>
       <li>
         <div>{{ $t("block")[4] }}:</div>
         <div>
-          {{ datalist.block_award }}UENC
+          {{ blockAward}}UENC
         </div>
       </li>
       <li>
         <div>{{ $t("blockdetail")[2] }}:</div>
         <div>
-          {{ datalist.block_gas }}UENC
+          {{ gasFees}}UENC
         </div>
       </li>
     </ul>
@@ -41,7 +41,7 @@ opacity: 1;"
     </div>
     <div class="block_info">
       <ul class="info_title">
-        <li v-for="item in blockData" :key="item" class="info_content">
+        <li v-for="item in tradeList" :key="item" class="info_content">
           <ul>
             <li>
               <div>
@@ -49,8 +49,8 @@ opacity: 1;"
               </div>
               <div>
                 TX
-                <span class="blue" @click="goToTransactionDetail(item.transaction_hash2)">
-                  {{ item.transaction_hash }}
+                <span class="blue" @click="goToTransactionDetail(item.txhash2)">
+                  {{ item.txhash }}
                 </span>
               </div>
             </li>
@@ -58,16 +58,16 @@ opacity: 1;"
               <div>
                 {{ $t("index")[9] }}
               </div>
-              <div class="blue" @click="goToAddressDetail(item.from_address2)">
-                {{ item.from_address }}
+              <div class="blue" @click="goToAddressDetail(item.fromAddress2)">
+                {{ item.fromAddress }}
               </div>
             </li>
             <li>
               <div>
                 {{ $t("index")[10] }}
               </div>
-              <div class="blue" @click="goToAddressDetail(item.to_address2)">
-                {{ item.to_address }}
+              <div class="blue" @click="goToAddressDetail(item.toAddress2)">
+                {{ item.toAddress }}
               </div>
             </li>
             <li>
@@ -75,7 +75,7 @@ opacity: 1;"
                 {{ $t("block")[3] }}
               </div>
               <div>
-                {{ item.transaction_amount }}UENC
+                {{ item.amount}}UENC
               </div>
             </li>
             <li>
@@ -83,7 +83,7 @@ opacity: 1;"
                 {{ $t("block")[1] }}
               </div>
               <div>
-                {{ item.time.toString() }}
+                {{ item.tradeTime}}
               </div>
             </li>
             <li>
@@ -91,14 +91,14 @@ opacity: 1;"
                 {{ $t("blockdetail")[2] }}
               </div>
               <div>
-                {{ item.gas }}UENC
+                {{ item.gasFees }}UENC
               </div>
             </li>
             <li>
               <div>
                 {{ $t("block")[4] }}
               </div>
-              <div>{{ item.award }}UENC</div>
+              <div>{{ item.blockAward }}UENC</div>
             </li>
           </ul>
         </li>
@@ -125,21 +125,27 @@ opacity: 1;"
   </div>
 </template>
 <script>
- import {GetBlockListDetail} from "@server/api.js";
+ import { GETADDRESSDETAIL } from "@server/api.js";
 
 export default {
   name: "block",
   data() {
     return {
       nowLang: "",
-
       // 分页
       blockmedianum: 1,
       internalCurrentPage: "",
       totalNum: "",
-      blockData: [],
       shiyan: "",
-      datalist: [],
+      height: "",
+      // 区块个数
+      blockNums: "",
+      // 区块奖励
+      blockAward: "",
+      // 燃料费
+      gasFees: "",
+      tradeList: [],
+     
     };
   },
   components: {},
@@ -161,7 +167,7 @@ export default {
         path: "/transactiondetail",
 
         query: {
-          transaction_hash: item,
+          txhash: item,
         },
       });
     },
@@ -190,95 +196,36 @@ export default {
       this.blocksearch();
     },
     async blocksearch() {
-      this.icon = true;
-      let that = this;
-      var blockData = [];
-      await that.$http
-        .get(GetBlockListDetail, {
-          params: {
-            block_height: this.shiyan,
-            pageNum: this.blockmedianum,
-            pageSize: 20,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          this.totalNum = res.data[0].total_page[0].totalPageNum;
-          // 高度
-          this.datalist = res.data[0].block_height[0];
-          // 燃料费
-          // table赋值
-          //console.log(res.data[0].block_list.length);
-          for (let i = 0; i < res.data[0].block_list.length + 1; i++) {
-            var obj = {};
-            //console.log(res.data[0].transaction_hash);
-            //console.log(res.data[0].from_address);
-            obj.transaction_hash2 = res.data[0].block_list[i].transaction_hash;
-            obj.transaction_hash =
-              res.data[0].block_list[i].transaction_hash.substring(0, 10) +
-              "...";
-            obj.time = this.timestampToTime(
-              Number(res.data[0].block_list[i].time)
-            );
-            obj.transaction_amount =
-              res.data[0].block_list[i].transaction_amount;
-            obj.gas = res.data[0].block_list[i].gas;
-            obj.award = res.data[0].block_list[i].award;
-            obj.transaction_amount =
-              res.data[0].block_list[i].transaction_amount;
-            if (
-              res.data[0].block_list[i].to_address ==
-                "0000000000000000000000000000000000" ||
-              res.data[0].block_list[i].pledge == "1"
-            ) {
-              // 从
-               obj.from_address2 =
-                res.data[0].block_list[i].from_address;
-              obj.from_address =
-                res.data[0].block_list[i].from_address.substring(0, 10) + "...";
-              if (this.nowLang == "cn") {
-                obj.to_address = "质押";
-              } else {
-                obj.to_address = "Pledge";
-              }
-            } else if (
-              res.data[0].block_list[i].from_address ==
-                res.data[0].block_list[i].to_address ||
-              res.data[0].block_list[i].redeem == "1"
-            ) {
-              if (this.nowLang == "cn") {
-                // 从
-                obj.from_address = "质押";
-              } else {
-                obj.from_address = "Pledge";
-              }
-              // 至
-              obj.to_address =
-                res.data[0].block_list[i].to_address.substring(0, 10) + "...";
-                 obj.to_address2 =
-                res.data[0].block_list[i].to_address;
-            } else {
-              obj.from_address2 =
-                res.data[0].block_list[i].from_address;
-              obj.to_address2 =
-                res.data[0].block_list[i].to_address;
-              obj.from_address =
-                res.data[0].block_list[i].from_address.substring(0, 10) + "...";
-              obj.to_address =
-                res.data[0].block_list[i].to_address.substring(0, 10) + "...";
-            }
-
-            // console.log(obj);
-            blockData[i] = obj;
-            //console.log(blockData);
-            this.blockData = blockData;
-            // console.log(obj);
-            //console.log(this.transactionData);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      const res = await GETADDRESSDETAIL({
+        type: "3",
+        key: this.shiyan
+        ,pageNum:'1',pageSize:'5'
+      });
+      console.log(res);
+      //  高度
+      this.height = res.result.height;
+      // 区块个数
+      this.blockNums = res.result.blockNums;
+      // 区块奖励
+      this.blockAward = res.result.blockAward;
+      // 燃料费
+      this.gasFees = res.result.gasFees;
+      this.tradeList = res.result.tradeList;
+     
+        for (var i = 0; i < res.result.tradeList.length; i++) {
+          this.tradeList[i].txhash2 = this.tradeList[i].txhash;
+          this.tradeList[i].txhash =
+            this.tradeList[i].txhash.substring(0, 10) + "...";
+          this.tradeList[i].fromAddress2 = this.tradeList[i].fromAddress;
+          this.tradeList[i].fromAddress =
+            this.tradeList[i].fromAddress.substring(0, 8) + "...";
+          this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
+          this.tradeList[i].toAddress =
+            this.tradeList[i].toAddress.substring(0, 8) + "...";
+          this.tradeList[i].tradeTime = this.timestampToTime(
+            res.result.tradeList[i].tradeTime
+          );
+        }
     },
     //获取MEDIA
     // async blocklist() {

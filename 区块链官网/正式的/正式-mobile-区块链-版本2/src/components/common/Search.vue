@@ -2,15 +2,31 @@
   <!-- 搜索栏区域 -->
   <div class="indexsecondsearch">
     <div class="searchleft">
-      <el-select v-model="value" placeholder="请选择" @change="selectChanged">
+      <div class="left_area">
+        <span
+          @click="bottomShow"
+          style="font-size: 14px;
+font-family: PingFang SC;
+font-weight: 600;
+line-height: 20px;
+color: #253551;
+opacity: 1;margin-left:14px"
+        >
+          {{ valuename }} <van-icon name="arrow-down"
+        /></span>
+      </div>
+
+      <!-- <el-select v-model="value" placeholder="请选择" @change="selectChanged">
         <el-option
-          v-for="item in select"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+        选择
         >
         </el-option>
-      </el-select>
+      </el-select> -->
+      <van-popup v-model="showbottom" position="bottom">
+        <li v-for="item in select" :key="item.value" @click="selected(item)">
+          {{ item.label }}
+        </li>
+      </van-popup>
     </div>
     <!-- <i
       class="el-icon-minus"
@@ -37,16 +53,18 @@ height: 33px;"
   </div>
 </template>
 <script>
-import {AddressSearch,TransactionSearch,BlockSearch} from  "@server/api.js";
+import { GETADDRESSDETAIL, BlockSearch } from "@server/api.js";
 export default {
   name: "search",
   inject: ["reload"],
   data() {
     return {
+      valuename: "",
       iconvalue: "UENC地址",
       fullscreenLoading: false,
       nowLang: "",
       show: false,
+      showbottom: false,
       sticky2: false,
       inputvalue: "",
       // 搜索下拉列表
@@ -67,16 +85,20 @@ export default {
   },
   props: {
     select: Array,
+    valuename: String,
   },
   watch: {},
   created() {
     this.nowLang = this.$i18n.locale;
+
     //  this.select=select;
-    if (this.$i18n.locale == "cn") {
-      this.iconvalue = "UENC地址";
-    } else {
-      this.iconvalue = "Address";
-    }
+    // if (this.$i18n.locale == "cn") {
+    //   this.iconvalue = "UENC地址";
+    //   this.valuename = "请选择";
+    // } else {
+    //   this.iconvalue = "Address";
+    //   this.valuename = "Select";
+    // }
     //console.log(this.$i18n.locale);
 
     if (this.value == "") {
@@ -86,6 +108,15 @@ export default {
   mounted() {},
   destroyed() {},
   methods: {
+    bottomShow() {
+      this.showbottom = true;
+    },
+    selected(item) {
+      // console.log(item.value);
+      this.value = item.value;
+      this.valuename = item.label;
+      this.showbottom = false;
+    },
     // selectChanged(value) {
 
     //   switch (value) {
@@ -179,144 +210,92 @@ export default {
           }
 
           break;
-        // 区块哈希
-        case "3":
-          //  console.log('3');
-          if (this.inputvalue !== "") {
-            //this.fullscreenLoading = true;
-            this.blockhaxisearch();
-          }
-
-          break;
+      }
+    },
+      // 根据交易易哈希查询相关交易易信息
+    async transactiondetaillist() {
+      const res = await GETADDRESSDETAIL({ type: "2", key: this.inputvalue,pageNum:'1',pageSize:'5'  });
+      if (res.code == 200) {
+        this.$router.push({
+          path: "/transactiondetail",
+          query: {
+            txhash: this.inputvalue,
+            // transaction_award:this.transaction_award
+          },
+        });
+        this.reload();
+        this.inputvalue = "";
+      } else {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "transaction" },
+        });
+        this.reload();
       }
     },
     //地址搜索
     async addresssearch() {
-      let that = this;
-      await that.$http
-        .get(AddressSearch, {
-          params: {
-            wallet_address: this.inputvalue,
-            pageNum: 1,
-            pageSize: 20,
-          },
-        })
-        .then((res) => {
-          // console.log(res);
-          //   console.log(res.data[0].total_page[0].totalPageNum);
-          if (res.data[0].total_page[0].totalPageNum !== 0) {
-            this.$router.push({
-              path: "/addressdetail",
-              query: { address: this.inputvalue },
-            });
-            this.reload();
-            this.inputvalue = "";
-          } else {
-            this.errmsg();
-            this.inputvalue = "";
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
+      const res = await GETADDRESSDETAIL({ type: "1", key: this.inputvalue,pageNum:'1',pageSize:'5' });
+      // console.log(res);
+      //   console.log(res.data[0].total_page[0].totalPageNum);
+      if (res.result.detailList.length == 0) {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "address" },
+        });
+        this.reload();
+      } else {
+        this.$router.push({
+          path: "/addressdetail",
+          query: { address: this.inputvalue },
+        });
+        this.reload();
+        this.inputvalue = "";
+      }
     },
     // 区块高度搜索
     async blocksearch() {
-      let that = this;
-      await that.$http
-        .get(BlockSearch, {
-          params: {
-            block_height: this.inputvalue,
-            pageNum: 1,
-            pageSize: 20,
+      const res = await GETADDRESSDETAIL({ type: "3", key: this.inputvalue,pageNum:'1',pageSize:'5' });
+      if (res.code == 200) {
+        this.$router.push({
+          path: "/blockdetail",
+          query: {
+            block: this.inputvalue,
+            // transaction_award:this.transaction_award
           },
-        })
-        .then((res) => {
-          //  console.log(res);
-          if (res.data[0].total_record[0].total_record !== 0) {
-            this.$router.push({
-              path: "/blockdetail",
-              query: {
-                block: this.inputvalue,
-                // transaction_award:this.transaction_award
-              },
-            });
-            this.reload();
-            this.inputvalue = "";
-          } else {
-            this.errmsg();
-            this.inputvalue = "";
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
-    },
-    // 根据交易易哈希查询相关交易易信息
-    async transactiondetaillist() {
-      let that = this;
-      await that.$http
-        .get(TransactionSearch, {
-          params: {
-            transaction_hash: this.inputvalue,
-          },
-        })
-        .then((res) => {
-          //  console.log(res);
-          if (res.data[0].select_status === 1) {
-            this.$router.push({
-              path: "/transactiondetail",
-              query: {
-                transaction_hash: this.inputvalue,
-                // transaction_award:this.transaction_award
-              },
-            });
-            this.reload();
-          } else {
-            this.errmsg();
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
-    },
-    // 区块哈希搜索
-    async blockhaxisearch() {
-      let that = this;
-      var blockData = [];
-      await that.$http
-        .get("/search_blockInfo_blockHash", {
-          params: {
-            block_hash: this.inputvalue,
-          },
-        })
-        .then((res) => {
-          // console.log(res);
-          if (res.data[0].search_main_transactionInfo.length !== 0) {
-            this.$router.push({
-              path: "/blockdetails",
-              query: { blockhaxi: this.inputvalue },
-            });
-            this.reload();
-          } else {
-            this.$router.push({
-              path: "/notfound",
-              query: {},
-            });
-          }
-        })
-        .catch((err) => {});
+        });
+        this.reload();
+        this.inputvalue = "";
+      } else {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "height" },
+        });
+        this.reload();
+        // this.$router.push({
+        //   path: "/notfound",
+        //   query: {},
+        // });
+      }
     },
   },
 };
 </script>
 <style lang="less">
+.van-popup--bottom {
+  background: #fff;
+  height: 20%;
+  li {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 18px;
+    // background: chartreuse;
+  }
+}
 .el-scrollbar__wrap {
   overflow: none;
 }
@@ -343,6 +322,14 @@ export default {
     width: 12px;
   }
   .searchleft {
+    .left_area {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .van-icon {
+        line-height: 20px;
+      }
+    }
   }
   .el-input__inner {
     height: 42px;
@@ -364,7 +351,7 @@ export default {
     outline: none;
   }
   .el-input__icon {
-    line-height: 45px;
+    line-height: 39px;
   }
   .el-select .el-input.is-focus .el-input__inner {
     border-color: none !important;

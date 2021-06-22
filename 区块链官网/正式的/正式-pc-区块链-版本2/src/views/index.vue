@@ -45,6 +45,18 @@
           </div>
           <!-- <div class="line_right2"></div> -->
         </ul>
+        <ul class="last">
+          <div class="node_award"></div>
+          <div>
+            <div class="center_top">
+              {{ lastDayAvgAward }}
+            </div>
+            <div class="center_bottom">
+              {{ $t("transaction")[2] }}
+            </div>
+          </div>
+          <!-- <div class="line_right2"></div> -->
+        </ul>
       </div>
       <div class="info_line"></div>
       <div class="info_top info_bottom">
@@ -80,6 +92,18 @@
             </div>
             <div class="center_bottom">
               {{ $t("index")[5] }}
+            </div>
+          </div>
+          <!-- <div class="line_right2"></div> -->
+        </ul>
+        <ul class="last">
+          <div class="liu_num"></div>
+          <div>
+            <div class="center_top">
+              {{ totalTradeAmount }}
+            </div>
+            <div class="center_bottom">
+             {{ $t("transaction")[3] }}
             </div>
           </div>
           <!-- <div class="line_right2"></div> -->
@@ -120,6 +144,10 @@ export default {
       blockreward: "",
       // 剩余区块奖励
       blocklastreward: "",
+      // 流通总量
+     totalTradeAmount:'',
+      // 选举节点预计收益
+      lastDayAvgAward:'',
       echartsed: [],
       // 本页面
       tableData: [],
@@ -148,7 +176,7 @@ export default {
   },
   mounted() {
     this.indexlists();
-    setInterval(this.indexlists, 20000);
+    // setInterval(this.indexlists, 20000);
   },
   methods: {
     qianwei(str) {
@@ -170,7 +198,7 @@ export default {
       if (this.nowLang == "cn") {
         for (var i = 0; i < this.tableData.length; i++) {
           this.tableData[i].amount = Number(this.tableData[i].amount).toFixed(
-            2
+           6
           );
           this.tableData[i].txhash2 = this.tableData[i].txhash;
           this.tableData[i].txhash =
@@ -206,32 +234,26 @@ export default {
             this.tableData[i].date = date;
           }
           // console.log(this.tableData[i].date);
+           this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
           this.tableData[i].fromAddress =
-            this.tableData[i].fromAddress.substring(0, 8) + "...";
-          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
-          this.tableData[i].toAddress =
-            this.tableData[i].toAddress.substring(0, 8) + "...";
-          this.tableData[i].toAddress2 = this.tableData[i].toAddress;
+            this.tableData[i].fromAddress.substring(0, 12) + "...";
+           this.tableData[i].toAddress2 = this.tableData[i].toAddress;
+          if (this.tableData[i].toAddress == "质押") {
+            this.tableData[i].toAddress = "质押";
+          } else {
+            this.tableData[i].toAddress =
+              this.tableData[i].toAddress.substring(0, 12) + "...";
+          }
 
-          // if (
-          //   this.tableData[i].toAddress == "0000000000000000000000000000000000"
-          // ) {
-          //   if (this.nowLang == "cn") {
-          //     this.tableData[i].toAddress = "质押";
-          //   }
-          //   if (this.nowLang == "en") {
-          //     this.tableData[i].toAddress = "Pledge";
-          //   }
-          // } else {
-          //   this.tableData[i].toAddress =
-          //     this.tableData[i].toAddress.substring(0, 8) + "...";
-          // }
+        
+
+          
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
           this.tableData2[j].blockAward = Number(
             this.tableData2[j].blockAward
-          ).toFixed(2);
+          ).toFixed(6);
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -303,12 +325,17 @@ export default {
           this.tableData[i].txhash =
             this.tableData[i].txhash.substring(0, 10) + "...";
           this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
+            this.tableData[i].toAddress2 = this.tableData[i].toAddress;
           this.tableData[i].fromAddress =
-            this.tableData[i].fromAddress.substring(0, 8) + "...";
-          this.tableData[i].toAddress =
-            this.tableData[i].toAddress.substring(0, 8) + "...";
+            this.tableData[i].fromAddress.substring(0, 12) + "...";
+          if (this.tableData[i].toAddress == "质押") {
+            this.tableData[i].toAddress = "Pledge";
+          } else {
+            this.tableData[i].toAddress =
+              this.tableData[i].toAddress.substring(0,12) + "...";
+          }
 
-          this.tableData[i].toAddress2 = this.tableData[i].toAddress;
+        
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
@@ -362,6 +389,10 @@ export default {
 
       //24小时交易笔数?
       this.transzoom = this.qianwei(data.lastDayTradeNums);
+      // 选举节点预计收益
+      this.lastDayAvgAward=data.lastDayAvgAward;
+      // 流通总量
+      this.totalTradeAmount=this.qianwei(data.totalTradeAmount);
     },
     timestampToTime2(timestamp) {
       var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -488,6 +519,34 @@ export default {
       center/100% 100%;
   }
 }
+@keyframes d-pro7 {
+  0% {
+    background: url("../assets/images/second/1H节点平均收益.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/1H节点平均收益.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/1H节点平均收益.gif") no-repeat
+      center/100% 100%;
+  }
+}
+@keyframes d-pro8 {
+  0% {
+    background: url("../assets/images/second/1H签名节点个数.gif") no-repeat
+      center/100% 100%;
+  }
+  50% {
+    background: url("../assets/images/second/1H签名节点个数.gif") no-repeat
+      center/100% 100%;
+  }
+  100% {
+    background: url("../assets/images/second/1H签名节点个数.gif") no-repeat
+      center/100% 100%;
+  }
+}
 .el-icon-arrow-right {
 }
 .more {
@@ -557,6 +616,7 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     height: 60px;
     align-items: center;
     // margin-left: 97.13px;
@@ -590,20 +650,31 @@ export default {
         animation: d-pro3 0.5s;
       }
     }
+    ul:nth-child(4):hover {
+      .node_award {
+        width: 60px;
+        height: 60px;
+        animation-iteration-count: 1;
+        animation: d-pro7 0.5s;
+      }
+    }
 
     ul:nth-child(3) {
       // margin-left: 95px;
     }
+    ul:nth-child(4) {
+      padding-right: 90px;
+    }
     ul {
-      width: 422px;
-      border-right: 2px solid #e9eced;
+      // width: 422px;
+      // border-right: 2px solid #e9eced;
       //background: chocolate;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding-left: 97px;
-      padding-right: 101px;
+      padding-left: 89px;
+      // padding-right: 101px;
       div:nth-child(2) {
         width: 120px;
         text-align: right;
@@ -635,7 +706,12 @@ export default {
         background: url("../assets/images/second/已发放奖励.png") no-repeat
           center/100% 100%;
       }
-
+      .node_award {
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/1H节点平均收益.png") no-repeat
+          center/100% 100%;
+      }
       .alljiedian {
         width: 60px;
         height: 60px;
@@ -654,6 +730,12 @@ export default {
         width: 60px;
         height: 60px;
         background: url("../assets/images/second/剩余区块奖励.png") no-repeat
+          center/100% 100%;
+      }
+      .liu_num {
+        width: 60px;
+        height: 60px;
+        background: url("../assets/images/second/1H签名节点个数.png") no-repeat
           center/100% 100%;
       }
     }
@@ -685,6 +767,15 @@ export default {
         height: 60px;
         animation-iteration-count: 1;
         animation: d-pro6 0.5s;
+      }
+    }
+    ul:nth-child(4):hover {
+     
+      .liu_num {
+        width: 60px;
+        height: 60px;
+        animation-iteration-count: 1;
+        animation: d-pro8 0.5s;
       }
     }
   }

@@ -42,14 +42,13 @@ export default {
           text: this.test1,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: [20, 0, 0, 20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          //padding: [20, 0, 0, 20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
-            color: "rgba(81, 81, 81, 1)",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
+            fontSize: "14",
+            fontFamily: "PingFang SC",
             fontWeight: "bolder",
-            color: "#000000",
+            color: "#253551",
           },
         },
         xAxis: {
@@ -68,12 +67,28 @@ export default {
             //y轴刻度线
             show: false,
           },
+           axisLabel: {
+            // fontSize: "10",
+            fontSize: "12",
+            fontFamily: "PingFang SC",
+           
+          
+            color: "#9DA5BB",
+          },
         },
         yAxis: {
           // max: function(value) {
           //   return parseInt(value.max + 20);
           // },
-          splitNumber: 2,
+          axisLabel: {
+            // fontSize: "10",
+            fontSize: "12",
+            fontFamily: "PingFang SC",
+            fontWeight: "400",
+            lineHeight: "17",
+            color: "#9DA5BB",
+          },
+          splitNumber: 3,
           type: "value",
           position: "left",
           splitLine: { show: true }, //去除网格线
@@ -103,7 +118,7 @@ export default {
               },
               lineStyle: {
                 // 系列级个性化折线样式
-                width: 3,
+                width: 4,
                 type: "solid",
                 color: "green", //折线的颜色
               },
@@ -135,6 +150,29 @@ export default {
           xAxis: {
             data: transaction_num,
           },
+          visualMap: {
+            type: "piecewise",
+            show: false,
+            dimension: 0,
+            seriesIndex: 0,
+            pieces: [
+              {
+                gt: 0,
+                lt: 1,
+                color: "rgba(219, 229, 255, 1)",
+              },
+              {
+                gt: 2,
+                lt: 3,
+                color: "rgba(219, 229, 255, 1)",
+              },
+              {
+                gt: 4,
+                lt: 5,
+                color: "rgba(219, 229, 255, 1)",
+              },
+            ],
+          },
           tooltip: {
             borderWidth: 1,
             extraCssText: "z-index:2",
@@ -161,24 +199,8 @@ export default {
             },
           },
           series: [
-            // {
-            //   name: "军费支出",
-            //   type: "bar",
-            //   barWidth: "20%",
-
-            //   itemStyle: {
-            //     normal: {
-            //       color: "#4169E1", //柱子的颜色
-            //     },
-            //   },
-            //   backgroundStyle: {
-            //     borderRadius: 10, // 统一设置四个角的圆角大小
-            //     shadowColor: "rgba(0, 0, 0, 0.5)",
-            //     shadowBlur: 10,
-            //   },
-            //   data: block_award,
-            // },
             {
+              symbolOffset: [0, -4],
               data: block_award,
               type: "line",
               showSymbol: false,
@@ -204,15 +226,15 @@ export default {
                   },
                 },
               },
-              areaStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: "#965EE5" },
-                    { offset: 0.4, color: "#965EE5" },
-                    { offset: 1, color: "#fff" },
-                  ]),
-                },
-              },
+              // areaStyle: {
+              //   normal: {
+              //     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              //       { offset: 0, color: "#965EE5" },
+              //       { offset: 0.4, color: "#965EE5" },
+              //       { offset: 1, color: "#fff" },
+              //     ]),
+              //   },
+              // },
               lineStyle: {
                 color: "#965EE5", //改变折线颜色
               },
@@ -230,15 +252,21 @@ export default {
           text: this.test2,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: [20, 0, 0, 20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          //padding: [20, 0, 0, 20], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
           itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
-            color: "#000000",
-            fontSize: "18px",
-            fontFamily: "Microsoft YaHei",
+            color: "#253551",
+            fontSize: "14",
+            fontFamily: "PingFang SC",
             fontWeight: "bolder",
           },
         },
+        grid: {
+          width: "auto",
+          heigth: "300",
+          borderWidth: 1,
+        },
+
         xAxis: {
           type: "category",
           data: [],
@@ -251,9 +279,24 @@ export default {
             //y轴刻度线
             show: false,
           },
+           axisLabel: {
+            // fontSize: "10",
+            fontSize: "12",
+            fontFamily: "PingFang SC",
+          
+            color: "#9DA5BB",
+          },
         },
         yAxis: {
-          splitNumber: 2,
+          axisLabel: {
+            // fontSize: "10",
+            fontSize: "12",
+            fontFamily: "PingFang SC",
+            fontWeight: "400",
+            lineHeight: "17",
+            color: "#9DA5BB",
+          },
+          splitNumber: 3,
           // max: function(value) {
           //   return parseInt(value.max);
           // },
@@ -292,14 +335,13 @@ export default {
       });
       const res2 = await GETINDEX();
       for (var i = 0; i < res2.result.barChart.length + 1; i++) {
-        block_award_time.unshift(res2.result.barChart[i].amount);
-        transaction_num_time.unshift(
+        block_award_time.push(res2.result.barChart[i].amount);
+        transaction_num_time.push(
           res2.result.barChart[i].dayTime.substring(5, 10)
         );
         //console.log(block_award_time);
         //console.log(transaction_num_time);
         myChart2.setOption({
-         
           xAxis: {
             type: "category",
             data: transaction_num_time,
@@ -315,7 +357,7 @@ export default {
           },
           yAxis: {
             type: "value",
-            splitLine: { show:true }, //去除网格线
+            splitLine: { show: true }, //去除网格线
             axisLine: {
               //y轴
               show: false,
@@ -424,7 +466,7 @@ export default {
     width: 343px;
     height: 322px;
     // border: 1px solid #e9eced;
-    opacity: 1;
+    padding-top: 20px;
     // border-radius: 18px;
     // div {
     //   width: 626px !important;

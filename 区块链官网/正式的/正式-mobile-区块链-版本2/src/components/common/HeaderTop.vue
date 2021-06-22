@@ -83,7 +83,7 @@
       </ul></van-popup
     >
 
-    <Search :select="select"></Search>
+    <Search :select="select" :valuename='valuename'></Search>
   </div>
 </template>
 
@@ -118,6 +118,7 @@ export default {
     } else {
       this.$i18n.locale = localStorage.getItem("lang");
     }
+   
     this.nowLang = localStorage.getItem("lang");
     if (this.$i18n.locale == "cn") {
       this.select = [
@@ -138,6 +139,7 @@ export default {
         //   label: "区块哈希",
         // },
       ];
+       this.valuename = "请选择";
     }
     if (this.$i18n.locale == "en") {
       this.select = [
@@ -158,6 +160,7 @@ export default {
         //   label: "Block",
         // },
       ];
+       this.valuename = "Select";
     }
     this.language = this.nowLang;
     if (this.language == "cn") {
@@ -208,8 +211,8 @@ export default {
     },
     changeLanguage() {
       // console.log(localStorage.lang);
-      console.log(this.$i18n.locale);
-      console.log(localStorage.getItem("lang"));
+      // console.log(this.$i18n.locale);
+      // console.log(localStorage.getItem("lang"));
       if (this.$i18n.locale == "cn") {
         this.$i18n.locale = "en";
         localStorage.setItem("lang", this.$i18n.locale);
@@ -231,6 +234,7 @@ export default {
           //   label: "Block",
           // },
         ];
+         this.valuename = "Select";
         this.language = "1";
         this.language2 = "中文";
         this.$store.commit("menuState", true);
@@ -256,6 +260,7 @@ export default {
           //   label: "区块哈希",
           // },
         ];
+         this.valuename = "请选择";
         this.language = "2";
         this.language2 = "En";
         this.$store.commit("menuState", true);

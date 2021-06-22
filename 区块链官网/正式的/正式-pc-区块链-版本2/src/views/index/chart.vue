@@ -41,7 +41,7 @@ export default {
     //   clearInterval(timer);
     // });
     this.chartSecond();
-     setInterval(this.chartSecond, 20000);
+    // setInterval(this.chartSecond, 20000);
   },
   beforeDestroy() {
     clearInterval(this.chartSecond);
@@ -130,10 +130,12 @@ export default {
       });
       const res = await GETINDEX();
       for (var i = 0; i < res.result.lineChart.length + 1; i++) {
-      
         block_award.unshift(res.result.lineChart[i].blockAward);
         block_award_time.unshift(
-          this.timestampToTime2(res.result.lineChart[i].tradeTime).substring(10)
+          this.timestampToTime2(res.result.lineChart[i].tradeTime).substring(
+            10,
+            17
+          )
         );
         this.loading = false;
         //  console.log(ranliaoaverage);
@@ -143,6 +145,7 @@ export default {
         myChart.setOption({
           xAxis: {
             data: block_award_time,
+            nameLocation: "center",
           },
           tooltip: {
             borderWidth: 1,
@@ -169,24 +172,30 @@ export default {
               },
             },
           },
+          visualMap: {
+            type: "piecewise",
+            show: false,
+            dimension: 0,
+            seriesIndex: 0,
+            pieces: [
+              {
+                gt: 0,
+                lt: 1,
+                color: "rgba(219, 229, 255, 1)",
+              },
+              {
+                gt: 2,
+                lt: 3,
+                color: "rgba(219, 229, 255, 1)",
+              },
+              {
+                gt: 4,
+                lt: 5,
+                color: "rgba(219, 229, 255, 1)",
+              },
+            ],
+          },
           series: [
-            // {
-            //   name: "军费支出",
-            //   type: "bar",
-            //   barWidth: "20%",
-
-            //   itemStyle: {
-            //     normal: {
-            //       color: "#4169E1", //柱子的颜色
-            //     },
-            //   },
-            //   backgroundStyle: {
-            //     borderRadius: 10, // 统一设置四个角的圆角大小
-            //     shadowColor: "rgba(0, 0, 0, 0.5)",
-            //     shadowBlur: 10,
-            //   },
-            //   data: block_award,
-            // },
             {
               data: block_award,
               type: "line",
@@ -195,11 +204,12 @@ export default {
               areaStyle: {},
               symbol: "circle", //拐点样式
               smooth: true, //true 为平滑曲线，false为直线
+              symbolOffset: [0, -10],
               itemStyle: {
                 normal: {
                   color: "#fff",
                   borderColor: "#965EE5",
-                  borderWidth: 3,
+                  borderWidth: 4,
                   label: {
                     show: false,
                     position: "left",
@@ -215,15 +225,16 @@ export default {
               },
               areaStyle: {
                 normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: "#965EE5" },
-                    { offset: 0.4, color: "#965EE5" },
-                    { offset: 1, color: "#fff" },
-                  ]),
+                  // color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                  //   { offset: 0, color: "#965EE5" },
+                  //   { offset: 0.2, color: "#965EE5" },
+                  //   { offset: 1, color: "#fff" },
+                  // ]),
                 },
               },
               lineStyle: {
                 color: "#965EE5", //改变折线颜色
+                width: 4,
               },
             },
           ],
@@ -307,7 +318,7 @@ export default {
         // part.unshif(res.result.barChart[i].transaction_amount_for_24H)
         // console.log(res.result.barChart[i].transaction_amount_for_24H);
         // console.log(part);
-        transaction_num.unshift(res.result.barChart[i].amount);
+        transaction_num.push(res.result.barChart[i].amount);
         transaction_num.forEach(function(val, index, arr) {
           // console.log(val);
           // if (Number(val / 1000000) >= 1) {
@@ -317,10 +328,10 @@ export default {
           // console.log(val);
           // val = 10000;
           // console.log(arr);
-          transaction_num2.unshift(val);
+          // transaction_num2.unshift(val);
         });
-        transaction_num_time.unshift(
-         res.result.barChart[i].dayTime.substring(5, 10)
+        transaction_num_time.push(
+          res.result.barChart[i].dayTime.substring(5, 10)
         );
         //console.log(block_award_time);
         //console.log(transaction_num_time);

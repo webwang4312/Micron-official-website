@@ -20,7 +20,7 @@ const en = {
         'Blockchain', 'Block', 'Transaction', 'Rich list', 'Chart'
 
     ],
-    transaction:['transaction details','show more','More information'],
+    transaction:['transaction details','show more','more information',"Estimated average return of election nodes",'Total Circulation'],
     search:['Search address, transaction, block hash, block height, etc.'],
     index:['block height', '24hr transaction count','rewards already distributed','no. of nodes','cumulative transactions','remaining block reward','newest transaction','latest block','More ','From','to'],
     block: ['block list','time','transaction count','trading num','block reward'],

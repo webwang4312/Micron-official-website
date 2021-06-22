@@ -14,6 +14,19 @@
           </div>
         </li>
         <li>
+          <div class="alljiedian"></div>
+          <div>
+            <div class="center_top">
+              {{ jiediancount }}
+            </div>
+            <div class="center_bottom">
+              {{ $t("index")[3] }}
+            </div>
+          </div>
+        </li>
+      </ul>
+      <ul>
+        <li>
           <div class="transaction24"></div>
           <div>
             <div class="center_top">
@@ -21,6 +34,17 @@
             </div>
             <div class="center_bottom">
               {{ $t("index")[1] }}
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="alltransaction"></div>
+          <div>
+            <div class="center_top">
+              {{ transnumber }}
+            </div>
+            <div class="center_bottom">
+              {{ $t("index")[4] }}
             </div>
           </div>
         </li>
@@ -38,30 +62,6 @@
           </div>
         </li>
         <li>
-          <div class="alljiedian"></div>
-          <div>
-            <div class="center_top">
-              {{ jiediancount }}
-            </div>
-            <div class="center_bottom">
-              {{ $t("index")[3] }}
-            </div>
-          </div>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <div class="alltransaction"></div>
-          <div>
-            <div class="center_top">
-              {{ transnumber }}
-            </div>
-            <div class="center_bottom">
-              {{ $t("index")[4] }}
-            </div>
-          </div>
-        </li>
-        <li>
           <div class="last_award"></div>
           <div>
             <div class="center_top">
@@ -73,7 +73,30 @@
           </div>
         </li>
       </ul>
-
+      <ul>
+        <li>
+          <div class="node_award"></div>
+          <div>
+            <div class="center_top">
+              {{ lastDayAvgAward }}
+            </div>
+            <div class="center_bottom">
+              {{ $t("transaction")[2] }}
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="liu_num"></div>
+          <div>
+            <div class="center_top">
+              {{ totalTradeAmount }}
+            </div>
+            <div class="center_bottom">
+              {{ $t("transaction")[3] }}
+            </div>
+          </div>
+        </li>
+      </ul>
       <!--     
       <div class="info_top info_bottom">
         
@@ -117,6 +140,10 @@ export default {
       blocklastreward: "",
       // 节点数量
       jiediancount: "",
+      // 流通总量
+      totalTradeAmount: "",
+      // 选举节点预计收益
+      lastDayAvgAward: "",
       // 本页面
       tableData: [],
       tableData2: [],
@@ -130,7 +157,7 @@ export default {
     this.indexlists();
   },
   mounted() {
-     setInterval(this.indexlists, 20000);
+    setInterval(this.indexlists, 20000);
   },
   methods: {
     qianwei(str) {
@@ -156,7 +183,7 @@ export default {
       this.$router.push({
         path: "/transactiondetail",
         query: {
-          transaction_hash: item,
+          txhash: item,
         },
       });
     },
@@ -220,27 +247,19 @@ export default {
             this.tableData[i].date = date;
           }
           // console.log(this.tableData[i].date);
-
+          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
+          this.tableData[i].toAddress2 = this.tableData[i].toAddress;
           this.tableData[i].fromAddress =
             this.tableData[i].fromAddress.substring(0, 8) + "...";
-          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
 
-          this.tableData[i].toAddress =
-            this.tableData[i].toAddress.substring(0, 8) + "...";
-          this.tableData[i].toAddress2 = this.tableData[i].toAddress;
-          // if (
-          //   this.tableData[i].toAddress == "0000000000000000000000000000000000"
-          // ) {
-          //   if (this.nowLang == "cn") {
-          //     this.tableData[i].toAddress = "质押";
-          //   }
-          //   if (this.nowLang == "en") {
-          //     this.tableData[i].toAddress = "Pledge";
-          //   }
-          // } else {
-          //   this.tableData[i].toAddress =
-          //     this.tableData[i].toAddress.substring(0, 8) + "...";
-          // }
+          if (this.tableData[i].toAddress == "质押") {
+            this.tableData[i].toAddress = "质押";
+          } else {
+            this.tableData[i].toAddress =
+              this.tableData[i].toAddress.substring(0, 8) + "...";
+          }
+          // this.tableData[i].toAddress =
+          //   this.tableData[i].toAddress.substring(0, 8) + "...";
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
@@ -316,8 +335,12 @@ export default {
           this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
           this.tableData[i].fromAddress =
             this.tableData[i].fromAddress.substring(0, 8) + "...";
-          this.tableData[i].toAddress =
-            this.tableData[i].toAddress.substring(0, 8) + "...";
+          if (this.tableData[i].toAddress == "质押") {
+            this.tableData[i].toAddress = "Pledge";
+          } else {
+            this.tableData[i].toAddress =
+              this.tableData[i].toAddress.substring(0, 8) + "...";
+          }
 
           this.tableData[i].toAddress2 = this.tableData[i].toAddress;
         }
@@ -373,6 +396,10 @@ export default {
 
       //24小时交易笔数?
       this.transzoom = this.qianwei(data.lastDayTradeNums);
+      // 选举节点预计收益
+      this.lastDayAvgAward = data.lastDayAvgAward;
+      // 流通总量
+      this.totalTradeAmount = this.qianwei(data.totalTradeAmount);
     },
     timestampToTime2(timestamp) {
       var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -531,12 +558,25 @@ export default {
         background: url("../assets/images/second/剩余区块奖励.png") no-repeat
           center/100% 100%;
       }
+
       // .last_award:hover {
       //   width: 44px;
       //   height: 44px;
       //   background: url("../assets/images/second/剩余区块奖励.gif") no-repeat
       //     center/100% 100%;
       // }
+      .liu_num {
+        width: 44px;
+        height: 44px;
+        background: url("../assets/images/second/1H签名节点个数.png") no-repeat
+          center/100% 100%;
+      }
+      .node_award {
+        width: 44px;
+        height: 44px;
+        background: url("../assets/images/second/1H节点平均收益.png") no-repeat
+          center/100% 100%;
+      }
     }
     .center_bottom {
       font-size: 14px;

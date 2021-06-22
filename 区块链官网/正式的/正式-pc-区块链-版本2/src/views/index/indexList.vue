@@ -221,8 +221,8 @@ export default {
             }
           }
           .content_center {
-            width: 140px;
-            margin-right: 75px;
+            width: 180px;
+            // margin-right: 75px;
             span:nth-child(1),
             span:nth-child(3) {
               font-size: 15px;

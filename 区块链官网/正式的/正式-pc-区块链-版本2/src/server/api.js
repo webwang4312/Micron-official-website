@@ -3,34 +3,24 @@ import { get, gets, post, posts } from './server.js'
 export const base='http://47.98.110.210:9002'
 // 获取首页数据
 export const GETINDEX = p => post(base+'/ethbrowser/home/getHomeData', p);
-//  区块列表
-export const GetBlockList = p => get(base+'/get_block_list_for_all', p);
-//  交易列表
-export const GetTransactionList = p => get(base+'/search_transaction_list_all', p);
+// 搜索地址详情、搜索交易哈希,高度详情
+ export const GETADDRESSDETAIL = p => post(base+'/ethbrowser/home/searchKey', p);
+// 搜索地址详情分页
+export const GETADDRESSDETAIL2 = p => post(base+'/ethbrowser/home/addrTradeList', p);
 //  富豪榜
-export const GetAddressList = p => get(base+'/get_address_list_for_all', p);
-//  搜索区块详情
-export const GetBlockListDetail = p => get(base+'/search_blockHeight_for_height', p);
-//  搜索交易详情
-export const GetTransactionListDetail = base+'/search_transactionHash_detailInfo';
-// 搜索地址详情
-export const GetAddressListDetail = p => get(base+'/search_transactionInfo_walletAddress', p);
-// 地址详情2
-export const GetAddressListDetail2 = p => get(base+'/wallet_address_overview', p);
+export const GETADDRESS = p => post(base+'/ethbrowser/home/richList', p);
+//  区块列表
+export const GETBLOCK = p => post(base+'/ethbrowser/home/blockList', p);
+//  交易列表
+export const GETTRANSACTION = p => post(base+'/ethbrowser/home/tradeList', p);
 // 图表页面
 export const GetChartAll =base+'/show_graph_data';
 // 图表节点
 export const GetChart = base+'/search_top_n';
-// 地址搜索
-export const AddressSearch = base+'/search_transactionInfo_walletAddress';
-// 交易哈希搜索
-export const TransactionSearch = base+'/search_transactionHash_detailInfo';
-// 高度搜索
-export const BlockSearch = base+'/search_blockHeight_for_height';
 
 // 时间的处理
 export function timestampToTime(timestamp) {
-    var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var date = new Date(timestamp *1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var Y = date.getFullYear() + "-";
     if (Y == "2021-") {
         Y = "";

@@ -17,10 +17,10 @@
       style="color:rgba(85, 131, 255, 1);transform:rotate(90deg);width: 0px;
 height: 33px;"
     ></i> -->
-    <div style="width: 2px;background:#6624FA;
-height: 23px;">
-
-    </div>
+    <div
+      style="width: 2px;background:#6624FA;
+height: 23px;"
+    ></div>
     <div class="searchcenter">
       <input
         type="text"
@@ -37,7 +37,7 @@ height: 23px;">
   </div>
 </template>
 <script>
-import {AddressSearch,TransactionSearch,BlockSearch} from  "@server/api.js";
+import { GETADDRESSDETAIL, BlockSearch } from "@server/api.js";
 export default {
   name: "foot",
   data() {
@@ -196,7 +196,7 @@ export default {
         case "0":
           // console.log('0');
           if (this.inputvalue !== "") {
-           this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             //this.fullscreenLoading = true;
             this.addresssearch();
           }
@@ -206,7 +206,7 @@ export default {
           //  console.log('1');
           // 区块高度
           if (this.inputvalue !== "") {
-             this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             //this.fullscreenLoading = true;
             this.blocksearch();
           }
@@ -215,152 +215,80 @@ export default {
         case "2":
           //  console.log('2');
           if (this.inputvalue !== "") {
-             this.inputvalue=this.inputvalue.replace(/\s*/g,"");
+            this.inputvalue = this.inputvalue.replace(/\s*/g, "");
             //this.fullscreenLoading = true;
             this.transactiondetaillist();
           }
 
           break;
-        // 区块哈希
-        // case "3":
-        //   //  console.log('3');
-        //   if (this.inputvalue !== "") {
-        //     //this.fullscreenLoading = true;
-        //     this.blockhaxisearch();
-        //   }
-
-        //   break;
       }
     },
     //地址搜索
     async addresssearch() {
-      let that = this;
-      await that.$http
-        .get(AddressSearch, {
-          params: {
-            wallet_address: this.inputvalue,
-            pageNum: 1,
-            pageSize: 20,
-          },
-        })
-        .then((res) => {
-          //   console.log(res.data[0].total_page[0].totalPageNum);
-          if (res.data[0].search_wallet_balance_for_walletAddress.length == 0) {
-            this.$router.push({
-              path: "/notfound",
-              query: { address: "address" },
-            });
-            this.reload();
-          } else {
-            this.$router.push({
-              path: "/addressdetail",
-              query: { address: this.inputvalue },
-            });
-             this.reload();
-             this.inputvalue=''
-          }
-        })
-        .catch((err) => {});
+      const res = await GETADDRESSDETAIL({ type: "1", key: this.inputvalue,pageNum:'1',pageSize:'5'  });
+      // console.log(res);
+      //   console.log(res.data[0].total_page[0].totalPageNum);
+      if (res.result.detailList.length == 0) {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "address" },
+        });
+        this.reload();
+      } else {
+        this.$router.push({
+          path: "/addressdetail",
+          query: { address: this.inputvalue },
+        });
+        this.reload();
+        this.inputvalue = "";
+      }
     },
     // 区块高度搜索
     async blocksearch() {
-      let that = this;
-      await that.$http
-        .get(BlockSearch, {
-          params: {
-            block_height: this.inputvalue,
-            pageNum: 1,
-            pageSize: 20,
+      const res = await GETADDRESSDETAIL({ type: "3", key: this.inputvalue,pageNum:'1',pageSize:'5'  });
+      if (res.code == 200) {
+        this.$router.push({
+          path: "/blockdetail",
+          query: {
+            block: this.inputvalue,
+            // transaction_award:this.transaction_award
           },
-        })
-        .then((res) => {
-          //  console.log(res);
-          if (res.data[0].total_record[0].total_record !== 0) {
-            this.$router.push({
-              path: "/blockdetail",
-              query: {
-                block: this.inputvalue,
-                // transaction_award:this.transaction_award
-              },
-            });
-             this.reload();
-             this.inputvalue=''
-          } else {
-             this.$router.push({
-              path: "/notfound",
-              query: { address: "height" },
-            });
-            this.reload();
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
+        });
+        this.reload();
+        this.inputvalue = "";
+      } else {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "height" },
+        });
+        this.reload();
+        // this.$router.push({
+        //   path: "/notfound",
+        //   query: {},
+        // });
+      }
     },
     // 根据交易易哈希查询相关交易易信息
     async transactiondetaillist() {
-      let that = this;
-      await that.$http
-        .get(TransactionSearch, {
-          params: {
-            transaction_hash: this.inputvalue,
+      const res = await GETADDRESSDETAIL({ type: "2", key: this.inputvalue,pageNum:'1',pageSize:'5'  });
+      if (res.code == 200) {
+        this.$router.push({
+          path: "/transactiondetail",
+          query: {
+            txhash: this.inputvalue,
+            // transaction_award:this.transaction_award
           },
-        })
-        .then((res) => {
-          //  console.log(res);
-          if (res.data[0].select_status === 1) {
-            this.$router.push({
-              path: "/transactiondetail",
-              query: {
-                transaction_hash: this.inputvalue,
-                // transaction_award:this.transaction_award
-              },
-            });
-             this.reload();
-             this.inputvalue=''
-          } else {
-            this.$router.push({
-              path: "/notfound",
-              query: { address: "transaction" },
-            });
-            this.reload();
-            // this.$router.push({
-            //   path: "/notfound",
-            //   query: {},
-            // });
-          }
-        })
-        .catch((err) => {});
+        });
+        this.reload();
+        this.inputvalue = "";
+      } else {
+        this.$router.push({
+          path: "/notfound",
+          query: { address: "transaction" },
+        });
+        this.reload();
+      }
     },
-    // 区块哈希搜索
-    // async blockhaxisearch() {
-    //   let that = this;
-    //   var blockData = [];
-    //   await that.$http
-    //     .get("/search_blockInfo_blockHash", {
-    //       params: {
-    //         block_hash: this.inputvalue,
-    //       },
-    //     })
-    //     .then((res) => {
-    //       // console.log(res);
-    //       if (res.data[0].search_main_transactionInfo.length !== 0) {
-    //         this.$router.push({
-    //           path: "/blockdetails",
-    //           query: { blockhaxi: this.inputvalue },
-    //         });
-    //       } else {
-    //         this.$router.push({
-    //           path: "/notfound",
-    //           query: {},
-    //         });
-    //         this.reload();
-    //       }
-    //     })
-    //     .catch((err) => {});
-    // },
   },
 };
 </script>
@@ -456,7 +384,7 @@ export default {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.16);
     opacity: 1;
     border-top-right-radius: 11px;
-     border-bottom-right-radius: 11px;
+    border-bottom-right-radius: 11px;
     display: flex;
     align-items: center;
     justify-content: center;

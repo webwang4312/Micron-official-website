@@ -1,5 +1,5 @@
 <template>
-  <div class="addressdetail" v-loading.fullscreen.lock="fullscreenLoading">
+  <div class="addressdetail">
     <div class="top">
       <img src="@assets/images/second/地址概览@2x.png" alt="" />
       <span> {{ $t("addressdetail")[0] }}</span>
@@ -17,11 +17,11 @@
         <li class="blue">
           {{ shiyan }}
         </li>
-        <li>{{ info[0].search_wallect_balance[0].account_balance }}</li>
-        <li>{{ info[0].ranking_and_transaction_num[0].transaction_num }}</li>
-        <li>{{ info[0].total_income[0].total_income }}UENC</li>
-        <li>{{ info[0].total_payout[0].total_payout }}UENC</li>
-        <li>{{ info[0].ranking_and_transaction_num[0].ranking }}</li>
+        <li>{{ balance }}</li>
+        <li>{{ tradeNums }}</li>
+        <li>{{ income }}UENC</li>
+        <li>{{ pay }}UENC</li>
+        <li>{{ rank }}</li>
       </ul>
     </div>
     <div class="top">
@@ -46,24 +46,24 @@
         </li>
       </ul>
       <ul class="info_content">
-        <li v-for="item in transactionData" :key="item">
-          <div @click="goToTransactionDetail(item.transaction_hash2)">
-            {{ item.transaction_hash }}
+        <li v-for="item in detailList" :key="item">
+          <div @click="goToTransactionDetail(item.txhash2)">
+            {{ item.txhash }}
           </div>
           <div>
-            {{ item.time.toString() }}
+            {{ item.tradeTime.toString() }}
           </div>
-          <div @click="goToAddressDetail(item.from_address2)">
-            {{ item.from_address }}
+          <div @click="goToAddressDetail(item.fromAddress2)">
+            {{ item.fromAddress }}
           </div>
-          <div @click="goToAddressDetail(item.to_address2)">
-            {{ item.to_address }}
+          <div @click="goToAddressDetail(item.toAddress2)">
+            {{ item.toAddress }}
           </div>
           <div>
             {{ item.amount }}
           </div>
           <div>
-            {{ item.gas }}
+            {{ item.gasFees }}
           </div>
         </li>
       </ul>
@@ -96,24 +96,34 @@
 </template>
 <script>
 import {
-  GetAddressListDetail,
-  GetAddressListDetail2,
+  GETADDRESSDETAIL,
   timestampToTime,
+  GETADDRESSDETAIL2,
 } from "@server/api.js";
 export default {
   name: "addressdetail",
   inject: ["reload"],
   data() {
     return {
-      fullscreenLoading: false,
       nowLang: "",
       // 分页
       transmedianum: 1,
-      internalCurrentPage: "",
+      // 总页数
       totalNum: "",
       shiyan: "",
-      transactionData: [],
-      info: {},
+      detailList: [],
+      // 钱包地址
+      walletAddress: "",
+      //余额
+      balance: "",
+      //交易数量
+      tradeNums: "",
+      //收入
+      income: "",
+      //支出
+      pay: "",
+      //排名
+      rank: "",
       have_list: Boolean,
     };
   },
@@ -123,8 +133,7 @@ export default {
     // console.log(this.$route.query.address);
     this.shiyan = this.$route.query.address;
     this.transmedianum = 1;
-    this.addresssearch();
-    this.addressList();
+    this.addressSearch();
   },
 
   // 页码设置
@@ -133,17 +142,15 @@ export default {
     goToTransactionDetail(item) {
       this.$router.push({
         path: "/transactiondetail",
-
         query: {
-          transaction_hash: item,
+          txhash: item,
         },
       });
     },
     goToAddressDetail(item) {
-      console.log(item);
+      // console.log(item);
       this.shiyan = item;
-      this.addressList();
-      this.addresssearch();
+      this.addressSearch();
     },
     pagesMinus() {
       if (this.transmedianum == 1) {
@@ -153,54 +160,74 @@ export default {
         });
       } else {
         this.transmedianum -= 1;
-        this.addresssearch();
+        this.pageList();
       }
     },
     pagesPlus() {
       if (this.transmedianum < this.totalNum) {
         this.transmedianum += 1;
         // //console.log(this.medianum);
-        this.addresssearch();
+        this.pageList();
       } else {
         return false;
       }
     },
-    async addressList() {
-      const res = await GetAddressListDetail2({
-        wallet_address: this.shiyan,
+
+    //地址搜索
+    async addressSearch() {
+      const res = await GETADDRESSDETAIL({
+        type: "1",
+        key: this.shiyan,
+        pageNum: "1",
+        pageSize: "20",
       });
       // console.log(res);
-      this.info = res;
-      // console.log(this.info);
-    },
-    //地址搜索
-    async addresssearch() {
-      this.icon = true;
-      let that = this;
-      var blockData = [];
-      const res = await GetAddressListDetail({
-        wallet_address: this.shiyan,
-        pageNum: this.transmedianum,
-        pageSize: 20,
-      });
-      //console.log(res);
-      this.totalNum = res[0].total_page[0].totalPageNum;
-      console.log(this.totalNum);
+      this.totalNum = Math.ceil(res.result.detailCount / 20);
+
       if (this.totalNum !== 0) {
         this.have_list = true;
       } else {
         this.have_list = false;
       }
-
-      var translist = res[0].search_transaction_list_for_walletAddress;
-      //console.log(this.have_list);
+      //要查询的钱包地址
+      this.walletAddress = res.result.walletAddress;
+      //余额
+      this.balance = res.result.balance;
+      //交易数量
+      this.tradeNums = res.result.tradeNums;
+      //收入
+      this.income = res.result.income;
+      //支出
+      this.pay = res.result.pay;
+      //排名
+      this.rank = res.result.rank;
+      // this.yue=res.
+      this.detailList = res.result.detailList;
+      // console.log(this.detailList);
       if (this.nowLang == "cn") {
-        for (let i = 0; i < translist.length + 1; i++) {
-          var obj = {};
+        for (var i = 0; i < this.detailList.length; i++) {
+          this.detailList[i].txhash2 = this.detailList[i].txhash;
+          this.detailList[i].txhash =
+            this.detailList[i].txhash.substring(0, 10) + "...";
+          this.detailList[i].fromAddress2 = this.detailList[i].fromAddress;
+          this.detailList[i].fromAddress =
+            this.detailList[i].fromAddress.substring(0, 8) + "...";
+          this.detailList[i].toAddress2 = this.detailList[i].toAddress;
+          this.detailList[i].type == "from" || this.detailList[i].type == "to"
+            ? (this.detailList[i].toAddress =
+                this.detailList[i].toAddress.substring(0, 8) + "...")
+            : (this.detailList[i].toAddress = this.detailList[i].toAddress);
           let date = [];
-          let strdate = translist[i].time;
-          let timestamp = Date.parse(new Date()) / 1000;
+          let strdate = parseInt(this.detailList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
+          // 当前日期转时间戳
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+
           let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
+          // console.log(s/86400000 + "天数");
+          // console.log(parseInt(s/86400000*24*60) + "fenzhong");
           let fenzhong = parseInt((s / 86400) * 24 * 60);
           // console.log(fenzhong);
           if (fenzhong < 60) {
@@ -209,99 +236,157 @@ export default {
             } else {
               date.push(parseInt(fenzhong) + "分钟前");
             }
-            obj.time = date;
+            this.detailList[i].tradeTime = date;
           }
           if (fenzhong >= 60 && fenzhong <= 1440) {
             date.push(parseInt(fenzhong / 60) + "小时前");
-            obj.time = date;
+            this.detailList[i].tradeTime = date;
           }
           if (fenzhong > 1440) {
             date.push(timestampToTime(strdate));
-            // date.push(parseInt(fenzhong / 1440) + "天前");
-            obj.time = date;
+            this.detailList[i].tradeTime = date;
           }
-          // date.push(this.timestampToTime(Number(strdate)));
-          obj.transaction_hash =
-            translist[i].transaction_hash.substring(0, 10) + "...";
-          obj.transaction_hash2 = translist[i].transaction_hash;
-          obj.from_address2 = translist[i].from_address;
-          obj.to_address2 = translist[i].to_address;
-
-          // obj.time = this.timestampToTime(Number(strdate));
-          obj.amount = translist[i].amount;
-          if (
-            translist[i].to_address == "0000000000000000000000000000000000" ||
-            translist[i].pledge == "1"
-          ) {
-            // 从
-            obj.from_address =
-              translist[i].from_address.substring(0, 10) + "...";
-            obj.to_address = this.nowLang == "cn" ? "质押" : "Pledge";
-          } else if (
-            translist[i].from_address == translist[i].to_address ||
-            translist[i].redeem == "1"
-          ) {
-            obj.from_address = this.nowLang == "cn" ? "质押" : "Pledge";
-            // 至
-            obj.to_address = translist[i].to_address.substring(0, 10) + "...";
-          } else {
-            obj.from_address =
-              translist[i].from_address.substring(0, 10) + "...";
-            obj.to_address = translist[i].to_address.substring(0, 10) + "...";
-          }
-          // obj.to_address = translist[i].to_address.substring(0, 10) + "...";
-          obj.gas = translist[i].gas;
-          // console.log(obj);
-          blockData[i] = obj;
-          //console.log(blockData);
-          this.transactionData = blockData;
-          // console.log(obj);
-          // console.log(this.transactionData);
+          // console.log(this.detailList[i].date);
         }
       } else {
-        for (let i = 0; i < translist.length + 1; i++) {
-          var obj = {};
+        for (var i = 0; i < this.detailList.length; i++) {
+          this.detailList[i].txhash2 = this.detailList[i].txhash;
+          this.detailList[i].txhash =
+            this.detailList[i].txhash.substring(0, 10) + "...";
+          this.detailList[i].fromAddress2 = this.detailList[i].fromAddress;
+          this.detailList[i].fromAddress =
+            this.detailList[i].fromAddress.substring(0, 8) + "...";
+          this.detailList[i].toAddress2 = this.detailList[i].toAddress;
+          this.detailList[i].type == "from" || this.detailList[i].type == "to"
+            ? (this.detailList[i].toAddress =
+                this.detailList[i].toAddress.substring(0, 8) + "...")
+            : (this.detailList[i].toAddress = this.detailList[i].toAddress);
           let date = [];
-          let strdate = translist[i].time;
-          let timestamp = Date.parse(new Date()) / 1000;
+          let strdate = parseInt(this.detailList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
+          // 当前日期转时间戳
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+
           let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
+          // console.log(s/86400000 + "天数");
+          // console.log(parseInt(s/86400000*24*60) + "fenzhong");
           let fenzhong = parseInt((s / 86400) * 24 * 60);
           // console.log(fenzhong);
           if (fenzhong < 60) {
             if (fenzhong == 0) {
-              date.push("just");
+              date.push("Just");
             } else {
               date.push(parseInt(fenzhong) + "minutes ago");
             }
-            obj.time = date;
+            this.detailList[i].tradeTime = date;
           }
           if (fenzhong >= 60 && fenzhong <= 1440) {
             date.push(parseInt(fenzhong / 60) + "hour ago");
-            obj.time = date;
+            this.detailList[i].tradeTime = date;
           }
           if (fenzhong > 1440) {
             date.push(timestampToTime(strdate));
-            // date.push(parseInt(fenzhong / 1440) + "days ago");
-            obj.time = date;
+            this.detailList[i].tradeTime = date;
           }
-          // date.push(this.timestampToTime(Number(strdate)));
-          obj.transaction_hash2 = translist[i].transaction_hash;
-          obj.from_address2 = translist[i].from_address;
+          // console.log(this.detailList[i].date);
+        }
+      }
+    },
+    async pageList() {
+      const res = await GETADDRESSDETAIL2({
+        address: this.walletAddress,
+        pageNum: this.transmedianum,
+        pageSize: 20,
+      });
+      this.detailList = res.result.detailList;
+      if (this.nowLang == "cn") {
+        for (var i = 0; i < this.detailList.length; i++) {
+          this.detailList[i].txhash2 = this.detailList[i].txhash;
+          this.detailList[i].txhash =
+            this.detailList[i].txhash.substring(0, 10) + "...";
+          this.detailList[i].fromAddress2 = this.detailList[i].fromAddress;
+          this.detailList[i].fromAddress =
+            this.detailList[i].fromAddress.substring(0, 8) + "...";
+          this.detailList[i].toAddress2 = this.detailList[i].toAddress;
+          this.detailList[i].type == "from" || this.detailList[i].type == "to"
+            ? (this.detailList[i].toAddress =
+                this.detailList[i].toAddress.substring(0, 8) + "...")
+            : (this.detailList[i].toAddress = this.detailList[i].toAddress);
+          let date = [];
+          let strdate = parseInt(this.detailList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
+          // 当前日期转时间戳
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
+          let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
+          // console.log(s/86400000 + "天数");
+          // console.log(parseInt(s/86400000*24*60) + "fenzhong");
+          let fenzhong = parseInt((s / 86400) * 24 * 60);
+          // console.log(fenzhong);
+          if (fenzhong < 60) {
+            if (fenzhong == 0) {
+              date.push("刚刚");
+            } else {
+              date.push(parseInt(fenzhong) + "分钟前");
+            }
+            this.detailList[i].tradeTime = date;
+          }
+          if (fenzhong >= 60 && fenzhong <= 1440) {
+            date.push(parseInt(fenzhong / 60) + "小时前");
+            this.detailList[i].tradeTime = date;
+          }
+          if (fenzhong > 1440) {
+            date.push(timestampToTime(strdate));
+            this.detailList[i].tradeTime = date;
+          }
+          // console.log(this.detailList[i].date);
+        }
+      } else {
+        for (var i = 0; i < this.detailList.length; i++) {
+          this.detailList[i].txhash2 = this.detailList[i].txhash;
+          this.detailList[i].txhash =
+            this.detailList[i].txhash.substring(0, 10) + "...";
+          this.detailList[i].fromAddress2 = this.detailList[i].fromAddress;
+          this.detailList[i].fromAddress =
+            this.detailList[i].fromAddress.substring(0, 8) + "...";
+          this.detailList[i].toAddress2 = this.detailList[i].toAddress;
+          this.detailList[i].type == "from" || this.detailList[i].type == "to"
+            ? (this.detailList[i].toAddress =
+                this.detailList[i].toAddress.substring(0, 8) + "...")
+            : (this.detailList[i].toAddress = this.detailList[i].toAddress);
+          let date = [];
+          let strdate = parseInt(this.detailList[i].tradeTime / 1000);
+          // console.log(strdate + "shuju");
+          // 当前日期转时间戳
+          // console.log(res.result.linuxTime);
+          let timestamp = res.result.linuxTime / 1000;
 
-          obj.to_address2 = translist[i].to_address;
-          obj.transaction_hash =
-            translist[i].transaction_hash.substring(0, 10) + "...";
-          // obj.time = this.timestampToTime(Number(strdate));
-          obj.amount = translist[i].amount;
-          obj.from_address = translist[i].from_address.substring(0, 10) + "...";
-          obj.to_address = translist[i].to_address.substring(0, 10) + "...";
-          obj.gas = translist[i].gas;
-          // console.log(obj);
-          blockData[i] = obj;
-          //console.log(blockData);
-          this.transactionData = blockData;
-          // console.log(obj);
-          // console.log(this.transactionData);
+          let s = timestamp - strdate; //9.20
+          // console.log(s+'相差');
+          // console.log(s/86400000 + "天数");
+          // console.log(parseInt(s/86400000*24*60) + "fenzhong");
+          let fenzhong = parseInt((s / 86400) * 24 * 60);
+          // console.log(fenzhong);
+          if (fenzhong < 60) {
+            if (fenzhong == 0) {
+              date.push("Just");
+            } else {
+              date.push(parseInt(fenzhong) + "minutes ago");
+            }
+            this.detailList[i].tradeTime = date;
+          }
+          if (fenzhong >= 60 && fenzhong <= 1440) {
+            date.push(parseInt(fenzhong / 60) + "hour ago");
+            this.detailList[i].tradeTime = date;
+          }
+          if (fenzhong > 1440) {
+            date.push(timestampToTime(strdate));
+            this.detailList[i].tradeTime = date;
+          }
+          // console.log(this.detailList[i].date);
         }
       }
     },
@@ -388,7 +473,7 @@ export default {
       font-size: 17px;
       font-family: Microsoft YaHei;
       font-weight: 400;
-background: #ffffff;
+      background: #ffffff;
       color: #000000;
       li {
         display: flex;
@@ -409,6 +494,10 @@ background: #ffffff;
         div:nth-child(3) {
           text-align: center;
         }
+        div:nth-child(4) {
+          width: 150px;
+          text-align: center;
+        }
       }
     }
     .info_content {
@@ -420,6 +509,10 @@ background: #ffffff;
         height: 45px;
         cursor: pointer;
         background: #fcfcfc;
+        div:nth-child(4) {
+          width: 150px;
+          text-align: center;
+        }
         div:nth-child(1),
         div:nth-child(3),
         div:nth-child(4) {
