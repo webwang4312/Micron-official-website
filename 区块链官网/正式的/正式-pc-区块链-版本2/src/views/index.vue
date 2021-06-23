@@ -103,7 +103,7 @@
               {{ totalTradeAmount }}
             </div>
             <div class="center_bottom">
-             {{ $t("transaction")[3] }}
+              {{ $t("transaction")[3] }}
             </div>
           </div>
           <!-- <div class="line_right2"></div> -->
@@ -145,9 +145,9 @@ export default {
       // 剩余区块奖励
       blocklastreward: "",
       // 流通总量
-     totalTradeAmount:'',
+      totalTradeAmount: "",
       // 选举节点预计收益
-      lastDayAvgAward:'',
+      lastDayAvgAward: "",
       echartsed: [],
       // 本页面
       tableData: [],
@@ -161,7 +161,7 @@ export default {
   components: { headertop, Search, VFooter, Chart, indexList },
   created() {
     this.nowLang = this.$i18n.locale;
-
+    this.frash();
     // window.setInterval(() => {
     //   setTimeout(this.indexlists(), 1000);
     // }, 60000);
@@ -172,13 +172,18 @@ export default {
     // this.jiedian();
   },
   beforeDestroy() {
-    clearInterval(this.indexlists);
+    clearInterval(this.frash);
   },
   mounted() {
     this.indexlists();
     // setInterval(this.indexlists, 20000);
   },
   methods: {
+    frash() {
+      setInterval(() => {
+        this.indexlists();
+      }, 20000);
+    },
     qianwei(str) {
       str = str.toString();
       var re = /(?=(?!(\b))(\d{3})+$)/g;
@@ -197,9 +202,14 @@ export default {
       this.nowTime = parseInt(data.linuxTime / 1000);
       if (this.nowLang == "cn") {
         for (var i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].amount = Number(this.tableData[i].amount).toFixed(
-           6
-          );
+          // this.tableData[i].amount = Number(this.tableData[i].amount);
+           this.tableData[i].amount.toString().split(".")[1].length > 6
+            ? (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ).toFixed(2))
+            : (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ));
           this.tableData[i].txhash2 = this.tableData[i].txhash;
           this.tableData[i].txhash =
             this.tableData[i].txhash.substring(0, 10) + "...";
@@ -234,26 +244,28 @@ export default {
             this.tableData[i].date = date;
           }
           // console.log(this.tableData[i].date);
-           this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
+          this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
           this.tableData[i].fromAddress =
             this.tableData[i].fromAddress.substring(0, 12) + "...";
-           this.tableData[i].toAddress2 = this.tableData[i].toAddress;
+          this.tableData[i].toAddress2 = this.tableData[i].toAddress;
           if (this.tableData[i].toAddress == "质押") {
             this.tableData[i].toAddress = "质押";
           } else {
             this.tableData[i].toAddress =
               this.tableData[i].toAddress.substring(0, 12) + "...";
           }
-
-        
-
-          
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward = Number(
-            this.tableData2[j].blockAward
-          ).toFixed(6);
+          // this.tableData2[j].blockAward = Number(this.tableData2[j].blockAward);
+          //  console.log(this.tableData2[j].blockAward.toString().split(".")[1].length);
+          this.tableData2[j].blockAward.toString().split(".")[1].length > 6
+            ? (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ).toFixed(2))
+            : (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ));
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -288,9 +300,13 @@ export default {
         }
       } else {
         for (var i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].amount = Number(this.tableData[i].amount).toFixed(
-            2
-          );
+          this.tableData[i].amount.toString().split(".")[1].length > 6
+            ? (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ).toFixed(2))
+            : (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ));
 
           let date = [];
           let strdate = parseInt(this.tableData[i].tradeTime / 1000);
@@ -325,23 +341,25 @@ export default {
           this.tableData[i].txhash =
             this.tableData[i].txhash.substring(0, 10) + "...";
           this.tableData[i].fromAddress2 = this.tableData[i].fromAddress;
-            this.tableData[i].toAddress2 = this.tableData[i].toAddress;
+          this.tableData[i].toAddress2 = this.tableData[i].toAddress;
           this.tableData[i].fromAddress =
             this.tableData[i].fromAddress.substring(0, 12) + "...";
           if (this.tableData[i].toAddress == "质押") {
             this.tableData[i].toAddress = "Pledge";
           } else {
             this.tableData[i].toAddress =
-              this.tableData[i].toAddress.substring(0,12) + "...";
+              this.tableData[i].toAddress.substring(0, 12) + "...";
           }
-
-        
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward = Number(
-            this.tableData2[j].blockAward
-          ).toFixed(2);
+           this.tableData2[j].blockAward.toString().split(".")[1].length > 6
+            ? (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ).toFixed(2))
+            : (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ));
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -390,9 +408,9 @@ export default {
       //24小时交易笔数?
       this.transzoom = this.qianwei(data.lastDayTradeNums);
       // 选举节点预计收益
-      this.lastDayAvgAward=data.lastDayAvgAward;
+      this.lastDayAvgAward = data.lastDayAvgAward;
       // 流通总量
-      this.totalTradeAmount=this.qianwei(data.totalTradeAmount);
+      this.totalTradeAmount = this.qianwei(data.totalTradeAmount);
     },
     timestampToTime2(timestamp) {
       var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -770,7 +788,6 @@ export default {
       }
     }
     ul:nth-child(4):hover {
-     
       .liu_num {
         width: 60px;
         height: 60px;

@@ -19,7 +19,7 @@
         <a href="http://47.75.93.221/devDocsEn/" target="_blank"
           >{{ $t("Technology.more") }} <i class="el-icon-right"></i
         ></a>
-        <a href="https://pili-vod.uenc.net/uencWhitePaperCN.pdf" target="_blank"
+        <a href="https://pili-vod.uenc.net/uencWhiteBook.pdf" target="_blank"
           >{{ $t("navbar.whitepaper") }} <i class="el-icon-right"></i
         ></a>
       </div>

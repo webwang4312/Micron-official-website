@@ -108,19 +108,36 @@ export default {
     },
     pagesMinus() {
       if (this.transmedianum == 1) {
-        this.$message({
-          message: "已到底",
-          type: "error",
-        });
+        this.nowLang == "cn"
+          ? this.$message({
+              message: "已到底",
+              type: "error",
+            })
+          : this.$message({
+              message: "no more",
+              type: "error",
+            });
       } else {
         this.transmedianum -= 1;
         this.transactionlist();
       }
     },
     pagesPlus() {
-      this.transmedianum += 1;
-      // //console.log(this.medianum);
-      this.transactionlist();
+      if (this.transmedianum >= this.totalNum) {
+        this.nowLang == "cn"
+          ? this.$message({
+              message: "已到顶",
+              type: "error",
+            })
+          : this.$message({
+              message: "no more",
+              type: "error",
+            });
+      } else {
+        this.transmedianum += 1;
+        // //console.log(this.medianum);
+        this.transactionlist();
+      }
     },
     //获取MEDIA
     async transactionlist() {
@@ -131,6 +148,7 @@ export default {
       this.tradeList = res.result.tradeList;
       // 取得页数总数
       this.totalNum = Math.ceil(res.result.total / 20);
+      console.log(this.totalNum);
       if (this.nowLang == "cn") {
         for (var i = 0; i < this.tradeList.length; i++) {
           this.tradeList[i].txhash2 = this.tradeList[i].txhash;
@@ -141,7 +159,7 @@ export default {
           this.tradeList[i].fromAddress =
             this.tradeList[i].fromAddress.substring(0, 8) + "...";
           this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
-          this.tradeList[i].type == "tx"||this.tradeList[i].type == "redeem"
+          this.tradeList[i].type == "tx" || this.tradeList[i].type == "redeem"
             ? (this.tradeList[i].toAddress =
                 this.tradeList[i].toAddress.substring(0, 8) + "...")
             : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);
@@ -184,7 +202,7 @@ export default {
           this.tradeList[i].fromAddress =
             this.tradeList[i].fromAddress.substring(0, 8) + "...";
           this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
-          this.tradeList[i].type == "from" || this.tradeList[i].type == "to"
+           this.tradeList[i].type == "tx" || this.tradeList[i].type == "redeem"
             ? (this.tradeList[i].toAddress =
                 this.tradeList[i].toAddress.substring(0, 8) + "...")
             : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);
@@ -246,7 +264,7 @@ export default {
     font-family: Microsoft YaHei;
     font-weight: 400;
     line-height: 20px;
-    color: #6624fa !important;
+    color: rgba(102, 36, 250, 1) !important;
     opacity: 1;
   }
   .top {
@@ -325,7 +343,7 @@ export default {
           font-family: Microsoft YaHei;
           font-weight: 400;
           text-align: left;
-          color: #6624fa;
+          color: rgba(102, 36, 250, 1);
           padding-left: 53px;
         }
         div:nth-last-of-type(1) {

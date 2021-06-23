@@ -8,24 +8,21 @@
 import { get, gets, post, posts } from './server.js'
 // 获取首页数据
 //  export const base='http://47.116.69.138:9090'
- export const base='http://47.98.110.210:9002'
+export const base = 'http://47.98.110.210:9002/ethbrowser/home/'
 // 获取首页数据
-export const GETINDEX = p => post(base+'/ethbrowser/home/getHomeData', p);
+export const GETINDEX = p => post(base + 'getHomeData', p);
 // 搜索地址详情
-export const GETADDRESSDETAIL = p => post(base+'/ethbrowser/home/searchKey', p);
+export const GETADDRESSDETAIL = p => post(base + 'searchKey', p);
 // 搜索地址详情分页
-export const GETADDRESSDETAIL2 = p => post(base+'/ethbrowser/home/addrTradeList', p);
+export const GETADDRESSDETAIL2 = p => post(base + 'addrTradeList', p);
 //  区块列表
-export const GETBLOCK = p => post(base+'/ethbrowser/home/blockList', p);
+export const GETBLOCK = p => post(base + '/blockList', p);
 //  交易列表
-export const GETTRANSACTION = p => post(base+'/ethbrowser/home/tradeList', p);
+export const GETTRANSACTION = p => post(base + 'tradeList', p);
 //  富豪榜
-export const GETADDRESS = p => post(base+'/ethbrowser/home/richList', p);
+export const GETADDRESS = p => post(base + 'richList', p);
 // 图表页面
-export const GetChartAll =base+'/show_graph_data';
-// 图表节点
-export const GetChart = base+'/search_top_n';
-
+export const GETCHART = p => post(base + 'getCharts', p);
 
 // 时间的处理
 export function timestampToTime(timestamp) {

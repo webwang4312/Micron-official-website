@@ -26,7 +26,7 @@
             ></a>
           </div>
           <div class="item">
-            <a href="https://pili-vod.uenc.net/uencWhitePaperCN.pdf" target="_blank"
+            <a href="https://pili-vod.uenc.net/uencWhiteBook.pdf" target="_blank"
               >{{ $t("navbar.whitepaper") }} <i class="el-icon-right"></i
             ></a>
           </div>

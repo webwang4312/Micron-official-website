@@ -201,7 +201,7 @@ export default {
         key: this.shiyan
         ,pageNum:'1',pageSize:'5'
       });
-      console.log(res);
+      // console.log(res);
       //  高度
       this.height = res.result.height;
       // 区块个数
@@ -225,6 +225,7 @@ export default {
           this.tradeList[i].tradeTime = this.timestampToTime(
             res.result.tradeList[i].tradeTime
           );
+          console.log(this.tradeList[i].tradeTime);
         }
     },
     //获取MEDIA
@@ -350,16 +351,36 @@ export default {
     //     .catch((e) => {});
     // },
     timestampToTime(timestamp) {
-      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + "-";
       var M =
         (date.getMonth() + 1 < 10
           ? "0" + (date.getMonth() + 1)
           : date.getMonth() + 1) + "-";
-      var D = date.getDate() + " ";
-      var h = date.getHours() + ":";
-      var m = date.getMinutes() + ":";
+      var D = date.getDate();
+      if (D < 10) {
+        D = "0" + D + "  ";
+      } else {
+        D = D + "  ";
+      }
+      var h = date.getHours();
+      if (h < 10) {
+        h = "0" + h + ":";
+      } else {
+        h = h + ":";
+      }
+      var m = date.getMinutes();
+      if (m < 10) {
+        m = "0" + m + ":";
+      } else {
+        m = m + ":";
+      }
       var s = date.getSeconds();
+      if (s < 10) {
+        s = "0" + s;
+      } else {
+        s = s;
+      }
       return Y + M + D + h + m + s;
     },
   },

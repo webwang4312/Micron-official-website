@@ -1,6 +1,6 @@
 <template>
   <div class="indexChart">
-    <div id="bars" v-loading="loading"></div>
+    <div id="bars"></div>
     <div id="bar"></div>
   </div>
 </template>
@@ -10,7 +10,6 @@ export default {
   name: "indexchart",
   data() {
     return {
-      loading: true,
       test1: "",
       test2: "",
       test22: "",
@@ -50,9 +49,9 @@ export default {
   watch: {},
   methods: {
     async chartSecond() {
-      this.loading = true;
       var block_award = [];
       var block_award_time = [];
+    
       let myChart = echarts.init(document.getElementById("bars"));
       myChart.setOption({
         title: {
@@ -137,7 +136,7 @@ export default {
             17
           )
         );
-        this.loading = false;
+
         //  console.log(ranliaoaverage);
         //  console.log(shijianchuo);
         // 填入数据
@@ -147,6 +146,11 @@ export default {
             data: block_award_time,
             nameLocation: "center",
           },
+          // legend: {
+          //   selected: {
+          //     data: true,
+          //   },
+          // },
           tooltip: {
             borderWidth: 1,
 

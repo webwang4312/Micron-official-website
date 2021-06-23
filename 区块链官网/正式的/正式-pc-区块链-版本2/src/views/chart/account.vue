@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import { GetChartAll } from "@server/api.js";
+import { GETCHART } from "@server/api.js";
 export default {
   name: "chart_account",
   data() {
@@ -45,7 +45,7 @@ export default {
   // 页码设置
   watch: {},
   methods: {
-    drawLine3() {
+    async drawLine3() {
       var myChart3 = echarts.init(document.getElementById("active_addresses"));
       myChart3.setOption({
         grid: {
@@ -135,118 +135,106 @@ export default {
       var avg_gas_for_722 = [];
       // // 前100快时间
       var avg_gas_for_7time22 = [];
-      this.$http
-        .get(GetChartAll)
-        .then((res) => {
-          for (
-            var m = 0;
-            m < res.data[0].active_user_statistics.length + 1;
-            m++
-          ) {
-            avg_gas_for_722.unshift(
-              res.data[0].active_user_statistics[m].active_user
-            );
-            avg_gas_for_7time22.unshift(
-              this.timestampToTime2(
-                res.data[0].active_user_statistics[m].date
-              ).substring(5)
-            );
-            // console.log(avg_gas_for_72);
-            // console.log( avg_gas_for_7time2);
-            //console.log(node_for_7);
-            //console.log(node_for_7time);
-            myChart3.setOption({
-              xAxis: {
-                data: avg_gas_for_7time22,
+      const res = await GETCHART();
+      for (var m = 0; m < res.result.nodeList.length + 1; m++) {
+        avg_gas_for_722.unshift(res.result.nodeList[m].tradeUsers);
+        avg_gas_for_7time22.unshift(
+          this.timestampToTime2(res.result.nodeList[m].createTime).substring(5)
+        );
+        // console.log(avg_gas_for_72);
+        // console.log( avg_gas_for_7time2);
+        //console.log(node_for_7);
+        //console.log(node_for_7time);
+        myChart3.setOption({
+          xAxis: {
+            data: avg_gas_for_7time22,
+          },
+          tooltip: {
+            borderWidth: 1,
+            padding: 15,
+            extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+            show: true,
+            position: "left",
+            backgroundColor: "rgba(74, 74, 74, 1)",
+            borderRadius: 10,
+            textStyle: {
+              fontSize: 12,
+              color: "rgba(255, 255, 255, 1)",
+              width: 166,
+              height: 54,
+              backgroundColor: "#fff",
+              boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+              borderRadius: 10,
+              padding: 15,
+            },
+            formatter: "{b0}<br />" + this.title[0].test3 + ":{c0}",
+            rich: {
+              a: {
+                marginLeft: 25,
+                marginTop: 15,
+                color: "#333333",
+                fontFamily: "苹方-简",
+                fontSize: 12,
               },
-              tooltip: {
-                borderWidth: 1,
-                padding: 15,
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
-                show: true,
-                position: "left",
-                backgroundColor: "rgba(74, 74, 74, 1)",
-                borderRadius: 10,
-                textStyle: {
-                  fontSize: 12,
-                  color: "rgba(255, 255, 255, 1)",
-                  width: 166,
-                  height: 54,
-                  backgroundColor: "#fff",
-                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                  borderRadius: 10,
-                  padding: 15,
-                },
-                formatter: "{b0}<br />" + this.title[0].test3 + ":{c0}",
-                rich: {
-                  a: {
-                    marginLeft: 25,
-                    marginTop: 15,
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                  b: {
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                },
-                trigger: "axis",
-                axisPointer: {
-                  type: "none",
+              b: {
+                color: "#333333",
+                fontFamily: "苹方-简",
+                fontSize: 12,
+              },
+            },
+            trigger: "axis",
+            axisPointer: {
+              type: "none",
+              label: {
+                backgroundColor: "#6a7985",
+              },
+            },
+          },
+          series: [
+            {
+              data: avg_gas_for_722,
+              type: "line",
+              showSymbol: false,
+              symbolSize: 10,
+              areaStyle: {},
+              symbol: "circle", //拐点样式
+              smooth: true, //true 为平滑曲线，false为直线
+              itemStyle: {
+                normal: {
+                  color: "#fff",
+                  borderColor: "rgba(150, 94, 229, 1)",
+                  borderWidth: 3,
                   label: {
-                    backgroundColor: "#6a7985",
+                    show: false,
+                    position: "left",
+                    textStyle: {
+                      fontSize: 16,
+                      color: "#fff",
+                      // width: 54,
+                      // height: 27,
+                      backgroundColor: "rgb(40,96,194)",
+                    },
                   },
                 },
               },
-              series: [
-                {
-                  data: avg_gas_for_722,
-                  type: "line",
-                  showSymbol: false,
-                  symbolSize: 10,
-                  areaStyle: {},
-                  symbol: "circle", //拐点样式
-                  smooth: true, //true 为平滑曲线，false为直线
-                  itemStyle: {
-                    normal: {
-                      color: "#fff",
-                      borderColor: "rgba(150, 94, 229, 1)",
-                      borderWidth: 3,
-                      label: {
-                        show: false,
-                        position: "left",
-                        textStyle: {
-                          fontSize: 16,
-                          color: "#fff",
-                          // width: 54,
-                          // height: 27,
-                          backgroundColor: "rgb(40,96,194)",
-                        },
-                      },
-                    },
-                  },
-                  areaStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 1, color: "#fff" },
-                      ]),
-                    },
-                  },
-                  lineStyle: {
-                    color: "rgba(150, 94, 229, 1)", //改变折线颜色
-                  },
+              areaStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: "rgba(150, 94, 229, 1)" },
+                    { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
+                    { offset: 1, color: "#fff" },
+                  ]),
                 },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
+              },
+              lineStyle: {
+                color: "rgba(150, 94, 229, 1)", //改变折线颜色
+              },
+            },
+          ],
+        });
+      }
     },
-    drawLine2() {
+    async drawLine2() {
       var myChart2 = echarts.init(document.getElementById("add_account"));
       myChart2.setOption({
         grid: {
@@ -336,118 +324,107 @@ export default {
       var avg_gas_for_72 = [];
       // // 前100快时间
       var avg_gas_for_7time2 = [];
-      this.$http
-        .get(GetChartAll)
-        .then((res) => {
-          for (
-            var s = 0;
-            s < res.data[0].new_account_statistics.length + 1;
-            s++
-          ) {
-            avg_gas_for_72.unshift(
-              res.data[0].new_account_statistics[s].new_account
-            );
-            avg_gas_for_7time2.unshift(
-              this.timestampToTime2(
-                res.data[0].new_account_statistics[s].date
-              ).substring(5)
-            );
-            // console.log(avg_gas_for_72);
-            // console.log( avg_gas_for_7time2);
-            //console.log(node_for_7);
-            //console.log(node_for_7time);
-            myChart2.setOption({
-              xAxis: {
-                data: avg_gas_for_7time2,
+      const res = await GETCHART();
+
+      for (var s = 0; s < res.result.nodeList.length + 1; s++) {
+        avg_gas_for_72.unshift(res.result.nodeList[s].accounts);
+        avg_gas_for_7time2.unshift(
+          this.timestampToTime2(res.result.nodeList[s].createTime).substring(5)
+        );
+        // console.log(avg_gas_for_72);
+        // console.log( avg_gas_for_7time2);
+        //console.log(node_for_7);
+        //console.log(node_for_7time);
+        myChart2.setOption({
+          xAxis: {
+            data: avg_gas_for_7time2,
+          },
+          tooltip: {
+            borderWidth: 1,
+            padding: 15,
+            extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+            show: true,
+            position: "left",
+            backgroundColor: "rgba(74, 74, 74, 1)",
+            borderRadius: 10,
+            textStyle: {
+              fontSize: 12,
+              color: "rgba(255, 255, 255, 1)",
+              width: 166,
+              height: 54,
+              backgroundColor: "#fff",
+              boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+              borderRadius: 10,
+              padding: 15,
+            },
+            formatter: "{b0}<br />" + this.title[0].test2 + ":{c0}",
+            rich: {
+              a: {
+                marginLeft: 25,
+                marginTop: 15,
+                color: "#333333",
+                fontFamily: "苹方-简",
+                fontSize: 12,
               },
-              tooltip: {
-                borderWidth: 1,
-                padding: 15,
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
-                show: true,
-                position: "left",
-                backgroundColor: "rgba(74, 74, 74, 1)",
-                borderRadius: 10,
-                textStyle: {
-                  fontSize: 12,
-                  color: "rgba(255, 255, 255, 1)",
-                  width: 166,
-                  height: 54,
-                  backgroundColor: "#fff",
-                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                  borderRadius: 10,
-                  padding: 15,
-                },
-                formatter: "{b0}<br />" + this.title[0].test2 + ":{c0}",
-                rich: {
-                  a: {
-                    marginLeft: 25,
-                    marginTop: 15,
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                  b: {
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                },
-                trigger: "axis",
-                axisPointer: {
-                  type: "none",
+              b: {
+                color: "#333333",
+                fontFamily: "苹方-简",
+                fontSize: 12,
+              },
+            },
+            trigger: "axis",
+            axisPointer: {
+              type: "none",
+              label: {
+                backgroundColor: "#6a7985",
+              },
+            },
+          },
+          series: [
+            {
+              data: avg_gas_for_72,
+              type: "line",
+              showSymbol: false,
+              symbolSize: 10,
+              areaStyle: {},
+              symbol: "circle", //拐点样式
+              smooth: true, //true 为平滑曲线，false为直线
+              itemStyle: {
+                normal: {
+                  color: "#fff",
+                  borderColor: "rgba(150, 94, 229, 1)",
+                  borderWidth: 3,
                   label: {
-                    backgroundColor: "#6a7985",
+                    show: false,
+                    position: "left",
+                    textStyle: {
+                      fontSize: 16,
+                      color: "#fff",
+                      // width: 54,
+                      // height: 27,
+                      backgroundColor: "rgb(40,96,194)",
+                    },
                   },
                 },
               },
-              series: [
-                {
-                  data: avg_gas_for_72,
-                  type: "line",
-                  showSymbol: false,
-                  symbolSize: 10,
-                  areaStyle: {},
-                  symbol: "circle", //拐点样式
-                  smooth: true, //true 为平滑曲线，false为直线
-                  itemStyle: {
-                    normal: {
-                      color: "#fff",
-                      borderColor: "rgba(150, 94, 229, 1)",
-                      borderWidth: 3,
-                      label: {
-                        show: false,
-                        position: "left",
-                        textStyle: {
-                          fontSize: 16,
-                          color: "#fff",
-                          // width: 54,
-                          // height: 27,
-                          backgroundColor: "rgb(40,96,194)",
-                        },
-                      },
-                    },
-                  },
-                  areaStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 1, color: "#fff" },
-                      ]),
-                    },
-                  },
-                  lineStyle: {
-                    color: "rgba(150, 94, 229, 1)", //改变折线颜色
-                  },
+              areaStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: "rgba(150, 94, 229, 1)" },
+                    { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
+                    { offset: 1, color: "#fff" },
+                  ]),
                 },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
+              },
+              lineStyle: {
+                color: "rgba(150, 94, 229, 1)", //改变折线颜色
+              },
+            },
+          ],
+        });
+      }
     },
-    drawLine() {
+    async drawLine() {
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(
         document.getElementById("total_number_accounts")
@@ -546,118 +523,106 @@ export default {
       var avg_gas_for_7 = [];
       // // 前100快时间
       var avg_gas_for_7time = [];
+      const res = await GETCHART();
 
-      this.$http
-        .get(GetChartAll)
-        .then((res) => {
-          for (
-            var i = 0;
-            i < res.data[0].account_number_statistics.length + 1;
-            i++
-          ) {
-            avg_gas_for_7.unshift(
-              res.data[0].account_number_statistics[i].account_number
-            );
-            avg_gas_for_7time.unshift(
-              this.timestampToTime2(
-                res.data[0].account_number_statistics[i].date
-              ).substring(5)
-            );
-            // console.log(avg_gas_for_7time);
-            //console.log(node_for_7time);
-            myChart.setOption({
-              xAxis: {
-                data: avg_gas_for_7time,
+      for (var i = 0; i < res.result.nodeList.length + 1; i++) {
+        avg_gas_for_7.unshift(res.result.nodeList[i].uencUsers);
+        avg_gas_for_7time.unshift(
+          this.timestampToTime2(res.result.nodeList[i].createTime).substring(5)
+        );
+        // console.log(avg_gas_for_7time);
+        //console.log(node_for_7time);
+        myChart.setOption({
+          xAxis: {
+            data: avg_gas_for_7time,
+          },
+          tooltip: {
+            borderWidth: 1,
+            padding: 15,
+            extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
+            show: true,
+            position: "left",
+            backgroundColor: "rgba(74, 74, 74, 1)",
+            borderRadius: 10,
+            textStyle: {
+              fontSize: 12,
+              color: "rgba(255, 255, 255, 1)",
+              width: 166,
+              height: 54,
+              backgroundColor: "#fff",
+              boxshadow: "0 0 5px rgba(0,0,0,0.3)",
+              borderRadius: 10,
+              padding: 15,
+            },
+            formatter: "{b0}<br />" + this.title[0].test + ":{c0}",
+            rich: {
+              a: {
+                marginLeft: 25,
+                marginTop: 15,
+                color: "#333333",
+                fontFamily: "苹方-简",
+                fontSize: 12,
               },
-              tooltip: {
-                borderWidth: 1,
-                padding: 15,
-                extraCssText: "box-shadow: 0 0 5px rgba(0,0,0,0.3)",
-                show: true,
-                position: "left",
-                backgroundColor: "rgba(74, 74, 74, 1)",
-                borderRadius: 10,
-                textStyle: {
-                  fontSize: 12,
-                  color: "rgba(255, 255, 255, 1)",
-                  width: 166,
-                  height: 54,
-                  backgroundColor: "#fff",
-                  boxshadow: "0 0 5px rgba(0,0,0,0.3)",
-                  borderRadius: 10,
-                  padding: 15,
-                },
-                formatter: "{b0}<br />" + this.title[0].test + ":{c0}",
-                rich: {
-                  a: {
-                    marginLeft: 25,
-                    marginTop: 15,
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                  b: {
-                    color: "#333333",
-                    fontFamily: "苹方-简",
-                    fontSize: 12,
-                  },
-                },
-                trigger: "axis",
-                axisPointer: {
-                  type: "none",
+              b: {
+                color: "#333333",
+                fontFamily: "苹方-简",
+                fontSize: 12,
+              },
+            },
+            trigger: "axis",
+            axisPointer: {
+              type: "none",
+              label: {
+                backgroundColor: "#6a7985",
+              },
+            },
+          },
+          series: [
+            {
+              data: avg_gas_for_7,
+              type: "line",
+              showSymbol: false,
+              symbolSize: 10,
+              areaStyle: {},
+              symbol: "circle", //拐点样式
+              smooth: true, //true 为平滑曲线，false为直线
+              itemStyle: {
+                normal: {
+                  color: "#fff",
+                  borderColor: "rgba(150, 94, 229, 1)",
+                  borderWidth: 3,
                   label: {
-                    backgroundColor: "#6a7985",
+                    show: false,
+                    position: "left",
+                    textStyle: {
+                      fontSize: 16,
+                      color: "#fff",
+                      // width: 54,
+                      // height: 27,
+                      backgroundColor: "rgb(40,96,194)",
+                    },
                   },
                 },
               },
-              series: [
-                {
-                  data: avg_gas_for_7,
-                  type: "line",
-                  showSymbol: false,
-                  symbolSize: 10,
-                  areaStyle: {},
-                  symbol: "circle", //拐点样式
-                  smooth: true, //true 为平滑曲线，false为直线
-                  itemStyle: {
-                    normal: {
-                      color: "#fff",
-                      borderColor: "rgba(150, 94, 229, 1)",
-                      borderWidth: 3,
-                      label: {
-                        show: false,
-                        position: "left",
-                        textStyle: {
-                          fontSize: 16,
-                          color: "#fff",
-                          // width: 54,
-                          // height: 27,
-                          backgroundColor: "rgb(40,96,194)",
-                        },
-                      },
-                    },
-                  },
-                  areaStyle: {
-                    normal: {
-                      color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                        { offset: 0, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
-                        { offset: 1, color: "#fff" },
-                      ]),
-                    },
-                  },
-                  lineStyle: {
-                    color: "rgba(150, 94, 229, 1)", //改变折线颜色
-                  },
+              areaStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: "rgba(150, 94, 229, 1)" },
+                    { offset: 0.2, color: "rgba(150, 94, 229, 1)" },
+                    { offset: 1, color: "#fff" },
+                  ]),
                 },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
+              },
+              lineStyle: {
+                color: "rgba(150, 94, 229, 1)", //改变折线颜色
+              },
+            },
+          ],
+        });
+      }
     },
     timestampToTime2(timestamp) {
-      var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + "-";
       var M =
         (date.getMonth() + 1 < 10

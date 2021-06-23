@@ -57,7 +57,11 @@
               </el-option>
             </el-select>
           </div>
-          <i
+          <div  style="width: 2px;background:#E9ECED;
+height: 23px;">
+
+          </div>
+          <!-- <i
             class="el-icon-minus"
             style="
               color:  #E9ECED;
@@ -65,7 +69,7 @@
               width: 0px;
               height: 33px;
             "
-          ></i>
+          ></i> -->
           <div class="searchcenter">
             <input
               type="text"

@@ -35,55 +35,42 @@
           <i class="el-icon-close" @click="menuHide"></i>
         </div>
       </div>
-      <ul class="menuslide">
-        <li @click="menu" >
-          <router-link :to="{ path: '/' }">
-            <span @click="menuindex">
-              {{ $t("nav")[0] }}
-            </span>
-          </router-link>
-        </li>
-        <li class="slide2" @click="menuSecond">
-          <div :class="{ 'el-dropdown-link': true, blue: $store.state.blues }">
-            {{ $t("nav")[1] }}
-            <img src="@assets/images/second/menuxia.png" v-show="!secondmenu" />
-            <img src="@assets/images/second/收回.png" v-show="secondmenu" />
-            <!-- <i class="el-icon-caret-bottom" @click="menuSecond"></i> -->
-          </div>
-          <ul v-show="secondmenu">
-            <li @click="menuBlue" >
-              <router-link :to="{ path: '/block' }">
-                {{ $t("nav")[2] }}
-              </router-link>
-            </li>
-            <li @click="menuBlue" >
-              <router-link :to="{ path: '/transaction' }">
-                {{ $t("nav")[3] }}
-              </router-link>
-            </li>
-            <li @click="menuBlue" >
-              <router-link :to="{ path: '/address' }">
-                {{ $t("nav")[4] }}
-              </router-link>
-            </li>
-          </ul>
-        </li>
-        <li @click="menu" >
-          <router-link :to="{ path: '/chart' }">
-            <span @click="blueClass2">
-              {{ $t("nav")[5] }}
-            </span>
-          </router-link>
-        </li>
+      <el-menu
+        class="menuslide"
+        router
+        :default-active="activeIndex"
+        @select="handleSelect"
+      >
+        <el-menu-item @click="menu" index="/">
+          {{ $t("nav")[0] }}
+        </el-menu-item>
+
+        <el-submenu index="2">
+          <template slot="title"> {{ $t("nav")[1] }}</template>
+
+          <el-menu-item index="/block">
+            {{ $t("nav")[2] }}
+          </el-menu-item>
+          <el-menu-item index="/transaction">
+            {{ $t("nav")[3] }}
+          </el-menu-item>
+          <el-menu-item index="/address">
+            {{ $t("nav")[4] }}
+          </el-menu-item>
+        </el-submenu>
+
+        <el-menu-item index="/chart">
+          {{ $t("nav")[5] }}
+        </el-menu-item>
         <li @click="changeLanguage" style="padding-left:15px">
           <div style="width:100%;height:100%;">
             {{ language2 }}
           </div>
         </li>
-      </ul></van-popup
+      </el-menu></van-popup
     >
 
-    <Search :select="select" :valuename='valuename'></Search>
+    <Search :select="select" :valuename="valuename"></Search>
   </div>
 </template>
 
@@ -94,8 +81,9 @@ export default {
   inject: ["reload"],
   data() {
     return {
-      blues: false,
       activeIndex: "1",
+      blues: false,
+
       nowLang: "",
       language: "",
       language2: "",
@@ -118,7 +106,7 @@ export default {
     } else {
       this.$i18n.locale = localStorage.getItem("lang");
     }
-   
+
     this.nowLang = localStorage.getItem("lang");
     if (this.$i18n.locale == "cn") {
       this.select = [
@@ -139,7 +127,7 @@ export default {
         //   label: "区块哈希",
         // },
       ];
-       this.valuename = "请选择";
+      this.valuename = "请选择";
     }
     if (this.$i18n.locale == "en") {
       this.select = [
@@ -160,7 +148,7 @@ export default {
         //   label: "Block",
         // },
       ];
-       this.valuename = "Select";
+      this.valuename = "Select";
     }
     this.language = this.nowLang;
     if (this.language == "cn") {
@@ -174,6 +162,9 @@ export default {
   },
   mounted() {},
   methods: {
+    handleSelect(key, keyPath) {
+      this.show = false;
+    },
     goHome() {
       this.$router.push({
         path: "/",
@@ -234,7 +225,7 @@ export default {
           //   label: "Block",
           // },
         ];
-         this.valuename = "Select";
+        this.valuename = "Select";
         this.language = "1";
         this.language2 = "中文";
         this.$store.commit("menuState", true);
@@ -260,7 +251,7 @@ export default {
           //   label: "区块哈希",
           // },
         ];
-         this.valuename = "请选择";
+        this.valuename = "请选择";
         this.language = "2";
         this.language2 = "En";
         this.$store.commit("menuState", true);
@@ -268,16 +259,39 @@ export default {
       }
       this.reload();
     },
-    handleSelect(key, keyPath) {},
   },
 };
 </script>
 
 <style lang="less">
+.el-menu-item {
+  color: #9da5bb !important;
+}
+.el-submenu__title {
+  color: #9da5bb !important;
+}
+.el-submenu__title:hover {
+  background-color: white !important;
+}
+.is-opened {
+  height: auto !important;
+  color: #9da5bb !important;
+}
+.is-active {
+  background: #f9f5ff !important;
+  font-size: 16px !important;
+  font-family: PingFang SC !important;
+  font-weight: 400 !important;
+  color: #6624fa !important;
+  opacity: 1;
+}
 .van-overlay {
 }
 .van-popup {
   max-height: 60%;
+  position: fixed;
+  top: 0;
+  z-index: 3;
   .header-tops {
     width: 100%;
     height: 55px;
@@ -287,8 +301,8 @@ export default {
     background: #fff;
     position: sticky;
     top: 0;
-
     border-bottom: 1px solid #e6e6e6;
+    z-index: 20;
     .el-icon-close {
       margin-right: 15px;
     }
@@ -303,7 +317,7 @@ export default {
     color: #9da5bb;
   }
   .menuslide {
-    width: 100%;
+   
     li {
       a {
         margin-left: 15px;
@@ -406,15 +420,15 @@ export default {
     font-size: 15px !important;
   }
   .el-menu {
-    background-color: goldenrod !important;
+    // background-color: goldenrod !important;
     justify-content: center;
     align-items: center;
     li {
       font-size: 15px;
       font-family: Arial;
       font-weight: bold;
-      line-height: 12px;
-      color: #965ee5;
+      // line-height: 12px;
+      // color: #965ee5;
     }
   }
 

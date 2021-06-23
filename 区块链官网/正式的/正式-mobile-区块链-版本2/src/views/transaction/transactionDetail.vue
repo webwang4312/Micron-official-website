@@ -56,8 +56,9 @@
             <li
               v-for="item in toAddress"
               :key="item"
-              class="detail_info3
+              class="detail_info3 
             "
+              @click="goToAddressDetail(item)"
             >
               {{ item }}
             </li>
@@ -161,7 +162,7 @@ export default {
       tradeTime: "",
       fromAddress: "",
       toAddress: "",
-     
+
       amount: "",
       needVertify: "",
       signList: [],
@@ -203,7 +204,12 @@ export default {
     },
 
     async transactiondetaillist() {
-      const res = await GETADDRESSDETAIL({ type: "2", key: this.shiyan,pageNum:'1',pageSize:'5' });
+      const res = await GETADDRESSDETAIL({
+        type: "2",
+        key: this.shiyan,
+        pageNum: "1",
+        pageSize: "5",
+      });
       console.log(res);
       // res.result.fromAddress =
       //   "1,2,3,4,5,6,7,8,9";
@@ -220,7 +226,7 @@ export default {
       // to地址
       this.toAddress = res.result.toAddress.split(",");
       this.toAddress.length > 5
-        ? ((this.toAddress = this.toAddress.slice(0,5) + "..."),
+        ? ((this.toAddress = this.toAddress.slice(0, 5) + "..."),
           (this.showmore = true))
         : ((this.toAddress = this.toAddress), (this.showmore = false));
       // console.log(this.toAddress);
@@ -323,11 +329,9 @@ export default {
     width: 343px;
     height: auto;
     background: #ffffff;
-
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-
     padding-bottom: 54px;
     margin-bottom: 10px;
     .all_content > li {
@@ -339,11 +343,11 @@ export default {
       width: 100%;
       padding: 0 0 30px;
       .detail_info3 {
-        
-            width: 200px;
-            word-wrap: break-word;
-    word-break: break-all;
-         color: #965ee5 !important;
+        font-size: 13px;
+        width: 200px;
+        word-wrap: break-word;
+        word-break: break-all;
+        color: #965ee5 !important;
         li:nth-child(1) {
           margin-top: 0px !important;
         }
@@ -378,7 +382,6 @@ export default {
           color: #333333;
         }
         .to-address {
-        
         }
       }
     }
@@ -397,9 +400,10 @@ export default {
         font-size: 13px;
         font-family: PingFang SC;
         font-weight: 400;
-        line-height: 18px;
+        line-height: 34px;
         color: #666666;
         word-wrap: break-word;
+
         li {
           margin-top: 12px;
         }

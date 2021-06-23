@@ -109,10 +109,15 @@ export default {
     },
     pagesMinus() {
       if (this.blockmedianum == 1) {
-        this.$message({
-          message: "已到底",
-          type: "error",
-        });
+       this.nowLang == "cn"
+          ? this.$message({
+              message: "已到顶",
+              type: "error",
+            })
+          : this.$message({
+              message: "no more",
+              type: "error",
+            });
       } else {
         this.blockmedianum -= 1;
          window.scrollTo(0,0);
@@ -120,10 +125,21 @@ export default {
       }
     },
     pagesPlus() {
-      this.blockmedianum += 1;
-       window.scrollTo(0,0);
-      // //console.log(this.medianum);
-      this.blocklist();
+      if (this.blockmedianum >= this.totalNum) {
+        this.nowLang == "cn"
+          ? this.$message({
+              message: "已到顶",
+              type: "error",
+            })
+          : this.$message({
+              message: "no more",
+              type: "error",
+            });
+      } else {
+        this.blockmedianum += 1;
+        // //console.log(this.medianum);
+        this.blocklist();
+      }
     },
     async blocklist() {
         const res = await GETBLOCK({

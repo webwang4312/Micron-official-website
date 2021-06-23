@@ -27,6 +27,7 @@ export default {
   mounted() {
     this.getChart();
     this.chartSecond();
+    setInterval(this.getChart, 20000);
   },
 
   // 页码设置
@@ -67,12 +68,11 @@ export default {
             //y轴刻度线
             show: false,
           },
-           axisLabel: {
+          axisLabel: {
             // fontSize: "10",
             fontSize: "12",
             fontFamily: "PingFang SC",
-           
-          
+
             color: "#9DA5BB",
           },
         },
@@ -149,6 +149,9 @@ export default {
         myChart.setOption({
           xAxis: {
             data: transaction_num,
+            axisLabel: {
+              interval: 0,
+            },
           },
           visualMap: {
             type: "piecewise",
@@ -279,11 +282,11 @@ export default {
             //y轴刻度线
             show: false,
           },
-           axisLabel: {
+          axisLabel: {
             // fontSize: "10",
             fontSize: "12",
             fontFamily: "PingFang SC",
-          
+
             color: "#9DA5BB",
           },
         },

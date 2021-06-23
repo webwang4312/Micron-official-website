@@ -5,14 +5,14 @@ const en = {
         'Blockchain', 'Block', 'Transaction', 'Rich list', 'Chart'
 
     ],
-    transaction:['transaction details','show more',"Estimated average return of election nodes",'Total Circulation'],
-    search:['Search address, transaction, block hash, block height, etc.'],
-    index:['block height', '24hr transaction count','rewards already distributed','no. of nodes','cumulative transactions','remaining block reward','newest transaction','latest block','More ','From','to'],
-    block: ['block list','time','transaction count','trad vol','block reward'],
-    blockdetail: ['block details','no. of blocks','fuel fee','tx hash','transaction list'],
-    transactiondetail: ['transaction details ','affiliated block','transaction time','consensus number','transaction signed node','click to view more','fuel fee information','block reward information'],
+    transaction:['transaction details','show more',"Node expected revenue",'Circulation'],
+    search:['Search address/block height/TXhash'],
+    index:['height', ' transaction（24H）','Reward issued','Total nodes','cumulative transactions','Remaining reward','Transactions','Blocks','More ','From','to'],
+    block: ['block list','time','TX Count','Value','Reward'],
+    blockdetail: ['block details','no. of blocks',' Fee','TxHash','transaction list'],
+    transactiondetail: ['transaction details ','affiliated block','transaction time','consensus number','transaction signed node','click to view more',' Fee information','Reward information'],
     address:['Address List','rank','address','amount','percentage'],
-    addressdetail:['address overview','balance','number of transactions','total income','total expenses','No transactions at this address'],
+    addressdetail:['address overview','balance','TX Count','total income','total expenses','No transactions at this address'],
     notfound:['not found','what you entered','does not exist','return'],
     chart:['network node information','mining reward','transaction information','account statistics','Fuel cost distribution map','Node','proportion'],
     ...enLocale

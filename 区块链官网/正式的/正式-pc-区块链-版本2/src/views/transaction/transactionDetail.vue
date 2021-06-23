@@ -203,10 +203,10 @@ export default {
     },
     async transactiondetaillist() {
       const res = await GETADDRESSDETAIL({ type: "2", key: this.shiyan,pageNum:'1',pageSize:'20' });
-      console.log(res);
+      // console.log(res);
       // res.result.fromAddress =
       //   "1,2,3,4,5,6,7,8,9";
-      // res.result.toAddress = "1,2,3";
+      // res.result.toAddress = "1,2,3,4,5,6,7,8,9";
       // 区块高度
       this.height = res.result.height;
       // 交易哈希

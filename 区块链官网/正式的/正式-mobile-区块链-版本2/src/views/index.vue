@@ -81,7 +81,7 @@
               {{ lastDayAvgAward }}
             </div>
             <div class="center_bottom">
-              {{ $t("transaction")[2] }}
+              {{ $t("transaction")[3] }}
             </div>
           </div>
         </li>
@@ -92,7 +92,7 @@
               {{ totalTradeAmount }}
             </div>
             <div class="center_bottom">
-              {{ $t("transaction")[3] }}
+              {{ $t("transaction")[4] }}
             </div>
           </div>
         </li>
@@ -213,6 +213,13 @@ export default {
       this.nowTime = parseInt(data.linuxTime / 1000);
       if (this.nowLang == "cn") {
         for (var i = 0; i < this.tableData.length; i++) {
+           this.tableData[i].amount.toString().split(".")[1].length > 6
+            ? (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ).toFixed(2))
+            : (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ));
           this.tableData[i].txhash2 = this.tableData[i].txhash;
           this.tableData[i].txhash =
             this.tableData[i].txhash.substring(0, 10) + "...";
@@ -263,9 +270,13 @@ export default {
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward = Number(
-            this.tableData2[j].blockAward
-          ).toFixed(2);
+          this.tableData2[j].blockAward.toString().split(".")[1].length > 6
+            ? (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ).toFixed(2))
+            : (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ));
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -300,6 +311,13 @@ export default {
         }
       } else {
         for (var i = 0; i < this.tableData.length; i++) {
+           this.tableData[i].amount.toString().split(".")[1].length > 6
+            ? (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ).toFixed(2))
+            : (this.tableData[i].amount = Number(
+                this.tableData[i].amount
+              ));
           let date = [];
           let strdate = parseInt(this.tableData[i].tradeTime / 1000);
           // console.log(strdate + "shuju");
@@ -346,9 +364,13 @@ export default {
         }
         //console.log(this.tableData2.length);
         for (var j = 0; j < this.tableData2.length; j++) {
-          this.tableData2[j].blockAward = Number(
-            this.tableData2[j].blockAward
-          ).toFixed(2);
+          this.tableData2[j].blockAward.toString().split(".")[1].length > 6
+            ? (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ).toFixed(2))
+            : (this.tableData2[j].blockAward = Number(
+                this.tableData2[j].blockAward
+              ));
           let times = [];
           let strtime = parseInt(this.tableData2[j].tradeTime / 1000);
           // 当前日期转时间戳
@@ -473,7 +495,7 @@ export default {
       //background: chocolate;
       display: flex;
       flex-direction: row;
-      align-items: center;
+      
       justify-content: space-between;
       margin-top: 38px;
       padding: 0 0px;

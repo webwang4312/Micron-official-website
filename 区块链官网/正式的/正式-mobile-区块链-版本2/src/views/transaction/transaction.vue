@@ -143,22 +143,40 @@ export default {
     },
     pagesMinus() {
       if (this.transmedianum == 1) {
-        this.$message({
-          message: "已到底",
-          type: "error",
-        });
+        this.nowLang == "cn"
+          ? this.$message({
+              message: "已到顶",
+              type: "error",
+            })
+          : this.$message({
+              message: "no more",
+              type: "error",
+            });
       } else {
         this.transmedianum -= 1;
          window.scrollTo(0,0);
         this.transactionlist();
       }
     },
-    pagesPlus() {
-      this.transmedianum += 1;
-      // //console.log(this.medianum);
+     pagesPlus() {
+      if (this.transmedianum >= this.totalNum) {
+        this.nowLang == "cn"
+          ? this.$message({
+              message: "已到顶",
+              type: "error",
+            })
+          : this.$message({
+              message: "no more",
+              type: "error",
+            });
+      } else {
+        this.transmedianum += 1;
          window.scrollTo(0,0);
-      this.transactionlist();
+        // //console.log(this.medianum);
+        this.transactionlist();
+      }
     },
+  
     async transactionlist() {
       const res = await GETTRANSACTION({
         pageNum: this.transmedianum,
@@ -220,7 +238,7 @@ export default {
           this.tradeList[i].fromAddress =
             this.tradeList[i].fromAddress.substring(0, 8) + "...";
           this.tradeList[i].toAddress2 = this.tradeList[i].toAddress;
-         this.tradeList[i].type == "tx"||this.tradeList[i].type == "redeem"
+         this.tradeList[i].type == "tx" || this.tradeList[i].type == "redeem"
             ? (this.tradeList[i].toAddress =
                 this.tradeList[i].toAddress.substring(0, 8) + "...")
             : (this.tradeList[i].toAddress = this.tradeList[i].toAddress);

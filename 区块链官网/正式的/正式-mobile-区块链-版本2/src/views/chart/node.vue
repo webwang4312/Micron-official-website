@@ -14,23 +14,23 @@
           <div class="progress">
             <div
               class="first"
-              :style="'width:' + credit_ratio[2].first2 + '%'"
+            :style="'width:' + credit_ratio[0].first"
             ></div>
             <div
               class="second"
-              :style="'width:' + credit_ratio[2].second2 + '%'"
+             :style="'width:' + credit_ratio[0].second"
             ></div>
             <div
               class="third"
-              :style="'width:' + credit_ratio[2].third2 + '%'"
+            :style="'width:' + credit_ratio[0].third"
             ></div>
             <div
               class="fourth"
-              :style="'width:' + credit_ratio[2].fourth2 + '%'"
+             :style="'width:' + credit_ratio[0].fourth"
             ></div>
             <div
               class="five"
-              :style="'width:' + credit_ratio[2].five2 + '%'"
+             :style="'width:' + credit_ratio[0].five"
             ></div>
           </div>
           <ul>
@@ -38,31 +38,31 @@
               <div class="blue"></div>
               <div>0~0.001</div>
               <div>{{ this.credit_ratio[1].node1 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].first }}% </div>
+              <div>{{ this.credit_ratio[2].first2 }}% </div>
             </li>
             <li>
               <div class="yellow"></div>
               <div>0.001~0.005</div>
               <div>{{ this.credit_ratio[1].node2 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].second }} %</div>
+              <div>{{ this.credit_ratio[2].second2 }} %</div>
             </li>
             <li>
               <div class="green"></div>
               <div>0.005~0.01</div>
               <div>{{ this.credit_ratio[1].node3 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].third }} %</div>
+              <div>{{ this.credit_ratio[2].third2 }} %</div>
             </li>
             <li>
               <div class="red"></div>
               <div>0.01~0.05</div>
               <div>{{ this.credit_ratio[1].node4 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].fourth }} %</div>
+              <div>{{ this.credit_ratio[2].fourth2 }} %</div>
             </li>
             <li>
               <div class="gray"></div>
               <div>0.05-0.1</div>
               <div>{{ this.credit_ratio[1].node5 }} {{ $t("chart")[5] }}</div>
-              <div>{{ this.credit_ratio[0].five }} %</div>
+              <div>{{ this.credit_ratio[2].five2 }} %</div>
             </li>
           </ul>
         </div>
@@ -71,12 +71,13 @@
   </div>
 </template>
 <script>
-import { GetChartAll,GetChart } from "@server/api.js";
+import { GETCHART } from "@server/api.js";
 export default {
   name: "chart_node",
   data() {
     return {
       nowLang: "",
+       nodenumber: "",
       credit_ratio: [
         { first: "10", second: "20", third: "30", fourth: "20", five: "20" },
         { node1: "10", node2: "20", node3: "30", node4: "20", node5: "20" },
@@ -96,12 +97,14 @@ export default {
   components: {},
   created() {
     this.nowLang = this.$i18n.locale;
-    if (this.nowLang == "cn") {
+   if (this.nowLang == "cn") {
       this.title[0].test = "节点统计";
       this.title[0].test2 = "燃料费分布图";
+      this.nodenumber = "节点数";
     } else {
       this.title[0].test = "node statistics";
       this.title[0].test2 = "gas fee distribution";
+      this.nodenumber = "Number of nodes";
     }
   },
   mounted() {
@@ -111,7 +114,7 @@ export default {
   // 页码设置
   watch: {},
   methods: {
-    drawLine() {
+   async drawLine() {
       // 基于准备好的dom，初始化echarts实例
       let myChart = echarts.init(document.getElementById("node"));
       var data = [];
@@ -121,13 +124,13 @@ export default {
           text: this.title[0].test,
           x: "left", //水平安放位置，默认为'left'，可选为：'center' | 'left' | 'right' | {number}（x坐标，单位px）
           y: "top", //垂直安放位置，默认为top，可选为：'top' | 'bottom' | 'center' | {number}（y坐标，单位px）
-          padding: [23, 0, 0, 0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
-          itemGap: 30, //主副标题纵向间隔，单位px，默认为10
+          padding: [0, 0, 0, 0], //标题内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距
+          itemGap: 0, //主副标题纵向间隔，单位px，默认为10
           textStyle: {
-            color: "rgba(37, 53, 81, 1)",
-            fontSize: "14px",
-            fontFamily: " PingFang SC",
-            fontWeight: "600",
+            color: "rgba(81, 81, 81, 1)",
+            fontSize: "18px",
+            fontFamily: "Microsoft YaHei",
+            fontWeight: "bolder",
           },
         },
         xAxis: {
@@ -145,7 +148,7 @@ export default {
         },
         yAxis: {
           type: "value",
-          splitLine: { show: true }, //去除网格线
+          splitLine: { show: false }, //去除网格线
           axisLine: {
             //y轴
             show: false,
@@ -184,169 +187,116 @@ export default {
       var node_for_7 = [];
       // 时间
       var node_for_7time = [];
-      that.$http
-        .get(GetChartAll)
-        .then((res) => {
-          //    console.log(res);
-          for (var i = 0; i < res.data[0].gas_node_statistics.length + 1; i++) {
-            node_for_7.unshift(res.data[0].gas_node_statistics[i].gas_count);
-            node_for_7time.unshift(
-              this.timestampToTime2(
-                res.data[0].gas_node_statistics[i].date
-              ).substring(5, 10)
-            );
-            //console.log(node_for_7);
-            //console.log(node_for_7time);
-            myChart.setOption({
-              title: {},
-              xAxis: {
-                type: "category",
-                data: node_for_7time,
-                splitLine: { show: false }, //去除网格线
-                axisLine: {
-                  //y轴
-                  show: false,
-                },
-                axisTick: {
-                  //y轴刻度线
-                  show: false,
-                },
+      const res = await GETCHART();
+      console.log(res);
+      this.credit_ratio[1].node1 = res.result.gasNode[0].value;
+      this.credit_ratio[1].node2 = res.result.gasNode[1].value;
+      this.credit_ratio[1].node3 = res.result.gasNode[2].value;
+      this.credit_ratio[1].node4 = res.result.gasNode[3].value;
+      this.credit_ratio[1].node5 = res.result.gasNode[4].value;
+      this.credit_ratio[0].first = res.result.gasNode[0].reservedValue;
+      this.credit_ratio[0].second = res.result.gasNode[1].reservedValue;
+      this.credit_ratio[0].third = res.result.gasNode[2].reservedValue;
+      this.credit_ratio[0].fourth = res.result.gasNode[3].reservedValue;
+      this.credit_ratio[0].five = res.result.gasNode[4].reservedValue;
+      this.credit_ratio[2].first2 = res.result.gasNode[0].reservedValue;
+      this.credit_ratio[2].second2 = res.result.gasNode[1].reservedValue;
+      this.credit_ratio[2].third2 = res.result.gasNode[2].reservedValue;
+      this.credit_ratio[2].fourth2 = res.result.gasNode[3].reservedValue;
+      this.credit_ratio[2].five2 = res.result.gasNode[4].reservedValue;
+      if (
+        Number(res.result.gasNode[1].value) * 100 <
+        Number(res.result.gasNode[0].value)
+      ) {
+        this.credit_ratio[0].second = "20%";
+        this.credit_ratio[0].third = "20%";
+        this.credit_ratio[0].fourth = "20%";
+        this.credit_ratio[0].five = "20%";
+      }
+      for (var i = 0; i < res.result.nodeList.length + 1; i++) {
+        node_for_7.unshift(res.result.nodeList[i].amount);
+        node_for_7time.unshift(
+          this.timestampToTime2(
+            res.result.nodeList[i].createTime / 1000
+          ).substring(5, 10)
+        );
+        //console.log(node_for_7);
+        //console.log(node_for_7time);
+        myChart.setOption({
+          title: {
+            textStyle: {
+              color: "rgba(81, 81, 81, 1)",
+              fontSize: "18px",
+              fontFamily: "Microsoft YaHei",
+              fontWeight: "bolder",
+            },
+          },
+          xAxis: {
+            type: "category",
+            data: node_for_7time,
+            splitLine: { show: false }, //去除网格线
+            axisLine: {
+              //y轴
+              show: false,
+            },
+            axisTick: {
+              //y轴刻度线
+              show: false,
+            },
+          },
+          yAxis: {
+            type: "value",
+            splitLine: {
+              show: true,
+              lineStyle: {
+                // 使用深浅的间隔色
+                color: "#EBEEEF",
+                width: 1,
               },
-              yAxis: {
-                type: "value",
-                splitLine: { show:true }, //去除网格线
-                axisLine: {
-                  //y轴
-                  show: false,
-                },
-                axisTick: {
-                  //y轴刻度线
-                  show: false,
-                },
-                axisLabel: {
-                  formatter: function(value, index) {
-                    // console.log(value);
-                    if (value / 1000 >= 1 && value / 1000 < 1000) {
-                      return (value = Number(value) / 1000 + "K");
-                    } else if (value / 1000 >= 1000) {
-                      return (value = Number(value) / 1000000 + "M");
-                    } else {
-                      return (value = value);
-                    }
-                  },
-                },
-              },
-              tooltip: {
-                trigger: "item",
-                formatter: "{c0}",
-                backgroundColor: "rgba(74, 74, 74, 1)",
-                extraCssText: "z-index:2",
-                borderWidth: "1",
-                textStyle: {
-                  color: "rgba(255, 255, 255, 1)",
-                  fontWeight: "bold",
-                },
-              },
-              series: [
-                {
-                  data: node_for_7,
-                  type: "bar",
-                  showBackground: true,
-                  backgroundStyle: {
-                    color: "rgba(238, 242, 252, 1)",
-                    borderRadius: 20, // 统一设置四个角的圆角大小
-                  },
-                  barWidth: 18,
-                  itemStyle: {
-                    emphasis: {
-                      barBorderRadius: 7,
-                    },
-                    normal: {
-                      color: "#965EE5",
-                      barBorderRadius: 7,
-                    },
-                  },
-                },
-              ],
-            });
-          }
-        })
-        .catch((e) => {});
-      that.$http.get(GetChart).then((res) => {
-        // console.log(res);
-        this.allgas = res.data.count[0].count;
-        // console.log(this.allgas);
-        let first = [];
-        let second = [];
-        let third = [];
-        let fourth = [];
-        let five = [];
+            }, //去除网格线
+            axisLine: {
+              //y轴
+              show: false,
+            },
+            axisTick: {
+              //y轴刻度线
+              show: false,
+            },
+          },
+          tooltip: {
+            trigger: "item",
+            formatter: "{b0}<br />" + this.nodenumber + ":{c0}",
+            backgroundColor: "rgba(74, 74, 74, 1)",
 
-        var num = 0;
-        for (var s = 0; s < res.data.topN.length + 1; s++) {
-          res.data.topN[s].gas = res.data.topN[s].gas / 1000000;
-          // console.log(res.data.topN[s].gas);
-          if (res.data.topN[s].gas > 0 && res.data.topN[s].gas <= 0.001) {
-            let sum = 0;
-            first.push(res.data.topN[s].count);
-            first.forEach((item) => {
-              sum = sum + item;
-            });
-            // console.log(res.data.topN[s].gas);
-            this.credit_ratio[0].first = ((sum / this.allgas) * 100).toFixed(2);
-            //console.log(this.credit_ratio[0].first);
-            this.credit_ratio[1].node1 = sum;
-          } else if (
-            res.data.topN[s].gas > 0.001 &&
-            res.data.topN[s].gas <= 0.005
-          ) {
-            let sum = 0;
-            second.push(res.data.topN[s].count);
-            second.forEach((item) => {
-              sum = sum + item;
-            });
-            this.credit_ratio[0].second = ((sum / this.allgas) * 100).toFixed(
-              2
-            );
-            this.credit_ratio[1].node2 = sum;
-          } else if (
-            res.data.topN[s].gas > 0.005 &&
-            res.data.topN[s].gas <= 0.01
-          ) {
-            let sum = 0;
-            third.push(res.data.topN[s].count);
-            third.forEach((item) => {
-              sum = sum + item;
-            });
-            this.credit_ratio[0].third = ((sum / this.allgas) * 100).toFixed(2);
-            this.credit_ratio[1].node3 = sum;
-          } else if (
-            res.data.topN[s].gas > 0.01 &&
-            res.data.topN[s].gas <= 0.05
-          ) {
-            let sum = 0;
-            fourth.push(res.data.topN[s].count);
-            fourth.forEach((item) => {
-              sum = sum + item;
-            });
-            this.credit_ratio[0].fourth = ((sum / this.allgas) * 100).toFixed(
-              2
-            );
-            this.credit_ratio[1].node4 = sum;
-          } else {
-            let sum = 0;
-            five.push(res.data.topN[s].count);
-            five.forEach((item) => {
-              sum = sum + item;
-            });
-            this.credit_ratio[0].five = ((sum / this.allgas) * 100).toFixed(2);
-            this.credit_ratio[1].node5 = sum;
-            //    if(this.credit_ratio[0].five<100){
-            //        this.credit_ratio[0].five=1000
-            //    }
-          }
-        }
-      });
+            borderWidth: "1",
+            textStyle: {
+              color: "rgba(255, 255, 255, 1)",
+              fontWeight: "bold",
+            },
+          },
+          series: [
+            {
+              data: node_for_7,
+              type: "bar",
+              showBackground: true,
+              backgroundStyle: {
+                color: "rgba(238, 242, 252, 1)",
+                borderRadius: 20, // 统一设置四个角的圆角大小
+              },
+              barWidth: 18,
+              itemStyle: {
+                emphasis: {
+                  barBorderRadius: 7,
+                },
+                normal: {
+                  color: "#965EE5",
+                  barBorderRadius: 7,
+                },
+              },
+            },
+          ],
+        });
+      }
     },
     timestampToTime2(timestamp) {
       var date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
